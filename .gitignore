@@ -1,0 +1,13 @@
+# Credentials — never commit tokens
+credentials.json
+
+# Local Lean project files (agent-local, environment-specific; see references/lean-setup.md)
+lean-toolchain
+lakefile.lean
+lakefile.olean
+lake-manifest.json
+.lake/
+*.olean
+
+# OS noise
+.DS_Store
