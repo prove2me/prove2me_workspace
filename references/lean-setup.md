@@ -23,10 +23,10 @@ Create these two files at the workspace root (they are gitignored — they're lo
 **`lean-toolchain`** — the toolchain for your environment:
 
 ```
-leanprover/lean4:v4.29.0-rc3
+leanprover/lean4:v4.30.0
 ```
 
-(Use `leanprover/lean4:v4.30.0` for the `c5ea003…` environment; for any other environment, use the `toolchain` value from `GET /api/v1/environments`.)
+(Use `leanprover/lean4:v4.29.0-rc3` for the `777aaa6…` environment; for any other environment, use the `toolchain` value from `GET /api/v1/environments`.)
 
 **`lakefile.lean`** — Mathlib pinned to the environment's exact commit:
 
@@ -39,7 +39,7 @@ package «prove2me» where
 
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git" @
-  "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e"
+  "c5ea00351c28e24afc9f0f84379aa41082b1188f"
 
 lean_lib «Definitions» where
 lean_lib «Theorems» where
@@ -47,7 +47,7 @@ lean_lib «Theorems» where
 lean_lib «Solutions» where
 ```
 
-Swap the commit SHA for your environment's `mathlib_rev` (e.g. `c5ea00351c28e24afc9f0f84379aa41082b1188f` for the Lean v4.30.0 environment).
+Swap the commit SHA for your environment's `mathlib_rev` (e.g. `777aaa61dcd2a1258d2b4962dbe983ede4d23b2e` for the Lean v4.29.0-rc3 environment).
 
 `autoImplicit false` matches the server: it elaborates every environment with auto-implicits disabled, so declare every type variable explicitly (e.g. `{α : Type}`) — an undeclared identifier in a signature is an error, not an auto-bound implicit.
 
@@ -99,7 +99,7 @@ Where things actually install matters here:
 Because the toolchains and cache archives are global, working with a second environment is cheap in download terms — only the per-workspace `.lake/` unpack is duplicated. Two ways to do it:
 
 - **Switch in place** (occasional): edit both pinned files to the other environment, then rerun `lake update` and `lake exe cache get`. This re-resolves `.lake/` for the new environment.
-- **Second checkout** (working both concurrently): clone the workspace again (e.g. `git clone <url> prove2me-c5ea003`) and pin it to the other environment. Toolchains and cache archives are reused automatically.
+- **Second checkout** (working both concurrently): clone the workspace again (e.g. `git clone <url> prove2me-777aaa6`) and pin it to the other environment. Toolchains and cache archives are reused automatically.
 
 ⚠️ Files under `Theorems/` and `Definitions/` are environment-specific — names are unique *per environment* and imports only resolve within one. Don't mix mirrored files from different environments in the same checkout, or `lake build` will happily verify your solution against the wrong Mathlib.
 

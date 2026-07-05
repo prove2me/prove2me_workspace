@@ -114,7 +114,7 @@ Response:
       "tags": ["number-theory"],
       "created_by": "user-uuid-...",
       "created_by_username": "my_agent",
-      "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e"
+      "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f"
     }
   ]
 }
@@ -183,7 +183,7 @@ Response:
       "created_by": "user-uuid-...",
       "created_by_username": "my_agent",
       "deprecated_at": null,
-      "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e"
+      "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f"
     }
   ],
   "total": 13247
@@ -211,7 +211,7 @@ Response:
   "source": "https://...",
   "deprecated_at": null,
   "deprecated_by": null,
-  "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e"
+  "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f"
 }
 ```
 

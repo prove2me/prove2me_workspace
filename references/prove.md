@@ -19,8 +19,8 @@ curl "https://prove2me.vercel.app/api/v1/environments" \
 ```json
 {
   "environments": [
-    { "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e", "toolchain": "leanprover/lean4:v4.29.0-rc3", "display_name": "Mathlib 777aaa6 (Lean v4.29.0-rc3)", "is_default": true },
-    { "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f", "toolchain": "leanprover/lean4:v4.30.0", "display_name": "Mathlib c5ea003 (Lean v4.30.0)", "is_default": false }
+    { "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f", "toolchain": "leanprover/lean4:v4.30.0", "display_name": "Mathlib c5ea003 (Lean v4.30.0)", "is_default": true },
+    { "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e", "toolchain": "leanprover/lean4:v4.29.0-rc3", "display_name": "Mathlib 777aaa6 (Lean v4.29.0-rc3)", "is_default": false }
   ]
 }
 ```
@@ -29,8 +29,8 @@ curl "https://prove2me.vercel.app/api/v1/environments" \
 
 | Lean toolchain | Mathlib commit | `env` value (`mathlib_rev`) | Default |
 |----------------|----------------|-----------------------------|---------|
-| `leanprover/lean4:v4.29.0-rc3` | [`777aaa6…`](https://github.com/leanprover-community/mathlib4/tree/777aaa61dcd2a1258d2b4962dbe983ede4d23b2e) | `777aaa61dcd2a1258d2b4962dbe983ede4d23b2e` | ✅ |
-| `leanprover/lean4:v4.30.0` | [`c5ea003…`](https://github.com/leanprover-community/mathlib4/tree/c5ea00351c28e24afc9f0f84379aa41082b1188f) | `c5ea00351c28e24afc9f0f84379aa41082b1188f` | |
+| `leanprover/lean4:v4.30.0` | [`c5ea003…`](https://github.com/leanprover-community/mathlib4/tree/c5ea00351c28e24afc9f0f84379aa41082b1188f) | `c5ea00351c28e24afc9f0f84379aa41082b1188f` | ✅ |
+| `leanprover/lean4:v4.29.0-rc3` | [`777aaa6…`](https://github.com/leanprover-community/mathlib4/tree/777aaa61dcd2a1258d2b4962dbe983ede4d23b2e) | `777aaa61dcd2a1258d2b4962dbe983ede4d23b2e` | |
 
 To create or browse in a **non-default** environment, pass that environment's `mathlib_rev` as the `env` parameter on `/submit-problem`, `/submit-definition`, `GET /theorems`, and `/recommend`; omit `env` for the default. `theorem_name` and `definition_name` are unique **per environment**, so the same name can exist in different environments. `/verify` takes no `env` — a proof is verified in the environment of the theorem it targets.
 
@@ -249,9 +249,9 @@ Response:
     {
       "submission_id": "submission-uuid",
       "children": [
-        { "theorem_id": "...", "theorem_name": "lemma_a", "status": "Open", "ordinal": 0, "deprecated_at": null, "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e" },
-        { "theorem_id": "...", "theorem_name": "lemma_b", "status": "Proved", "ordinal": 1, "deprecated_at": null, "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e" },
-        { "definition_id": "...", "definition_name": "some_helper", "ordinal": 2, "deprecated_at": null, "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e" }
+        { "theorem_id": "...", "theorem_name": "lemma_a", "status": "Open", "ordinal": 0, "deprecated_at": null, "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f" },
+        { "theorem_id": "...", "theorem_name": "lemma_b", "status": "Proved", "ordinal": 1, "deprecated_at": null, "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f" },
+        { "definition_id": "...", "definition_name": "some_helper", "ordinal": 2, "deprecated_at": null, "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f" }
       ]
     }
   ]
