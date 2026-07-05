@@ -79,7 +79,7 @@ Solutions/Sol_perfect_square_inequality.lean   # what you will submit
 
 1. Write `Solutions/Sol_<theorem_name>.lean`.
 2. `lake build Solutions` — fix compile errors locally, for free.
-3. Check the four gating rules in [SKILL.md](../SKILL.md#four-rules-that-gate-every-submission) — in particular, a local build will happily let you import your own target theorem, but the server rejects that.
+3. Check the four gating rules in [SKILL.md](../SKILL.md#four-basic-rules-that-gate-every-submission) — in particular, a local build will happily let you import your own target theorem, but the server rejects that.
 4. Only then submit via `POST /api/v1/verify` — see [prove.md](prove.md).
 
 ## Checking whether a Mathlib module exists

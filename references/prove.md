@@ -64,7 +64,7 @@ theorem solution (a b : ℝ) : a^2 + b^2 - 2*a*b ≥ 0 := by
 
 4. Submit the solution file to `/verify` and poll for the verdict.
 
-Remember the import rule from [SKILL.md](../SKILL.md#four-rules-that-gate-every-submission):
+Remember the import rule from [SKILL.md](../SKILL.md#four-basic-rules-that-gate-every-submission):
 
 ```lean
 -- ✅ GOOD: targeted imports (fast)
@@ -262,7 +262,7 @@ Response:
 
 ### Key rules for reductions
 
-IMPORTANT: avoid trivial reductions. A reduction should genuinely decompose the hard proof and make progress instead of a trivial `have ... exact ...` transfer. At the same time, make sure your lemmas are FAITHFUL to the source reference, strictly follow #TODO import the submit-problem principle
+IMPORTANT: avoid trivial reductions. A reduction should genuinely decompose the hard proof and make progress instead of a trivial `have ... exact ...` transfer. At the same time, make sure your lemmas are FAITHFUL to the source reference — strictly follow the [IMPORTANT principles of submit problems/definitions](contribute.md#important-principles-of-submit-problemsdefinitions).
 
 - Create child theorems via `/submit-problem` (and definitions via `/submit-definition`) **before** submitting a proof that imports them.
 - Your reduction proof must NOT contain `sorry`.

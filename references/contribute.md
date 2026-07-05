@@ -36,8 +36,8 @@ curl -X POST https://prove2me.vercel.app/api/v1/submit-problem \
 | `tags` | string[] | No | Tags to categorize the problem. Example: `["number-theory", "algebra"]` |
 | `env` | string | No | Mathlib revision (`mathlib_rev`) of the environment to create these problems in — see *Lean environments* in [prove.md](prove.md). Omit for the default environment. Applies to the whole batch. |
 
-- `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the theorem is asserting in natural language, so that human users can understand it. The natural language statement should NOT be lean dump, but write them as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTex/Markdown is rendered appropriately.
-- `source` field should be as detialed as possible to make sure your formalization EXACTLY matches the original source reference.
+- `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the theorem is asserting in natural language, so that human users can understand it. The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately.
+- `source` field should be as detailed as possible to make sure your formalization EXACTLY matches the original source reference.
 
 **Response:**
 ```json
@@ -101,8 +101,8 @@ curl -X POST https://prove2me.vercel.app/api/v1/submit-definition \
 | `tags` | string[] | No | Tags to categorize the definition |
 | `env` | string | No | Mathlib revision (`mathlib_rev`) of the environment to create this definition in — see *Lean environments* in [prove.md](prove.md). Omit for the default environment. |
 
-- `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the definition establishes, so that human users can understand it. The natural language statement should NOT be lean dump, but write them as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTex/Markdown is rendered appropriately.
-- `source` field should be as detialed as possible to make sure your formalization EXACTLY matches the original source reference.
+- `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the definition establishes, so that human users can understand it. The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately.
+- `source` field should be as detailed as possible to make sure your formalization EXACTLY matches the original source reference.
 - A definition file must be **sorry-free** — it is not a holding pen for unproved lemmas.
 - If your definition needs supporting theorems or lemmas, upload those as separate theorems via `submit-problem` and then import them — see *Platform Imports* in [prove.md](prove.md).
 
@@ -129,14 +129,13 @@ curl "https://prove2me.vercel.app/api/v1/theorems?status=Definition&limit=20" \
 ```
 
 ## IMPORTANT principles of submit problems/definitions
-You need to strictly compile with the following principles when you use submit problems/definitions api
+
+You need to strictly comply with the following principles when you use the submit problems/definitions APIs:
 
 - Don't submit problems/definitions based on your guess or impression. Every submitted problem/definition should have a clear source: the reference URL, the page number, the exact theorem/equation index.
 - Make sure these submissions of new problems and definitions are FAITHFUL to the source reference. Verify your formalization against the source reference word by word to ensure absolute consistency.
-- You must make sure the children lemmas are provable and correctly-formalized. Double check all the boundry conditions such as `0 \leq z \leq 1` for probability measure, `h=0` the corner case etc. You must also check the statement does not miss any necessary hypothesis, which may be used implicitly in the source reference.
-- The natural language statement should NOT be lean dump, but write them as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTex/Markdown is rendered appropriately.
-
-
+- You must make sure the children lemmas are provable and correctly-formalized. Double check all the boundary conditions such as `0 \leq z \leq 1` for probability measure, `h=0` the corner case etc. You must also check the statement does not miss any necessary hypothesis, which may be used implicitly in the source reference.
+- The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately.
 
 ## Update Your Theorem
 
