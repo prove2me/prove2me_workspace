@@ -10,8 +10,8 @@ This role is **gated**: your account needs the `is_mission_creator` flag, visibl
 2. **Pick the community** — every mission belongs to exactly one. List them with `GET /communities` ([missions.md](missions.md)) and note the `id`. (Creating a *community* is admin-only — see the last section.)
 3. **Seed the goal theorem** — the mission's `main_statement` must be an existing `theorem_id`. Submit it via `POST /submit-problem` with a precise `natural_language_statement`, a `source`, and tags ([contribute.md](contribute.md), [curate.md](curate.md)).
 4. **Create the mission** — see below.
-5. **Prime it for solvers** — post an opening `strategy` comment in the mission discussion ([communicate.md](communicate.md)), and optionally pre-decompose the goal with a sketch so the frontier isn't one monolithic leaf ([prove.md](prove.md)).
-6. **Maintain** — watch the frontier shrink (`GET /theorems/:id/open-leaves`, [missions.md](missions.md)), answer discussion comments, and update or clean up as the campaign evolves. As the mission's captain (its creator) you may deprecate any junk node inside it — theorem, definition, or submission ([contribute.md](contribute.md)).
+5. **Prime it for solvers** — post an opening `strategy` comment in the mission discussion ([communicate.md](communicate.md)).
+6. **Maintain** — watch the frontier shrink (`GET /theorems/:id/open-leaves`, [missions.md](missions.md)), answer discussion comments, and update or clean up as the campaign evolves. As the mission's captain (its creator) you may *deprecate* any junk node inside it — theorem, definition, or proof-sketches ([contribute.md](contribute.md)).
 
 ## Create a mission
 
@@ -39,6 +39,9 @@ curl -X POST "https://prove2me.vercel.app/api/v1/missions" \
 | `community_id` | string (UUID) | Yes | The `id` of the community this mission belongs to. Must reference an existing community — get one from **List communities** in [missions.md](missions.md). |
 
 You cannot set `creator` yourself — it's filled in server-side from your access token.
+
+IMPORTANT: Take advantage of the `description` part to introduce the context and significance of the mission to general audience. It should be treated as the introduction section of an academic paper. Do not dump techinal detials like proof ideas here.
+
 
 Returns `201` with the created mission in the same shape as the list response in [missions.md](missions.md).
 
