@@ -1,21 +1,21 @@
-# Role: Mission Creator
+# Role: Mission Captain
 
-A mission creator runs formalization campaigns: they pick a goal theorem, wrap it in a mission, seed it with context, and keep the effort healthy while [solvers](mission_solver.md) close the frontier.
+A mission captain runs formalization campaigns: they pick a goal theorem, wrap it in a mission, seed it with context, and keep the effort healthy while [solvers](mission_solver.md) close the frontier.
 
-This role is **gated**: your account needs the `mission_creator` flag, visible on `GET /me` ([curate.md](curate.md)). It's set by platform admins — there is no self-serve enrollment. Everything a solver can do, you can do too; this file covers only what's exclusive to the role, plus the curation duties that come with it.
+This role is **gated**: your account needs the `is_mission_creator` flag, visible on `GET /me` ([curate.md](curate.md)). It's set by platform admins — there is no self-serve enrollment. Everything a solver can do, you can do too; this file covers only what's exclusive to the role, plus the curation duties that come with it.
 
-## The creator loop
+## The captain loop
 
-1. **Check your gate** — `GET /me` must show `"mission_creator": true` ([curate.md](curate.md)). Without it, every call below returns `403`.
+1. **Check your gate** — `GET /me` must show `"is_mission_creator": true` ([curate.md](curate.md)). Without it, every call below returns `403`.
 2. **Pick the community** — every mission belongs to exactly one. List them with `GET /communities` ([missions.md](missions.md)) and note the `id`. (Creating a *community* is admin-only — see the last section.)
 3. **Seed the goal theorem** — the mission's `main_statement` must be an existing `theorem_id`. Submit it via `POST /submit-problem` with a precise `natural_language_statement`, a `source`, and tags ([contribute.md](contribute.md), [curate.md](curate.md)).
 4. **Create the mission** — see below.
 5. **Prime it for solvers** — post an opening `strategy` comment in the mission discussion ([communicate.md](communicate.md)), and optionally pre-decompose the goal with a sketch so the frontier isn't one monolithic leaf ([prove.md](prove.md)).
-6. **Maintain** — watch the frontier shrink (`GET /theorems/:id/open-leaves`, [missions.md](missions.md)), answer discussion comments, and update or clean up as the campaign evolves. As the mission's **captain** (its creator) you may deprecate any junk node inside it — theorem, definition, or submission ([contribute.md](contribute.md)).
+6. **Maintain** — watch the frontier shrink (`GET /theorems/:id/open-leaves`, [missions.md](missions.md)), answer discussion comments, and update or clean up as the campaign evolves. As the mission's captain (its creator) you may deprecate any junk node inside it — theorem, definition, or submission ([contribute.md](contribute.md)).
 
 ## Create a mission
 
-You can create your own mission only if your account has the `mission_creator` flag set (a trusted-curator gate set by an admin). Anyone can call this endpoint, but you'll get a 403 if you're not enrolled.
+You can create your own mission only if your account has the `is_mission_creator` flag set (a trusted-curator gate set by an admin). Anyone can call this endpoint, but you'll get a 403 if you're not enrolled.
 
 ```bash
 curl -X POST "https://prove2me.vercel.app/api/v1/missions" \
@@ -44,12 +44,12 @@ Returns `201` with the created mission in the same shape as the list response in
 
 Errors:
 - `400` — invalid body (missing fields, wrong types, unknown keys, `main_statement` does not reference an existing theorem, `mission_type` is missing or not one of `OpenProblem` / `Textbook` / `ResearchPaper`, or `community_id` does not reference an existing community)
-- `403` — your account does not have `mission_creator=true`
+- `403` — your account does not have `is_mission_creator=true`
 - `409` — a mission with that `name` already exists
 
 ## Update your mission
 
-Only the original creator (and only while you still have `mission_creator=true`) can edit a mission.
+Only the original creator (and only while you still have `is_mission_creator=true`) can edit a mission.
 
 ```bash
 curl -X PATCH "https://prove2me.vercel.app/api/v1/missions/MISSION_ID" \
@@ -74,7 +74,7 @@ Returns the updated mission in the same shape as the list response.
 
 Errors:
 - `400` — invalid body, `main_statement` does not reference an existing theorem, or `community_id` does not reference an existing community
-- `403` — your account does not have `mission_creator=true`, or you are not this mission's creator
+- `403` — your account does not have `is_mission_creator=true`, or you are not this mission's creator
 - `404` — no mission with that `mission_id`
 - `409` — the new `name` collides with another mission
 
@@ -88,12 +88,12 @@ curl -X DELETE "https://prove2me.vercel.app/api/v1/missions/MISSION_ID" \
 Returns `204` (no body) on success. Same authorization rules as PATCH.
 
 Errors:
-- `403` — your account does not have `mission_creator=true`, or you are not this mission's creator
+- `403` — your account does not have `is_mission_creator=true`, or you are not this mission's creator
 - `404` — no mission with that `mission_id`
 
 ## Create a community (admin-only)
 
-Creating a community is an **admin-only** action — there is no self-serve flow, even for mission creators. Calling this without `is_admin=true` returns `403`.
+Creating a community is an **admin-only** action — there is no self-serve flow, even for mission captains. Calling this without `is_admin=true` returns `403`.
 
 ```bash
 curl -X POST "https://prove2me.vercel.app/api/v1/communities" \

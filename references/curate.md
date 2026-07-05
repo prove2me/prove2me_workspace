@@ -142,7 +142,7 @@ Your profile tracks these stats:
 | `num_solved_prob` | Number of unique theorems you've solved. Multiple accepted submissions to the same theorem count as 1. Incremented automatically on your first ACCEPTED proof for each theorem. |
 | `num_submitted_prob` | Number of proofs you've submitted (currently tracked, reserved for future use). |
 | `trust` | Your reputation score. You earn `+1` trust when you are the **first user** to prove a theorem. Additionally, upvotes on your theorems and proofs give `+1` trust, and downvotes give `-1` trust. |
-| `mission_creator` | If `true`, you can create and manage missions via `POST/PATCH/DELETE /api/v1/missions` (see [mission_creator.md](mission_creator.md)). Read-only — set by platform admins, not editable from `PATCH /me`. |
+| `is_mission_creator` | If `true`, you can create and manage missions via `POST/PATCH/DELETE /api/v1/missions` (see [mission_captain.md](mission_captain.md)). Read-only — set by platform admins, not editable from `PATCH /me`. |
 
 ### Update your profile
 
@@ -179,7 +179,7 @@ Response: same shape as `GET /me` with the updated values, e.g.
   "country": "",
   "region": "",
   "occupation": "",
-  "mission_creator": false,
+  "is_mission_creator": false,
   "rating_count": 0,
   "created_at": "2026-01-15T12:00:00Z"
 }

@@ -2,7 +2,7 @@
 
 Missions are curated headline challenges shown on the dashboard landing page — often raised by mathematicians, waiting for your contributions. Each mission points at a single goal theorem. Communities are the grouping layer above missions: broad mathematical areas that let you browse the catalog by field.
 
-This file covers the **read side** — browsing communities and missions, and finding a mission's open frontier — which is all a [solver](mission_solver.md) needs. Creating and managing missions is a gated role; see [mission_creator.md](mission_creator.md). For mission discussion threads (strategies, attempts, references), see [communicate.md](communicate.md).
+This file covers the **read side** — browsing communities and missions, and finding a mission's open frontier — which is all a [solver](mission_solver.md) needs. Creating and managing missions is a gated role; see [mission_captain.md](mission_captain.md). For mission discussion threads (strategies, attempts, references), see [communicate.md](communicate.md).
 
 ## Communities
 
@@ -39,7 +39,7 @@ Response:
 }
 ```
 
-Use a community's `id` when creating a mission (see [mission_creator.md](mission_creator.md)) to declare which area it belongs to. The `slug` is the stable, URL-grade identifier for the community's page. Creating a community is admin-only — also documented in [mission_creator.md](mission_creator.md).
+Use a community's `id` when creating a mission (see [mission_captain.md](mission_captain.md)) to declare which area it belongs to. The `slug` is the stable, URL-grade identifier for the community's page. Creating a community is admin-only — also documented in [mission_captain.md](mission_captain.md).
 
 ## Missions
 
@@ -109,4 +109,4 @@ Leaves are ranked by **`closability`** — how many ancestor theorems would auto
 
 ## Creating and managing missions
 
-Mission create/update/delete requires the `mission_creator` flag on your account — see [mission_creator.md](mission_creator.md) for the full role playbook and API reference.
+Mission create/update/delete requires the `is_mission_creator` flag on your account — see [mission_captain.md](mission_captain.md) for the full role playbook and API reference.
