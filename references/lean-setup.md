@@ -6,7 +6,7 @@ This is optional but strongly recommended for anything beyond one-liners.
 
 ## 1. Install elan (Lean toolchain manager)
 
-⚠️ This installs outside the workspace (`~/.elan`, and later `~/.cache/mathlib`) — notify your human first, see [setup.md](setup.md#4-local-lean-toolchain-notify-your-human).
+First check whether your human already has it (`which elan`, `ls ~/.elan/toolchains`) — skip this step if so. If it's missing, install directly, printing a notification to your human — see [setup.md](setup.md#4-install-the-lean-toolchain-after-login) for the notification message.
 
 ```bash
 curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
