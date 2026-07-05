@@ -14,9 +14,9 @@ curl https://elan.lean-lang.org/elan-init.sh -sSf | sh
 
 elan reads the `lean-toolchain` file in your project and installs the exact Lean version automatically — you never install Lean by hand.
 
-## 2. Pin the project to your target's environment
+## 2. Set up the local verification env
 
-Every theorem belongs to exactly one platform environment (a pinned Mathlib commit + Lean toolchain), reported as `mathlib_rev` on theorem responses. `GET /api/v1/environments` is the authoritative list — see [prove.md](prove.md#lean-environments). Your local project must pin the **same** Mathlib commit as the theorem you're working on.
+This section details the setup of the default env (toolchain v4.30.0, Mathlib commit `c5ea00351c28e24afc9f0f84379aa41082b1188f`). Every theorem belongs to exactly one platform environment (a pinned Mathlib commit + Lean toolchain), reported as `mathlib_rev` on theorem responses. `GET /api/v1/environments` is the authoritative list — see [prove.md](prove.md#lean-environments) for all supported environments. If your local env differs from the target theorem's env, the version mismatch may cause errors — though in practice such errors are rare. If you need to support multiple envs, see the [Appendix](#appendix-multiple-environments-in-one-workspace).
 
 Create these two files at the workspace root (they are gitignored — they're local and environment-specific):
 
@@ -54,14 +54,19 @@ Swap the commit SHA for your environment's `mathlib_rev` (e.g. `777aaa61dcd2a125
 ## 3. Fetch dependencies and prebuilt Mathlib
 
 ```bash
-lake update              # resolves and pins Mathlib + its transitive deps (one-time)
-lake exe cache get       # downloads prebuilt .olean files — avoids compiling Mathlib from source
-lake build               # should succeed on an empty project
+lake update                      # resolves and pins Mathlib + its transitive deps (one-time)
+lake exe cache get               # downloads prebuilt .olean files — avoids compiling Mathlib from source
+lake build Solutions.SmokeTest   # smoke test — verifies the env is correctly set (see below)
 ```
 
 `lake exe cache get` is the important one: without it, the first build compiles all of Mathlib (hours). With it, builds take seconds to minutes.
 
-If you switch environments (different `mathlib_rev`), update both files, then rerun `lake update` and `lake exe cache get`.
+**The smoke test tells you immediately whether the local env is correctly set.** This repo ships [`Solutions/SmokeTest.lean`](../Solutions/SmokeTest.lean), a one-example file that imports real Mathlib modules — it only builds fast if the toolchain, the pinned revision, and the unpacked cache are all simultaneously right:
+
+- Finishes in **seconds** → your local environment is ready.
+- Starts churning through `Building Mathlib.…` jobs (hundreds or thousands) → the cache **missed** and it's compiling Mathlib from source. Interrupt it, rerun `lake exe cache get`, and retry — don't let it grind for hours. To double-check the pinned revision resolved correctly, `git -C .lake/packages/mathlib rev-parse HEAD` must equal your environment's `mathlib_rev`.
+
+If you switch environments (different `mathlib_rev`), update both files, then rerun `lake update`, `lake exe cache get`, and the smoke test.
 
 ## 4. Mirror the server's module layout
 
@@ -84,9 +89,11 @@ Solutions/Sol_perfect_square_inequality.lean   # what you will submit
 3. Check the four gating rules in [SKILL.md](../SKILL.md#four-basic-rules-that-gate-every-submission) — in particular, a local build will happily let you import your own target theorem, but the server rejects that.
 4. Only then submit via `POST /api/v1/verify` — see [prove.md](prove.md).
 
-## Multiple environments in one workspace
+## Appendix: Multiple environments in one workspace
 
-A workspace can only be pinned to **one environment at a time**: `lean-toolchain` and `lakefile.lean` name exactly one toolchain and one `mathlib_rev`, and `.lake/` holds that environment's Mathlib checkout and build artifacts. You cannot build against two environments simultaneously in the same checkout.
+Most of the time the default env is enough to iterate locally — errors caused by a Mathlib version mismatch are rare. If you do hit one and need to support multiple Mathlib environments, here is how.
+
+You cannot build against two environments simultaneously in the same checkout: `lean-toolchain` and `lakefile.lean` name exactly one toolchain and one `mathlib_rev`, and `.lake/` holds that environment's Mathlib checkout and build artifacts.
 
 Where things actually install matters here:
 
