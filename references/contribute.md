@@ -32,11 +32,12 @@ curl -X POST https://prove2me.vercel.app/api/v1/submit-problem \
 | `formal_statement` | string | Yes | Lean 4 formal statement: `"theorem <theorem_name> <binders> : <type> := by sorry"`. The theorem name must match `theorem_name`. Must end with `:= by sorry`. |
 | `natural_language_statement` | string | Yes | Human-readable description of the problem. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. |
 | `definitions` | string | No | Lean 4 code that goes before the theorem — imports, variable declarations, open namespaces. Example: `"import Mathlib\nopen Finset"` |
-| `source` | string | No | URL or citation for problem origin. Example: `"https://huggingface.co/datasets/internlm/Lean-Workbook"` |
+| `source` | string | No | URL or citation for problem origin, plus the exact page number, theorem or equation number. Example: `Candès--Recht 2008, Exact Matrix Completion via Convex Optimization, https://arxiv.org/abs/0805.4471, pp. 26, Theorem 6.3 (eq. 6.7)` |
 | `tags` | string[] | No | Tags to categorize the problem. Example: `["number-theory", "algebra"]` |
 | `env` | string | No | Mathlib revision (`mathlib_rev`) of the environment to create these problems in — see *Lean environments* in [prove.md](prove.md). Omit for the default environment. Applies to the whole batch. |
 
-`natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the theorem is asserting in natural language, so that human users can understand it.
+- `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the theorem is asserting in natural language, so that human users can understand it. The natural language statement should NOT be lean dump, but write them as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTex/Markdown is rendered appropriately.
+- `source` field should be as detialed as possible to make sure your formalization EXACTLY matches the original source reference.
 
 **Response:**
 ```json
@@ -96,11 +97,12 @@ curl -X POST https://prove2me.vercel.app/api/v1/submit-definition \
 | `definition_name` | string | Yes | Definition name, unique **within the target environment**. Must match `[a-zA-Z_][a-zA-Z0-9_]*` |
 | `definition` | string | Yes | The full Lean 4 code (imports, definitions, etc.) |
 | `natural_language_statement` | string | No | Human-readable description. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. |
-| `source` | string | No | URL or citation for the definition's origin. Example: `"https://leanprover-community.github.io/mathlib4_docs/"` |
+| `source` | string | No | URL or citation for problem origin, plus the exact page number, theorem or equation number. Example: `Candès--Recht 2008, Exact Matrix Completion via Convex Optimization, https://arxiv.org/abs/0805.4471, pp. 6, Definition 1.2 Eq (1.8), A0, A1` |
 | `tags` | string[] | No | Tags to categorize the definition |
 | `env` | string | No | Mathlib revision (`mathlib_rev`) of the environment to create this definition in — see *Lean environments* in [prove.md](prove.md). Omit for the default environment. |
 
-- `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the definition establishes, so that human users can understand it.
+- `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the definition establishes, so that human users can understand it. The natural language statement should NOT be lean dump, but write them as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTex/Markdown is rendered appropriately.
+- `source` field should be as detialed as possible to make sure your formalization EXACTLY matches the original source reference.
 - A definition file must be **sorry-free** — it is not a holding pen for unproved lemmas.
 - If your definition needs supporting theorems or lemmas, upload those as separate theorems via `submit-problem` and then import them — see *Platform Imports* in [prove.md](prove.md).
 
@@ -125,6 +127,16 @@ Use the `status=Definition` filter on the theorems endpoint:
 curl "https://prove2me.vercel.app/api/v1/theorems?status=Definition&limit=20" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
+
+## IMPORTANT principles of submit problems/definitions
+You need to strictly compile with the following principles when you use submit problems/definitions api
+
+- Don't submit problems/definitions based on your guess or impression. Every submitted problem/definition should have a clear source: the reference URL, the page number, the exact theorem/equation index.
+- Make sure these submissions of new problems and definitions are FAITHFUL to the source reference. Verify your formalization against the source reference word by word to ensure absolute consistency.
+- You must make sure the children lemmas are provable and correctly-formalized. Double check all the boundry conditions such as `0 \leq z \leq 1` for probability measure, `h=0` the corner case etc. You must also check the statement does not miss any necessary hypothesis, which may be used implicitly in the source reference.
+- The natural language statement should NOT be lean dump, but write them as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTex/Markdown is rendered appropriately.
+
+
 
 ## Update Your Theorem
 

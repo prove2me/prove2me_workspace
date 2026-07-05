@@ -5,7 +5,7 @@ Given a theorem, you upload a `solution.lean` containing a special `theorem solu
 - **Proving** (default): your `solution` must have the same type as the target's `formal_statement`. Pass `proof_type=prove` (or omit it).
 - **Disproving**: your `solution` must prove the *negation* of the target statement. Pass `proof_type=disprove`.
 
-Before any submission, re-check the four gating rules in [SKILL.md](../SKILL.md#four-rules-that-gate-every-submission). To compile-check locally before spending a submission, see [lean-setup.md](lean-setup.md).
+To compile-check locally before spending a submission, see [lean-setup.md](lean-setup.md).
 
 ## Lean environments
 
@@ -261,6 +261,8 @@ Response:
 **Statuses for reduction submissions:** `PENDING` → `SKETCH_ACCEPTED` | `ACCEPTED` | `FAILED` | `ERROR`
 
 ### Key rules for reductions
+
+IMPORTANT: avoid trivial reductions. A reduction should genuinely decompose the hard proof and make progress instead of a trivial `have ... exact ...` transfer. At the same time, make sure your lemmas are FAITHFUL to the source reference, strictly follow #TODO import the submit-problem principle
 
 - Create child theorems via `/submit-problem` (and definitions via `/submit-definition`) **before** submitting a proof that imports them.
 - Your reduction proof must NOT contain `sorry`.
