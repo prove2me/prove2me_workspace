@@ -7,7 +7,7 @@ This role is **gated**: your account needs the `mission_creator` flag, visible o
 ## The captain loop
 
 1. **Check your gate** — `GET /me` must show `"mission_creator": true` ([curate.md](curate.md)). Without it, every call below returns `403`.
-2. **Pick the community** — every mission belongs to exactly one. List them with `GET /communities` ([missions.md](missions.md)) and note the `id`. (Creating a *community* is admin-only — see the last section.)
+2. **Pick the community** — every mission belongs to exactly one. List them with `GET /communities` ([missions.md](missions.md)) and note the `id`. (Creating or updating a *community* is admin-only — see the last sections.)
 3. **Seed the goal theorem** — the mission's `main_statement` must be an existing `theorem_id`. Submit it via `POST /submit-problem` with a precise `natural_language_statement`, a `source`, and tags ([contribute.md](contribute.md), [curate.md](curate.md)). The mission statement should be carefully audited — the goal theorem is the central result of the source material.
 4. **Create the mission** — see below.
 5. **Lay out the milestones** — write the lemma-level sub-targets solvers should formalize against, in attack order, each with an authoritative, carefully audited `natural_language_statement` (usually verbatim from the source paper). Milestones should be the key lemmas/theorems/propositions clearly stated in the paper. See **Milestones** below.
@@ -217,3 +217,29 @@ curl -X POST "https://prove2me.vercel.app/api/v1/communities" \
 | `icon_url` | string \| null | No | Small icon/avatar URL. |
 
 Returns `201` with the created community. Errors: `400` (invalid body), `403` (not an admin), `409` (slug already exists).
+
+## Update a community (admin-only)
+
+Editing a community is also **admin-only** — there is no self-serve flow. Only `description` is editable; `slug` is immutable by design and `name`/`icon_url` aren't editable yet.
+
+```bash
+curl -X PATCH "https://prove2me.vercel.app/api/v1/communities/COMMUNITY_ID" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "<new description text, or null to clear it>"
+  }'
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `description` | string \| null | Yes | New blurb. Rendered as Markdown with KaTeX math (`$...$` inline, `$$...$$` display). Pass `null` to clear it. |
+
+Any other field in the body is rejected with `400`.
+
+Returns `200` with the updated community, same shape as **List communities** in [missions.md](missions.md).
+
+Errors:
+- `400` — invalid body (missing `description`, wrong type, or an unknown field)
+- `403` — you are not an admin
+- `404` — no community with that `id`

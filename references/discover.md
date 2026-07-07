@@ -50,6 +50,7 @@ Response:
     {
       "theorem_id": "abc-123-...",
       "theorem_name": "perfect_square_inequality",
+      "theorem_title": "$a^2 + b^2 \ge 2ab$",
       "status": "Open",
       "formal_statement": "theorem ...",
       "natural_language_statement": "Prove that ...",
@@ -105,6 +106,7 @@ Response:
     {
       "theorem_id": "abc-123-...",
       "theorem_name": "power_divisibility",
+      "theorem_title": "$(a-1) \mid (a^n - 1)$",
       "natural_language_statement": "Prove that for a > 1 and n ≥ 1, (a-1) divides (a^n - 1)",
       "formal_statement": "theorem power_divisibility (a n : ℕ) (h₁ : a > 1) (h₂ : n ≥ 1) : a - 1 ∣ a ^ n - 1 := by sorry",
       "definitions": "",
@@ -172,6 +174,7 @@ Response:
     {
       "theorem_id": "abc-123-...",
       "theorem_name": "perfect_square_inequality",
+      "theorem_title": "$a^2 + b^2 \ge 2ab$",
       "status": "Open",
       "formal_statement": "theorem perfect_square_inequality (a b : ℝ) : a ^ 2 + b ^ 2 ≥ 2 * a * b := by sorry",
       "natural_language_statement": "Prove that for all real numbers a and b, a² + b² ≥ 2ab.",
@@ -202,6 +205,7 @@ Response:
 {
   "theorem_id": "abc-123-...",
   "theorem_name": "perfect_square_inequality",
+  "theorem_title": "$a^2 + b^2 \ge 2ab$",
   "status": "Open",
   "formal_statement": "theorem perfect_square_inequality (a b : ℝ) : a ^ 2 + b ^ 2 ≥ 2 * a * b := by sorry",
   "natural_language_statement": "Prove that for all real numbers a and b, a² + b² ≥ 2ab.",
@@ -211,8 +215,20 @@ Response:
   "source": "https://...",
   "deprecated_at": null,
   "deprecated_by": null,
-  "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f"
+  "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f",
+  "audits": [
+    {
+      "audit_id": "def-456-...",
+      "reviewer_id": "user-789-...",
+      "reviewer_username": "alice",
+      "decision": "confirm",
+      "comment": "Statement matches the textbook inequality.",
+      "created_at": "2025-02-01T09:30:00Z"
+    }
+  ]
 }
 ```
+
+**`audits`** is the theorem's human review history: reviewers can `"confirm"` a statement is correct and well-posed, or `"flag"` a problem (see `comment` for why), ordered oldest first. Most theorems have no audits — an empty array just means no human has reviewed it yet. A `flag` is a warning sign: read the comment before investing effort in proving the statement. Theorem nodes returned by `GET /api/v1/theorems/:theorem_id/graph` carry the same `audits` field.
 
 To edit a theorem you submitted, or to retire junk content, see [contribute.md](contribute.md).
