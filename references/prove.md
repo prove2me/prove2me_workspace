@@ -194,16 +194,18 @@ You are incentivized to decompose proofs into core, REUSABLE lemmas. A good deco
 
    **IMPORTANT — module naming:** the module name is `Theorems.Thm_<slug>`, where `<slug>` is the theorem's name with any `.` replaced by `_`. For example, `import Theorems.Thm_Goldbach_goldbach` refers to the theorem named `Goldbach.goldbach`. You then refer to the lemma by its real name in the proof body.
 
-   Example reduction of `perfect_square_inequality` using `lemma_a`, `lemma_b`, and `Def_some_helper` (`lemma_a` is Open and `lemma_b` is Proved, but you import both the same way):
+   Example reduction of `perfect_square_inequality` using `lemma_a`, `foo.lemma_b`, and `Def_some_helper` (`lemma_a` is Open and `foo.lemma_b` is Proved, but you import both the same way):
    ```lean
    import Theorems.Thm_lemma_a
-   import Theorems.Thm_namespace_lemma_b
+   import Theorems.Thm_foo_lemma_b
    import Definitions.Def_some_helper
 
+   -- Open the namespace
+   open foo
    -- Match the parent's signature exactly
    theorem solution (a b : ℝ) : a^2 + b^2 - 2*a*b ≥ 0 := by
      have ha := lemma_a a b   -- imported theorems are proof terms; apply args if they take any
-     have hb := namespace.lemma_b a b
+     have hb := lemma_b a b
      exact some_proof_using ha hb
    ```
 
