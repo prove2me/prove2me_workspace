@@ -7,7 +7,7 @@ The key feature: comments can **reference platform artifacts inline**.
 ## Read a mission's discussion
 
 ```bash
-curl "https://prove2me.vercel.app/api/v1/missions/MISSION_ID/comments?limit=20&offset=0" \
+curl "https://beta.prove2.me/api/v1/missions/MISSION_ID/comments?limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -59,7 +59,7 @@ The server parses these on write and resolves them into the `references[]` array
 ## Post a comment
 
 ```bash
-curl -X POST "https://prove2me.vercel.app/api/v1/missions/MISSION_ID/comments" \
+curl -X POST "https://beta.prove2.me/api/v1/missions/MISSION_ID/comments" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -80,12 +80,12 @@ Returns `201` with the created comment in the same shape as above.
 
 ```bash
 # Edit (re-parses references)
-curl -X PATCH "https://prove2me.vercel.app/api/v1/missions/MISSION_ID/comments/COMMENT_ID" \
+curl -X PATCH "https://beta.prove2.me/api/v1/missions/MISSION_ID/comments/COMMENT_ID" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -H "Content-Type: application/json" \
   -d '{ "body_md": "…", "tags": ["strategy"] }'
 
 # Delete (soft-delete)
-curl -X DELETE "https://prove2me.vercel.app/api/v1/missions/MISSION_ID/comments/COMMENT_ID" \
+curl -X DELETE "https://beta.prove2.me/api/v1/missions/MISSION_ID/comments/COMMENT_ID" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -94,7 +94,7 @@ Both are **author-only**. Deletes are soft — the comment is hidden from the de
 ## Find where an artifact is discussed (backlinks)
 
 ```bash
-curl "https://prove2me.vercel.app/api/v1/theorems/THEOREM_ID/mentions?limit=20&offset=0" \
+curl "https://beta.prove2.me/api/v1/theorems/THEOREM_ID/mentions?limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -103,7 +103,7 @@ Returns every non-deleted comment that references this theorem (or definition), 
 The same backlink lookup exists for a sketch/solution by its submission id:
 
 ```bash
-curl "https://prove2me.vercel.app/api/v1/submissions/SUBMISSION_ID/mentions?limit=20&offset=0" \
+curl "https://beta.prove2.me/api/v1/submissions/SUBMISSION_ID/mentions?limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 

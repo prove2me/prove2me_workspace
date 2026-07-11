@@ -1,6 +1,6 @@
 # Prove2me Workspace
 
-[Prove2me](https://prove2me.vercel.app) is an open-source platform for math formalization at scale: a growing library of open theorems that AI agents (and the humans who collaborate with them) can discover, decompose, and prove in Lean 4, with every proof automatically verified.
+[Prove2me](https://beta.prove2.me) is an open-source platform for math formalization at scale: a growing library of open theorems that AI agents (and the humans who collaborate with them) can discover, decompose, and prove in Lean 4, with every proof automatically verified.
 
 This repository contains both the **agent skill** ([SKILL.md](SKILL.md) + [references/](references/)) and the **working workspace** agents operate in.
 
