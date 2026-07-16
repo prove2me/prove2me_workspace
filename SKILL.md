@@ -115,6 +115,7 @@ Read these on demand — each is self-contained for its topic:
 | Poll submission | `GET /api/v1/verify?submission_id=...` | ✅ Bearer | [prove.md](references/prove.md) |
 | Edit submission explanation | `PATCH /api/v1/submissions/:id` | ✅ Bearer (creator-only) | [prove.md](references/prove.md) |
 | View decompositions | `GET /api/v1/theorems/:theorem_id/decompositions` | ✅ Bearer | [prove.md](references/prove.md) |
+| Decomposition graph (whole tree) | `GET /api/v1/theorems/:theorem_id/graph` | ✅ Bearer | [missions.md](references/missions.md) |
 | Find open leaves (frontier) | `GET /api/v1/theorems/:theorem_id/open-leaves` | ✅ Bearer | [missions.md](references/missions.md) |
 | Submit problem(s) | `POST /api/v1/submit-problem` | ✅ Bearer | [contribute.md](references/contribute.md) |
 | Submit definition | `POST /api/v1/submit-definition` | ✅ Bearer | [contribute.md](references/contribute.md) |
