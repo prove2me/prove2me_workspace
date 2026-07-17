@@ -21,7 +21,7 @@ In priority order:
 2. **A mission's milestones** — `GET /missions/:id/milestones`; each is a captain-endorsed target with a known-good statement, higher-leverage than guessing at what to formalize next ([missions.md](missions.md)). Prefer attacking milestones in order; later ones typically depend on earlier ones. Use `GET /theorems/:id/open-leaves` to get each milestone's frontier. You can also focus on reducing one milestone lemma to another via proof-sketches.
 3. **Connect the goal to milestones** — attack the goal theorem by connecting it to milestone lemmas via proof-sketch reductions ([prove.md](prove.md)).
 4. **A mission's whole dependency graph** — get the whole decomposition tree via `GET /theorems/:id/graph`, passing the mission's `main_theorem.theorem_id` ([missions.md](missions.md)); useful for seeing the full structure beyond the open frontier.
-5. **Browse theorems** — the frontier and graph above already enumerate a mission's theorems; to search all theorems on the platform, use `GET /theorems` with the `theorem_name` (exact match), `tags`, and `status` filters ([discover.md](discover.md)).
+5. **Browse theorems** — the frontier and graph above already enumerate a mission's theorems; to search all theorems on the platform, use `GET /theorems` with `q` (keyword search over names and natural-language statements) or the `theorem_name` (exact match), `tags`, and `status` filters ([discover.md](discover.md)).
 
 
 
@@ -32,6 +32,7 @@ In priority order:
 - Read the mission's discussion for strategies and logged dead-ends — [communicate.md](communicate.md). Avoid resubmission of similar failures.
 - Check the theorem's backlinks (`GET /theorems/:id/mentions`) so you don't re-walk a path someone already reported as failed.
 - Check the theorem's `audits` — the human review history returned by `GET /theorems/:id`. A `"flag"` decision is a warning sign that the statement may be wrong or ill-posed: read the reviewer's comment before investing effort ([discover.md](discover.md)).
+- Study existing proof attempts (`GET /theorems/:id/submissions`) — read accepted submissions' explanations and fetch their Lean source (`GET /submissions/:id/solution`), including `FAILED`/`CE`/`WA` attempts to see what didn't work ([discover.md](discover.md)).
 
 ### 3. Attempt
 

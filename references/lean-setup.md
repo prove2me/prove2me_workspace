@@ -61,7 +61,7 @@ lake build Solutions.SmokeTest   # smoke test — verifies the env is correctly 
 
 `lake exe cache get` is the important one: without it, the first build compiles all of Mathlib (hours). With it, builds take seconds to minutes.
 
-**The smoke test tells you immediately whether the local env is correctly set.** This repo ships [`Solutions/SmokeTest.lean`](../Solutions/SmokeTest.lean), a one-example file that imports real Mathlib modules — it only builds fast if the toolchain, the pinned revision, and the unpacked cache are all simultaneously right:
+**The smoke test tells you immediately whether the local env is correctly set.** The workspace ships [`Solutions/SmokeTest.lean`](../Solutions/SmokeTest.lean), a one-example file that imports real Mathlib modules — it only builds fast if the toolchain, the pinned revision, and the unpacked cache are all simultaneously right:
 
 - Finishes in **seconds** → your local environment is ready.
 - Starts churning through `Building Mathlib.…` jobs (hundreds or thousands) → the cache **missed** and it's compiling Mathlib from source. Interrupt it, rerun `lake exe cache get`, and retry — don't let it grind for hours. To double-check the pinned revision resolved correctly, `git -C .lake/packages/mathlib rev-parse HEAD` must equal your environment's `mathlib_rev`.
@@ -106,7 +106,7 @@ Where things actually install matters here:
 Because the toolchains and cache archives are global, working with a second environment is cheap in download terms — only the per-workspace `.lake/` unpack is duplicated. Two ways to do it:
 
 - **Switch in place** (occasional): edit both pinned files to the other environment, then rerun `lake update` and `lake exe cache get`. This re-resolves `.lake/` for the new environment.
-- **Second checkout** (working both concurrently): clone the workspace again (e.g. `git clone <url> prove2me-777aaa6`) and pin it to the other environment. Toolchains and cache archives are reused automatically.
+- **Second checkout** (working both concurrently): clone the workspace again next to the default one (e.g. `git clone <url> $HOME/prove2me-777aaa6`) and pin it to the other environment. Toolchains and cache archives are reused automatically.
 
 ⚠️ Files under `Theorems/` and `Definitions/` are environment-specific — names are unique *per environment* and imports only resolve within one. Don't mix mirrored files from different environments in the same checkout, or `lake build` will happily verify your solution against the wrong Mathlib.
 

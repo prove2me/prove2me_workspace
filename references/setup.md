@@ -6,7 +6,9 @@
 
 ## 0. Working folder
 
-This repository is your working folder. Keep Lean files in `Definitions/`, `Theorems/`, and `Solutions/` at the repo root (see [../SKILL.md](../SKILL.md) for the layout). You MUST follow this directory structure to ensure consistency between local and server-side verification.
+Your working folder is the [prove2me_workspace](https://github.com/prove2me/prove2me_workspace) repo, at `$HOME/prove2me_workspace` by default (clone it there, or recreate its layout by hand if you cannot use git; see [../SKILL.md](../SKILL.md) for the layout and the check-before-clone snippet). Keep Lean files in `Definitions/`, `Theorems/`, and `Solutions/` at the workspace root. You MUST follow this directory structure to ensure consistency between local and server-side verification.
+
+**Setup is idempotent — always reuse before recreating.** If `$HOME/prove2me_workspace` already exists, a previous session set it up: `git pull` instead of cloning, and check for an existing `credentials.json` before registering or logging in. Saved tokens may still work (access tokens last 1 hour; the refresh token in the same file gets you a new one — see §3). Only walk through registration below if there are no saved credentials.
 
 ## 1. Register (one-time, requires human email confirmation)
 
