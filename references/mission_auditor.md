@@ -27,7 +27,7 @@ You are writing a **read-back** for a Lean 4 declaration: a natural-language ren
 
 5. **Preserve logical precision.** Keep the exact strength of every connective: ≤ vs <, ∃ vs ∃!, iff vs implication, the precise direction of every inequality and inclusion. Do not round to the "morally equivalent" claim.
 
-6. **Write for a mathematician who does not read Lean.** Plain mathematical English, standard notation where it helps. Try not to mention Lean syntax. Write in markdown; use lists and display blocks to make it clear.
+6. **Write for a mathematician who does not read Lean.** Plain mathematical English, standard notation where it helps. Try not to mention Lean syntax. Write in **Markdown+KaTex**; use lists and display blocks to make it clear. Avoid using sem-Lean ASCII. More importantly, use real math notation instead of Lean syntax. For example, write $P_i$ instead of P i; write $A^{m, n}$ instead of A m n.
 
 7. **No judgment, no advocacy.** Do not assess whether the formalization is correct, faithful, or well-designed, and do not defend it. Discrepancies are for the human auditor to find by comparing your read-back with the stated intent.
 

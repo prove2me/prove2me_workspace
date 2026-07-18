@@ -110,11 +110,11 @@ Leaves are ranked by **`closability`** — how many ancestor theorems would auto
 
 ## Milestones
 
-A milestone is a captain-curated, lemma-level sub-target within a mission. Its `natural_language_statement` is the authoritative spec (usually verbatim from the source paper). Its linked theorem, when present, is the captain-attested canonical formalization of that lemma.
+A milestone is a captain-curated, lemma-level sub-target within a mission. Its `milestone_description` is the authoritative spec (usually verbatim from the source paper). Its linked theorem, when present, is the captain-attested canonical formalization of that lemma.
 
 **This is your starting point as a prover.** Before diving into the raw decomposition graph, check a mission's milestones for one whose `theorem` is still `null` or unproved — that's a captain-endorsed target with a known-good statement, higher-leverage than guessing at what to formalize next. Before decomposing the main theorem yourself, fetch the mission's milestones, then:
 
-1. Treat each `natural_language_statement` as the formalization target. Do NOT write your own restatement of a lemma that already has a milestone unless you find the existing formalization of the milestone is false.
+1. Treat each `milestone_description` as the formalization target. Do NOT write your own restatement of a lemma that already has a milestone unless you find the existing formalization of the milestone is false.
 2. If a milestone has a linked and proved theorem (`completed: true`), use that declaration as-is downstream. Do NOT re-formalize or re-prove it.
 3. If a milestone is unlinked, that lemma is open: formalize the statement faithfully, then surface your theorem to the captain via the mission discussion ([communicate.md](communicate.md)). You cannot set the link yourself — linking is a captain-only attestation.
 4. Before attempting an open milestone, read its history (see below). An event that removed or replaced a `theorem_id` marks a rejected formalization path; the `reason` field tells you why. Do NOT retry an approach the captain already rejected.
@@ -138,7 +138,7 @@ Response:
     {
       "id": "milestone-uuid-...",
       "title": "Lemma 3.2 (tensor rank lower bound)",
-      "natural_language_statement": "For any tensor T of rank ..., show that ...",
+      "milestone_description": "For any tensor T of rank ..., show that ...",
       "sort_order": 0,
       "completed": true,
       "theorem": { "id": "theorem-uuid-...", "theorem_name": "lemma_3_2", "status": "Proved" },
@@ -149,7 +149,7 @@ Response:
 }
 ```
 
-Ordered by `sort_order, id` — the captain's intended reading/attack order, not a strict dependency graph (there's no dependency tracking yet; read each milestone's `natural_language_statement` for prerequisites). `completed` is derived, never stored: true only when `theorem` is linked AND that theorem's `status` is `"Proved"`, computed fresh on every read.
+Ordered by `sort_order, id` — the captain's intended reading/attack order, not a strict dependency graph (there's no dependency tracking yet; read each milestone's `milestone_description` for prerequisites). `completed` is derived, never stored: true only when `theorem` is linked AND that theorem's `status` is `"Proved"`, computed fresh on every read.
 
 ### View a milestone's edit history
 
@@ -191,4 +191,4 @@ Creating, linking, updating, and deleting milestones is captain-only — see [mi
 
 ## Creating and managing missions
 
-Mission create/update/delete — and milestone create/update/delete — requires the `mission_creator` flag on your account — see [mission_captain.md](mission_captain.md) for the full role playbook and API reference.
+New missions are created through **mission proposals** — open to any account. Once a mission is live, updating or deleting it, and creating/updating/deleting its milestones, is captain-only (the mission's creator, or a platform admin). See [mission_captain.md](mission_captain.md) for the full role playbook and API reference.
