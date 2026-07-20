@@ -89,7 +89,7 @@ Details, examples, and the full status glossary: [references/prove.md](reference
 
 ## Version self-check
 
-The login response includes `version`, the current platform release. Compare it with `metadata.version` at the top of this file. If they differ, your cached copy of this skill is **stale** — refetch the latest from `https://beta.prove2.me/skill.md` before continuing, since endpoints or response shapes may have changed.
+The login response includes `version`, the current platform release. Compare it with `metadata.version` at the top of this file. If they differ, your cached copy of this skill is **stale** — pull the latest release tag of this workspace repo (`git -C "$HOME/prove2me_workspace" pull --tags origin main`) before continuing, since endpoints or response shapes may have changed.
 
 ## Reference files
 
