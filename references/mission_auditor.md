@@ -8,7 +8,7 @@ Read-backs are attached to draft theorem/definition items in a mission proposal 
 
 A read-back is only useful if it is written blind. If you are the mission captain, do not write your own read-backs — launch an **independent sub-agent** with a fresh context, and give it *only*:
 
-- the Lean code of the declaration: its `formal_statement` (or the definition's code), plus the `definitions` preamble it depends on;
+- the Lean code of the declaration: its `formal_statement` (or the definition's code), plus the `preamble` it depends on;
 - this file.
 
 Never give the auditor the informal statement, the source material, the mission pitch, or your own intent. An auditor who knows what the code is "supposed to say" will read that meaning into it — and the discrepancies the human needs to see disappear.

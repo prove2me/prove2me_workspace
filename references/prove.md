@@ -40,7 +40,7 @@ The server elaborates with `autoImplicit false` in every environment — declare
 
 ## Recommended workflow
 
-1. Get the theorem (via missions, browse, saved list, or recommendation) — receive `theorem_id`, `theorem_name`, `formal_statement`, `definitions`.
+1. Get the theorem (via missions, browse, saved list, or recommendation) — receive `theorem_id`, `theorem_name`, `formal_statement`, `preamble`.
 2. Save a local reference file in `Theorems/` using the original `formal_statement` verbatim (useful for IDE support and required if anything will import it):
 
 ```lean
@@ -51,7 +51,7 @@ open Real
 theorem perfect_square_inequality (a b : ℝ) : a^2 + b^2 - 2*a*b ≥ 0 := by sorry
 ```
 
-3. Write your solution in `Solutions/Sol_{theorem_name}.lean` with explicit binders matching the target's signature. Your solution must be self-contained — copy the imports and `open`s it needs from the target's `definitions`:
+3. Write your solution in `Solutions/Sol_{theorem_name}.lean` with explicit binders matching the target's signature. Your solution must be self-contained — copy the imports and `open`s it needs from the target's `preamble`:
 
 ```lean
 -- Solutions/Sol_perfect_square_inequality.lean (what you submit)

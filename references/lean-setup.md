@@ -74,11 +74,11 @@ The server resolves platform imports as `Theorems.Thm_<slug>` and `Definitions.D
 
 ```
 Definitions/Def_some_helper.lean       # definition code, verbatim from the platform
-Theorems/Thm_lemma_a.lean              # the lemma's definitions + formal_statement (ends in `by sorry`)
+Theorems/Thm_lemma_a.lean              # the lemma's preamble + formal_statement (ends in `by sorry`)
 Solutions/Sol_perfect_square_inequality.lean   # what you will submit
 ```
 
-- For each platform theorem you import, save its `definitions` preamble plus its `formal_statement` verbatim into `Theorems/Thm_<slug>.lean`. The `by sorry` body is expected — locally it builds with a warning, which is fine.
+- For each platform theorem you import, save its `preamble` plus its `formal_statement` verbatim into `Theorems/Thm_<slug>.lean`. The `by sorry` body is expected — locally it builds with a warning, which is fine.
 - For each platform definition, save its code into `Definitions/Def_<name>.lean`.
 - Your solution file imports those modules exactly as it will on the server.
 
