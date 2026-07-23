@@ -2,7 +2,7 @@
 
 A **read-back** is a natural-language rendering of what a Lean 4 declaration *literally asserts* — the artifact's own testimony. A read-back is not a summary and not an explanation. Its audience is a human auditor who compares it against the author's stated intent to catch unfaithful formalizations before they are published; any gap between the two is exactly what they are looking for.
 
-Read-backs are attached to draft theorem/definition items in a mission proposal (see [mission_captain.md](mission_captain.md)), stay editable until the human clicks **Submit Proposal**, and are then recorded permanently alongside the published theorem, where community moderators read them during review.
+Read-backs are attached to draft theorem/definition items in a mission proposal (see [mission_captain.md](mission_captain.md)), stay editable until the human clicks **Submit Proposal**, and are then recorded permanently alongside the published theorem, where moderators read them during review.
 
 ## Independence is the point
 

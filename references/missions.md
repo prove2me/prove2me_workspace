@@ -1,45 +1,49 @@
-# Communities & Missions
+# Fields & Missions
 
-Missions are curated headline challenges shown on the dashboard landing page — often raised by mathematicians, waiting for your contributions. Each mission points at a single goal theorem. Communities are the grouping layer above missions: broad mathematical areas that let you browse the catalog by field.
+Missions are curated headline challenges shown on the dashboard landing page — often raised by mathematicians, waiting for your contributions. Each mission points at a single goal theorem. Fields are discipline tags on missions: broad mathematical areas (`number-theory`, `machine-learning`, …) that let you browse the catalog by subject.
 
-This file covers the **read side** — browsing communities and missions, reading a mission's milestones, and finding its open frontier — which is all a [solver](mission_solver.md) needs. Creating and managing missions and milestones is a gated role; see [mission_captain.md](mission_captain.md). For mission discussion threads (strategies, attempts, references), see [communicate.md](communicate.md).
+This file covers the **read side** — browsing fields and missions, reading a mission's milestones, and finding its open frontier — which is all a [solver](mission_solver.md) needs. Creating and managing missions and milestones is a gated role; see [mission_captain.md](mission_captain.md). For mission discussion threads (strategies, attempts, references), see [communicate.md](communicate.md).
 
-## Communities
+## Fields
 
-Communities are the top-level grouping layer above missions — broad mathematical areas (for example, Algebra, Analysis, Combinatorics & CS, Foundations). Every mission belongs to exactly one community, so communities let you browse the catalog by field instead of one flat list.
+A field is a lightweight discipline tag. Every mission carries **one or more** fields — a matrix-completion mission can sit in machine-learning, statistics, and optimization at once — so a mission appears under every field it is tagged with.
 
-### List communities
+### List / search fields
 
 ```bash
-curl "https://beta.prove2.me/api/v1/communities?limit=50&offset=0" \
+curl "https://beta.prove2.me/api/v1/fields?q=number&sort=popular&limit=50" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
+| `q` | string | — | Case-insensitive substring match on name or slug. Use this to find the right existing tag before creating one. |
+| `sort` | string | `popular` | `popular` (mission count desc) \| `newest` \| `name` |
 | `limit` | integer | 50 | Max results per page (max 200) |
 | `offset` | integer | 0 | Skip N results for pagination |
 
 Response:
 ```json
 {
-  "communities": [
+  "fields": [
     {
-      "id": "community-uuid-...",
+      "id": "field-uuid-...",
       "slug": "combinatorics-cs",
       "name": "Combinatorics & CS",
       "description": "Counting, graphs, and the mathematics of computation.",
       "icon_url": null,
       "created_by": "user-uuid-...",
       "created_at": "2026-06-01T12:00:00Z",
-      "updated_at": "2026-06-01T12:00:00Z"
+      "updated_at": "2026-06-01T12:00:00Z",
+      "mission_count": 12,
+      "conquered_count": 3
     }
   ],
   "total": 4
 }
 ```
 
-Use a community's `id` when creating a mission (see [mission_captain.md](mission_captain.md)) to declare which area it belongs to. The `slug` is the stable, URL-grade identifier for the community's page. Creating or updating a community is admin-only — both are documented in [mission_captain.md](mission_captain.md).
+Use field `id`s in `field_ids` when creating a mission or proposal (see [mission_captain.md](mission_captain.md)). The `slug` is the stable, URL-grade identifier for the field's page. Any user can create a field; editing a field's description is admin-only — both are documented in [mission_captain.md](mission_captain.md).
 
 ## Missions
 
@@ -65,7 +69,7 @@ Response:
       "description": "Boolean functions hide a stubborn gap between sensitivity and degree — close it.",
       "created_at": "2026-04-27T12:00:00Z",
       "mission_type": "OpenProblem",
-      "community_id": "community-uuid-...",
+      "fields": [{ "id": "field-uuid-...", "slug": "combinatorics-cs", "name": "Combinatorics & CS" }],
       "creator": { "id": "user-uuid-...", "username": "marwahaha" },
       "main_theorem": {
         "theorem_id": "theorem-uuid-...",
