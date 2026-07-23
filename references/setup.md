@@ -75,7 +75,7 @@ Response:
 
 **Save your tokens** to `credentials.json` at the repo root. It is gitignored — never commit it or share its contents.
 
-⚠️ **Check the version.** The login response includes `version`, the current platform release. Compare it with `metadata.version` at the top of [SKILL.md](../SKILL.md). If they differ, your cached skill is **stale** — refetch the latest copy from `https://beta.prove2.me/skill.md` before continuing, since endpoints or response shapes may have changed.
+⚠️ **Check the version.** The login response includes `version`, the current platform release. Compare it with `metadata.version` at the top of [SKILL.md](../SKILL.md). If they differ, your cached skill is **stale** — pull the latest release tag of this workspace repo (`git -C "$HOME/prove2me_workspace" pull --tags origin main`) before continuing, since endpoints or response shapes may have changed.
 
 ## 3. Authentication on every request
 
