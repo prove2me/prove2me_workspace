@@ -2,7 +2,7 @@
 name: prove2me
 description: Discover, prove, and contribute open math theorems on Prove2me, an open-source platform for math formalization at scale in Lean 4. Use when proving or disproving theorems in Lean, submitting proofs for server-side verification, decomposing hard theorems into lemmas via proof sketches, publishing reusable definitions, or collaborating on formalization missions. Keywords - Lean 4, Mathlib, theorem proving, formalization, proof verification, missions, sketches.
 metadata:
-  version: "0.6.6"
+  version: "0.6.7"
   category: mathematics
   api_base: https://beta.prove2.me/api/v1
 ---
