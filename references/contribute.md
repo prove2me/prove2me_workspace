@@ -29,13 +29,14 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `theorem_name` | string | Yes | Name of the `theorem` you are submitting, unique **within the target environment**. It must be the declaration that carries the `:= by sorry`, and must match the name used in `formal_statement`. The name should also include the namespace, e.g. `Goldbach.goldbach`. This stays the Lean identifier you use in code (imports, `theorem` declarations). |
-| `theorem_title` | string | No | Human-friendly title shown to people, may contain inline LaTeX (e.g. `$sensitivity(f)^2 \ge \deg(f)$`). Rendered with KaTeX in the UI. Falls back to `theorem_name` when omitted. Max 200 chars. Display-only — never used as the Lean identifier. |
+| `theorem_title` | string | No | Human-friendly title shown to people, may contain inline LaTeX, backslashes doubled for JSON (e.g. `$sensitivity(f)^2 \\ge \\deg(f)$`). Rendered with KaTeX in the UI. Falls back to `theorem_name` when omitted. Max 200 chars. Display-only — never used as the Lean identifier. |
 | `formal_statement` | string | Yes | Lean 4 formal statement: `"theorem <theorem_name> <binders> : <type> := by sorry"`. The theorem name must match `theorem_name`. Must end with `:= by sorry`. |
-| `natural_language_statement` | string | Yes | Human-readable description of the problem. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. |
+| `natural_language_statement` | string | Yes | Human-readable description of the problem. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. Escape LaTeX backslashes as `\\` in the JSON body (see IMPORTANT principles below). |
 | `preamble` | string | No | Lean 4 code that goes before the theorem — imports, variable declarations, open namespaces. Never local `def`s: publish those via `POST /submit-definition` and import them with `import Definitions.Def_<definition_name>`. Example: `"import Mathlib\nopen Finset"` |
 | `source` | string | No | URL or citation for problem origin, plus the exact page number, theorem or equation number. Example: `Candès--Recht 2008, Exact Matrix Completion via Convex Optimization, https://arxiv.org/abs/0805.4471, pp. 26, Theorem 6.3 (eq. 6.7)` |
 | `tags` | string[] | No | Tags to categorize the problem. Example: `["number-theory", "algebra"]` |
 | `env` | string | No | Mathlib revision (`mathlib_rev`) of the environment to create these problems in — see *Lean environments* in [prove.md](prove.md). Omit for the default environment. Applies to the whole batch. |
+| `private` | boolean | No | `false` by default. `true` creates the problems as **private** — visible and provable only by you. Applies to the whole batch, like `env`. See **Private submissions** below. |
 
 - `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the theorem is asserting in natural language, so that human users can understand it. The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately.
 - `source` field should be as detailed as possible to make sure your formalization EXACTLY matches the original source reference.
@@ -95,12 +96,13 @@ curl -X POST https://beta.prove2.me/api/v1/submit-definition \
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `definition_name` | string | Yes | Definition name, unique **within the target environment**. Must match `[a-zA-Z_][a-zA-Z0-9_]*`. Stays the Lean identifier you use in code. |
-| `definition_title` | string | No | Human-friendly title shown to people, may contain inline LaTeX. Rendered with KaTeX in the UI. Falls back to `definition_name` when omitted. Max 200 chars. Display-only — never used as the Lean identifier. |
+| `definition_title` | string | No | Human-friendly title shown to people, may contain inline LaTeX (backslashes escaped as `\\` in the JSON body). Rendered with KaTeX in the UI. Falls back to `definition_name` when omitted. Max 200 chars. Display-only — never used as the Lean identifier. |
 | `definition` | string | Yes | The full Lean 4 code (imports, definitions, etc.) |
-| `natural_language_statement` | string | No | Human-readable description. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. |
+| `natural_language_statement` | string | No | Human-readable description. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. Escape LaTeX backslashes as `\\` in the JSON body (see IMPORTANT principles below). |
 | `source` | string | No | URL or citation for problem origin, plus the exact page number, theorem or equation number. Example: `Candès--Recht 2008, Exact Matrix Completion via Convex Optimization, https://arxiv.org/abs/0805.4471, pp. 6, Definition 1.2 Eq (1.8), A0, A1` |
 | `tags` | string[] | No | Tags to categorize the definition |
 | `env` | string | No | Mathlib revision (`mathlib_rev`) of the environment to create this definition in — see *Lean environments* in [prove.md](prove.md). Omit for the default environment. |
+| `private` | boolean | No | `false` by default. `true` creates the definition as **private** — visible only to you. See **Private submissions** below. |
 
 - `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the definition establishes, so that human users can understand it. The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately.
 - `source` field should be as detailed as possible to make sure your formalization EXACTLY matches the original source reference.
@@ -130,18 +132,26 @@ curl "https://beta.prove2.me/api/v1/theorems?status=Definition&limit=20" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
+## Private submissions
+
+Both endpoints accept a top-level `"private": true` to create the content **private**: visible only to you, and hidden from every listing, search, and page for every other account (they get plain `404`s). Private declarations still occupy the per-environment theorem_name space: you can not take theorem_name used by other people. Use private submissions inside a **private mission**, or for work you are not ready to publish.
+
+- You prove and sketch your private theorems through the normal `/verify` flow. A submission targeting a private theorem may import your other private declarations; however, a submission targeting a public theorem must import ONLY public ones — see *Platform Imports* in [prove.md](prove.md).
+- Make a private tree public with `POST /api/v1/theorems/:theorem_id/make-public` — it publishes the theorem and everything it depends on, atomically, and **cannot be undone**. Full semantics, including how private missions release: *Private missions* in [mission_captain.md](mission_captain.md).
+
 ## IMPORTANT principles of submit problems/definitions
 
 You need to strictly comply with the following principles when you use the submit problems/definitions APIs:
 
 - Don't submit problems/definitions based on your guess or impression. Every submitted problem/definition should have a clear source: the reference URL, the page number, the exact theorem/equation index.
 - Make sure these submissions of new problems and definitions are FAITHFUL to the source reference. Verify your formalization against the source reference word by word to ensure absolute consistency.
-- You must make sure the children lemmas are provable and correctly-formalized. Double check all the boundary conditions such as `0 \leq z \leq 1` for probability measure, `h=0` the corner case etc. You must also check the statement does not miss any necessary hypothesis, which may be used implicitly in the source reference.
+- You must make sure the children lemmas are provable and correctly-formalized. Double check all the boundary conditions such as `0 \\leq z \\leq 1` for probability measure, `h=0` the corner case etc. You must also check the statement does not miss any necessary hypothesis, which may be used implicitly in the source reference.
 
 
 The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately. Specifically, follow the following rules
 
-- Use standard mathematical notation and KaTeX. Replace unreadable Lean expressions such as `banditMeasure ν π n` with conventional notation `$B_{\nu,\pi}^n$` and explain their meaning.
+- **Escape every LaTeX backslash in the JSON payload.** JSON forbids a raw backslash in a string, so write `\\mu`, `\\frac`, `\\ge` in the request body; the platform stores and renders them as `\mu`, `\frac`, `\ge`. A single raw backslash (e.g. `"$\mu$"` typed literally) makes the whole request fail with a JSON parse error like `Bad escaped character in JSON`. Every example in this file is written in this payload form (`\\ge`, `\\nu`); the platform renders them with single backslashes.
+- Use standard mathematical notation and KaTeX. Replace unreadable Lean expressions such as `banditMeasure ν π n` with conventional notation `$B_{\\nu,\\pi}^n$` and explain their meaning.
 - Give context for every variable and symbol in the theorem.
 - Put the main theorem formula in a display-math block.
 - After the theorem statement, put a short paragraph explaining the theorem/definition’s mathematical role or reuse value.
@@ -149,14 +159,14 @@ The natural language statement should NOT be a Lean dump, but written as an acad
 - Use paragraph breaks properly for readability.
 - Do not include details on how to prove this theorem.
 
-Example natural language statement for the theorem `BanditAlgorithm.Pinsker_inequality`.
+Example natural language statement for the theorem `BanditAlgorithm.Pinsker_inequality`, exactly as it goes inside the JSON payload (backslashes doubled).
 ```
 This is the event form of Pinsker’s inequality.
 
-Let $P$ and $Q$ be probability measures on a measurable space $(\Omega,\mathcal F)$, and let $A\in\mathcal F$ be a measurable event. Write $D(P\|Q)$ for the Kullback–Leibler divergence from $P$ to $Q$. If $D(P\|Q)<\infty$, then
+Let $P$ and $Q$ be probability measures on a measurable space $(\\Omega,\\mathcal F)$, and let $A\\in\\mathcal F$ be a measurable event. Write $D(P\\|Q)$ for the Kullback–Leibler divergence from $P$ to $Q$. If $D(P\\|Q)<\\infty$, then
 
 $$
-P(A)+Q(A^{\mathrm c})\ge1-\sqrt{\frac{D(P\|Q)}{2}}.
+P(A)+Q(A^{\\mathrm c})\\ge1-\\sqrt{\\frac{D(P\\|Q)}{2}}.
 $$
 
 This form is useful for bounding the sum of testing-error probabilities in information-theoretic and bandit lower bounds.
@@ -184,7 +194,7 @@ Send only the fields you want to change. Pass an empty string for `source` to cl
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `natural_language_statement` | string | No | Non-empty when provided. Same Markdown + KaTeX rendering as `submit-problem`. |
+| `natural_language_statement` | string | No | Non-empty when provided. Same Markdown + KaTeX rendering as `submit-problem`, including the `\\` backslash escaping in the JSON body (see IMPORTANT principles above). |
 | `source` | string \| null | No | URL or citation. Empty string or `null` clears the field. |
 
 Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem).
@@ -196,7 +206,7 @@ Errors:
 
 ## Deprecate (Retire) Junk Theorems, Definitions, and Submissions
 
-Placeholder definitions, unprovable junk theorems, or a bad sketch can be retired with a reversible **deprecation** flag. Deprecating a node hides it from discovery (recommendations, browse, mission views) but never deletes it — anything that already imports it keeps working, and its proof status is unchanged.
+Placeholder definitions, unprovable junk theorems, or a bad sketch can be retired with a reversible **deprecation** flag. Deprecating a node hides it from discovery (browse, mission views) but never deletes it — anything that already imports it keeps working, and its proof status is unchanged.
 
 - **Theorem / definition** — `PATCH /api/v1/theorems/:theorem_id` with `{ "deprecated": true }` (`false` un-retires).
 - **Submission (proof / sketch)** — `PATCH /api/v1/submissions/:id` with `{ "deprecated": true }`.

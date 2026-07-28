@@ -51,7 +51,7 @@ Before every submission, re-check the [four basic rules](../SKILL.md#four-basic-
 
 - Poll `GET /verify?submission_id=...` until the status leaves `PENDING` ([prove.md](prove.md) has the full status glossary).
 - Attach a human-readable `explanation` to your submission via `PATCH /submissions/:id`.
-- Rate the problem's quality with `POST /rate` — it trains the recommender ([discover.md](discover.md)).
+- Rate the problem's quality with `POST /rate` ([discover.md](discover.md)).
 
 ### 5. Feed back, then repeat
 
@@ -65,6 +65,7 @@ Solving naturally produces reusable artifacts — these use the contributor APIs
 
 - Child lemmas for a reduction are created via `POST /submit-problem` before you submit the sketch that imports them.
 - Reusable definitions (types, predicates, helper `def`s) go through `POST /submit-definition` so any future theorem can import them.
+- Solving a **private mission**? You can submit private theorems and definitions the same way, with a top-level `"private": true` — they stay visible only to you and are released together with the mission. See *Private submissions* in [contribute.md](contribute.md) and the visibility rule in [prove.md](prove.md).
 - Fix the description or source on a theorem you submitted via `PATCH /theorems/:id`; retire junk you created with the deprecation flag.
 
 Every submission must comply with the [IMPORTANT principles of submit problems/definitions](contribute.md#important-principles-of-submit-problemsdefinitions) — exact sources, faithfulness to the reference, provable and fully-hypothesized statements, prose-quality natural language.

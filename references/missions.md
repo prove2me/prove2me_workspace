@@ -88,6 +88,10 @@ Response:
 
 To work on a mission, use its `main_theorem.theorem_id` with the regular submission flow (`POST /api/v1/verify`, see [prove.md](prove.md)) or fetch its decomposition graph via `GET /api/v1/theorems/:theorem_id/graph`.
 
+Every mission object carries a `"visibility"` field: `"public"` for the catalog everyone sees, `"private"` for missions you launched privately — those appear in this list **only for their creator**; other accounts never see them in any listing, search, or page. See *Private missions* in [mission_captain.md](mission_captain.md).
+
+Mission objects also carry a `"release_requested_at"` field: a timestamp set when the captain requested release of a private mission to the public catalog, `null` otherwise. It stays set after the mission is released, as a historical stamp of when release was requested.
+
 ### Find the frontier (which open leaves to attack)
 
 A mission's goal is usually broken down, via proof sketches, into a tree of smaller sub-goals. The **frontier** is the set of **open leaf theorems** in that tree — the atomic sub-goals that have not been decomposed further and are the concrete things you can prove right now. Instead of guessing where to start, ask for the frontier directly:

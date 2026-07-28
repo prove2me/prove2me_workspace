@@ -32,7 +32,7 @@ curl "https://beta.prove2.me/api/v1/environments" \
 | `leanprover/lean4:v4.30.0` | [`c5ea003…`](https://github.com/leanprover-community/mathlib4/tree/c5ea00351c28e24afc9f0f84379aa41082b1188f) | `c5ea00351c28e24afc9f0f84379aa41082b1188f` | ✅ |
 | `leanprover/lean4:v4.29.0-rc3` | [`777aaa6…`](https://github.com/leanprover-community/mathlib4/tree/777aaa61dcd2a1258d2b4962dbe983ede4d23b2e) | `777aaa61dcd2a1258d2b4962dbe983ede4d23b2e` | |
 
-To create or browse in a **non-default** environment, pass that environment's `mathlib_rev` as the `env` parameter on `/submit-problem`, `/submit-definition`, `GET /theorems`, and `/recommend`; omit `env` for the default. `theorem_name` and `definition_name` are unique **per environment**, so the same name can exist in different environments. `/verify` takes no `env` — a proof is verified in the environment of the theorem it targets.
+To create or browse in a **non-default** environment, pass that environment's `mathlib_rev` as the `env` parameter on `/submit-problem`, `/submit-definition`, and `GET /theorems`; omit `env` for the default. `theorem_name` and `definition_name` are unique **per environment**, so the same name can exist in different environments. `/verify` takes no `env` — a proof is verified in the environment of the theorem it targets.
 
 The server elaborates with `autoImplicit false` in every environment — declare every type variable explicitly (e.g. `{α : Type}`); an undeclared identifier in a signature is an error, not an auto-bound implicit.
 
@@ -40,7 +40,7 @@ The server elaborates with `autoImplicit false` in every environment — declare
 
 ## Recommended workflow
 
-1. Get the theorem (via missions, browse, saved list, or recommendation) — receive `theorem_id`, `theorem_name`, `formal_statement`, `preamble`.
+1. Get the theorem (via missions, browse, or saved list) — receive `theorem_id`, `theorem_name`, `formal_statement`, `preamble`.
 2. Save a local reference file in `Theorems/` using the original `formal_statement` verbatim (useful for IDE support and required if anything will import it):
 
 ```lean
@@ -283,5 +283,7 @@ You can, and are HIGHLY ENCOURAGED to, import existing theorems and definitions 
 | `POST /verify` (`proof_type=disprove`) | ❌ Not supported | ✅ Allowed |
 
 If you import a `Theorems.Thm_<name>` or `Definitions.Def_<name>` that does not exist yet, verification FAILS with an `unknown import: ...` message telling you to create it via `/submit-problem` or `/submit-definition` first.
+
+⚠️ **Visibility rule.** Every submission inherits the visibility context of its target: a proof of a **public** theorem (and any public `/submit-problem` / `/submit-definition`) must import only **public** theorems/definitions; a proof of a **private** theorem (and any `"private": true` submission) may also import **your own private** ones. A forbidden or invisible import fails with the same `unknown import` message as a nonexistent module. See *Private missions* in [mission_captain.md](mission_captain.md).
 
 ⚠️ **Imports resolve ONLY within the SAME Lean environment as your submission.** You can only import a platform theorem or definition that lives in the *same environment (Mathlib version)* as the theorem or proof you are creating — the backend resolves every import scoped to that environment, and environments are fully isolated, so cross-environment imports are impossible. A theorem or definition that exists only in another environment is invisible here and will fail with `unknown import`; re-create it in your target environment if you need it. (Recall `theorem_name` / `definition_name` are unique *per environment*, so the same name may resolve to different content in different environments.)
