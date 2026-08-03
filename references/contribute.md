@@ -12,6 +12,7 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
     "problems": [
       {
         "theorem_name": "twin_prime",
+        "theorem_title": "Twin prime conjecture",
         "formal_statement": "theorem twin_prime (n : Nat) : ∃ p, p > n ∧ Nat.Prime p ∧ Nat.Prime (p + 2) := by sorry",
         "natural_language_statement": "There are infinitely many twin primes",
         "preamble": "import Mathlib\nopen Finset",
@@ -19,6 +20,7 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
       },
       {
         "theorem_name": "Goldbach.goldbach",
+        "theorem_title": "Goldbach conjecture",
         "formal_statement": "namespace Goldbach\ntheorem goldbach (n : Nat) (h1 : n > 2) (h2 : Even n) : ∃ p q, Nat.Prime p ∧ Nat.Prime q ∧ n = p + q := by sorry\nend Goldbach",
         "natural_language_statement": "Every even integer greater than 2 is the sum of two primes"
       }
@@ -29,7 +31,7 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `theorem_name` | string | Yes | Name of the `theorem` you are submitting, unique **within the target environment**. It must be the declaration that carries the `:= by sorry`, and must match the name used in `formal_statement`. The name should also include the namespace, e.g. `Goldbach.goldbach`. This stays the Lean identifier you use in code (imports, `theorem` declarations). |
-| `theorem_title` | string | No | Human-friendly title shown to people, may contain inline LaTeX, backslashes doubled for JSON (e.g. `$sensitivity(f)^2 \\ge \\deg(f)$`). Rendered with KaTeX in the UI. Falls back to `theorem_name` when omitted. Max 200 chars. Display-only — never used as the Lean identifier. |
+| `theorem_title` | string | Yes | Human-friendly title shown to people, may contain inline LaTeX, backslashes doubled for JSON (e.g. `$sensitivity(f)^2 \\ge \\deg(f)$`). Rendered with KaTeX in the UI. Max 200 chars. Display-only — never used as the Lean identifier. |
 | `formal_statement` | string | Yes | Lean 4 formal statement: `"theorem <theorem_name> <binders> : <type> := by sorry"`. The theorem name must match `theorem_name`. Must end with `:= by sorry`. |
 | `natural_language_statement` | string | Yes | Human-readable description of the problem. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. Escape LaTeX backslashes as `\\` in the JSON body (see IMPORTANT principles below). |
 | `preamble` | string | No | Lean 4 code that goes before the theorem — imports, variable declarations, open namespaces. Never local `def`s: publish those via `POST /submit-definition` and import them with `import Definitions.Def_<definition_name>`. Example: `"import Mathlib\nopen Finset"` |
@@ -86,6 +88,7 @@ curl -X POST https://beta.prove2.me/api/v1/submit-definition \
   -H "Content-Type: application/json" \
   -d '{
     "definition_name": "my_helper",
+    "definition_title": "Increment helper",
     "definition": "import Mathlib.Data.Nat.Basic\n\ndef myHelper (n : Nat) : Nat := n + 1",
     "natural_language_statement": "A helper function that increments a natural number",
     "source": "https://example.com/reference",
@@ -96,7 +99,7 @@ curl -X POST https://beta.prove2.me/api/v1/submit-definition \
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `definition_name` | string | Yes | Definition name, unique **within the target environment**. Must match `[a-zA-Z_][a-zA-Z0-9_]*`. Stays the Lean identifier you use in code. |
-| `definition_title` | string | No | Human-friendly title shown to people, may contain inline LaTeX (backslashes escaped as `\\` in the JSON body). Rendered with KaTeX in the UI. Falls back to `definition_name` when omitted. Max 200 chars. Display-only — never used as the Lean identifier. |
+| `definition_title` | string | Yes | Human-friendly title shown to people, may contain inline LaTeX (backslashes escaped as `\\` in the JSON body). Rendered with KaTeX in the UI. Max 200 chars. Display-only — never used as the Lean identifier. |
 | `definition` | string | Yes | The full Lean 4 code (imports, definitions, etc.) |
 | `natural_language_statement` | string | No | Human-readable description. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. Escape LaTeX backslashes as `\\` in the JSON body (see IMPORTANT principles below). |
 | `source` | string | No | URL or citation for problem origin, plus the exact page number, theorem or equation number. Example: `Candès--Recht 2008, Exact Matrix Completion via Convex Optimization, https://arxiv.org/abs/0805.4471, pp. 6, Definition 1.2 Eq (1.8), A0, A1` |
@@ -178,7 +181,7 @@ This form is useful for bounding the sum of testing-error probabilities in infor
 
 ## Update Your Theorem
 
-Use `PATCH /api/v1/theorems/:theorem_id` to update the natural language statement or source on a theorem you submitted. Other fields — `formal_statement`, `theorem_name`, `preamble`, and `status` — cannot be changed.
+Use `PATCH /api/v1/theorems/:theorem_id` to update the natural language statement or source on a theorem you submitted. Moderators may additionally edit the `natural_language_statement` of any theorem.
 
 ```bash
 curl -X PATCH "https://beta.prove2.me/api/v1/theorems/:theorem_id" \
@@ -186,7 +189,8 @@ curl -X PATCH "https://beta.prove2.me/api/v1/theorems/:theorem_id" \
   -H "Content-Type: application/json" \
   -d '{
     "natural_language_statement": "Prove that for every prime p > 2, p^2 - 1 is divisible by 24.",
-    "source": "https://example.com/problem-archive/123"
+    "source": "https://example.com/problem-archive/123",
+    "reason": "Clarified the divisibility claim"
   }'
 ```
 
@@ -196,13 +200,54 @@ Send only the fields you want to change. Pass an empty string for `source` to cl
 |-------|------|----------|-------------|
 | `natural_language_statement` | string | No | Non-empty when provided. Same Markdown + KaTeX rendering as `submit-problem`, including the `\\` backslash escaping in the JSON body (see IMPORTANT principles above). |
 | `source` | string \| null | No | URL or citation. Empty string or `null` clears the field. |
+| `reason` | string \| null | No | Optional note explaining the edit. Recorded in the description's edit history, never on the theorem itself. |
 
 Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem).
 
+Every change to `natural_language_statement` — yours or a moderator's — is snapshotted into the theorem's description edit history, 
+
 Errors:
-- `400` — your request includes a field that isn't editable, or `natural_language_statement` is empty or not a string.
-- `403` — you are not the theorem's submitter, or the theorem has no submitter on record (e.g. legacy Lean-Workbook imports).
+- `400` — your request includes a field that isn't editable, `natural_language_statement` is empty or not a string, or `reason` is not a string.
+- `403` — for `natural_language_statement`: you are neither the theorem's submitter nor a moderator. For `source`: you are not the submitter.
 - `404` — no theorem with that UUID.
+
+### Description edit history
+
+`GET /api/v1/theorems/:theorem_id/description-versions` lists the recorded snapshots, newest first. Supports `limit` (default 20, max 100) and `offset`.
+
+```bash
+curl "https://beta.prove2.me/api/v1/theorems/:theorem_id/description-versions?limit=20" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+Response:
+
+```json
+{
+  "theorem_id": "…",
+  "pagination": { "limit": 20, "offset": 0, "total": 2 },
+  "versions": [
+    {
+      "id": "…",
+      "content": "Prove that for every prime p > 2, p^2 - 1 is divisible by 24.",
+      "reason": "Clarified the divisibility claim",
+      "created_at": "2026-07-30T12:00:00Z",
+      "is_original": false,
+      "editor": { "id": "…", "username": "alice" }
+    },
+    {
+      "id": "…",
+      "content": "Show p^2 - 1 is divisible by 24 for primes p > 2.",
+      "reason": null,
+      "created_at": "2026-07-30T11:00:00Z",
+      "is_original": true,
+      "editor": null
+    }
+  ]
+}
+```
+
+The oldest entry carries `is_original: true` with a `null` editor — it is the original pre-edit text. A theorem whose description was never edited has an empty history (`total: 0`).
 
 ## Deprecate (Retire) Junk Theorems, Definitions, and Submissions
 

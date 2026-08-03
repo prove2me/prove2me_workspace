@@ -98,7 +98,7 @@ curl -X POST https://beta.prove2.me/api/v1/rate \
 
 ## Browse Theorems
 
-List and filter all theorems on the platform. Use `q` for keyword search — it matches the theorem name AND the natural-language statement, so you can find theorems by topic (e.g. `q=Cauchy`) without knowing what anyone named them.
+List and filter all theorems on the platform. Use `q` for keyword search — it matches the title, the Lean name, AND the natural-language statement, so you can find theorems by topic (e.g. `q=Cauchy`) without knowing what anyone named them.
 
 ```bash
 curl "https://beta.prove2.me/api/v1/theorems?status=Open&q=inequality&sort=votes&limit=20&offset=0" \
@@ -108,7 +108,7 @@ curl "https://beta.prove2.me/api/v1/theorems?status=Open&q=inequality&sort=votes
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
 | `status` | string | *(all)* | Filter: `"Open"`, `"Proved"`, `"Disproved"`, or `"Definition"` |
-| `q` | string | | Keyword search: case-insensitive substring match on `theorem_name` OR `natural_language_statement`. Composes with every other filter. Ignored if `theorem_name` is present. |
+| `q` | string | | Keyword search: case-insensitive substring match on `theorem_title` OR `theorem_name` OR `natural_language_statement`. Composes with every other filter. Ignored if `theorem_name` is present. |
 | `theorem_name` | string | | Exact match on theorem name |
 | `tags` | string | | Comma-separated tag list; returns only theorems that have **all** specified tags (see [curate.md](curate.md)) |
 | `sort` | string | `"newest"` | Sort order: `"newest"` or `"votes"` (most votes first) |
