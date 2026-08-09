@@ -116,3 +116,17 @@
   (50/225 attempted, 0 failed)
   [def] qpr_core_14 -> 706ec6bf-9f93-4ff2-9f5c-946fdccdf3cc
   (51/225 attempted, 0 failed)
+  [def] qpr_core_15 -> 49600f50-f53c-418d-81ee-7a658e088b9f
+  (52/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition -> ACCEPTED 
+  (53/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalMixedAcceptedPrefix_norm_sq -> ACCEPTED 
+  (54/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal -> ACCEPTED 
+  (55/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.fullHistoryAliceEntropyPotential_lower_bound -> ACCEPTED 
+  (56/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le -> ACCEPTED 
+  (57/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.fullCoordinateAliceEntropyIncrement_nonneg -> ACCEPTED 
+  (58/225 attempted, 0 failed)
