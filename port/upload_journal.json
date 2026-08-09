@@ -14,8 +14,10 @@
     "QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_complement_pos": "fa65bb12-7939-4057-b172-a5d5ed1dda1c",
     "QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_pos": "e8ff91a3-e6ba-43d9-995d-b6dc032fbb0d",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le": "738d10f3-88e5-4283-98a2-7fe8b3c24241",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform": "45bb6caf-fb3b-4838-805e-d7fcbebddc6d",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform": "f93bc60b-3778-406e-b6fb-fdf85283747a",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal": "50e105e1-584a-4f1d-8c74-7d832f9e2425",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance": "6123a8ac-9526-4370-9bb4-edd82bfb67de",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition": "bcb20033-9889-40c9-989e-0eb3f011cc1d",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthPhysicalRelativeHazard_eq": "544d34fa-deda-4f9f-a5c1-466e9a351268",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthRelativeMismatch_le_targetDistance": "47c0e6e2-84e8-4d16-9b97-7045a654fd43",
@@ -81,8 +83,11 @@
     "def:qpr_core_15": "49600f50-f53c-418d-81ee-7a658e088b9f"
   },
   "inflight": {
-    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance": "create",
-    "QuantumParallelRepetition.exactRight_coordinate_not_mem": "create"
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_le_targetDistance": "create",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow": "create",
+    "QuantumParallelRepetition.exactAliceQuestionFilter_posSemidef": "create",
+    "QuantumParallelRepetition.exactRight_coordinate_not_mem": "create",
+    "QuantumParallelRepetition.exactSeedWeight_nonneg": "create"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -99,8 +104,10 @@
     "QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_complement_pos": "c19822d0-7cda-49e0-94bf-c3526e4ffaac",
     "QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_pos": "969f8aef-99d3-4345-a5f5-0a4d5bef64f1",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le": "a90c2c70-1299-4653-9bc1-082ee5d7c1e4",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform": "df1c9623-b6ef-43c5-9717-9c2d41e8dbe5",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform": "843daff6-efdf-492c-a3d7-804ed8a38f30",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal": "25acd889-e10a-4fc3-918e-bcca7cfa9544",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance": "e9a35207-3849-42e7-ba6e-5c6adfd928a8",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition": "cf4073d8-6da2-48df-bf4d-9f1e8df4fa96",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthPhysicalRelativeHazard_eq": "37ec8b8b-ef36-4905-89ec-1f96ad3e38fb",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthRelativeMismatch_le_targetDistance": "1dda6490-cc17-4683-9f89-d8ee8a8dba75",
@@ -220,10 +227,25 @@
       "status": "ACCEPTED",
       "submission_id": "a90c2c70-1299-4653-9bc1-082ee5d7c1e4"
     },
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "df1c9623-b6ef-43c5-9717-9c2d41e8dbe5"
+    },
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "843daff6-efdf-492c-a3d7-804ed8a38f30"
+    },
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal": {
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "25acd889-e10a-4fc3-918e-bcca7cfa9544"
+    },
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "e9a35207-3849-42e7-ba6e-5c6adfd928a8"
     },
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition": {
       "error_message": "",
@@ -309,6 +331,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "85d17adf-fdb3-43d5-a9bf-987c9f2be78f"
+    },
+    "QuantumParallelRepetition.exactLeft_coordinate_not_mem": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "399f1a83-223f-493a-9ac2-b44e9a57af16"
     },
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": {
       "error_message": "",

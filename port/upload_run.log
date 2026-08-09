@@ -130,3 +130,13 @@
   (57/225 attempted, 0 failed)
   [thm] QuantumParallelRepetition.fullCoordinateAliceEntropyIncrement_nonneg -> ACCEPTED 
   (58/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform -> ACCEPTED 
+  (59/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactLeft_coordinate_not_mem -> ACCEPTED 
+  (60/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance -> ACCEPTED 
+  (61/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform -> ACCEPTED 
+  (62/225 attempted, 0 failed)
+  [error] ('thm', 993): 'submitted'
+  (63/225 attempted, 1 failed)

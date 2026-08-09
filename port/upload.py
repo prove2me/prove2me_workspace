@@ -92,16 +92,19 @@ def create(node, account, journal):
     save(journal)
     r = api.call("POST", "/submit-problem", body=body, account=account, timeout=900)
     # `submit-problem` returns HTTP success with a populated `errors` list on rejection, so the
-    # message is not a reliable success signal — key on `submitted`/`errors`.
-    if r.get("errors"):
-        # A duplicate-key error on a retry is proof the first attempt landed; resolve by name.
+    # message is not a reliable success signal — key on `submitted`/`errors`.  A response with
+    # neither (an HTTP 5xx, or a transport failure that exhausted its retries) is *ambiguous*:
+    # the insert may well have landed, so look the name up before concluding anything.
+    if r.get("errors") or not r.get("submitted"):
         tid = resolve(name, account)
         if tid:
             journal["created"][name] = tid
             journal["inflight"].pop(name, None)
             save(journal)
             return tid
-        raise RuntimeError(f"submit-problem failed for {name}: {r['errors']}")
+        journal["inflight"].pop(name, None)
+        save(journal)
+        raise RuntimeError(f"submit-problem failed for {name}: {json.dumps(r)[:600]}")
     tid = r["submitted"][0]["theorem_id"]
     journal["created"][name] = tid
     journal["inflight"].pop(name, None)
