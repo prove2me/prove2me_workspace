@@ -1,0 +1,79 @@
+{
+  "created": {
+    "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "8a8c89be-2868-4542-9a43-7b3e9ea93952",
+    "QuantumParallelRepetition.Strategy.jointMeasurementOperator_positive": "58a7e4e5-be66-48d6-bb20-92c36f8fa5f1",
+    "QuantumParallelRepetition.Strategy.outcomeProbability_nonneg": "d50e2837-973e-4aed-ace9-85cff1338169",
+    "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": "f8f24ddd-2847-478d-84d6-8183751764e1",
+    "QuantumParallelRepetition.Strategy.winProbability_le_one": "17570be4-4be1-4edf-83d7-5e038d97205c",
+    "QuantumParallelRepetition.Strategy.winProbability_nonneg": "b992baa8-8874-451f-8a77-c3c2ac27a0fc",
+    "QuantumParallelRepetition.entangledValue_le_one": "972e5e1e-e163-4fcb-9924-d20bd41c11bd",
+    "QuantumParallelRepetition.entangledValue_nonneg": "ed0b300e-c1cb-4071-ab61-b4b7433ac7e8",
+    "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "86fe3927-cc85-4b14-b3b9-e3b4e09d2a5b",
+    "QuantumParallelRepetition.winProbabilities_bddAbove": "a9dd6609-4698-4986-aaaf-5b0f48cbe917"
+  },
+  "inflight": {},
+  "submitted": {
+    "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
+    "QuantumParallelRepetition.Strategy.jointMeasurementOperator_positive": "26f3efe6-29c6-4573-b82e-fab41a5d643c",
+    "QuantumParallelRepetition.Strategy.outcomeProbability_nonneg": "eb45999c-237e-4396-a338-d5e0493a3d90",
+    "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": "9bb7c873-c637-480e-9ae1-f15df69c2abb",
+    "QuantumParallelRepetition.Strategy.winProbability_le_one": "05551136-d3b1-477a-97dc-2392ecbc1846",
+    "QuantumParallelRepetition.Strategy.winProbability_nonneg": "6174924f-87b3-45b0-9712-7b494f8105ab",
+    "QuantumParallelRepetition.entangledValue_le_one": "24564a0d-ed1a-4ed8-ae9b-7313433390b7",
+    "QuantumParallelRepetition.entangledValue_nonneg": "85d17adf-fdb3-43d5-a9bf-987c9f2be78f",
+    "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "32ade1fe-f331-4f13-9a1d-f09f78429f2e",
+    "QuantumParallelRepetition.winProbabilities_bddAbove": "5e918e7b-a6e9-44ea-a021-b3b24ea06c35"
+  },
+  "verdict": {
+    "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "643a9a96-f7b5-4182-8c95-02f896ff043d"
+    },
+    "QuantumParallelRepetition.Strategy.jointMeasurementOperator_positive": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "26f3efe6-29c6-4573-b82e-fab41a5d643c"
+    },
+    "QuantumParallelRepetition.Strategy.outcomeProbability_nonneg": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "eb45999c-237e-4396-a338-d5e0493a3d90"
+    },
+    "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "9bb7c873-c637-480e-9ae1-f15df69c2abb"
+    },
+    "QuantumParallelRepetition.Strategy.winProbability_le_one": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "05551136-d3b1-477a-97dc-2392ecbc1846"
+    },
+    "QuantumParallelRepetition.Strategy.winProbability_nonneg": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "6174924f-87b3-45b0-9712-7b494f8105ab"
+    },
+    "QuantumParallelRepetition.entangledValue_le_one": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "24564a0d-ed1a-4ed8-ae9b-7313433390b7"
+    },
+    "QuantumParallelRepetition.entangledValue_nonneg": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "85d17adf-fdb3-43d5-a9bf-987c9f2be78f"
+    },
+    "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "32ade1fe-f331-4f13-9a1d-f09f78429f2e"
+    },
+    "QuantumParallelRepetition.winProbabilities_bddAbove": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "5e918e7b-a6e9-44ea-a021-b3b24ea06c35"
+    }
+  }
+}

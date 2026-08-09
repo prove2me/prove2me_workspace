@@ -1,0 +1,4 @@
+import Solutions.QPRRebase
+
+#print axioms QuantumParallelRepetition.standardQuantumParallelRepetition
+#print axioms QuantumParallelRepetition.distributionUniformExponential

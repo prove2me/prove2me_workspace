@@ -1,0 +1,12 @@
+[
+  "QuantumParallelRepetition.trace_mul_posSemidef_nonneg",
+  "QuantumParallelRepetition.Strategy.jointMeasurementOperator_positive",
+  "QuantumParallelRepetition.Strategy.outcomeProbability_nonneg",
+  "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete",
+  "QuantumParallelRepetition.Strategy.outcomeProbability_normalized",
+  "QuantumParallelRepetition.Strategy.winProbability_nonneg",
+  "QuantumParallelRepetition.Strategy.winProbability_le_one",
+  "QuantumParallelRepetition.winProbabilities_bddAbove",
+  "QuantumParallelRepetition.entangledValue_nonneg",
+  "QuantumParallelRepetition.entangledValue_le_one"
+]

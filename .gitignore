@@ -16,3 +16,4 @@ lake-manifest.json
 Solutions/QPRPort.lean
 Solutions/QPRRebase.lean
 __pycache__/
+credentials_*.json
