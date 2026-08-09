@@ -90,6 +90,9 @@ def create(node, account, journal):
     }]}
     journal.setdefault("inflight", {})[name] = "create"
     save(journal)
+    # `submit-problem` compile-checks the preamble and statement server-side, so it is a build,
+    # not an insert: measured at 245s for one node whose 450-module preamble was not cached.
+    # The timeout has to cover that; a short one turns a slow success into a spurious failure.
     r = api.call("POST", "/submit-problem", body=body, account=account, timeout=900)
     # `submit-problem` returns HTTP success with a populated `errors` list on rejection, so the
     # message is not a reliable success signal — key on `submitted`/`errors`.  A response with

@@ -19,6 +19,7 @@
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal": "50e105e1-584a-4f1d-8c74-7d832f9e2425",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance": "6123a8ac-9526-4370-9bb4-edd82bfb67de",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition": "bcb20033-9889-40c9-989e-0eb3f011cc1d",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow": "5f22094f-bfcd-4b51-bc79-5385aede058e",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthPhysicalRelativeHazard_eq": "544d34fa-deda-4f9f-a5c1-466e9a351268",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthRelativeMismatch_le_targetDistance": "47c0e6e2-84e8-4d16-9b97-7045a654fd43",
     "QuantumParallelRepetition.dSVDensityRationalMixedAcceptedPrefix_norm_sq": "c5c8fc35-2754-452a-b3ca-690eba8edf06",
@@ -36,6 +37,8 @@
     "QuantumParallelRepetition.entangledValue_le_one": "972e5e1e-e163-4fcb-9924-d20bd41c11bd",
     "QuantumParallelRepetition.entangledValue_nonneg": "ed0b300e-c1cb-4071-ab61-b4b7433ac7e8",
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "b3bee34d-5239-4461-b2f4-c7c747c421fd",
+    "QuantumParallelRepetition.exactRight_coordinate_not_mem": "775ba4a3-6864-441e-9f1b-31e27856ef1f",
+    "QuantumParallelRepetition.exactSeedWeight_nonneg": "707f128b-05cf-4871-8d6c-ae210b049f8b",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "2303ae02-e1d1-4f22-9fd8-46ceccafc79d",
     "QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst": "61d397ca-d32f-4a03-8233-58f66d732e0b",
     "QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram": "3d833c85-8fda-4588-b46c-6d02d76e5b25",
@@ -84,10 +87,8 @@
   },
   "inflight": {
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_le_targetDistance": "create",
-    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow": "create",
     "QuantumParallelRepetition.exactAliceQuestionFilter_posSemidef": "create",
-    "QuantumParallelRepetition.exactRight_coordinate_not_mem": "create",
-    "QuantumParallelRepetition.exactSeedWeight_nonneg": "create"
+    "QuantumParallelRepetition.exactBobQuestionFilter_posSemidef": "create"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -109,6 +110,7 @@
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal": "25acd889-e10a-4fc3-918e-bcca7cfa9544",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance": "e9a35207-3849-42e7-ba6e-5c6adfd928a8",
     "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition": "cf4073d8-6da2-48df-bf4d-9f1e8df4fa96",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow": "ee7d4bce-54bb-4c92-9f6a-2cf10e5f6493",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthPhysicalRelativeHazard_eq": "37ec8b8b-ef36-4905-89ec-1f96ad3e38fb",
     "QuantumParallelRepetition.dSVDensityRationalLargeWidthRelativeMismatch_le_targetDistance": "1dda6490-cc17-4683-9f89-d8ee8a8dba75",
     "QuantumParallelRepetition.dSVDensityRationalMixedAcceptedPrefix_norm_sq": "04e9cbf5-07de-4432-8ca6-f2563b3c4351",
@@ -126,6 +128,7 @@
     "QuantumParallelRepetition.entangledValue_le_one": "24564a0d-ed1a-4ed8-ae9b-7313433390b7",
     "QuantumParallelRepetition.entangledValue_nonneg": "85d17adf-fdb3-43d5-a9bf-987c9f2be78f",
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "399f1a83-223f-493a-9ac2-b44e9a57af16",
+    "QuantumParallelRepetition.exactSeedWeight_nonneg": "6c984755-a290-477a-9e15-8e7d0eff7aa2",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "51279b5a-3e01-4ad3-b205-95cc2d7133c1",
     "QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst": "ab7b200e-90c4-4f32-899f-3e0be7b019ee",
     "QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram": "88e6eff2-f6e3-4f63-b6af-657698dedb1b",
