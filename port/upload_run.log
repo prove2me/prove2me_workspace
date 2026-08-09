@@ -94,3 +94,23 @@
   (39/225 attempted, 0 failed)
   [thm] QuantumParallelRepetition.commonFinitePurification_weighted_left_variation_le -> ACCEPTED 
   (40/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalLargeWidthRelativeMismatch_le_targetDistance -> ACCEPTED 
+  (41/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalPhysicalProjector_pos -> ACCEPTED 
+  (42/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalPhysicalProjector_complement_pos -> ACCEPTED 
+  (43/225 attempted, 0 failed)
+  [def] qpr_core_12 -> fc1a6f83-7191-48e2-9369-c6193c3f83dd
+  (44/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_complement_pos -> ACCEPTED 
+  (45/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_pos -> ACCEPTED 
+  (46/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalLargeWidthPhysicalRelativeHazard_eq -> ACCEPTED 
+  (47/225 attempted, 0 failed)
+  [def] qpr_core_13 -> 3ad2f99c-f942-418e-b3a3-d173f6b703ce
+  (48/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.unconditionalExactSourceScalarClipping -> ACCEPTED 
+  (49/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalCanonicalNormalizedTarget_norm -> ACCEPTED 
+  (50/225 attempted, 0 failed)
