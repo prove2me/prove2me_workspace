@@ -1,0 +1,5 @@
+import Solutions.QPRPort
+
+#print axioms QuantumParallelRepetition.standardQuantumParallelRepetition
+#print axioms QuantumParallelRepetition.distributionUniformExponential
+#print axioms QuantumParallelRepetition.exact_standardQuantumParallelRepetition_unconditional
