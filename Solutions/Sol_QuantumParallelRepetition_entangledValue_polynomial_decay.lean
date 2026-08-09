@@ -24,7 +24,7 @@ theorem solution
     have hE : (0 : ℝ) < Real.exp (c * ((n : ℝ) + 1)) := Real.exp_pos _
     have hEneg : Real.exp (-c * ((n : ℝ) + 1)) = (Real.exp (c * ((n : ℝ) + 1)))⁻¹ := by
       rw [neg_mul, Real.exp_neg]
-    rw [hEneg, ← div_eq_mul_inv, div_le_div_iff hE hc]
+    rw [hEneg, ← div_eq_mul_inv, div_le_div_iff₀ hE hc]
     have hcomm : ((n : ℝ) + 1) * c = c * ((n : ℝ) + 1) := by ring
     rw [hcomm, one_mul]
     exact hle
