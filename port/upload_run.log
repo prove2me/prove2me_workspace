@@ -1,0 +1,22 @@
+  [thm] QuantumParallelRepetition.permutationMatrix_mem_unitary -> ACCEPTED 
+  (1/230 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.scalarResolventFilter_memLp_two -> ACCEPTED 
+  (2/230 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.mixtureBlockMatrix_trace -> ACCEPTED 
+  (3/230 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.mixtureBlockMatrix_trace -> ACCEPTED 
+  (4/230 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.mixtureBlockMatrix_trace -> ACCEPTED 
+  (5/230 attempted, 0 failed)
+  [def] qpr_core_01 -> bb236e95-7057-4025-9f76-25644f1450a8
+  (6/230 attempted, 0 failed)
+  [FAIL] qpr_core_01: {"_http_error": 500, "_body": "{\"error\":\"Failed to insert definition: duplicate key value violates unique constraint \\\"theorems_theorem_name_env_unique\\\"\"}"}
+  (7/230 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss -> ACCEPTED 
+  (8/230 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.purifiedRefinedEffect_posSemidef -> ACCEPTED 
+  (1/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.purifiedRefinedEffect_complete -> ACCEPTED 
+  (2/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.spectralPurificationFilter_memLp_two -> ACCEPTED 
+  (3/225 attempted, 0 failed)

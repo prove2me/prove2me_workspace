@@ -16,6 +16,7 @@ a response is lost.
     python3 port/run_tree.py canary    # one definition bundle and one attribute-carrying node
     python3 port/run_tree.py run       # upload everything remaining
 """
+import concurrent.futures as cf
 import json
 import os
 import sys
@@ -130,7 +131,8 @@ class Tree:
         sol = open(os.path.join(generate.ROOT, "Solutions",
                                 f"Sol_{generate.slug(name)}.lean")).read()
         a, z = linemap.span(*self.g.S.blocks[b])
-        m = self.meta.get(name, {})
+        # Metadata is keyed by the platform name, so the lookup has to be renamed too.
+        m = self.meta.get(generate.apply_renames(name), {})
         return dict(
             name=generate.apply_renames(name),
             deps=[generate.apply_renames(self.g.name_of[d])
@@ -158,8 +160,10 @@ class Tree:
         r = api.call("POST", "/submit-definition", body=payload, account=ACCOUNT, timeout=900)
         did = r.get("definition_id")
         if not did:
-            # A duplicate name on a retry means the first attempt landed.
-            if "already exists" in json.dumps(r):
+            # A duplicate name on a retry means the first attempt landed.  The server reports
+            # this two ways: a validation message, or a raw unique-constraint violation.
+            blob = json.dumps(r)
+            if "already exists" in blob or "duplicate key" in blob:
                 did = "exists"
             else:
                 print(f"  [FAIL] {name}: {json.dumps(r)[:600]}")
@@ -169,6 +173,84 @@ class Tree:
         upload.save(journal)
         print(f"  [def] {name} -> {did}")
         return True
+
+    # -------------------------------------------------------------- scheduling
+
+    def is_done(self, k, journal):
+        if k[0] == "def":
+            return ("def:" + self.g.bundle_name(k[1])) in journal["created"]
+        name = self.g.name_of[k[1]]
+        if name in self.frozen:
+            return True
+        v = journal["verdict"].get(generate.apply_renames(name), {})
+        return v.get("status") in ("ACCEPTED", "SKETCH_ACCEPTED")
+
+    def do_item(self, k, journal):
+        if k[0] == "def":
+            return self.upload_bundle(k[1], journal)
+        node = self.node_payload(k[1])
+        if not node["nl"] or not node["explanation"]:
+            print(f"  [skip] {node['name']}: metadata not written yet", flush=True)
+            return False
+        tid = upload.create(node, ACCOUNT, journal)
+        v = upload.verify(node, tid, ACCOUNT, journal)
+        print(f"  [thm] {node['name']} -> {v['status']} "
+              f"{v.get('error_message', '')[:400]}", flush=True)
+        return v["status"] in ("ACCEPTED", "SKETCH_ACCEPTED")
+
+    def run_parallel(self, journal, workers=4):
+        """Upload with several items in flight, still strictly leaves-first.
+
+        An item is dispatched only once every item it imports is done, so the ordering
+        guarantee is unchanged — the concurrency is across independent branches of the tree.
+        Verification is server-side and takes about a minute per node, so almost all of the
+        wall-clock here is waiting, which is exactly what parallelism buys back.
+        """
+        items = self.items()
+        pending = {k: set(v) for k, v in items.items()}
+        done = {k for k in items if self.is_done(k, journal)}
+        for k in pending:
+            pending[k] -= done
+        inflight, dispatched, failures = {}, set(), []
+        total = len(items) - len(done)
+        finished = 0
+        with cf.ThreadPoolExecutor(max_workers=workers) as ex:
+            while True:
+                # `dispatched` is tracked separately: `inflight` is keyed by future, so testing
+                # an item against it never matches and the same item goes up twice.
+                ready = [k for k in items
+                         if k not in done and k not in dispatched and not pending[k]]
+                ready.sort(key=lambda k: (k[0] != "def", k[1]))
+                for k in ready[:max(0, workers - len(inflight))]:
+                    dispatched.add(k)
+                    inflight[ex.submit(self.do_item, k, journal)] = k
+                if not inflight:
+                    break
+                got, _ = cf.wait(list(inflight), return_when=cf.FIRST_COMPLETED)
+                for fut in got:
+                    k = inflight.pop(fut)
+                    try:
+                        ok = fut.result()
+                    except Exception as e:                       # noqa: BLE001
+                        ok = False
+                        print(f"  [error] {k}: {e}", flush=True)
+                    finished += 1
+                    if ok:
+                        done.add(k)
+                        for other in pending:
+                            pending[other].discard(k)
+                    else:
+                        failures.append(k)
+                        # Everything above a failure stays unsubmitted; a parent must never go
+                        # up before the child it imports is Proved.
+                    print(f"  ({finished}/{total} attempted, {len(failures)} failed)",
+                          flush=True)
+        if failures:
+            print("blocked by failures:")
+            for k in failures:
+                label = self.g.bundle_name(k[1]) if k[0] == "def" else self.g.name_of[k[1]]
+                print(f"   {k[0]:4s} {label}")
+        return not failures
 
     def run(self, journal, limit=None, stop_on_failure=True):
         done = 0
@@ -226,4 +308,8 @@ if __name__ == "__main__":
         print("canary ok" if ok else "canary stopped")
     elif cmd == "run":
         ok = t.run(j)
+        print("tree complete" if ok else "tree stopped early")
+    elif cmd == "parallel":
+        w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
+        ok = t.run_parallel(j, workers=w)
         print("tree complete" if ok else "tree stopped early")

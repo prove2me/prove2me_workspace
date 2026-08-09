@@ -20,6 +20,7 @@ that work go out on `self`.
 import json
 import os
 import sys
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -39,11 +40,16 @@ def load():
     return {"created": {}, "submitted": {}, "verdict": {}}
 
 
+LOCK = threading.Lock()
+
+
 def save(j):
-    tmp = JOURNAL + ".tmp"
-    with open(tmp, "w") as f:
-        json.dump(j, f, indent=2, sort_keys=True)
-    os.replace(tmp, JOURNAL)
+    """Atomic, and safe to call from the parallel runner's workers."""
+    with LOCK:
+        tmp = JOURNAL + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(j, f, indent=2, sort_keys=True)
+        os.replace(tmp, JOURNAL)
 
 
 def toposort(nodes):

@@ -16,6 +16,7 @@ Usage:  python3 port/api.py GET /missions '{"limit":50}' [account]
 import json
 import os
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -46,8 +47,20 @@ def _post_json(path, payload):
         return json.load(r)
 
 
+_TOKEN_LOCK = threading.Lock()
+
+
 def token(account="self"):
-    """Return a live access token for `account`, refreshing (and re-saving) near expiry."""
+    """Return a live access token for `account`, refreshing (and re-saving) near expiry.
+
+    Serialised: the parallel uploader has several requests in flight, and two threads racing to
+    refresh would spend one refresh token twice and corrupt the saved credentials.
+    """
+    with _TOKEN_LOCK:
+        return _token_locked(account)
+
+
+def _token_locked(account):
     path = _cred_path(account)
     c = json.load(open(path))
     if c.get("expires_at", 0) - time.time() > 120:
