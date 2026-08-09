@@ -26,3 +26,43 @@
   (5/225 attempted, 0 failed)
   [thm] QuantumParallelRepetition.positiveMatrixSpectralAtom_sum -> ACCEPTED 
   (6/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.fullSubsetHistory_mass_eq_postselection -> ACCEPTED 
+  (7/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.embezzlementState_norm -> ACCEPTED 
+  (8/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.diagonalSchmidtState_norm_sq -> ACCEPTED 
+  (9/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.fullHistoryRemaining_insert_subset -> ACCEPTED 
+  (10/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.fullHistoryRemaining_insert_conditioned -> ACCEPTED 
+  (11/225 attempted, 0 failed)
+  [def] qpr_core_03 -> 2c7e761c-a1a2-40d6-9542-dac21a6cafb1
+  (12/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.matrixLogEntropy_born_lower_bound_left -> ACCEPTED 
+  (13/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.targetReducedDensity_posSemidef -> ACCEPTED 
+  (14/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst -> ACCEPTED 
+  (15/225 attempted, 0 failed)
+  [def] qpr_core_04 -> d36a209f-365d-40bc-b725-488eabe6423c
+  (16/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalPublicBucketLocalHarmonicCleanup_sq -> ACCEPTED 
+  (17/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVSoftBobLeftReducedDensity_posSemidef -> ACCEPTED 
+  (18/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVUniformDensityThresholdSharedState_norm -> ACCEPTED 
+  (19/225 attempted, 0 failed)
+  [def] qpr_core_05 -> d2d073f6-bdda-481f-8638-d0dd84627270
+  (20/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVUniformLeftDensityConjugateSwapVector_norm -> ACCEPTED 
+  (21/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVUniformDensitySpectralAtomDiscrepancy_le -> ACCEPTED 
+  (22/225 attempted, 0 failed)
+  [def] qpr_core_06 -> 3b724da8-30a0-444a-8a2a-cef35061fdc5
+  (23/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.normalizeOrDefault_norm -> ACCEPTED 
+  (24/225 attempted, 0 failed)
+  [def] qpr_core_07 -> f7fb8ec1-0577-45b7-92b5-11d1199a97bd
+  (25/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVUniformDensityPolarConjugateSwap_norm -> ACCEPTED 
+  (26/225 attempted, 0 failed)
