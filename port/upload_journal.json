@@ -68,10 +68,14 @@
     "def:qpr_core_10": "08d68844-58e6-479d-b5c7-ec858fa3e052",
     "def:qpr_core_11": "c1107ce5-bed8-4a3a-9338-28634feafd1d",
     "def:qpr_core_12": "fc1a6f83-7191-48e2-9369-c6193c3f83dd",
-    "def:qpr_core_13": "3ad2f99c-f942-418e-b3a3-d173f6b703ce"
+    "def:qpr_core_13": "3ad2f99c-f942-418e-b3a3-d173f6b703ce",
+    "def:qpr_core_14": "706ec6bf-9f93-4ff2-9f5c-946fdccdf3cc"
   },
   "inflight": {
-    "def:qpr_core_14": "definition"
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le": "create",
+    "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition": "create",
+    "QuantumParallelRepetition.dSVDensityRationalMixedAcceptedPrefix_norm_sq": "create",
+    "def:qpr_core_15": "definition"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",

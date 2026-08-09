@@ -114,3 +114,5 @@
   (49/225 attempted, 0 failed)
   [thm] QuantumParallelRepetition.dSVDensityRationalCanonicalNormalizedTarget_norm -> ACCEPTED 
   (50/225 attempted, 0 failed)
+  [def] qpr_core_14 -> 706ec6bf-9f93-4ff2-9f5c-946fdccdf3cc
+  (51/225 attempted, 0 failed)
