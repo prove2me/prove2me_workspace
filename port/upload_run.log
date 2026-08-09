@@ -66,3 +66,31 @@
   (25/225 attempted, 0 failed)
   [thm] QuantumParallelRepetition.dSVUniformDensityPolarConjugateSwap_norm -> ACCEPTED 
   (26/225 attempted, 0 failed)
+  [def] qpr_core_08 -> e8dc3c7e-7aff-4b22-ac88-69199ac47a6b
+  (27/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram -> ACCEPTED 
+  (28/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt -> ACCEPTED 
+  (29/225 attempted, 0 failed)
+  [def] qpr_core_09 -> 0d374733-8de4-4e7b-b67b-06a0d2b74845
+  (30/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.mean_spectralPurificationFilterEntryLp_mem_common -> ACCEPTED 
+  (31/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.commonPurificationSubspace_finiteDimensional -> ACCEPTED 
+  (32/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.ensemble_spectralPurificationFilterEntryLp_mem_common -> ACCEPTED 
+  (33/225 attempted, 0 failed)
+  [def] qpr_core_10 -> 08d68844-58e6-479d-b5c7-ec858fa3e052
+  (34/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.strategyPurificationVector_norm -> ACCEPTED 
+  (35/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.matrixLogEntropy_weighted_jensen_posSemidef -> ACCEPTED 
+  (36/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.common_finite_purification_pair_jensen -> ACCEPTED 
+  (37/225 attempted, 0 failed)
+  [def] qpr_core_11 -> c1107ce5-bed8-4a3a-9338-28634feafd1d
+  (38/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.commonFinitePurification_weighted_right_variation_le -> ACCEPTED 
+  (39/225 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.commonFinitePurification_weighted_left_variation_le -> ACCEPTED 
+  (40/225 attempted, 0 failed)
