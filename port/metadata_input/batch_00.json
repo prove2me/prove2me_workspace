@@ -1,0 +1,206 @@
+[
+  {
+    "name": "QuantumParallelRepetition.posSemidef_blockDiagonal'",
+    "upstream_lines": [
+      438,
+      457
+    ],
+    "docstring": "",
+    "statement": "theorem posSemidef_blockDiagonal_prime\n    {ι : Type*} [Fintype ι] [DecidableEq ι]\n    {d : ι → Type*} [∀ j, Fintype (d j)]\n    (M : ∀ j, Matrix (d j) (d j) ℂ)\n    (hM : ∀ j, (M j).PosSemidef) :\n    (Matrix.blockDiagonal' M).PosSemidef",
+    "proof": " by\n  classical\n  choose K hK using fun j =>\n    CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (hM j).nonneg\n  apply Matrix.LE.le.posSemidef\n  apply CStarAlgebra.nonneg_iff_eq_star_mul_self.mpr\n  refine ⟨Matrix.blockDiagonal' K, ?_⟩\n  calc\n    Matrix.blockDiagonal' M =\n        Matrix.blockDiagonal' (fun j => star (K j) * K j) := by\n          congr 1\n          funext j\n          exact hK j\n    _ = star (Matrix.blockDiagonal' K) * Matrix.blockDiagonal' K := by\n          simp [star_eq_conjTranspose, ← Matrix.blockDiagonal'_mul]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.mixtureEmbedding_isometry",
+    "upstream_lines": [
+      490,
+      501
+    ],
+    "docstring": "",
+    "statement": "theorem mixtureEmbedding_isometry (S : J → Strategy G) :\n    (mixtureEmbedding S)ᴴ * mixtureEmbedding S = 1",
+    "proof": " by\n  classical\n  ext i j\n  by_cases h : i = j\n  · subst j\n    simp [mixtureEmbedding, Matrix.mul_apply,\n      Matrix.conjTranspose_apply]\n  · have hindex : mixtureMatchedIndex S i ≠ mixtureMatchedIndex S j :=\n      fun hij => h (mixtureMatchedIndex_injective S hij)\n    simp [mixtureEmbedding, Matrix.mul_apply,\n      Matrix.conjTranspose_apply, h, hindex.symm]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.mixtureBlockMatrix_posSemidef",
+    "upstream_lines": [
+      517,
+      523
+    ],
+    "docstring": "",
+    "statement": "theorem mixtureBlockMatrix_posSemidef\n    (p : J → ℝ) (hp : ∀ j, 0 ≤ p j) (S : J → Strategy G) :\n    (mixtureBlockMatrix p S).PosSemidef",
+    "proof": " by\n  unfold mixtureBlockMatrix\n  apply posSemidef_blockDiagonal'\n  intro j\n  exact (S j).state.positive.smul (hp j)",
+    "imports_theorems": [
+      "QuantumParallelRepetition.posSemidef_blockDiagonal'"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.mixtureBlockMatrix_trace",
+    "upstream_lines": [
+      525,
+      531
+    ],
+    "docstring": "",
+    "statement": "theorem mixtureBlockMatrix_trace\n    (p : J → ℝ) (S : J → Strategy G) :\n    Matrix.trace (mixtureBlockMatrix p S) =\n      (↑(∑ j : J, p j) : ℂ)",
+    "proof": " by\n  unfold mixtureBlockMatrix\n  rw [Matrix.trace_blockDiagonal']\n  simp [Matrix.trace_smul, DensityMatrix.trace_one]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.purifiedRefinedEffect_posSemidef",
+    "upstream_lines": [
+      2503,
+      2520
+    ],
+    "docstring": "",
+    "statement": "theorem purifiedRefinedEffect_posSemidef\n    {ι d e : Type*} [Fintype ι] [DecidableEq ι]\n    [Fintype d] [DecidableEq d]\n    [Fintype e] [DecidableEq e]\n    (F : Matrix d d ℂ) (hF : F.PosSemidef)\n    (Γ : Matrix e d ℂ)\n    (hΓ : Matrix.conjTranspose Γ * Γ = F)\n    (operator : ι → Matrix d d ℂ)\n    (hpositive : ∀ a, (operator a).PosSemidef)\n    (a₀ a : ι) :\n    (purifiedRefinedEffect F hF Γ operator a₀ a).PosSemidef",
+    "proof": " by\n  change (purifiedRefinementCore F hF Γ operator a +\n    if a = a₀ then 1 - purificationRangeProjection F hF Γ else 0).PosSemidef\n  refine (purifiedRefinementCore_posSemidef F hF Γ operator\n    hpositive a).add ?_\n  split\n  · exact purificationRangeProjection_complement_posSemidef F hF Γ hΓ\n  · exact Matrix.PosSemidef.zero",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.purifiedRefinedEffect_complete",
+    "upstream_lines": [
+      2522,
+      2536
+    ],
+    "docstring": "",
+    "statement": "theorem purifiedRefinedEffect_complete\n    {ι d e : Type*} [Fintype ι] [DecidableEq ι]\n    [Fintype d] [DecidableEq d]\n    [Fintype e] [DecidableEq e]\n    (F : Matrix d d ℂ) (hF : F.PosSemidef)\n    (Γ : Matrix e d ℂ)\n    (operator : ι → Matrix d d ℂ)\n    (hsum : (∑ a : ι, operator a) = F)\n    (a₀ : ι) :\n    (∑ a : ι, purifiedRefinedEffect F hF Γ operator a₀ a) = 1",
+    "proof": " by\n  classical\n  unfold purifiedRefinedEffect\n  rw [Finset.sum_add_distrib]\n  rw [purifiedRefinementCore_sum F hF Γ operator hsum]\n  simp",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.fullSubsetHistory_mass_eq_postselection",
+    "upstream_lines": [
+      3362,
+      3473
+    ],
+    "docstring": "",
+    "statement": "theorem fullSubsetHistory_mass_eq_postselection\n    [DecidableEq A] [DecidableEq B]\n    (G : Game X Y A B) (n : ℕ)\n    (S : Strategy (G.repeat n))\n    (D L : Finset (Fin n))\n    (hL : L ⊆ Finset.univ \\ D) :\n    (∑ h : FullSubsetHistory X Y n D L,\n      ∑ α : {i : Fin n // i ∈ D} → A,\n      ∑ β : {i : Fin n // i ∈ D} → B,\n        fullHistoryWeight G h * fullHistoryWinIndicator G h α β *\n          bornTracePairing S.state.matrix\n            (fullHistoryAliceFilter G n S D L h α)\n            (fullHistoryBobFilter G n S D L h β)) =\n      (strategyEventLaw (G.repeat n) S).eventMass\n        (FiniteEventLaw.winEvent\n          (repeatedCoordinateWin G n) D)",
+    "proof": " by\n  classical\n  calc\n    (∑ h : FullSubsetHistory X Y n D L,\n      ∑ α : {i : Fin n // i ∈ D} → A,\n      ∑ β : {i : Fin n // i ∈ D} → B,\n        fullHistoryWeight G h * fullHistoryWinIndicator G h α β *\n          bornTracePairing S.state.matrix\n            (fullHistoryAliceFilter G n S D L h α)\n            (fullHistoryBobFilter G n S D L h β)) =\n      ∑ h : FullSubsetHistory X Y n D L,\n      ∑ α : {i : Fin n // i ∈ D} → A,\n      ∑ β : {i : Fin n // i ∈ D} → B,\n      ∑ hx : {i : Fin n // i ∈ fullHistoryRemaining n D L} → X,\n      ∑ hy : {i : Fin n // i ∈ L} → Y,\n        fullHistoryWeight G h * fullHistoryWinIndicator G h α β *\n          fullHistoryHiddenAliceWeight G h hx *\n          fullHistoryHiddenBobWeight G h hy *\n          bornTracePairing S.state.matrix\n            (conditionedAliceEffect G n S D α\n              (fullHistoryAliceQuestion h hx))\n            (conditionedBobEffect G n S D β\n              (fullHistoryBobQuestion h hy)) := by\n        apply Finset.sum_congr rfl\n        intro h _\n        apply Finset.sum_congr rfl\n        intro α _\n        apply Finset.sum_congr rfl\n        intro β _\n        rw [fullHistoryFilters_born_expansion G n S D L h α β]\n        simp only [Finset.mul_sum, mul_assoc]\n    _ = ∑ h : FullSubsetHistory X Y n D L,\n      ∑ hx : {i : Fin n // i ∈ fullHistoryRemaining n D L} → X,\n      ∑ hy : {i : Fin n // i ∈ L} → Y,\n      ∑ α : {i : Fin n // i ∈ D} → A,\n      ∑ β : {i : Fin n // i ∈ D} → B,\n        fullHistoryWeight G h * fullHistoryWinIndicator G h α β *\n          fullHistoryHiddenAliceWeight G h hx *\n          fullHistoryHiddenBobWeight G h hy *\n          bornTracePairing S.state.matrix\n            (conditionedAliceEffect G n S D α\n              (fullHistoryAliceQuestion h hx))\n            (conditionedBobEffect G n S D β\n              (fullHistoryBobQuestion h hy)) := by\n        apply Finset.sum_congr rfl\n        intro h _\n        exact finite_sum_four_swap _\n    _ = ∑ h : FullSubsetHistory X Y n D L,\n      ∑ hx : {i : Fin n // i ∈ fullHistoryRemaining n D L} → X,\n      ∑ hy : {i : Fin n // i ∈ L} → Y,\n      ∑ α : {i : Fin n // i ∈ D} → A,\n      ∑ β : {i : Fin n // i ∈ D} → B,\n        (G.repeat n).questionWeight\n          (fullHistoryAliceQuestion h hx)\n          (fullHistoryBobQuestion h hy) *\n        fullQuestionWinIndicator G D\n          (fullHistoryAliceQuestion h hx)\n          (fullHistoryBobQuestion h hy) α β *\n        bornTracePairing S.state.matrix\n          (conditionedAliceEffect G n S D α\n            (fullHistoryAliceQuestion h hx))\n          (conditionedBobEffect G n S D β\n            (fullHistoryBobQuestion h hy)) := by\n        apply Finset.sum_congr rfl\n        intro h _\n        apply Finset.sum_congr rfl\n        intro hx _\n        apply Finset.sum_congr rfl\n        intro hy _\n        apply Finset.sum_congr rfl\n        intro α _\n        apply Finset.sum_congr rfl\n        intro β _\n        rw [fullHistoryWinIndicator_eq_question G D L h hx hy α β]\n        rw [← fullHistoryWeight_mul_hidden G D L hL h hx hy]\n        ring\n    _ = ∑ xs : Fin n → X, ∑ ys : Fin n → Y,\n      ∑ α : {i : Fin n // i ∈ D} → A,\n      ∑ β : {i : Fin n // i ∈ D} → B,\n        (G.repeat n).questionWeight xs ys *\n          fullQuestionWinIndicator G D xs ys α β *\n          bornTracePairing S.state.matrix\n            (conditionedAliceEffect G n S D α xs)\n            (conditionedBobEffect G n S D β ys) := by\n      let f : ((Fin n → X) × (Fin n → Y)) → ℝ := fun q =>\n        ∑ α : {i : Fin n // i ∈ D} → A,\n        ∑ β : {i : Fin n // i ∈ D} → B,\n          (G.repeat n).questionWeight q.1 q.2 *\n            fullQuestionWinIndicator G D q.1 q.2 α β *\n            bornTracePairing S.state.matrix\n... (7 more lines)",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.scalarResolventFilter_memLp_two",
+    "upstream_lines": [
+      3989,
+      3999
+    ],
+    "docstring": "",
+    "statement": "theorem scalarResolventFilter_memLp_two\n    {z : ℝ} (hz : 0 ≤ z) :\n    MemLp (fun s : ℝ => z / (z + s)) 2\n      (volume.restrict (Ioi 0))",
+    "proof": " by\n  have hmeas :\n      AEStronglyMeasurable (fun s : ℝ => z / (z + s))\n        (volume.restrict (Ioi 0)) := by\n    exact (measurable_const.div\n      (measurable_const.add measurable_id)).aestronglyMeasurable\n  exact (memLp_two_iff_integrable_sq hmeas).mpr\n    (scalar_resolvent_purification_integrable hz)",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.spectralPurificationFilter_memLp_two",
+    "upstream_lines": [
+      4001,
+      4032
+    ],
+    "docstring": "",
+    "statement": "theorem spectralPurificationFilter_memLp_two\n    {d : Type*} [Fintype d] [DecidableEq d]\n    (F : Matrix d d ℂ) (hF : F.PosSemidef) :\n    MemLp (spectralPurificationFilter F hF) 2\n      (volume.restrict (Ioi 0))",
+    "proof": " by\n  classical\n  let U := hF.isHermitian.eigenvectorUnitary\n  let eigenvalue := hF.isHermitian.eigenvalues\n  apply MemLp.of_eval\n  intro i\n  apply MemLp.of_eval\n  intro j\n  have hform :\n      (fun s : ℝ => spectralPurificationFilter F hF s i j) =\n        (fun s : ℝ => ∑ k : d,\n          (U : Matrix d d ℂ) i k *\n            ((eigenvalue k / (eigenvalue k + s) : ℝ) : ℂ) *\n            star (U : Matrix d d ℂ) k j) := by\n    funext s\n    change\n      ((U : Matrix d d ℂ) *\n        Matrix.diagonal (fun k =>\n          ((eigenvalue k / (eigenvalue k + s) : ℝ) : ℂ)) *\n        star (U : Matrix d d ℂ)) i j = _\n    simp [Matrix.mul_apply, Matrix.diagonal, mul_ite]\n  rw [hform]\n  apply memLp_finsetSum Finset.univ\n  intro k _\n  exact ((scalarResolventFilter_memLp_two\n    (hF.eigenvalues_nonneg k)).ofReal.const_mul\n      ((U : Matrix d d ℂ) i k)).mul_const\n        (star (U : Matrix d d ℂ) k j)",
+    "imports_theorems": [
+      "QuantumParallelRepetition.scalarResolventFilter_memLp_two"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.positiveMatrixSpectralAtom_posSemidef",
+    "upstream_lines": [
+      4871,
+      4888
+    ],
+    "docstring": "",
+    "statement": "theorem positiveMatrixSpectralAtom_posSemidef\n    {d : Type*} [Fintype d] [DecidableEq d]\n    (F : Matrix d d ℂ) (hF : F.PosSemidef) (i : d) :\n    (positiveMatrixSpectralAtom F hF i).PosSemidef",
+    "proof": " by\n  classical\n  have hdiag :\n      (Matrix.diagonal (Pi.single i (1 : ℂ))).PosSemidef := by\n    apply Matrix.PosSemidef.diagonal\n    intro j\n    by_cases hij : i = j\n    · subst j\n      simp\n    · simp [hij]\n  unfold positiveMatrixSpectralAtom\n  rw [spectralConjugationCLM_apply]\n  simpa [Matrix.star_eq_conjTranspose] using\n    hdiag.mul_mul_conjTranspose_same\n      (hF.isHermitian.eigenvectorUnitary : Matrix d d ℂ)",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.positiveMatrixSpectralAtom_sum",
+    "upstream_lines": [
+      4890,
+      4909
+    ],
+    "docstring": "",
+    "statement": "theorem positiveMatrixSpectralAtom_sum\n    {d : Type*} [Fintype d] [DecidableEq d]\n    (F : Matrix d d ℂ) (hF : F.PosSemidef) :\n    (∑ i : d, positiveMatrixSpectralAtom F hF i) = 1",
+    "proof": " by\n  classical\n  let U := hF.isHermitian.eigenvectorUnitary\n  have hdiag :\n      (∑ i : d, Matrix.diagonal (Pi.single i (1 : ℂ))) =\n        (1 : Matrix d d ℂ) := by\n    ext j k\n    by_cases hjk : j = k\n    · subst k\n      simp [Matrix.sum_apply, Pi.single_apply]\n    · simp [Matrix.sum_apply,         hjk]\n  change\n    (∑ i : d,\n      spectralConjugationCLM U\n        (Matrix.diagonal (Pi.single i (1 : ℂ)))) = 1\n  rw [← map_sum, hdiag]\n  simp [spectralConjugationCLM_apply]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.matrixLogEntropy_born_lower_bound_left",
+    "upstream_lines": [
+      5126,
+      5220
+    ],
+    "docstring": "",
+    "statement": "theorem matrixLogEntropy_born_lower_bound_left\n    {dA dB : Type*}\n    [Fintype dA] [Fintype dB]\n    [DecidableEq dA] [DecidableEq dB]\n    (ρ : DensityMatrix (dA × dB))\n    (F : Matrix dA dA ℂ) (hF : F.PosSemidef)\n    (hFcomplement : (1 - F).PosSemidef)\n    (G : Matrix dB dB ℂ) (hG : G.PosSemidef)\n    (hGcomplement : (1 - G).PosSemidef) :\n    -bornTracePairing ρ.matrix\n        (cfc (fun z : ℝ => z * Real.log z) F) G ≤\n      Real.negMulLog (bornTracePairing ρ.matrix F G)",
+    "proof": " by\n  classical\n  have hp_nonneg : 0 ≤ bornTracePairing ρ.matrix F G :=\n    trace_mul_posSemidef_nonneg ρ.positive (hF.kronecker hG)\n  have hmass_le :\n      bornTracePairing ρ.matrix F G ≤\n        bornTracePairing ρ.matrix (1 : Matrix dA dA ℂ) G := by\n    calc\n      bornTracePairing ρ.matrix F G =\n        ∑ i : dA,\n          leftSpectralBornWeight ρ F hF G i *\n            hF.isHermitian.eigenvalues i :=\n          (leftSpectralBornWeight_moment ρ F hF G).symm\n      _ ≤ ∑ i : dA, leftSpectralBornWeight ρ F hF G i := by\n        apply Finset.sum_le_sum\n        intro i _\n        exact mul_le_of_le_one_right\n          (leftSpectralBornWeight_nonneg ρ F hF G hG i)\n          (positiveContraction_eigenvalue_le_one F hF hFcomplement i)\n      _ = bornTracePairing ρ.matrix (1 : Matrix dA dA ℂ) G :=\n        leftSpectralBornWeight_sum ρ F hF G\n  by_cases hp : bornTracePairing ρ.matrix F G = 0\n  · have hzero :\n        (∑ i : dA,\n          leftSpectralBornWeight ρ F hF G i *\n            hF.isHermitian.eigenvalues i) = 0 := by\n        rw [leftSpectralBornWeight_moment, hp]\n    have hterm (i : dA) :\n        leftSpectralBornWeight ρ F hF G i *\n          hF.isHermitian.eigenvalues i = 0 :=\n      (Finset.sum_eq_zero_iff_of_nonneg\n        (fun j _ => mul_nonneg\n          (leftSpectralBornWeight_nonneg ρ F hF G hG j)\n          (hF.eigenvalues_nonneg j))).mp hzero i (Finset.mem_univ i)\n    have hentropy :\n        (∑ i : dA,\n          leftSpectralBornWeight ρ F hF G i *\n            Real.negMulLog (hF.isHermitian.eigenvalues i)) = 0 := by\n      apply Finset.sum_eq_zero\n      intro i _\n      rcases mul_eq_zero.mp (hterm i) with hw | he\n      · simp [hw]\n      · simp [he]\n    calc\n      -bornTracePairing ρ.matrix\n          (cfc (fun z : ℝ => z * Real.log z) F) G =\n        ∑ i : dA,\n          leftSpectralBornWeight ρ F hF G i *\n            Real.negMulLog (hF.isHermitian.eigenvalues i) :=\n          leftSpectralBornWeight_negEntropy ρ F hF G\n      _ = 0 := hentropy\n      _ ≤ Real.negMulLog (bornTracePairing ρ.matrix F G) := by\n        rw [hp]\n        simp\n  · have hp_pos : 0 < bornTracePairing ρ.matrix F G :=\n      lt_of_le_of_ne hp_nonneg (Ne.symm hp)\n    have hW_pos : 0 <\n        bornTracePairing ρ.matrix (1 : Matrix dA dA ℂ) G :=\n      lt_of_lt_of_le hp_pos hmass_le\n    have hscalar := finite_weighted_entropy_le_of_weight_bound\n      (Finset.univ : Finset dA)\n      (leftSpectralBornWeight ρ F hF G)\n      hF.isHermitian.eigenvalues\n      (W := bornTracePairing ρ.matrix (1 : Matrix dA dA ℂ) G)\n      (N := (1 : ℝ))\n      (p := bornTracePairing ρ.matrix F G)\n      (fun i _ => leftSpectralBornWeight_nonneg ρ F hF G hG i)\n      (fun i _ => hF.eigenvalues_nonneg i)\n      hW_pos hp_pos\n      (leftSpectralBornWeight_sum ρ F hF G)\n      (leftSpectralBornWeight_moment ρ F hF G)\n      (bornTracePairing_one_le_one ρ G hGcomplement)\n    calc\n      -bornTracePairing ρ.matrix\n          (cfc (fun z : ℝ => z * Real.log z) F) G =\n        ∑ i : dA,\n          leftSpectralBornWeight ρ F hF G i *\n            Real.negMulLog (hF.isHermitian.eigenvalues i) :=\n        leftSpectralBornWeight_negEntropy ρ F hF G\n      _ ≤ bornTracePairing ρ.matrix F G *\n          Real.log (1 / bornTracePairing ρ.matrix F G) := hscalar\n      _ = Real.negMulLog (bornTracePairing ρ.matrix F G) := by\n        rw [one_div, Real.log_inv]\n        simp [Real.negMulLog]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.trace_mul_posSemidef_nonneg"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.embezzlementState_norm",
+    "upstream_lines": [
+      5295,
+      5301
+    ],
+    "docstring": "",
+    "statement": "theorem embezzlementState_norm\n    (n : ℕ) (hn : 0 < n) :\n    ‖embezzlementState n‖ = 1",
+    "proof": " by\n  have hraw : ‖rawEmbezzlementState n‖ ≠ 0 :=\n    norm_ne_zero_iff.mpr (rawEmbezzlementState_ne_zero n hn)\n  rw [embezzlementState, norm_smul, Real.norm_eq_abs,\n    abs_of_nonneg (inv_nonneg.mpr (norm_nonneg _)), inv_mul_cancel₀ hraw]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.diagonalSchmidtState_norm_sq",
+    "upstream_lines": [
+      6427,
+      6443
+    ],
+    "docstring": "",
+    "statement": "theorem diagonalSchmidtState_norm_sq\n    {d : Type*} [Fintype d] [DecidableEq d]\n    (σ : d → ℝ) :\n    ‖diagonalSchmidtState σ‖ ^ 2 =\n      ∑ i : d, σ i ^ 2",
+    "proof": " by\n  rw [EuclideanSpace.norm_sq_eq, Fintype.sum_prod_type]\n  apply Finset.sum_congr rfl\n  intro i _\n  change\n    (∑ j : d, ‖if i = j then (σ i : ℂ) else 0‖ ^ 2) =\n      σ i ^ 2\n  have hterm (j : d) :\n      ‖if i = j then (σ i : ℂ) else 0‖ ^ 2 =\n        if i = j then σ i ^ 2 else 0 := by\n    split_ifs <;> simp [Complex.norm_real, Real.norm_eq_abs, sq_abs]\n  simp_rw [hterm]\n  simp",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.permutationMatrix_mem_unitary",
+    "upstream_lines": [
+      7049,
+      7055
+    ],
+    "docstring": "",
+    "statement": "theorem permutationMatrix_mem_unitary\n    {ι : Type*} [Fintype ι] [DecidableEq ι]\n    (σ : Equiv.Perm ι) :\n    σ.permMatrix ℂ ∈ Matrix.unitaryGroup ι ℂ",
+    "proof": " by\n  rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose,\n    Matrix.conjTranspose_permMatrix, ← Matrix.permMatrix_mul]\n  simp",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst",
+    "upstream_lines": [
+      7936,
+      7990
+    ],
+    "docstring": "",
+    "statement": "theorem exists_proofUniversalHarmonicCatalyst\n    (d : ℕ) (hd : 0 < d)\n    (ε : ℝ) (hε : 0 < ε) :\n    ∃ n : ℕ, 0 < n ∧\n      ∀ ξ : BipartiteUnitVector d,\n        ∃ U V : Matrix.unitaryGroup (Fin (d * n)) ℂ,\n          ‖localUnitaryAction U V\n            (embezzlementState (d * n)) -\n              tensorEmbezzlementTarget (n := n) ξ‖ ≤ ε",
+    "proof": " by\n  let δ : ℝ := min (ε ^ 2 / 2) 1\n  have hδ : 0 < δ := by\n    dsimp [δ]\n    exact lt_min (by positivity) zero_lt_one\n  have hδone : δ ≤ 1 := min_le_right _ _\n  obtain ⟨n, hn, hratio⟩ :=\n    exists_proofHarmonicNumber_ratio_ge d hd hδ hδone\n  refine ⟨n, hn, ?_⟩\n  intro ξ\n  obtain ⟨σ, U, V, hσ, hunit, hξ⟩ :=\n    exists_proofUnitSchmidtDecomposition ξ\n  let LU := harmonicTargetLiftUnitary (n := n) U\n  let LV := harmonicTargetLiftUnitary (n := n) V\n  let P := harmonicSchmidtPermutationUnitary\n    (n := n) σ\n  refine ⟨LU * P, LV * P, ?_⟩\n  have hdiagonal := universalDiagonalCatalyst_distance\n    hd hn σ hσ hunit δ hδ.le hδone hratio\n  have htarget := harmonicTargetLift_diagonal_action\n    (n := n) ξ σ hunit U V hξ\n  have hdeltaeps : 2 * δ ≤ ε ^ 2 := by\n    have hmin : δ ≤ ε ^ 2 / 2 := min_le_left _ _\n    linarith\n  have hsqrt : Real.sqrt (2 * δ) ≤ ε := by\n    have hsq : (Real.sqrt (2 * δ)) ^ 2 = 2 * δ :=\n      Real.sq_sqrt (by positivity)\n    nlinarith [Real.sqrt_nonneg (2 * δ)]\n  calc\n    ‖localUnitaryAction (LU * P) (LV * P)\n      (embezzlementState (d * n)) -\n        tensorEmbezzlementTarget (n := n) ξ‖ =\n      ‖localUnitaryAction LU LV\n        (localUnitaryAction P P\n          (embezzlementState (d * n)) -\n            tensorEmbezzlementTarget (n := n)\n              (diagonalSchmidtUnitVector σ hunit))‖ := by\n        rw [localUnitaryAction_sub,\n          localUnitaryAction_comp]\n        rw [htarget]\n    _ = ‖localUnitaryAction P P\n      (embezzlementState (d * n)) -\n        tensorEmbezzlementTarget (n := n)\n          (diagonalSchmidtUnitVector σ hunit)‖ :=\n        localUnitaryAction_norm LU LV _\n    _ ≤ Real.sqrt (2 * δ) := hdiagonal\n    _ ≤ ε := hsqrt",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.targetReducedDensity_posSemidef",
+    "upstream_lines": [
+      8390,
+      8394
+    ],
+    "docstring": "",
+    "statement": "theorem targetReducedDensity_posSemidef\n    {d : ℕ} (ξ : BipartiteUnitVector d) :\n    (targetReducedDensity ξ).PosSemidef",
+    "proof": " by\n  exact Matrix.posSemidef_conjTranspose_mul_self\n    (targetCoefficientMatrix ξ)",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVSoftBobLeftReducedDensity_posSemidef",
+    "upstream_lines": [
+      9224,
+      9228
+    ],
+    "docstring": "",
+    "statement": "theorem dSVSoftBobLeftReducedDensity_posSemidef\n    {d : ℕ} (ζ : BipartiteUnitVector d) :\n    (dSVSoftBobLeftReducedDensity ζ).PosSemidef",
+    "proof": " by\n  exact Matrix.posSemidef_self_mul_conjTranspose\n    (targetCoefficientMatrix ζ)",
+    "imports_theorems": []
+  }
+]

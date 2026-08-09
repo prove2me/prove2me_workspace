@@ -1,0 +1,14 @@
+{
+  "QuantumParallelRepetition.entangledValue_exponential_decay": [
+    "import Definitions.Def_quantum_parallel_repetition_game\nimport Mathlib.Analysis.SpecialFunctions.Exp",
+    "namespace QuantumParallelRepetition\n\n/-- Exponential parallel repetition for finite two-player entangled games.\nThe constants may depend on the game. -/\ntheorem entangledValue_exponential_decay\n    {X Y A B : Type*}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    [Nonempty A] [Nonempty B]\n    (G : Game X Y A B)\n    (hG : entangledValue G < 1) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ,\n      repeatedEntangledValue G n ≤ C * Real.exp (-c * n) := by\n  sorry\n\nend QuantumParallelRepetition"
+  ],
+  "QuantumParallelRepetition.entangledValue_polynomial_decay": [
+    "import Definitions.Def_quantum_parallel_repetition_game\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real",
+    "namespace QuantumParallelRepetition\n\n/-- The entangled value of a nontrivial finite game decays at least polynomially\nunder parallel repetition.  The constants may depend on the game. -/\ntheorem entangledValue_polynomial_decay\n    {X Y A B : Type*}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    [Nonempty A] [Nonempty B]\n    (G : Game X Y A B)\n    (hG : entangledValue G < 1) :\n    ∃ C α : ℝ, 0 < C ∧ 0 < α ∧ ∀ n : ℕ,\n      repeatedEntangledValue G (n + 1) ≤ C * Real.rpow (n + 1) (-α) := by\n  sorry\n\nend QuantumParallelRepetition"
+  ],
+  "QuantumParallelRepetition.entangledValue_tendsto_zero": [
+    "import Definitions.Def_quantum_parallel_repetition_game\nimport Mathlib.Topology.Order.Basic\n\nopen Filter\nopen scoped Topology",
+    "namespace QuantumParallelRepetition\n\n/-- The entangled value of every nontrivial finite two-player game tends to zero under\nparallel repetition. -/\ntheorem entangledValue_tendsto_zero\n    {X Y A B : Type*}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    [Nonempty A] [Nonempty B]\n    (G : Game X Y A B)\n    (hG : entangledValue G < 1) :\n    Tendsto (repeatedEntangledValue G) atTop (𝓝 0) := by\n  sorry\n\nend QuantumParallelRepetition"
+  ]
+}

@@ -1,0 +1,207 @@
+[
+  {
+    "name": "QuantumParallelRepetition.dSVUniformDensityThresholdSharedState_norm",
+    "upstream_lines": [
+      9363,
+      9368
+    ],
+    "docstring": "",
+    "statement": "theorem dSVUniformDensityThresholdSharedState_norm\n    {N d : ℕ} (grid : 0 < N) (dimension : 0 < d) :\n    ‖dSVUniformDensityThresholdSharedState N d‖ = 1",
+    "proof": " by\n  exact sharedThresholdResource_norm\n    (fun _ : Fin N => (1 : ℝ))\n    ⟨0, grid⟩ ⟨0, dimension⟩ (by norm_num)",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVUniformDensitySpectralAtomDiscrepancy_le",
+    "upstream_lines": [
+      9592,
+      9678
+    ],
+    "docstring": "",
+    "statement": "theorem dSVUniformDensitySpectralAtomDiscrepancy_le\n    {d : ℕ} (ξ ζ : BipartiteUnitVector d) :\n    dSVUniformDensitySpectralAtomDiscrepancy ξ ζ ≤\n      2 * Real.sqrt 2 * ‖ξ.val - ζ.val‖",
+    "proof": " by\n  let F := targetReducedDensity ξ\n  let G := targetReducedDensity ζ\n  let hF : F.PosSemidef := targetReducedDensity_posSemidef ξ\n  let hG : G.PosSemidef := targetReducedDensity_posSemidef ζ\n  let σ := targetCanonicalSchmidtCoefficient ξ\n  let μ := targetCanonicalSchmidtCoefficient ζ\n  let weight : Fin d × Fin d → ℝ := fun ij =>\n    spectralAtomOverlap F G hF hG ij.1 ij.2\n  let f : Fin d × Fin d → ℝ := fun ij =>\n    |σ ij.1 - μ ij.2|\n  let g : Fin d × Fin d → ℝ := fun ij =>\n    σ ij.1 + μ ij.2\n  have hweight : ∀ ij, 0 ≤ weight ij := fun ij =>\n    spectralAtomOverlap_nonneg F G hF hG ij.1 ij.2\n  have cauchy := weighted_real_cauchy weight f g hweight\n  have exact_l1 :\n      (∑ ij : Fin d × Fin d, weight ij * f ij * g ij) =\n        dSVUniformDensitySpectralAtomDiscrepancy ξ ζ := by\n    rw [Fintype.sum_prod_type]\n    unfold dSVUniformDensitySpectralAtomDiscrepancy\n    apply Finset.sum_congr rfl\n    intro i _\n    apply Finset.sum_congr rfl\n    intro j _\n    have sum_nonnegative : 0 ≤ σ i + μ j :=\n      add_nonneg\n        (targetCanonicalSchmidtCoefficient_nonneg ξ i)\n        (targetCanonicalSchmidtCoefficient_nonneg ζ j)\n    have factor : σ i ^ 2 - μ j ^ 2 =\n        (σ i - μ j) * (σ i + μ j) := by ring\n    rw [factor, abs_mul, abs_of_nonneg sum_nonnegative]\n    dsimp [weight, f, g, F, G, hF, hG, σ, μ]\n    ring\n  have exact_energy :\n      (∑ ij : Fin d × Fin d, weight ij * f ij ^ 2) =\n        targetCanonicalSpectralEnergy ξ ζ := by\n    rw [Fintype.sum_prod_type]\n    unfold targetCanonicalSpectralEnergy\n    dsimp [weight, f, F, G, hF, hG, σ, μ,\n      targetCanonicalSchmidtCoefficient]\n    apply Finset.sum_congr rfl\n    intro i _\n    apply Finset.sum_congr rfl\n    intro j _\n    rw [sq_abs]\n    ring\n  have exact_mass :\n      (∑ ij : Fin d × Fin d, weight ij * g ij ^ 2) =\n        dSVUniformDensitySchmidtSumMass ξ ζ := by\n    rw [Fintype.sum_prod_type]\n    unfold dSVUniformDensitySchmidtSumMass\n    apply Finset.sum_congr rfl\n    intro i _\n    apply Finset.sum_congr rfl\n    intro j _\n    dsimp [weight, g, F, G, hF, hG, σ, μ]\n    ring\n  rw [exact_l1, exact_energy, exact_mass] at cauchy\n  have target_energy := targetCanonicalSpectralEnergy_le ξ ζ\n  have sum_mass := dSVUniformDensitySchmidtSumMass_le_four ξ ζ\n  have first :\n      Real.sqrt (targetCanonicalSpectralEnergy ξ ζ) ≤\n        Real.sqrt 2 * ‖ξ.val - ζ.val‖ := by\n    apply Real.sqrt_le_iff.mpr\n    constructor\n    · positivity\n    · have square_two : Real.sqrt (2 : ℝ) ^ 2 = 2 :=\n        Real.sq_sqrt (by norm_num)\n      nlinarith [sq_nonneg ‖ξ.val - ζ.val‖]\n  have second :\n      Real.sqrt (dSVUniformDensitySchmidtSumMass ξ ζ) ≤ 2 := by\n    apply Real.sqrt_le_iff.mpr\n    constructor\n    · norm_num\n    · nlinarith\n  calc\n    _ ≤ Real.sqrt (targetCanonicalSpectralEnergy ξ ζ) *\n        Real.sqrt (dSVUniformDensitySchmidtSumMass ξ ζ) :=\n      cauchy\n    _ ≤ (Real.sqrt 2 * ‖ξ.val - ζ.val‖) * 2 :=\n      mul_le_mul first second\n        (Real.sqrt_nonneg _) (by positivity)\n    _ = 2 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ := by ring",
+    "imports_theorems": [
+      "QuantumParallelRepetition.targetReducedDensity_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVUniformLeftDensityConjugateSwapVector_norm",
+    "upstream_lines": [
+      11423,
+      11439
+    ],
+    "docstring": "",
+    "statement": "theorem dSVUniformLeftDensityConjugateSwapVector_norm\n    {d : ℕ} (z : EuclideanSpace ℂ (Fin d × Fin d)) :\n    ‖dSVUniformLeftDensityConjugateSwapVector z‖ = ‖z‖",
+    "proof": " by\n  have squares :\n      ‖dSVUniformLeftDensityConjugateSwapVector z‖ ^ 2 =\n        ‖z‖ ^ 2 := by\n    rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq,\n      Fintype.sum_prod_type, Fintype.sum_prod_type]\n    change\n      (∑ i : Fin d, ∑ j : Fin d,\n        ‖star (z (j, i))‖ ^ 2) =\n        ∑ i : Fin d, ∑ j : Fin d, ‖z (i, j)‖ ^ 2\n    simp_rw [norm_star]\n    rw [Finset.sum_comm]\n  nlinarith [norm_nonneg\n    (dSVUniformLeftDensityConjugateSwapVector z),\n    norm_nonneg z]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.normalizeOrDefault_norm",
+    "upstream_lines": [
+      11779,
+      11785
+    ],
+    "docstring": "",
+    "statement": "theorem normalizeOrDefault_norm\n    (fallback z : E) (hfallback : ‖fallback‖ = 1) :\n    ‖normalizeOrDefault fallback z‖ = 1",
+    "proof": " by\n  classical\n  by_cases hz : z = 0\n  · simp [normalizeOrDefault, hz, hfallback]\n  · simp [normalizeOrDefault, hz, NormedSpace.norm_normalize hz]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVUniformDensityPolarConjugateSwap_norm",
+    "upstream_lines": [
+      11907,
+      11919
+    ],
+    "docstring": "",
+    "statement": "theorem dSVUniformDensityPolarConjugateSwap_norm\n    {d : ℕ} (v : EuclideanSpace ℂ (Fin d × Fin d)) :\n    ‖dSVUniformDensityPolarConjugateSwap v‖ = ‖v‖",
+    "proof": " by\n  have squares :\n      ‖dSVUniformDensityPolarConjugateSwap v‖ ^ 2 =\n        ‖v‖ ^ 2 := by\n    rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq,\n      Fintype.sum_prod_type, Fintype.sum_prod_type]\n    simp only [dSVUniformDensityPolarConjugateSwap,\n      norm_star]\n    exact Finset.sum_comm\n  nlinarith [norm_nonneg\n    (dSVUniformDensityPolarConjugateSwap v), norm_nonneg v]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt",
+    "upstream_lines": [
+      11952,
+      11988
+    ],
+    "docstring": "",
+    "statement": "theorem exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt\n    {d : ℕ} (ξ : BipartiteUnitVector d) :\n    ∃ A : Matrix.unitaryGroup (Fin d) ℂ,\n      ξ.val = schmidtVector\n        (dSVUniformDensityPolarLeftSchmidtCoefficient ξ)\n        A (dSVUniformDensityThresholdLeftBobBasis ξ)",
+    "proof": " by\n  let χ := dSVUniformDensityPolarConjugateSwapTarget ξ\n  have density : targetReducedDensity χ =\n      dSVSoftBobLeftReducedDensity ξ :=\n    dSVUniformDensityPolarConjugateSwap_reducedDensity ξ\n  obtain ⟨V, decomposition⟩ :=\n    exists_proofTargetCanonicalSpectralSchmidtDecomposition χ\n  have canonical_basis :\n      (targetReducedDensity_posSemidef χ).isHermitian.eigenvectorUnitary =\n        dSVUniformDensityThresholdLeftBobBasis ξ := by\n    unfold dSVUniformDensityThresholdLeftBobBasis\n    simp only [density]\n  have canonical_coefficient :\n      targetCanonicalSchmidtCoefficient χ =\n        dSVUniformDensityPolarLeftSchmidtCoefficient ξ := by\n    funext i\n    unfold targetCanonicalSchmidtCoefficient\n      dSVUniformDensityPolarLeftSchmidtCoefficient\n    simp only [density]\n  rw [canonical_basis, canonical_coefficient] at decomposition\n  refine ⟨conjugateUnitary V, ?_⟩\n  ext ⟨a, b⟩\n  have coordinate := congrArg\n    (fun v : EuclideanSpace ℂ (Fin d × Fin d) => v (b, a))\n    decomposition\n  change star (ξ.val (a, b)) = _ at coordinate\n  beta_reduce at coordinate\n  rw [schmidtVector_apply] at coordinate\n  have unconjugated := congrArg star coordinate\n  rw [schmidtVector_apply]\n  simpa [map_sum, map_mul, conjugateUnitary_apply,\n    mul_assoc, mul_left_comm, mul_comm] using unconjugated",
+    "imports_theorems": [
+      "QuantumParallelRepetition.dSVSoftBobLeftReducedDensity_posSemidef",
+      "QuantumParallelRepetition.targetReducedDensity_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram",
+    "upstream_lines": [
+      12003,
+      12061
+    ],
+    "docstring": "",
+    "statement": "theorem finiteTensorLocalUnitaryMatrix_gram\n    {ι β : Type*}\n    [Fintype ι] [DecidableEq ι]\n    [Fintype β] [DecidableEq β]\n    (U : ι → Matrix.unitaryGroup β ℂ) :\n    (finiteTensorLocalUnitaryMatrix U).conjTranspose *\n        finiteTensorLocalUnitaryMatrix U = 1",
+    "proof": " by\n  classical\n  ext p q\n  change\n    (∑ r : ι → β,\n      star (∏ i : ι, (U i : Matrix β β ℂ) (r i) (p i)) *\n        (∏ i : ι, (U i : Matrix β β ℂ) (r i) (q i))) =\n      (1 : Matrix (ι → β) (ι → β) ℂ) p q\n  have factor :\n      (∑ r : ι → β,\n        star (∏ i : ι, (U i : Matrix β β ℂ) (r i) (p i)) *\n          (∏ i : ι, (U i : Matrix β β ℂ) (r i) (q i))) =\n        ∏ i : ι, ∑ x : β,\n          star ((U i : Matrix β β ℂ) x (p i)) *\n            (U i : Matrix β β ℂ) x (q i) := by\n    calc\n      _ = ∑ r : ι → β, ∏ i : ι,\n          (star ((U i : Matrix β β ℂ) (r i) (p i)) *\n            (U i : Matrix β β ℂ) (r i) (q i)) := by\n        apply Finset.sum_congr rfl\n        intro r _\n        rw [star_prod, ← Finset.prod_mul_distrib]\n      _ = _ :=\n        (Fintype.prod_sum fun i : ι => fun x : β =>\n          star ((U i : Matrix β β ℂ) x (p i)) *\n            (U i : Matrix β β ℂ) x (q i)).symm\n  rw [factor]\n  have single (i : ι) :\n      (∑ x : β,\n        star ((U i : Matrix β β ℂ) x (p i)) *\n          (U i : Matrix β β ℂ) x (q i)) =\n        (1 : Matrix β β ℂ) (p i) (q i) := by\n    have gram := (Matrix.mem_unitaryGroup_iff').mp\n      (U i).property\n    have entry := congrArg\n      (fun M : Matrix β β ℂ => M (p i) (q i)) gram\n    simpa [Matrix.star_eq_conjTranspose,\n      Matrix.mul_apply, Matrix.conjTranspose_apply] using entry\n  simp_rw [single]\n  by_cases equal : p = q\n  · subst q\n    simp\n  · have different : ∃ i : ι, p i ≠ q i := by\n      by_contra h\n      push Not at h\n      exact equal (funext h)\n    obtain ⟨i, hi⟩ := different\n    have zero :\n        (∏ j : ι, (1 : Matrix β β ℂ) (p j) (q j)) = 0 := by\n      apply Finset.prod_eq_zero (Finset.mem_univ i)\n      simp [hi]\n    rw [zero]\n    simp [equal]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.commonPurificationSubspace_finiteDimensional",
+    "upstream_lines": [
+      12387,
+      12395
+    ],
+    "docstring": "",
+    "statement": "theorem commonPurificationSubspace_finiteDimensional\n    {ι d : Type*} [Fintype ι] [Fintype d] [DecidableEq d]\n    (F : ι → Matrix d d ℂ) (M : Matrix d d ℂ)\n    (positive : ∀ i, (F i).PosSemidef)\n    (hM : M.PosSemidef) :\n    FiniteDimensional ℂ (commonPurificationSubspace F M positive hM)",
+    "proof": " by\n  unfold commonPurificationSubspace\n  exact FiniteDimensional.span_of_finite ℂ\n    (Set.finite_range (commonPurificationGenerator F M positive hM))",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.ensemble_spectralPurificationFilterEntryLp_mem_common",
+    "upstream_lines": [
+      12503,
+      12516
+    ],
+    "docstring": "",
+    "statement": "theorem ensemble_spectralPurificationFilterEntryLp_mem_common\n    {ι d : Type*} [Fintype ι] [Fintype d] [DecidableEq d]\n    (F : ι → Matrix d d ℂ) (M : Matrix d d ℂ)\n    (positive : ∀ i, (F i).PosSemidef)\n    (hM : M.PosSemidef)\n    (a : ι) (i j : d) :\n    spectralPurificationFilterEntryLp (F a) (positive a) i j ∈\n      commonPurificationSubspace F M positive hM",
+    "proof": " by\n  rw [spectralPurificationFilterEntryLp_eq_eigen_sum]\n  apply (commonPurificationSubspace F M positive hM).sum_mem\n  intro k _\n  apply (commonPurificationSubspace F M positive hM).smul_mem\n  exact ensemble_scalarPurificationLp_mem_common\n    F M positive hM a k",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.mean_spectralPurificationFilterEntryLp_mem_common",
+    "upstream_lines": [
+      12518,
+      12531
+    ],
+    "docstring": "",
+    "statement": "theorem mean_spectralPurificationFilterEntryLp_mem_common\n    {ι d : Type*} [Fintype ι] [Fintype d] [DecidableEq d]\n    (F : ι → Matrix d d ℂ) (M : Matrix d d ℂ)\n    (positive : ∀ i, (F i).PosSemidef)\n    (hM : M.PosSemidef)\n    (i j : d) :\n    spectralPurificationFilterEntryLp M hM i j ∈\n      commonPurificationSubspace F M positive hM",
+    "proof": " by\n  rw [spectralPurificationFilterEntryLp_eq_eigen_sum]\n  apply (commonPurificationSubspace F M positive hM).sum_mem\n  intro k _\n  apply (commonPurificationSubspace F M positive hM).smul_mem\n  exact mean_scalarPurificationLp_mem_common\n    F M positive hM k",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.strategyPurificationVector_norm",
+    "upstream_lines": [
+      13009,
+      13034
+    ],
+    "docstring": "",
+    "statement": "theorem strategyPurificationVector_norm\n    {X Y A B : Type*}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    {G : Game X Y A B} (S : Strategy G) :\n    ‖strategyPurificationVector S‖ = 1",
+    "proof": " by\n  let K := spectralSupportSqrt S.state.matrix S.state.positive\n  have h_hermitian : (Matrix.conjTranspose K) = K :=\n    (spectralSupportFunctional_isHermitian\n      S.state.matrix S.state.positive Real.sqrt).eq\n  have h_sq : ‖strategyPurificationVector S‖ ^ 2 = 1 := by\n    calc\n      ‖strategyPurificationVector S‖ ^ 2 =\n          ‖matrixPurificationVector K‖ ^ 2 :=\n            strategyPurificationVector_norm_sq S\n      _ = (Matrix.trace (Matrix.conjTranspose K * K)).re :=\n            matrixPurificationVector_norm_sq K\n      _ = (Matrix.trace S.state.matrix).re := by\n            rw [h_hermitian]\n            change\n              (Matrix.trace\n                (spectralSupportSqrt S.state.matrix S.state.positive *\n                  spectralSupportSqrt S.state.matrix S.state.positive)).re =\n                (Matrix.trace S.state.matrix).re\n            rw [spectralSupportSqrt_sq]\n      _ = 1 := by rw [S.state.trace_one]; norm_num\n  nlinarith [norm_nonneg (strategyPurificationVector S)]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalPhysicalProjector_pos",
+    "upstream_lines": [
+      13998,
+      14003
+    ],
+    "docstring": "",
+    "statement": "theorem dSVDensityRationalPhysicalProjector_pos\n    {d N : ℕ} (w : ℝ)\n    (ξ : BipartiteUnitVector d) (k : Fin N) :\n    (dSVDensityRationalPhysicalProjector w ξ k).PosSemidef",
+    "proof": "  (dSVDensityRationalLeftProjectiveThresholdPOVM\n    w N k ξ).positive true",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalPhysicalProjector_complement_pos",
+    "upstream_lines": [
+      14015,
+      14022
+    ],
+    "docstring": "",
+    "statement": "theorem dSVDensityRationalPhysicalProjector_complement_pos\n    {d N : ℕ} (w : ℝ)\n    (ξ : BipartiteUnitVector d) (k : Fin N) :\n    (1 - dSVDensityRationalPhysicalProjector w ξ k).PosSemidef",
+    "proof": "  dSVProjectorComplement_posSemidef\n    (dSVDensityRationalPhysicalProjector w ξ k)\n    (dSVDensityRationalPhysicalProjector_pos w ξ k)\n    (dSVDensityRationalPhysicalProjector_projective w ξ k)",
+    "imports_theorems": [
+      "QuantumParallelRepetition.dSVDensityRationalPhysicalProjector_pos"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_pos",
+    "upstream_lines": [
+      14304,
+      14310
+    ],
+    "docstring": "",
+    "statement": "theorem dSVDensityRationalCompleteProjectiveThresholdProjector_pos\n    {d : ℕ} (w : ℝ) (N : ℕ)\n    (ξ : BipartiteUnitVector d) (k : Fin N) :\n    (dSVDensityRationalCompleteProjectiveThresholdProjector\n      w N ξ k).PosSemidef",
+    "proof": "  (dSVDensityRationalLeftProjectiveThresholdPOVM\n    w N k ξ).positive true",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalCompleteProjectiveThresholdProjector_complement_pos",
+    "upstream_lines": [
+      14340,
+      14348
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalCompleteProjectiveThresholdProjector_complement_pos\n    {d : ℕ} (w : ℝ) (N : ℕ)\n    (ξ : BipartiteUnitVector d) (k : Fin N) :\n    (1 - dSVDensityRationalCompleteProjectiveThresholdProjector\n      w N ξ k).PosSemidef",
+    "proof": " by\n  rw [← dSVDensityRationalCompleteProjectiveThresholdEffect_false]\n  exact (dSVDensityRationalLeftProjectiveThresholdPOVM\n    w N k ξ).positive false",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalCanonicalNormalizedTarget_norm",
+    "upstream_lines": [
+      14789,
+      14798
+    ],
+    "docstring": "",
+    "statement": "theorem dSVDensityRationalCanonicalNormalizedTarget_norm\n    {d N : ℕ} {w : ℝ} (width : 0 < w) (grid : 0 < N)\n    (fine : (d : ℝ) / (N : ℝ) < 1 / (w + 1))\n    (ξ : BipartiteUnitVector d) :\n    ‖dSVDensityRationalCanonicalNormalizedTarget\n      w N ξ‖ = 1",
+    "proof": " by\n  unfold dSVDensityRationalCanonicalNormalizedTarget\n  exact NormedSpace.norm_normalize\n    (dSVDensityRationalCanonicalAcceptedTarget_ne_zero\n      width grid fine ξ)",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalLargeWidthRelativeMismatch_le_targetDistance",
+    "upstream_lines": [
+      14944,
+      14987
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalLargeWidthRelativeMismatch_le_targetDistance\n    {d N : ℕ} {w : ℝ} (large : 1 ≤ w) (grid : 0 < N)\n    (fine : (d : ℝ) / N ≤ 1 / (2 * (w + 1)))\n    (ξ ζ : BipartiteUnitVector d) :\n    dSVDensityRationalLeftProjectiveThresholdAtomMismatch\n        w N ξ ζ /\n      dSVDensityRationalLeftProjectiveDiagonalMass w N ξ ≤\n        8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n          2 * (w + 1) * ((d : ℝ) / N)",
+    "proof": " by\n  have width : 0 < w := lt_of_lt_of_le (by norm_num) large\n  have distance := dSVUniformLeftDensitySpectralAtomDiscrepancy_le\n    ξ ζ\n  have root : 0 ≤ Real.sqrt (2 : ℝ) := Real.sqrt_nonneg _\n  have distance_nonnegative : 0 ≤ ‖ξ.val - ζ.val‖ := norm_nonneg _\n  have denominator : 0 < w := width\n  have ratio : (w + 1) / w ≤ 2 := by\n    apply (div_le_iff₀ denominator).mpr\n    nlinarith\n  calc\n    dSVDensityRationalLeftProjectiveThresholdAtomMismatch\n        w N ξ ζ /\n      dSVDensityRationalLeftProjectiveDiagonalMass w N ξ ≤\n        2 * (w + 1) *\n          (dSVUniformLeftDensitySpectralAtomDiscrepancy ξ ζ / w +\n            (d : ℝ) / N) :=\n      dSVDensityRationalLargeWidthRelativeMismatch_le_discrepancy\n        width grid fine ξ ζ\n    _ ≤ 2 * (w + 1) *\n          ((2 * Real.sqrt 2 * ‖ξ.val - ζ.val‖) / w +\n            (d : ℝ) / N) := by\n      gcongr\n    _ = 4 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ * ((w + 1) / w) +\n          2 * (w + 1) * ((d : ℝ) / N) := by\n      field_simp; ring\n    _ ≤ (4 * Real.sqrt 2 * ‖ξ.val - ζ.val‖) * 2 +\n          2 * (w + 1) * ((d : ℝ) / N) := by\n      have scale_nonnegative :\n          0 ≤ 4 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ := by positivity\n      have scaled := mul_le_mul_of_nonneg_left ratio scale_nonnegative\n      exact add_le_add scaled (le_refl _)\n    _ = 8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n          2 * (w + 1) * ((d : ℝ) / N) := by\n      ring",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalLargeWidthPhysicalRelativeHazard_eq",
+    "upstream_lines": [
+      15070,
+      15091
+    ],
+    "docstring": "",
+    "statement": "theorem dSVDensityRationalLargeWidthPhysicalRelativeHazard_eq\n    {d N : ℕ} (dimension : 0 < d) {w : ℝ}\n    (width : 0 < w) (grid : 0 < N)\n    (fine : (d : ℝ) / N ≤ 1 / (2 * (w + 1)))\n    (ξ ζ : BipartiteUnitVector d) :\n    dSVDensityRationalPhysicalProjectorCrossHazard N w ξ ζ /\n      dSVDensityRationalPhysicalDiagonalBornSuccess\n        grid dimension w ξ =\n      dSVDensityRationalLeftProjectiveThresholdAtomMismatch\n        w N ξ ζ /\n        dSVDensityRationalLeftProjectiveDiagonalMass w N ξ",
+    "proof": " by\n  rw [dSVDensityRationalPhysicalProjectorCrossHazard_eq\n    grid dimension w ξ ζ,\n    dSVDensityRationalPhysicalDiagonalBornSuccess_eq\n      grid dimension w ξ]\n  have dimension_ne : (d : ℝ) ≠ 0 := by\n    exact_mod_cast (Nat.ne_of_gt dimension)\n  have mass_ne :\n      dSVDensityRationalLeftProjectiveDiagonalMass w N ξ ≠ 0 :=\n    ne_of_gt (dSVDensityRationalLargeWidthDiagonalMass_pos\n      width grid fine ξ)\n  field_simp",
+    "imports_theorems": []
+  }
+]

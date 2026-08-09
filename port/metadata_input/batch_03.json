@@ -1,0 +1,219 @@
+[
+  {
+    "name": "QuantumParallelRepetition.commonFinitePurification_weighted_left_variation_le",
+    "upstream_lines": [
+      21852,
+      21928
+    ],
+    "docstring": "",
+    "statement": "theorem commonFinitePurification_weighted_left_variation_le\n    {X Y A B ι κ eB : Type*}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    [Fintype ι] [Fintype κ] [Fintype eB]\n    {G : Game X Y A B} (S : Strategy G)\n    (weight : ι → ℝ)\n    (F : κ → Matrix S.Alice S.Alice ℂ)\n    (anchor : Matrix S.Alice S.Alice ℂ)\n    (positive : ∀ k, (F k).PosSemidef)\n    (hanchor : anchor.PosSemidef)\n    (choose : ι → κ) (meanIndex : κ)\n    (nonnegative : ∀ a, 0 ≤ weight a)\n    (normalized : (∑ a : ι, weight a) = 1)\n    (mean : (∑ a : ι, weight a • F (choose a)) = F meanIndex)\n    (KB : Matrix eB S.Bob ℂ) :\n    (∑ a : ι, weight a *\n      ‖finiteLocalPurificationVector S\n          (finitePurificationMatrix F anchor positive hanchor (choose a)) KB -\n        finiteLocalPurificationVector S\n          (finitePurificationMatrix F anchor positive hanchor meanIndex) KB‖ ^ 2) ≤\n      bornTracePairing S.state.matrix\n        ((∑ a : ι, weight a •\n            cfc (fun z : ℝ => z * Real.log z) (F (choose a))) -\n          cfc (fun z : ℝ => z * Real.log z) (F meanIndex))\n        (KB.conjTranspose * KB)",
+    "proof": " by\n  classical\n  have hJ := common_finite_purification_pair_jensen\n    weight F anchor positive hanchor choose meanIndex\n    nonnegative normalized mean\n  have hnonneg := trace_mul_posSemidef_nonneg S.state.positive\n    (hJ.kronecker (Matrix.posSemidef_conjTranspose_mul_self KB))\n  change\n    0 ≤ bornTracePairing S.state.matrix\n      (((∑ a : ι, weight a •\n          cfc (fun z : ℝ => z * Real.log z) (F (choose a))) -\n        cfc (fun z : ℝ => z * Real.log z) (F meanIndex)) -\n       (∑ a : ι, weight a •\n        ((finitePurificationMatrix F anchor positive hanchor (choose a) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n          (finitePurificationMatrix F anchor positive hanchor (choose a) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex))))\n      (KB.conjTranspose * KB) at hnonneg\n  have hsum :\n      bornTracePairing S.state.matrix\n        (∑ a : ι, weight a •\n          ((finitePurificationMatrix F anchor positive hanchor (choose a) -\n              finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n            (finitePurificationMatrix F anchor positive hanchor (choose a) -\n              finitePurificationMatrix F anchor positive hanchor meanIndex)))\n        (KB.conjTranspose * KB) =\n        ∑ a : ι, weight a *\n          ‖finiteLocalPurificationVector S\n              (finitePurificationMatrix F anchor positive hanchor (choose a)) KB -\n            finiteLocalPurificationVector S\n              (finitePurificationMatrix F anchor positive hanchor meanIndex) KB‖ ^ 2 := by\n    simp only [map_sum, LinearMap.sum_apply, map_smul,\n      LinearMap.smul_apply, smul_eq_mul]\n    apply Finset.sum_congr rfl\n    intro a _\n    rw [finiteLocalPurificationVector_sub_left_norm_sq]\n  rw [map_sub] at hnonneg\n  change\n    0 ≤\n      bornTracePairing S.state.matrix\n        ((∑ a : ι, weight a •\n            cfc (fun z : ℝ => z * Real.log z) (F (choose a))) -\n          cfc (fun z : ℝ => z * Real.log z) (F meanIndex))\n        (KB.conjTranspose * KB) -\n      bornTracePairing S.state.matrix\n        (∑ a : ι, weight a •\n          ((finitePurificationMatrix F anchor positive hanchor (choose a) -\n              finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n            (finitePurificationMatrix F anchor positive hanchor (choose a) -\n              finitePurificationMatrix F anchor positive hanchor meanIndex)))\n        (KB.conjTranspose * KB) at hnonneg\n  rw [hsum] at hnonneg\n  linarith",
+    "imports_theorems": [
+      "QuantumParallelRepetition.common_finite_purification_pair_jensen",
+      "QuantumParallelRepetition.trace_mul_posSemidef_nonneg"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.commonFinitePurification_weighted_right_variation_le",
+    "upstream_lines": [
+      21930,
+      21990
+    ],
+    "docstring": "",
+    "statement": "theorem commonFinitePurification_weighted_right_variation_le\n    {X Y A B ι κ eA : Type*}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    [Fintype ι] [Fintype κ] [Fintype eA]\n    {G : Game X Y A B} (S : Strategy G)\n    (weight : ι → ℝ)\n    (F : κ → Matrix S.Bob S.Bob ℂ)\n    (anchor : Matrix S.Bob S.Bob ℂ)\n    (positive : ∀ k, (F k).PosSemidef)\n    (hanchor : anchor.PosSemidef)\n    (choose : ι → κ) (meanIndex : κ)\n    (nonnegative : ∀ b, 0 ≤ weight b)\n    (normalized : (∑ b : ι, weight b) = 1)\n    (mean : (∑ b : ι, weight b • F (choose b)) = F meanIndex)\n    (KA : Matrix eA S.Alice ℂ) :\n    (∑ b : ι, weight b *\n      ‖finiteLocalPurificationVector S KA\n          (finitePurificationMatrix F anchor positive hanchor (choose b)) -\n        finiteLocalPurificationVector S KA\n          (finitePurificationMatrix F anchor positive hanchor meanIndex)‖ ^ 2) ≤\n      bornTracePairing S.state.matrix\n        (KA.conjTranspose * KA)\n        ((∑ b : ι, weight b •\n            cfc (fun z : ℝ => z * Real.log z) (F (choose b))) -\n          cfc (fun z : ℝ => z * Real.log z) (F meanIndex))",
+    "proof": " by\n  classical\n  have hJ := common_finite_purification_pair_jensen\n    weight F anchor positive hanchor choose meanIndex\n    nonnegative normalized mean\n  have hnonneg := trace_mul_posSemidef_nonneg S.state.positive\n    ((Matrix.posSemidef_conjTranspose_mul_self KA).kronecker hJ)\n  change\n    0 ≤ bornTracePairing S.state.matrix\n      (KA.conjTranspose * KA)\n      (((∑ b : ι, weight b •\n          cfc (fun z : ℝ => z * Real.log z) (F (choose b))) -\n        cfc (fun z : ℝ => z * Real.log z) (F meanIndex)) -\n       (∑ b : ι, weight b •\n        ((finitePurificationMatrix F anchor positive hanchor (choose b) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n          (finitePurificationMatrix F anchor positive hanchor (choose b) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex)))) at hnonneg\n  have hsum :\n      bornTracePairing S.state.matrix\n        (KA.conjTranspose * KA)\n        (∑ b : ι, weight b •\n          ((finitePurificationMatrix F anchor positive hanchor (choose b) -\n              finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n            (finitePurificationMatrix F anchor positive hanchor (choose b) -\n              finitePurificationMatrix F anchor positive hanchor meanIndex))) =\n        ∑ b : ι, weight b *\n          ‖finiteLocalPurificationVector S KA\n              (finitePurificationMatrix F anchor positive hanchor (choose b)) -\n            finiteLocalPurificationVector S KA\n              (finitePurificationMatrix F anchor positive hanchor meanIndex)‖ ^ 2 := by\n    simp only [map_sum, map_smul, smul_eq_mul]\n    apply Finset.sum_congr rfl\n    intro b _\n    rw [finiteLocalPurificationVector_sub_right_norm_sq]\n  rw [map_sub, hsum] at hnonneg\n  linarith",
+    "imports_theorems": [
+      "QuantumParallelRepetition.common_finite_purification_pair_jensen",
+      "QuantumParallelRepetition.trace_mul_posSemidef_nonneg"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAliceQuestionFilter_posSemidef",
+    "upstream_lines": [
+      22478,
+      22496
+    ],
+    "docstring": "",
+    "statement": "theorem exactAliceQuestionFilter_posSemidef\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → A)\n    (x : X) :\n    (exactAliceQuestionFilter\n      G n S D seed history answer x).PosSemidef",
+    "proof": " by\n  unfold exactAliceQuestionFilter\n  apply Matrix.posSemidef_sum Finset.univ\n  intro q _\n  split\n  · exact (conditionedAliceEffect_positive G n S D answer q.1).smul\n      (div_nonneg\n        (exactPriorQuestionWeight_nonneg G n q)\n        (exactAliceQuestionMass_nonneg\n          G n D seed history x))\n  · exact Matrix.PosSemidef.zero",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobQuestionFilter_posSemidef",
+    "upstream_lines": [
+      22498,
+      22516
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobQuestionFilter_posSemidef\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → B)\n    (y : Y) :\n    (exactBobQuestionFilter\n      G n S D seed history answer y).PosSemidef",
+    "proof": " by\n  unfold exactBobQuestionFilter\n  apply Matrix.posSemidef_sum Finset.univ\n  intro q _\n  split\n  · exact (conditionedBobEffect_positive G n S D answer q.2).smul\n      (div_nonneg\n        (exactPriorQuestionWeight_nonneg G n q)\n        (exactBobQuestionMass_nonneg\n          G n D seed history y))\n  · exact Matrix.PosSemidef.zero",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAliceCoordinateFilter_posSemidef",
+    "upstream_lines": [
+      22604,
+      22623
+    ],
+    "docstring": "",
+    "statement": "theorem exactAliceCoordinateFilter_posSemidef\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → A)\n    (x : X) (a : A) :\n    (exactAliceCoordinateFilter\n      G n S D seed history answer x a).PosSemidef",
+    "proof": " by\n  unfold exactAliceCoordinateFilter\n  apply Matrix.posSemidef_sum Finset.univ\n  intro q _\n  split\n  · exact (conditionedAliceCoordinateEffect_posSemidef\n      G n S D answer q.1 seed.coordinate.val a).smul\n      (div_nonneg\n        (exactPriorQuestionWeight_nonneg G n q)\n        (exactAliceQuestionMass_nonneg\n          G n D seed history x))\n  · exact Matrix.PosSemidef.zero",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobCoordinateFilter_posSemidef",
+    "upstream_lines": [
+      22625,
+      22644
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobCoordinateFilter_posSemidef\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → B)\n    (y : Y) (b : B) :\n    (exactBobCoordinateFilter\n      G n S D seed history answer y b).PosSemidef",
+    "proof": " by\n  unfold exactBobCoordinateFilter\n  apply Matrix.posSemidef_sum Finset.univ\n  intro q _\n  split\n  · exact (conditionedBobCoordinateEffect_posSemidef\n      G n S D answer q.2 seed.coordinate.val b).smul\n      (div_nonneg\n        (exactPriorQuestionWeight_nonneg G n q)\n        (exactBobQuestionMass_nonneg\n          G n D seed history y))\n  · exact Matrix.PosSemidef.zero",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAliceCoordinateFilter_sum",
+    "upstream_lines": [
+      22646,
+      22668
+    ],
+    "docstring": "",
+    "statement": "theorem exactAliceCoordinateFilter_sum\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → A)\n    (x : X) :\n    (∑ a : A,\n      exactAliceCoordinateFilter\n        G n S D seed history answer x a) =\n      exactAliceQuestionFilter\n        G n S D seed history answer x",
+    "proof": " by\n  classical\n  unfold exactAliceCoordinateFilter\n    exactAliceQuestionFilter\n  rw [Finset.sum_comm]\n  apply Finset.sum_congr rfl\n  intro q _\n  by_cases hq : exactRevealCode D seed q = history ∧\n      q.1 seed.coordinate.val = x\n  · simp [hq, ← Finset.smul_sum,\n      conditionedAliceCoordinateEffect_sum]\n  · simp [hq]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobCoordinateFilter_sum",
+    "upstream_lines": [
+      22670,
+      22692
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobCoordinateFilter_sum\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → B)\n    (y : Y) :\n    (∑ b : B,\n      exactBobCoordinateFilter\n        G n S D seed history answer y b) =\n      exactBobQuestionFilter\n        G n S D seed history answer y",
+    "proof": " by\n  classical\n  unfold exactBobCoordinateFilter\n    exactBobQuestionFilter\n  rw [Finset.sum_comm]\n  apply Finset.sum_congr rfl\n  intro q _\n  by_cases hq : exactRevealCode D seed q = history ∧\n      q.2 seed.coordinate.val = y\n  · simp [hq, ← Finset.smul_sum,\n      conditionedBobCoordinateEffect_sum]\n  · simp [hq]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+    "upstream_lines": [
+      22716,
+      22731
+    ],
+    "docstring": "",
+    "statement": "theorem exactAlicePurificationFamily_posSemidef\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → A)\n    (q : Sum X Y) :\n    (exactAlicePurificationFamily\n      G n S D seed history answer q).PosSemidef",
+    "proof": " by\n  cases q with\n  | inl x =>\n      exact exactAliceQuestionFilter_posSemidef\n        G n S D seed history answer x\n  | inr y =>\n      exact exactAliceMeanFilter_posSemidef\n        G n S D seed history answer y",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAliceQuestionFilter_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef",
+    "upstream_lines": [
+      22733,
+      22748
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobPurificationFamily_posSemidef\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (answer : {j : Fin n // j ∈ D} → B)\n    (q : Sum Y X) :\n    (exactBobPurificationFamily\n      G n S D seed history answer q).PosSemidef",
+    "proof": " by\n  cases q with\n  | inl y =>\n      exact exactBobQuestionFilter_posSemidef\n        G n S D seed history answer y\n  | inr x =>\n      exact exactBobMeanFilter_posSemidef\n        G n S D seed history answer x",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactBobQuestionFilter_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAliceQuestionPurificationMatrix_gram",
+    "upstream_lines": [
+      22987,
+      22999
+    ],
+    "docstring": "",
+    "statement": "theorem exactAliceQuestionPurificationMatrix_gram\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (r : ExactHistoryFlag X Y A B D)\n    (x : X) :\n    (exactAlicePurificationMatrix\n      G n S D r.seed r.history r.aliceAnswer (.inl x)).conjTranspose *\n      exactAlicePurificationMatrix\n        G n S D r.seed r.history r.aliceAnswer (.inl x) =\n      exactAliceQuestionFilter\n        G n S D r.seed r.history r.aliceAnswer x",
+    "proof": "  exactAlicePurificationMatrix_gram\n    G n S D r.seed r.history r.aliceAnswer (.inl x)",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobQuestionPurificationMatrix_gram",
+    "upstream_lines": [
+      23001,
+      23013
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobQuestionPurificationMatrix_gram\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (r : ExactHistoryFlag X Y A B D)\n    (y : Y) :\n    (exactBobPurificationMatrix\n      G n S D r.seed r.history r.bobAnswer (.inl y)).conjTranspose *\n      exactBobPurificationMatrix\n        G n S D r.seed r.history r.bobAnswer (.inl y) =\n      exactBobQuestionFilter\n        G n S D r.seed r.history r.bobAnswer y",
+    "proof": "  exactBobPurificationMatrix_gram\n    G n S D r.seed r.history r.bobAnswer (.inl y)",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactPaddedDefault_norm",
+    "upstream_lines": [
+      23215,
+      23221
+    ],
+    "docstring": "",
+    "statement": "theorem exactPaddedDefault_norm\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (r : ExactHistoryFlag X Y A B D) :\n    ‖exactPaddedDefault G n S D r‖ = 1",
+    "proof": " by\n  classical\n  simp [exactPaddedDefault]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactSeedWeight_sum",
+    "upstream_lines": [
+      23577,
+      23649
+    ],
+    "docstring": "",
+    "statement": "theorem exactSeedWeight_sum\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (nonempty : 0 < Fintype.card M) :\n    (∑ seed : ExactForwardSeed M,\n      exactSeedWeight seed) = 1",
+    "proof": " by\n  classical\n  have hbits : 0 < Fintype.card (M → Bool) :=\n    Fintype.card_pos_iff.mpr ⟨fun _ => false⟩\n  rw [exactForwardSeed_sum]\n  conv_rhs => rw [← exactUniform_sum nonempty]\n  apply Finset.sum_congr (by ext; simp)\n  intro coordinate _\n  conv_rhs =>\n    rw [← exactUniform_sum_mul hbits\n      (1 / (Fintype.card M : ℝ))]\n  apply Finset.sum_congr (by ext; simp)\n  intro partition _\n  letI : DecidableEq\n      {j : M // j ∈ exactLeft coordinate partition} :=\n    fun a b => Classical.propDecidable (a = b)\n  letI : DecidableEq\n      {j : M // j ∈ exactRight coordinate partition} :=\n    fun a b => Classical.propDecidable (a = b)\n  conv_rhs =>\n    rw [← exactPermutationUniform_sum_mul\n      (T := {j : M // j ∈ exactLeft coordinate partition})\n      ((1 / (Fintype.card M : ℝ)) *\n        (1 / (Fintype.card (M → Bool) : ℝ)))]\n  apply Finset.sum_congr (by ext; simp)\n  intro leftOrder _\n  conv_rhs =>\n    rw [← exactPermutationUniform_sum_mul\n      (T := {j : M // j ∈ exactRight coordinate partition})\n      ((1 / (Fintype.card M : ℝ)) *\n        (1 / (Fintype.card (M → Bool) : ℝ)) *\n        (1 / (Fintype.card\n          (Equiv.Perm\n            {j : M // j ∈ exactLeft coordinate partition}) : ℝ)))]\n  apply Finset.sum_congr (by ext; simp)\n  intro rightOrder _\n  conv_rhs =>\n    rw [← exactPrefixUniform_sum_mul\n      (exactLeft coordinate partition).card\n      ((1 / (Fintype.card M : ℝ)) *\n        (1 / (Fintype.card (M → Bool) : ℝ)) *\n        (1 / (Fintype.card\n          (Equiv.Perm\n            {j : M // j ∈ exactLeft coordinate partition}) : ℝ)) *\n        (1 / (Fintype.card\n          (Equiv.Perm\n            {j : M // j ∈ exactRight coordinate partition}) : ℝ)))]\n  apply Finset.sum_congr (by ext; simp)\n  intro leftCut _\n  conv_rhs =>\n    rw [← exactPrefixUniform_sum_mul\n      (exactRight coordinate partition).card\n      ((1 / (Fintype.card M : ℝ)) *\n        (1 / (Fintype.card (M → Bool) : ℝ)) *\n        (1 / (Fintype.card\n          (Equiv.Perm\n            {j : M // j ∈ exactLeft coordinate partition}) : ℝ)) *\n        (1 / (Fintype.card\n          (Equiv.Perm\n            {j : M // j ∈ exactRight coordinate partition}) : ℝ)) *\n        (1 / ((exactLeft coordinate partition).card + 1 : ℝ)))]\n  apply Finset.sum_congr (by ext; simp)\n  intro rightCut _\n  simp only [exactSeedWeight]\n  congr 2\n  congr 3\n  · apply congrArg (fun k : ℕ => (k : ℝ))\n    exact exactFintypeCard_eq _ _\n  · exact exactFintypeCard_eq _ _",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.fullHistoryRemaining_insert_conditioned",
+    "upstream_lines": [
+      24084,
+      24091
+    ],
+    "docstring": "",
+    "statement": "theorem fullHistoryRemaining_insert_conditioned\n    {n : ℕ} (D L : Finset (Fin n)) (i : Fin n) :\n    fullHistoryRemaining n (insert i D) L =\n      fullHistoryRemaining n D (insert i L)",
+    "proof": " by\n  ext j\n  simp only [fullHistoryRemaining, Finset.mem_sdiff,\n    Finset.mem_univ, true_and, Finset.mem_insert]\n  tauto",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.martingale_log_cost_eq",
+    "upstream_lines": [
+      24960,
+      24986
+    ],
+    "docstring": "",
+    "statement": "theorem martingale_log_cost_eq\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (hp : 0 < repeatedPostselectionMass G n S D) :\n    Real.log\n        (fullHistoryAnswerCount (A := A) (B := B) D /\n          repeatedPostselectionMass G n S D) =\n      postselectionLogCost G n S D +\n        answerLogCost (A := A) (B := B) D",
+    "proof": " by\n  have hN := answerCount_pos_of_postselection G n S D hp\n  calc\n    Real.log\n        (fullHistoryAnswerCount (A := A) (B := B) D /\n          repeatedPostselectionMass G n S D) =\n        Real.log (fullHistoryAnswerCount (A := A) (B := B) D) -\n          Real.log (repeatedPostselectionMass G n S D) :=\n            Real.log_div hN.ne' hp.ne'\n    _ = (D.card : ℝ) *\n          Real.log ((Fintype.card A : ℝ) *\n            (Fintype.card B : ℝ)) -\n          Real.log (repeatedPostselectionMass G n S D) := by\n            rw [fullHistoryAnswerCount_eq, ← mul_pow, Real.log_pow]\n    _ = postselectionLogCost G n S D +\n          answerLogCost (A := A) (B := B) D := by\n            simp only [postselectionLogCost,\n              answerLogCost, one_div, Real.log_inv]\n            ring",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.aliceMartingaleEntropyBudget",
+    "upstream_lines": [
+      24988,
+      25007
+    ],
+    "docstring": "",
+    "statement": "theorem aliceMartingaleEntropyBudget\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (hm : 0 < (Finset.univ \\ D).card)\n    (hp : 0 < repeatedPostselectionMass G n S D) :\n    sourceUniformPermutationAverage D\n        (sourcePermutationAliceEntropyIncrement G n S D) ≤\n      repeatedPostselectionMass G n S D *\n        martingaleRate G n S D",
+    "proof": " by\n  have hbudget := sourceUniformPermutationAliceEntropyBudget\n    G n S D hm hp\n  change sourceUniformPermutationAverage D\n    (sourcePermutationAliceEntropyIncrement G n S D) ≤\n    repeatedPostselectionMass G n S D *\n      Real.log\n        (fullHistoryAnswerCount (A := A) (B := B) D /\n          repeatedPostselectionMass G n S D) /\n        ((Finset.univ \\ D).card : ℝ) at hbudget\n  rw [martingale_log_cost_eq G n S D hp] at hbudget\n  simpa [martingaleRate, mul_div_assoc] using hbudget",
+    "imports_theorems": [
+      "QuantumParallelRepetition.martingale_log_cost_eq"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.sourceHistoryAcceptedMass_eq_uniform",
+    "upstream_lines": [
+      25652,
+      25721
+    ],
+    "docstring": "",
+    "statement": "theorem sourceHistoryAcceptedMass_eq_uniform\n    (G : Game X Y A B) (n : ℕ)\n    (S : Strategy (G.repeat n)) (D : Finset (Fin n)) :\n    sourceHistoryAcceptedMass G n S D =\n      sourceUniformPermutationAverage D\n        (fun π k =>\n          (strategyEventLaw (G.repeat n) S).eventMass\n            (FiniteEventLaw.winEvent (repeatedCoordinateWin G n)\n              (insert (sourceRemainingPermutationCoordinate D π k) D)))",
+    "proof": " by\n  classical\n  have hlocal (π : SourceRemainingPermutation D)\n      (k : Fin (Finset.univ \\ D).card) :\n      fullCoordinateAcceptedPostselectedMass G n S D\n        (sourceRemainingPermutationPrefix D π k.castSucc)\n        (sourceRemainingPermutationCoordinate D π k) =\n        (strategyEventLaw (G.repeat n) S).eventMass\n          (FiniteEventLaw.winEvent (repeatedCoordinateWin G n)\n            (insert (sourceRemainingPermutationCoordinate D π k) D)) := by\n    apply fullCoordinateAcceptedPostselectedMass_eq\n    · exact sourceRemainingPermutationCoordinate_not_mem D π k\n    · exact sourceRemainingPermutationCoordinate_not_mem_prefix D π k\n    · exact sourceRemainingPermutationPrefix_subset D π k.castSucc\n  calc\n    sourceHistoryAcceptedMass G n S D =\n      ∑ π : SourceRemainingPermutation D,\n      ∑ k : Fin (Finset.univ \\ D).card,\n        sourceHistoryPermutationPositionWeight D *\n          fullCoordinateAcceptedPostselectedMass G n S D\n            (sourceRemainingPermutationPrefix D π k.castSucc)\n            (sourceRemainingPermutationCoordinate D π k) := by\n      unfold sourceHistoryAcceptedMass\n      rw [sourceHistoryFlag_sum]\n      apply Finset.sum_congr rfl\n      intro π _\n      apply Finset.sum_congr rfl\n      intro k _\n      unfold fullCoordinateAcceptedPostselectedMass\n      simp only [Finset.mul_sum]\n      apply Finset.sum_congr rfl\n      intro r _\n      apply Finset.sum_congr rfl\n      intro α _\n      apply Finset.sum_congr rfl\n      intro β _\n      simp only [sourceHistoryRaw, sourceHistoryAcceptedQuestionMass,\n        Finset.mul_sum]\n      ring_nf\n    _ =\n      ∑ π : SourceRemainingPermutation D,\n      ∑ k : Fin (Finset.univ \\ D).card,\n        sourceHistoryPermutationPositionWeight D *\n          (strategyEventLaw (G.repeat n) S).eventMass\n            (FiniteEventLaw.winEvent (repeatedCoordinateWin G n)\n              (insert (sourceRemainingPermutationCoordinate D π k) D)) := by\n      apply Finset.sum_congr rfl\n      intro π _\n      apply Finset.sum_congr rfl\n      intro k _\n      rw [hlocal π k]\n    _ = _ := by\n      unfold sourceHistoryPermutationPositionWeight\n        sourceUniformPermutationAverage\n      simp_rw [one_div, div_eq_mul_inv]\n      rw [Finset.sum_mul]\n      apply Finset.sum_congr rfl\n      intro π _\n      rw [Finset.sum_mul]\n      apply Finset.sum_congr rfl\n      intro k _\n      ring",
+    "imports_theorems": []
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "name": "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.answerNonempty",
+    "upstream_lines": [
+      70257,
+      70261
+    ],
+    "docstring": "",
+    "statement": "theorem answerNonempty\n    (c : UnconditionalActualFairSourceRoundingContext\n      G n S D alpha gamma) : Nonempty A ∧ Nonempty B",
+    "proof": "  exactSourceAnswerTypes_nonempty_of_remaining\n    G n S D c.remaining",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_cleanBound",
+    "upstream_lines": [
+      70434,
+      70498
+    ],
+    "docstring": "",
+    "statement": "theorem unconditionalActualFairSourceRoundingContext_cleanBound\n    {X Y A B : Type}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    {G : Game X Y A B} {n : ℕ} {S : Strategy (G.repeat n)}\n    {D : Finset (Fin n)} {alpha gamma : ℝ}\n    (c : UnconditionalActualFairSourceRoundingContext\n      G n S D alpha gamma) :\n    deviation c ≤\n      (34 / Real.sqrt\n          (64 * Real.sqrt (martingaleRate G n S D) +\n            alpha ^ (1 / 3 : ℝ))) *\n        (64 * Real.sqrt (martingaleRate G n S D) +\n          alpha ^ (1 / 3 : ℝ)) +\n        4 * (alpha ^ (1 / 12 : ℝ)) ^ 2 +\n          unconditionalPrefactorBucketCoefficient *\n            Real.sqrt\n              (64 * Real.sqrt (martingaleRate G n S D) +\n                alpha ^ (1 / 3 : ℝ))",
+    "proof": " by\n  have identification :=\n    unconditionalActualC485WeightedCleanDeviation_eq_hazard\n      (law c) c.stopping.Q (width c) (schedule c)\n      (gammaVector c) (phiVector c)\n      c.stopping.UA c.stopping.UB\n      (width_all c) c.stopping.phases c.stopping.grid\n      (dimension_pos c) (fine_all c)\n  have fair_hazard :\n      (∑ h : ExactLocallySampleableTuple X Y A B D,\n        law c h *\n          dSVDensityRationalHeterogeneousStoppedCommonPrefixHazard\n            c.stopping.Q c.stopping.m (width c) (schedule c)\n            (gammaVector c h) (phiVector c h)\n            c.stopping.UA c.stopping.UB) ≤\n        (34 / Real.sqrt\n            (64 * Real.sqrt (martingaleRate G n S D) +\n              alpha ^ (1 / 3 : ℝ))) *\n          (64 * Real.sqrt (martingaleRate G n S D) +\n            alpha ^ (1 / 3 : ℝ)) +\n          4 * (alpha ^ (1 / 12 : ℝ)) ^ 2 +\n            unconditionalPrefactorBucketCoefficient *\n              Real.sqrt\n                (64 * Real.sqrt (martingaleRate G n S D) +\n                  alpha ^ (1 / 3 : ℝ)) := by\n    change\n      (∑ h : ExactLocallySampleableTuple X Y A B D,\n        exactLocallySampleableLaw G n S D h *\n          dSVDensityRationalHeterogeneousStoppedCommonPrefixHazard\n            c.stopping.Q c.stopping.m\n            (fun _ : Fin 1 => c.stopping.w)\n            (fun _ : Fin c.stopping.L => 0)\n            (unconditionalExactFairGammaUnit G n S D h)\n            (exactGlobalHistoryFinPhi\n              G n S D h.2.2.2 h.2.2.1)\n            c.stopping.UA c.stopping.UB) ≤ _\n    simpa only [unconditionalExactFairGammaUnit_eq_global] using\n      c.stopping.hazard\n  calc\n    deviation c =\n        (∑ h : ExactLocallySampleableTuple X Y A B D,\n          law c h *\n            dSVDensityRationalHeterogeneousStoppedCommonPrefixHazard\n              c.stopping.Q c.stopping.m (width c) (schedule c)\n              (gammaVector c h) (phiVector c h)\n              c.stopping.UA c.stopping.UB) := by\n          simpa only [deviation, actual, canonical] using identification\n    _ ≤ _ := fair_hazard",
+    "imports_theorems": [
+      "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all",
+      "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all",
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_analyticLedger",
+    "upstream_lines": [
+      70500,
+      70609
+    ],
+    "docstring": "",
+    "statement": "theorem unconditionalActualFairSourceRoundingContext_analyticLedger\n    {X Y A B : Type}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    {G : Game X Y A B} {n : ℕ} {S : Strategy (G.repeat n)}\n    {D : Finset (Fin n)} {alpha gamma : ℝ}\n    (c : UnconditionalActualFairSourceRoundingContext\n      G n S D alpha gamma) :\n    UnconditionalActualFairCachedStoppedAnalyticLedger\n      (law c) (actual c) (canonical c) (source c)\n      (deviation c) (clipping c) (bad c)",
+    "proof": " by\n  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩\n  · exact unconditionalActualFairWeightedCleanedMass_le_one\n      (law c)\n      (exactLocallySampleableLaw_nonneg G n S D c.positive)\n      (exactLocallySampleableLaw_sum\n        G n S D c.remaining c.positive)\n      c.stopping.phases c.stopping.grid (dimension_pos c)\n      c.stopping.harmonic (width c) (width_all c) (schedule c)\n      (gammaVector c) (phiVector c)\n      c.stopping.Q c.stopping.UA c.stopping.UB\n  · exact unconditionalActualFairWeightedCanonicalMass_le_one\n      (law c)\n      (exactLocallySampleableLaw_nonneg G n S D c.positive)\n      (exactLocallySampleableLaw_sum\n        G n S D c.remaining c.positive)\n      c.stopping.phases c.stopping.grid (dimension_pos c)\n      c.stopping.harmonic (width c) (width_all c) (schedule c)\n      (gammaVector c) (phiVector c) (fine_all c)\n  · intro h\n    exact unconditionalActualFairCanonicalRow_le_one\n      c.stopping.phases c.stopping.grid (dimension_pos c)\n      c.stopping.harmonic (width c) (width_all c) (schedule c)\n      (gammaVector c h) (phiVector c h) (fine_all c)\n  · intro h j\n    exact unconditionalActualFairSourceCanonicalVector_norm\n      c.stopping.phases c.stopping.grid c.stopping.harmonic\n      (width c) (schedule c) (gammaVector c h) (phiVector c h)\n      (psiVector c h) (exactSourceTuplePsi_norm G n S D h) j\n      (width_all c (schedule c j)) (fine_all c (schedule c j))\n  · exact le_refl (deviation c)\n  · change\n      (∑ h : ExactLocallySampleableTuple X Y A B D,\n        law c h *\n          ∑ j : Fin c.stopping.L,\n            ‖canonical c (h, j) - source c (h, j)‖ ^ 2) ≤\n        unconditionalActualC485FairSourceClipEnergy\n          (P := c.stopping.P) (m := c.stopping.m)\n          G n S D (width_positive c) c.stopping.grid\n          c.stopping.fine (schedule c)\n    unfold unconditionalActualC485FairSourceClipEnergy\n    apply le_of_eq\n    apply Finset.sum_congr rfl\n    intro h _\n    congr 1\n    apply Finset.sum_congr rfl\n    intro j _\n    change\n      ‖canonical c (h, j) - source c (h, j)‖ ^ 2 =\n        ‖source c (h, j) - canonical c (h, j)‖ ^ 2\n    rw [norm_sub_rev]\n  · have async :\n        (∑ h : ExactLocallySampleableTuple X Y A B D,\n          law c h *\n            dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass\n              c.stopping.N (width c) (schedule c)\n              (gammaVector c h) (phiVector c h)) ≤\n          64 * Real.sqrt (martingaleRate G n S D) +\n            alpha ^ (1 / 3 : ℝ) := by\n      change\n        (∑ h : ExactLocallySampleableTuple X Y A B D,\n          exactLocallySampleableLaw G n S D h *\n            dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass\n              c.stopping.N\n              (fun _ : Fin 1 => c.stopping.w)\n              (fun _ : Fin c.stopping.L => 0)\n              (unconditionalExactFairGammaUnit G n S D h)\n              (exactGlobalHistoryFinPhi\n                G n S D h.2.2.2 h.2.2.1)) ≤ _\n      simpa only [unconditionalExactFairGammaUnit_eq_global] using\n        c.stopping.asynchronous\n    have finish :\n        (∑ h : ExactLocallySampleableTuple X Y A B D,\n          law c h *\n            dSVDensityRationalHeterogeneousPhysicalTerminalMass\n              c.stopping.N (width c) (schedule c)\n              (gammaVector c h) (phiVector c h)) ≤\n          (alpha ^ (1 / 3 : ℝ)) ^ 2 := by\n      change\n        (∑ h : ExactLocallySampleableTuple X Y A B D,\n          exactLocallySampleableLaw G n S D h *\n            dSVDensityRationalHeterogeneousPhysicalTerminalMass\n              c.stopping.N\n              (fun _ : Fin 1 => c.stopping.w)\n              (fun _ : Fin c.stopping.L => 0)\n              (unconditionalExactFairGammaUnit G n S D h)\n              (exactGlobalHistoryFinPhi\n                G n S D h.2.2.2 h.2.2.1)) ≤ _\n      simpa only [unconditionalExactFairGammaUnit_eq_global] using\n        c.stopping.terminal\n... (11 more lines)",
+    "imports_theorems": [
+      "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all",
+      "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all",
+      "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_positive",
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef",
+      "QuantumParallelRepetition.unconditionalActualFairWeightedStoppedSuccess"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_verifierLedger",
+    "upstream_lines": [
+      70623,
+      70677
+    ],
+    "docstring": "",
+    "statement": "theorem unconditionalActualFairSourceRoundingContext_verifierLedger\n    {X Y A B : Type}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    {G : Game X Y A B} {n : ℕ} {S : Strategy (G.repeat n)}\n    {D : Finset (Fin n)} {alpha gamma : ℝ}\n    (c : UnconditionalActualFairSourceRoundingContext\n      G n S D alpha gamma) :\n    UnconditionalActualFairCachedSourceVerifierLedger\n      G n S D c.operator c.actual c.source",
+    "proof": " by\n  classical\n  refine ⟨?_, ?_, ?_, ?_⟩\n  · intro p\n    exact unconditionalActualFairSourceVerifier_norm_le_one\n      G n S D c.aliceDefault c.bobDefault\n      p.2 p.1.2.1 p.1.2.2.1\n  · intro h supported j\n    change\n      quadraticExpectation\n          (integratorActualC485WinningEffect\n            (P := c.stopping.P) (N := c.stopping.N)\n            (m := c.stopping.m)\n            G n S D c.aliceDefault c.bobDefault\n            j h.2.1 h.2.2.1)\n          (integratorActualC485SourceVector\n            (S := 1) (B := c.stopping.P) (N := c.stopping.N)\n            (d := c.d) (L := c.stopping.L) (m := c.stopping.m)\n            c.width c.schedule\n            (unconditionalExactFairGammaUnit G n S D h)\n            (exactGlobalHistoryFinPhi\n              G n S D h.2.2.2 h.2.2.1)\n            (exactSourceTuplePsi G n S D h) j) =\n        ‖integratorActualC485SourceVector\n            (S := 1) (B := c.stopping.P) (N := c.stopping.N)\n            (d := c.d) (L := c.stopping.L) (m := c.stopping.m)\n            c.width c.schedule\n            (unconditionalExactFairGammaUnit G n S D h)\n            (exactGlobalHistoryFinPhi\n              G n S D h.2.2.2 h.2.2.1)\n            (exactSourceTuplePsi G n S D h) j‖ ^ 2 *\n          exactSourceConditionalWinningProbability G n S D h\n    rw [unconditionalExactFairGammaUnit_eq_global]\n    exact unconditionalActualFairSourceSupportedBorn\n      G n S D c.positive c.aliceDefault c.bobDefault h supported\n      c.stopping.phases c.stopping.grid c.stopping.harmonic\n      c.width c.schedule j\n  · intro h\n    exact unconditionalActualFairSourceVerifier_historyBorn_nonnegative\n      G n S D c.aliceDefault c.bobDefault\n      (fun h j => c.actual (h, j))\n      (unconditionalActualFairSourceRoundingContext_actualRow c) h\n  · intro h\n    exact unconditionalActualFairSourceVerifier_historyBorn_bounded\n      G n S D c.aliceDefault c.bobDefault\n      (fun h j => c.actual (h, j))\n      (unconditionalActualFairSourceRoundingContext_actualRow c) h",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier",
+    "upstream_lines": [
+      70791,
+      70843
+    ],
+    "docstring": "",
+    "statement": "theorem unconditionalActualFairSourceRoundingData_exists_stoppedVerifier\n    {X Y A B : Type}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    (G : Game X Y A B)\n    (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (remaining : 0 < (Finset.univ \\ D).card)\n    (positive : 0 < repeatedPostselectionMass G n S D)\n    (alpha gamma : ℝ)\n    (alpha_positive : 0 < alpha)\n    (alpha_bounded : alpha ≤ 1)\n    (gamma_positive : 0 < gamma)\n    (small : 64 * Real.sqrt (martingaleRate G n S D) +\n      alpha ^ (1 / 3 : ℝ) ≤ 1)\n    (failure :\n      uniformRemainingFailure\n        (strategyEventLaw (G.repeat n) S)\n        (repeatedCoordinateWin G n) D <\n        (1 - entangledValue G) / 2) :\n    ∃ (deviation clipping : ℝ) (rounded : Strategy G),\n      (deviation ≤\n        (34 / Real.sqrt\n            (64 * Real.sqrt (martingaleRate G n S D) +\n              alpha ^ (1 / 3 : ℝ))) *\n          (64 * Real.sqrt (martingaleRate G n S D) +\n            alpha ^ (1 / 3 : ℝ)) +\n          4 * (alpha ^ (1 / 12 : ℝ)) ^ 2 +\n          unconditionalPrefactorBucketCoefficient *\n            Real.sqrt\n              (64 * Real.sqrt (martingaleRate G n S D) +\n                alpha ^ (1 / 3 : ℝ))) ∧\n      (clipping ≤\n        16 * martingaleRate G n S D +\n          8 * (3 * alpha ^ (1 / 3 : ℝ) / 2)) ∧\n      (1 - (1 - entangledValue G) / 2 -\n        5 * (exactSourcePinskerRate G n S D + gamma) -\n          ((64 * Real.sqrt (martingaleRate G n S D) +\n              alpha ^ (1 / 3 : ℝ) +\n              (alpha ^ (1 / 3 : ℝ)) ^ 2) +\n            4 * Real.sqrt deviation + 2 * Real.sqrt clipping) ≤\n        rounded.winProbability)",
+    "proof": " by\n  classical\n  let context :=\n    unconditionalActualFairSourceRoundingContext_of_positive\n      G n S D remaining positive alpha gamma\n      alpha_positive alpha_bounded gamma_positive small failure\n  exact ⟨\n    UnconditionalActualFairSourceRoundingContext.deviation context,\n    UnconditionalActualFairSourceRoundingContext.clipping context,\n    UnconditionalActualFairSourceRoundingContext.rounded context,\n    unconditionalActualFairSourceRoundingContext_cleanBound context,\n    unconditionalActualFairSourceRoundingContext_clippingBound context,\n    unconditionalActualFairSourceRoundingContext_stoppedVerifier context⟩",
+    "imports_theorems": [
+      "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_cleanBound"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.distributionUniformExponential",
+    "upstream_lines": [
+      70957,
+      70973
+    ],
+    "docstring": "",
+    "statement": "theorem distributionUniformExponential :\n    ∃ c : ℝ, 0 < c ∧\n      ∀ {X Y A B : Type}\n        [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n        (G : Game X Y A B),\n        Nonempty A → Nonempty B →\n        0 < 1 - entangledValue G →\n        ∀ n : ℕ, 0 < n →\n          repeatedEntangledValue G n ≤\n            Real.exp\n              (-(c *\n                ((1 - entangledValue G) ^ 13 /\n                  ((1 - entangledValue G) +\n                    Real.log\n                      ((Fintype.card A : ℝ) *\n                        (Fintype.card B : ℝ))))) * (n : ℝ))",
+    "proof": "  pdf_distributionUniformExponential_unconditional",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.standardQuantumParallelRepetition",
+    "upstream_lines": [
+      70975,
+      70980
+    ],
+    "docstring": "",
+    "statement": "theorem standardQuantumParallelRepetition\n    {X Y A B : Type}\n    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]\n    (G : Game X Y A B) :\n    StandardQuantumParallelRepetition G",
+    "proof": "  exact_standardQuantumParallelRepetition_unconditional G",
+    "imports_theorems": []
+  }
+]

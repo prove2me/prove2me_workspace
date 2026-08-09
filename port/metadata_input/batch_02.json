@@ -1,0 +1,217 @@
+[
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalMixedAcceptedPrefix_norm_sq",
+    "upstream_lines": [
+      15825,
+      15919
+    ],
+    "docstring": "",
+    "statement": "theorem dSVDensityRationalMixedAcceptedPrefix_norm_sq\n    {d N : ℕ} {w : ℝ} (width : 0 < w) (grid : 0 < N)\n    (ξ ζ : BipartiteUnitVector d) :\n    ‖dSVDensityRationalCompleteProjectiveOutcome\n        w N ξ ζ true true‖ ^ 2 =\n      (∑ i : Fin d, ∑ j : Fin d,\n        spectralAtomOverlap\n          (dSVSoftBobLeftReducedDensity ξ)\n          (dSVSoftBobLeftReducedDensity ζ)\n          (dSVSoftBobLeftReducedDensity_posSemidef ξ)\n          (dSVSoftBobLeftReducedDensity_posSemidef ζ) i j *\n          ((dSVDensityRationalPhysicalMixedAcceptedIntersectionRank\n            w N ξ ζ i j).val : ℝ)) /\n        ((d : ℝ) * (N : ℝ))",
+    "proof": " by\n  classical\n  rw [dSVDensityRationalCompleteProjectiveOutcome_norm_sq_eq]\n  congr 1\n  let overlap := spectralAtomOverlap\n    (dSVSoftBobLeftReducedDensity ξ)\n    (dSVSoftBobLeftReducedDensity ζ)\n    (dSVSoftBobLeftReducedDensity_posSemidef ξ)\n    (dSVSoftBobLeftReducedDensity_posSemidef ζ)\n  have expand (k : Fin N) :\n      (Matrix.trace\n        ((dSVDensityRationalLeftProjectiveThresholdPOVM\n            w N k ξ).operator true *\n         (dSVDensityRationalLeftProjectiveThresholdPOVM\n            w N k ζ).operator true)).re =\n        ∑ i : Fin d, ∑ j : Fin d,\n          if dSVDensityRationalProjectiveThresholdBin w N k\n              ((dSVSoftBobLeftReducedDensity_posSemidef\n                ξ).isHermitian.eigenvalues i) = true ∧\n            dSVDensityRationalProjectiveThresholdBin w N k\n              ((dSVSoftBobLeftReducedDensity_posSemidef\n                ζ).isHermitian.eigenvalues j) = true\n          then overlap i j else 0 := by\n    rw [← dSVDensityRationalMixedSpectralAtomBlock_eq_projectorProduct]\n    exact dSVDensityRationalMixedSpectralAtomBlock_trace_eq\n      w N ξ ζ true true k\n  simp_rw [expand]\n  calc\n    (∑ k : Fin N, ∑ i : Fin d, ∑ j : Fin d,\n      if dSVDensityRationalProjectiveThresholdBin w N k\n          ((dSVSoftBobLeftReducedDensity_posSemidef\n            ξ).isHermitian.eigenvalues i) = true ∧\n        dSVDensityRationalProjectiveThresholdBin w N k\n          ((dSVSoftBobLeftReducedDensity_posSemidef\n            ζ).isHermitian.eigenvalues j) = true\n      then overlap i j else 0) =\n      ∑ i : Fin d, ∑ j : Fin d, ∑ k : Fin N,\n        if dSVDensityRationalProjectiveThresholdBin w N k\n            ((dSVSoftBobLeftReducedDensity_posSemidef\n              ξ).isHermitian.eigenvalues i) = true ∧\n          dSVDensityRationalProjectiveThresholdBin w N k\n            ((dSVSoftBobLeftReducedDensity_posSemidef\n              ζ).isHermitian.eigenvalues j) = true\n        then overlap i j else 0 := by\n      rw [Finset.sum_comm]\n      apply Finset.sum_congr rfl\n      intro i _\n      rw [Finset.sum_comm]\n    _ = ∑ i : Fin d, ∑ j : Fin d,\n        overlap i j *\n          ((dSVDensityRationalPhysicalMixedAcceptedIntersectionRank\n            w N ξ ζ i j).val : ℝ) := by\n      apply Finset.sum_congr rfl\n      intro i _\n      apply Finset.sum_congr rfl\n      intro j _\n      have counted := congrArg (fun r : ℕ => (r : ℝ))\n        (dSVDensityRationalPhysicalMixedAcceptedThreshold_count\n          width grid ξ ζ i j)\n      calc\n        (∑ k : Fin N,\n          if dSVDensityRationalProjectiveThresholdBin w N k\n              ((dSVSoftBobLeftReducedDensity_posSemidef\n                ξ).isHermitian.eigenvalues i) = true ∧\n            dSVDensityRationalProjectiveThresholdBin w N k\n              ((dSVSoftBobLeftReducedDensity_posSemidef\n                ζ).isHermitian.eigenvalues j) = true\n          then overlap i j else 0) =\n          overlap i j *\n            ((Finset.univ.filter fun k : Fin N =>\n              dSVDensityRationalProjectiveThresholdBin w N k\n                  ((dSVSoftBobLeftReducedDensity_posSemidef\n                    ξ).isHermitian.eigenvalues i) = true ∧\n                dSVDensityRationalProjectiveThresholdBin w N k\n                  ((dSVSoftBobLeftReducedDensity_posSemidef\n                    ζ).isHermitian.eigenvalues j) = true).card : ℝ) := by\n            rw [← Finset.sum_boole]\n            rw [Finset.mul_sum]\n            apply Finset.sum_congr rfl\n            intro k _\n            split_ifs <;> simp\n        _ = _ := by beta_reduce at counted; rw [counted]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.dSVSoftBobLeftReducedDensity_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalPublicBucketLocalHarmonicCleanup_sq",
+    "upstream_lines": [
+      16496,
+      16585
+    ],
+    "docstring": "",
+    "statement": "theorem dSVDensityRationalPublicBucketLocalHarmonicCleanup_sq\n    {Ω I : Type*} [DecidableEq I] {N D : ℕ} (dimension : 0 < N)\n    (work : Fin D → BipartiteUnitVector N)\n    (bucket : Ω → Fin D → I)\n    (representative : Ω → I → Fin D)\n    (ε : ℝ) (precision : 0 < ε) :\n    ∃ n : ℕ, 0 < n ∧\n      ∃ A B : Ω → I → Matrix.unitaryGroup (Fin (N * n)) ℂ,\n        ∀ (phase : Ω) (r s : Fin D),\n          ‖localUnitaryAction\n              (A phase (bucket phase r))\n              (B phase (bucket phase s))\n              (tensorEmbezzlementTarget (n := n) (work r)) -\n            embezzlementState (N * n)‖ ^ 2 ≤\n              2 * ε ^ 2 +\n              2 * ‖(work r).val -\n                (work (representative phase (bucket phase r))).val‖ ^ 2 +\n              4 * (if bucket phase r = bucket phase s\n                then (0 : ℝ) else 1)",
+    "proof": " by\n  classical\n  obtain ⟨n, positive, A, B, diagonal, _stable⟩ :=\n    dSVBobTargetLocalUniformHarmonicWorkCleanup\n      N dimension\n      (fun q : Ω × I => work (representative q.1 q.2))\n      ε precision\n  refine ⟨n, positive,\n    fun phase label => A (phase, label),\n    fun phase label => B (phase, label), ?_⟩\n  intro phase r s\n  by_cases same : bucket phase r = bucket phase s\n  · have clean := diagonal (phase, bucket phase r)\n    have stable := dSVBobTargetLocalHarmonicCleanup_stable\n      positive\n      (A (phase, bucket phase r))\n      (B (phase, bucket phase r))\n      (work r)\n      (work (representative phase (bucket phase r)))\n      ε clean\n    have actual :\n        ‖localUnitaryAction\n            (A (phase, bucket phase r))\n            (B (phase, bucket phase s))\n            (tensorEmbezzlementTarget (n := n) (work r)) -\n          embezzlementState (N * n)‖ ≤\n            ‖(work r).val -\n              (work (representative phase (bucket phase r))).val‖ + ε := by\n      simpa only [same] using stable\n    simp only [if_pos same, mul_zero, add_zero]\n    nlinarith [\n      norm_nonneg\n        (localUnitaryAction\n            (A (phase, bucket phase r))\n            (B (phase, bucket phase s))\n            (tensorEmbezzlementTarget (n := n) (work r)) -\n          embezzlementState (N * n)),\n      norm_nonneg ((work r).val -\n        (work (representative phase (bucket phase r))).val),\n      sq_nonneg\n        (‖(work r).val -\n          (work (representative phase (bucket phase r))).val‖ - ε)]\n  · have bound :\n        ‖localUnitaryAction\n            (A (phase, bucket phase r))\n            (B (phase, bucket phase s))\n            (tensorEmbezzlementTarget (n := n) (work r)) -\n          embezzlementState (N * n)‖ ≤ 2 := by\n      calc\n        _ ≤ ‖localUnitaryAction\n              (A (phase, bucket phase r))\n              (B (phase, bucket phase s))\n              (tensorEmbezzlementTarget (n := n) (work r))‖ +\n            ‖embezzlementState (N * n)‖ := norm_sub_le _ _\n        _ = 2 := by\n          rw [localUnitaryAction_norm,\n            tensorEmbezzlementTarget_norm positive,\n            embezzlementState_norm (N * n)\n              (Nat.mul_pos dimension positive)]\n          norm_num\n    simp only [if_neg same, mul_one]\n    nlinarith [\n      norm_nonneg\n        (localUnitaryAction\n            (A (phase, bucket phase r))\n            (B (phase, bucket phase s))\n            (tensorEmbezzlementTarget (n := n) (work r)) -\n          embezzlementState (N * n)),\n      sq_nonneg ε,\n      sq_nonneg\n        ‖(work r).val -\n          (work (representative phase (bucket phase r))).val‖]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.embezzlementState_norm"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition",
+    "upstream_lines": [
+      18442,
+      18492
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (schedule : Fin L → Fin S)\n    (ξ ζ : BipartiteUnitVector d) :\n    dSVDensityRationalHeterogeneousPhysicalStoppedSuccessMass\n        N width schedule ξ ζ +\n      dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass\n          N width schedule ξ ζ +\n      dSVDensityRationalHeterogeneousPhysicalTerminalMass\n          N width schedule ξ ζ = 1",
+    "proof": " by\n  let continuation :=\n    dSVDensityRationalHeterogeneousPhysicalStageContinue\n      N width schedule ξ ζ\n  let success :=\n    dSVDensityRationalHeterogeneousPhysicalStageSuccess\n      N width schedule ξ ζ\n  let asynchronous :=\n    dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n      N width schedule ξ ζ\n  have stage (k : ℕ) :\n      success k + asynchronous k = 1 - continuation k := by\n    dsimp [continuation, success, asynchronous]\n    linarith [\n      dSVDensityRationalHeterogeneousPhysicalStage_partition\n        grid dimension width schedule ξ ζ k]\n  have escape :=\n    dSVHeterogeneousRealStopping_escape_identity\n      continuation L\n  change\n    (∑ k ∈ Finset.range L,\n      dSVHeterogeneousRealPrefix continuation k * success k) +\n      (∑ k ∈ Finset.range L,\n        dSVHeterogeneousRealPrefix continuation k *\n          asynchronous k) +\n      dSVHeterogeneousRealPrefix continuation L = 1\n  have combined :\n      (∑ k ∈ Finset.range L,\n        dSVHeterogeneousRealPrefix continuation k * success k) +\n      (∑ k ∈ Finset.range L,\n        dSVHeterogeneousRealPrefix continuation k *\n          asynchronous k) =\n      ∑ k ∈ Finset.range L,\n        dSVHeterogeneousRealPrefix continuation k *\n          (1 - continuation k) := by\n    rw [← Finset.sum_add_distrib]\n    apply Finset.sum_congr rfl\n    intro k _\n    rw [← mul_add, stage k]\n  rw [combined, escape]\n  ring",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le",
+    "upstream_lines": [
+      18696,
+      18714
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (large : ∀ s, 1 ≤ width s)\n    (fine : ∀ s : Fin S,\n      (d : ℝ) / N ≤ 1 / (2 * (width s + 1)))\n    (schedule : Fin L → Fin S)\n    (ξ ζ : BipartiteUnitVector d) (k : Fin L) :\n    dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n        N width schedule ξ ζ k.val /\n      dSVDensityRationalPhysicalDiagonalBornSuccess\n        grid dimension (width (schedule k)) ξ ≤\n      8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n        2 * (width (schedule k) + 1) * ((d : ℝ) / N)",
+    "proof": " by\n  rw [\n    dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_eq_hazard\n      N width schedule ξ ζ k]\n  exact dSVDensityRationalLargeWidthPhysicalRelativeHazard_le\n    dimension (large (schedule k)) grid (fine (schedule k)) ξ ζ",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal",
+    "upstream_lines": [
+      18716,
+      18748
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (large : ∀ s, 1 ≤ width s)\n    (fine : ∀ s : Fin S,\n      (d : ℝ) / N ≤ 1 / (2 * (width s + 1)))\n    (schedule : Fin L → Fin S)\n    (ξ ζ : BipartiteUnitVector d) (k : Fin L) :\n    dSVDensityRationalHeterogeneousPhysicalStageHazardRatio\n        N width schedule ξ ζ k.val ≤\n      dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n          N width schedule ξ ζ k.val /\n        dSVDensityRationalPhysicalDiagonalBornSuccess\n          grid dimension (width (schedule k)) ξ",
+    "proof": " by\n  have width_positive : 0 < width (schedule k) :=\n    lt_of_lt_of_le (by norm_num) (large (schedule k))\n  have self_positive :=\n    dSVDensityRationalLargeWidthPhysicalDiagonalBornSuccess_pos\n      dimension width_positive grid (fine (schedule k)) ξ\n  have self_lower :=\n    dSVDensityRationalHeterogeneousPhysicalStage_escape_ge_diagonal\n      grid dimension width schedule ξ ζ k\n  have asynchronous_nonnegative :\n      0 ≤ dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n        N width schedule ξ ζ k.val := by\n    exact add_nonneg\n      (dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg\n        N width schedule ξ ζ k.val true false)\n      (dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg\n        N width schedule ξ ζ k.val false true)\n  unfold dSVDensityRationalHeterogeneousPhysicalStageHazardRatio\n  exact div_le_div_of_nonneg_left\n    asynchronous_nonnegative self_positive self_lower",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance",
+    "upstream_lines": [
+      18750,
+      18778
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (large : ∀ s, 1 ≤ width s)\n    (fine : ∀ s : Fin S,\n      (d : ℝ) / N ≤ 1 / (2 * (width s + 1)))\n    {W : ℝ} (upper : ∀ s, width s ≤ W)\n    (schedule : Fin L → Fin S)\n    (ξ ζ : BipartiteUnitVector d) (k : Fin L) :\n    dSVDensityRationalHeterogeneousPhysicalStageHazardRatio\n        N width schedule ξ ζ k.val ≤\n      8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n        2 * (W + 1) * ((d : ℝ) / N)",
+    "proof": " by\n  calc\n    _ ≤ dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n          N width schedule ξ ζ k.val /\n        dSVDensityRationalPhysicalDiagonalBornSuccess\n          grid dimension (width (schedule k)) ξ :=\n      dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal\n        grid dimension width large fine schedule ξ ζ k\n    _ ≤ 8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n        2 * (width (schedule k) + 1) * ((d : ℝ) / N) :=\n      dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le\n        grid dimension width large fine schedule ξ ζ k\n    _ ≤ 8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n        2 * (W + 1) * ((d : ℝ) / N) := by\n      have scale := upper (schedule k)\n      have grid_cost : 0 ≤ (d : ℝ) / N := by positivity\n      nlinarith [mul_nonneg grid_cost (sub_nonneg.mpr scale)]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageAsynchronous_relative_diagonal_le",
+      "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_relative_diagonal"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_le_targetDistance",
+    "upstream_lines": [
+      18816,
+      18903
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_le_targetDistance\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (large : ∀ s, 1 ≤ width s)\n    (fine : ∀ s : Fin S,\n      (d : ℝ) / N ≤ 1 / (2 * (width s + 1)))\n    {W : ℝ} (upper : ∀ s, width s ≤ W) (W_nonnegative : 0 ≤ W)\n    (schedule : Fin L → Fin S)\n    (ξ ζ : BipartiteUnitVector d) :\n    dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass\n        N width schedule ξ ζ ≤\n      8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n        2 * (W + 1) * ((d : ℝ) / N)",
+    "proof": " by\n  let bound : ℝ :=\n    8 * Real.sqrt 2 * ‖ξ.val - ζ.val‖ +\n      2 * (W + 1) * ((d : ℝ) / N)\n  have bound_nonnegative : 0 ≤ bound := by\n    dsimp [bound]\n    positivity\n  have escape_budget :=\n    dSVDensityRationalHeterogeneousPhysicalStoppedEscape_budget\n      grid dimension width schedule ξ ζ\n  rw [\n    dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_eq_ratioLedger]\n  change\n    (∑ k ∈ Finset.range L,\n      dSVDensityRationalHeterogeneousPhysicalSurvival\n          N width schedule ξ ζ k *\n        (dSVDensityRationalHeterogeneousPhysicalStageSuccess\n            N width schedule ξ ζ k +\n          dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n            N width schedule ξ ζ k) *\n        dSVDensityRationalHeterogeneousPhysicalStageHazardRatio\n          N width schedule ξ ζ k) ≤ bound\n  calc\n    _ ≤ ∑ k ∈ Finset.range L,\n      dSVDensityRationalHeterogeneousPhysicalSurvival\n          N width schedule ξ ζ k *\n        (dSVDensityRationalHeterogeneousPhysicalStageSuccess\n            N width schedule ξ ζ k +\n          dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n            N width schedule ξ ζ k) * bound := by\n      apply Finset.sum_le_sum\n      intro k member\n      have active : k < L := Finset.mem_range.mp member\n      let stage : Fin L := ⟨k, active⟩\n      have ratio :=\n        dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance\n          grid dimension width large fine upper schedule ξ ζ stage\n      have survival_nonnegative :=\n        dSVDensityRationalHeterogeneousPhysicalSurvival_nonneg\n          N width schedule ξ ζ k\n      have success_nonnegative :=\n        dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg\n          N width schedule ξ ζ k true true\n      have asynchronous_nonnegative :\n          0 ≤\n            dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n              N width schedule ξ ζ k := by\n        exact add_nonneg\n          (dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg\n            N width schedule ξ ζ k true false)\n          (dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg\n            N width schedule ξ ζ k false true)\n      have coefficient_nonnegative :\n          0 ≤\n            dSVDensityRationalHeterogeneousPhysicalSurvival\n                N width schedule ξ ζ k *\n              (dSVDensityRationalHeterogeneousPhysicalStageSuccess\n                  N width schedule ξ ζ k +\n                dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n                  N width schedule ξ ζ k) :=\n        mul_nonneg survival_nonnegative\n          (add_nonneg success_nonnegative asynchronous_nonnegative)\n      apply mul_le_mul_of_nonneg_left _ coefficient_nonnegative\n      simpa [stage, bound] using ratio\n    _ =\n      (∑ k ∈ Finset.range L,\n        dSVDensityRationalHeterogeneousPhysicalSurvival\n            N width schedule ξ ζ k *\n          (dSVDensityRationalHeterogeneousPhysicalStageSuccess\n              N width schedule ξ ζ k +\n            dSVDensityRationalHeterogeneousPhysicalStageAsynchronous\n              N width schedule ξ ζ k)) * bound := by\n      rw [Finset.sum_mul]\n    _ ≤ bound := by\n      nlinarith [mul_nonneg bound_nonnegative\n        (sub_nonneg.mpr escape_budget)]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageHazardRatio_le_targetDistance"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform",
+    "upstream_lines": [
+      18934,
+      18968
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (large : ∀ s, 1 ≤ width s)\n    (fine : ∀ s : Fin S,\n      (d : ℝ) / N ≤ 1 / (2 * (width s + 1)))\n    {W : ℝ} (W_nonnegative : 0 ≤ W)\n    (upper : ∀ s, width s ≤ W)\n    (schedule : Fin L → Fin S)\n    (ξ : BipartiteUnitVector d) (k : Fin L) :\n    dSVDensityRationalHeterogeneousPhysicalUniformEscapeRate\n        d W ≤\n      dSVDensityRationalPhysicalDiagonalBornSuccess\n        grid dimension (width (schedule k)) ξ",
+    "proof": " by\n  have real_dimension : 0 < (d : ℝ) := by\n    exact_mod_cast dimension\n  have width_positive : 0 < width (schedule k) :=\n    lt_of_lt_of_le (by norm_num) (large (schedule k))\n  have wide_positive : 0 < 2 * (W + 1) * (d : ℝ) := by\n    positivity\n  have stage_positive :\n      0 < 2 * (width (schedule k) + 1) * (d : ℝ) := by\n    positivity\n  have width_bound := upper (schedule k)\n  calc\n    dSVDensityRationalHeterogeneousPhysicalUniformEscapeRate\n        d W = 1 / (2 * (W + 1) * (d : ℝ)) := rfl\n    _ ≤ 1 / (2 * (width (schedule k) + 1) * (d : ℝ)) := by\n      apply (div_le_div_iff₀ wide_positive stage_positive).mpr\n      nlinarith [mul_nonneg real_dimension.le\n        (sub_nonneg.mpr width_bound)]\n    _ ≤ dSVDensityRationalPhysicalDiagonalBornSuccess\n        grid dimension (width (schedule k)) ξ :=\n      dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_lower\n        grid dimension width large fine schedule ξ k",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform",
+    "upstream_lines": [
+      18970,
+      18994
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (large : ∀ s, 1 ≤ width s)\n    (fine : ∀ s : Fin S,\n      (d : ℝ) / N ≤ 1 / (2 * (width s + 1)))\n    {W : ℝ} (W_nonnegative : 0 ≤ W)\n    (upper : ∀ s, width s ≤ W)\n    (schedule : Fin L → Fin S)\n    (ξ ζ : BipartiteUnitVector d) (k : Fin L) :\n    dSVDensityRationalHeterogeneousPhysicalStageContinue\n        N width schedule ξ ζ k.val ≤\n      1 -\n        dSVDensityRationalHeterogeneousPhysicalUniformEscapeRate\n          d W",
+    "proof": " by\n  have floor :=\n    dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform\n      grid dimension width large fine W_nonnegative upper schedule ξ k\n  have escape :=\n    dSVDensityRationalHeterogeneousPhysicalStage_escape_ge_diagonal\n      grid dimension width schedule ξ ζ k\n  have partition :=\n    dSVDensityRationalHeterogeneousPhysicalStage_partition\n      grid dimension width schedule ξ ζ k.val\n  linarith",
+    "imports_theorems": [
+      "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageDiagonalSuccess_ge_uniform"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow",
+    "upstream_lines": [
+      18996,
+      19049
+    ],
+    "docstring": "",
+    "statement": "theorem\n    dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow\n    {d S L N : ℕ} (grid : 0 < N) (dimension : 0 < d)\n    (width : Fin S → ℝ) (large : ∀ s, 1 ≤ width s)\n    (fine : ∀ s : Fin S,\n      (d : ℝ) / N ≤ 1 / (2 * (width s + 1)))\n    {W : ℝ} (W_nonnegative : 0 ≤ W)\n    (upper : ∀ s, width s ≤ W)\n    (schedule : Fin L → Fin S)\n    (ξ ζ : BipartiteUnitVector d) :\n    dSVDensityRationalHeterogeneousPhysicalTerminalMass\n        N width schedule ξ ζ ≤\n      (1 -\n        dSVDensityRationalHeterogeneousPhysicalUniformEscapeRate\n          d W) ^ L",
+    "proof": " by\n  let continuation :=\n    dSVDensityRationalHeterogeneousPhysicalStageContinue\n      N width schedule ξ ζ\n  let c : ℝ :=\n    1 - dSVDensityRationalHeterogeneousPhysicalUniformEscapeRate\n      d W\n  have rate_bounded :=\n    dSVDensityRationalHeterogeneousPhysicalUniformEscapeRate_le_half\n      dimension W_nonnegative\n  have c_nonnegative : 0 ≤ c := by\n    dsimp [c]\n    linarith\n  have continuation_nonnegative : ∀ k, 0 ≤ continuation k := by\n    intro k\n    exact\n      dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg\n        N width schedule ξ ζ k false false\n  have prefix_bound : ∀ k : ℕ, k ≤ L →\n      dSVHeterogeneousRealPrefix continuation k ≤ c ^ k := by\n    intro k\n    induction k with\n    | zero =>\n        intro _\n        simp [dSVHeterogeneousRealPrefix]\n    | succ k induction =>\n        intro within\n        have active : k < L := by omega\n        have previous := induction (by omega : k ≤ L)\n        let stage : Fin L := ⟨k, active⟩\n        have next :=\n          dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform\n            grid dimension width large fine W_nonnegative upper\n            schedule ξ ζ stage\n        change continuation k ≤ c at next\n        rw [dSVHeterogeneousRealPrefix_succ, pow_succ]\n        exact mul_le_mul previous next\n          (continuation_nonnegative k) (pow_nonneg c_nonnegative k)\n  change dSVHeterogeneousRealPrefix continuation L ≤ c ^ L\n  exact prefix_bound L (le_refl L)",
+    "imports_theorems": [
+      "QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStageContinue_le_uniform"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.fullHistoryAliceEntropyPotential_lower_bound",
+    "upstream_lines": [
+      19764,
+      19805
+    ],
+    "docstring": "",
+    "statement": "theorem fullHistoryAliceEntropyPotential_lower_bound\n    [DecidableEq A] [DecidableEq B]\n    (G : Game X Y A B) (n : ℕ)\n    (S : Strategy (G.repeat n))\n    (D L : Finset (Fin n))\n    (hL : L ⊆ Finset.univ \\ D)\n    (hp : 0 < (strategyEventLaw (G.repeat n) S).eventMass\n      (FiniteEventLaw.winEvent (repeatedCoordinateWin G n) D)) :\n    -((strategyEventLaw (G.repeat n) S).eventMass\n        (FiniteEventLaw.winEvent (repeatedCoordinateWin G n) D) *\n      Real.log\n        (fullHistoryAnswerCount (A := A) (B := B) D /\n          (strategyEventLaw (G.repeat n) S).eventMass\n            (FiniteEventLaw.winEvent (repeatedCoordinateWin G n) D))) ≤\n      fullHistoryAliceEntropyPotential G n S D L",
+    "proof": " by\n  classical\n  have hpoint :\n      -fullHistoryAliceEntropyPotential G n S D L ≤\n        ∑ t : FullHistoryEntropyAtom X Y A B n D L,\n          fullHistoryAtomCountingWeight G D L t *\n            Real.negMulLog (fullHistoryAtomBornMass G n S D L t) := by\n    simp only [fullHistoryAliceEntropyPotential,\n      fullHistoryAtomCountingWeight, fullHistoryAtomBornMass,\n      Fintype.sum_prod_type, ← Finset.sum_neg_distrib]\n    apply Finset.sum_le_sum\n    intro h _\n    apply Finset.sum_le_sum\n    intro α _\n    apply Finset.sum_le_sum\n    intro β _\n    have hw := mul_nonneg (fullHistoryWeight_nonneg G h)\n      (fullHistoryWinIndicator_nonneg G h α β)\n    have hlocal := matrixLogEntropy_born_lower_bound_left S.state\n      (fullHistoryAliceFilter G n S D L h α)\n      (fullHistoryAliceFilter_posSemidef G n S D L h α)\n      (fullHistoryAliceFilter_complement_posSemidef G n S D L h α)\n      (fullHistoryBobFilter G n S D L h β)\n      (fullHistoryBobFilter_posSemidef G n S D L h β)\n      (fullHistoryBobFilter_complement_posSemidef G n S D L h β)\n    nlinarith [mul_le_mul_of_nonneg_left hlocal hw]\n  have hscalar := fullHistoryAtomEntropy_le G n S D L hL hp\n  linarith",
+    "imports_theorems": [
+      "QuantumParallelRepetition.matrixLogEntropy_born_lower_bound_left"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.fullHistoryRemaining_insert_subset",
+    "upstream_lines": [
+      19823,
+      19830
+    ],
+    "docstring": "",
+    "statement": "theorem fullHistoryRemaining_insert_subset\n    {n : ℕ} (D L : Finset (Fin n)) (i : Fin n) :\n    fullHistoryRemaining n D (insert i L) ⊆\n      fullHistoryRemaining n D L",
+    "proof": " by\n  intro j hj\n  simp only [fullHistoryRemaining, Finset.mem_sdiff,\n    Finset.mem_univ, true_and, Finset.mem_insert] at hj ⊢\n  exact ⟨hj.1, fun h => hj.2 (Or.inr h)⟩",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.matrixLogEntropy_weighted_jensen_posSemidef",
+    "upstream_lines": [
+      20791,
+      20830
+    ],
+    "docstring": "",
+    "statement": "theorem matrixLogEntropy_weighted_jensen_posSemidef\n    {ι d : Type*} [Fintype ι] [Fintype d] [DecidableEq d]\n    (weight : ι → ℝ) (F : ι → Matrix d d ℂ)\n    (M : Matrix d d ℂ)\n    (nonnegative : ∀ i, 0 ≤ weight i)\n    (normalized : (∑ i : ι, weight i) = 1)\n    (mean : (∑ i : ι, weight i • F i) = M)\n    (positive : ∀ i, (F i).PosSemidef) :\n    ((∑ i : ι, weight i •\n        cfc (fun z : ℝ => z * Real.log z) (F i)) -\n      cfc (fun z : ℝ => z * Real.log z) M).PosSemidef",
+    "proof": " by\n  classical\n  let hM : M.PosSemidef := by\n    rw [← mean]\n    exact weighted_positive_matrix_mean weight F nonnegative positive\n  have hgap := finite_purification_log_entropy_jensen\n    weight F M nonnegative normalized mean positive\n  change\n    ((∑ i : ι, weight i •\n        cfc (fun z : ℝ => z * Real.log z) (F i)) -\n      cfc (fun z : ℝ => z * Real.log z) M -\n      (∑ i : ι, weight i •\n        ((finitePurificationMatrix F M positive hM i -\n            meanFinitePurificationMatrix F M positive hM).conjTranspose *\n          (finitePurificationMatrix F M positive hM i -\n            meanFinitePurificationMatrix F M positive hM)))).PosSemidef\n    at hgap\n  have hvariance :\n      (∑ i : ι, weight i •\n        ((finitePurificationMatrix F M positive hM i -\n            meanFinitePurificationMatrix F M positive hM).conjTranspose *\n          (finitePurificationMatrix F M positive hM i -\n            meanFinitePurificationMatrix F M positive hM))).PosSemidef := by\n    apply Matrix.posSemidef_sum Finset.univ\n    intro i _\n    exact (Matrix.posSemidef_conjTranspose_mul_self\n      (finitePurificationMatrix F M positive hM i -\n        meanFinitePurificationMatrix F M positive hM)).smul\n      (nonnegative i)\n  convert hgap.add hvariance using 1 ; module",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.fullCoordinateAliceEntropyIncrement_nonneg",
+    "upstream_lines": [
+      20897,
+      20930
+    ],
+    "docstring": "",
+    "statement": "theorem fullCoordinateAliceEntropyIncrement_nonneg\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D L : Finset (Fin n)) (i : Fin n)\n    (hiD : i ∉ D) (hiL : i ∉ L)\n    (r : FullCoordinateRevealHistory X Y n D L i)\n    (α : {j : Fin n // j ∈ D} → A)\n    (β : {j : Fin n // j ∈ D} → B) :\n    0 ≤ fullCoordinateAliceEntropyIncrement G n S D L i r α β",
+    "proof": " by\n  unfold fullCoordinateAliceEntropyIncrement\n  apply Finset.sum_nonneg\n  intro y _\n  by_cases hy : G.marginalY y = 0\n  · simp [hy]\n  · have hypos : 0 < G.marginalY y :=\n      lt_of_le_of_ne (G.marginalY_nonneg y) (Ne.symm hy)\n    have hmean := fullCoordinateAliceFilter_conditional_mean\n      G n S D L i hiD hiL r α y\n    have hgap :\n        (conditionalAliceAverage G\n          (fun x => cfc (fun z : ℝ => z * Real.log z)\n            (fullCoordinateAliceQuestionFilter G n S D L i r α x)) y -\n          cfc (fun z : ℝ => z * Real.log z)\n            (fullCoordinateAliceMeanFilter G n S D L i r α y)).PosSemidef := by\n      rw [hmean]\n      exact conditionalAlice_matrixLogEntropy_gap_posSemidef G\n        (fullCoordinateAliceQuestionFilter G n S D L i r α)\n        (fun x => fullHistoryAliceFilter_posSemidef G n S D\n          (insert i L) (fullCoordinateNewHistory D L i r x) α)\n        y hypos\n    exact mul_nonneg (G.marginalY_nonneg y)\n      (trace_mul_posSemidef_nonneg S.state.positive\n        (hgap.kronecker\n          (fullHistoryBobFilter_posSemidef G n S D L\n            (fullCoordinateOldHistory D L i r y) β)))",
+    "imports_theorems": [
+      "QuantumParallelRepetition.trace_mul_posSemidef_nonneg"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactLeft_coordinate_not_mem",
+    "upstream_lines": [
+      21590,
+      21594
+    ],
+    "docstring": "",
+    "statement": "theorem exactLeft_coordinate_not_mem\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (coordinate : M) (partition : M → Bool) :\n    coordinate ∉ exactLeft coordinate partition",
+    "proof": " by\n  simp [exactLeft]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactRight_coordinate_not_mem",
+    "upstream_lines": [
+      21596,
+      21600
+    ],
+    "docstring": "",
+    "statement": "theorem exactRight_coordinate_not_mem\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (coordinate : M) (partition : M → Bool) :\n    coordinate ∉ exactRight coordinate partition",
+    "proof": " by\n  simp [exactRight]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactSeedWeight_nonneg",
+    "upstream_lines": [
+      21688,
+      21693
+    ],
+    "docstring": "",
+    "statement": "theorem exactSeedWeight_nonneg\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    0 ≤ exactSeedWeight seed",
+    "proof": " by\n  unfold exactSeedWeight\n  positivity",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.common_finite_purification_pair_jensen",
+    "upstream_lines": [
+      21792,
+      21850
+    ],
+    "docstring": "",
+    "statement": "theorem common_finite_purification_pair_jensen\n    {ι κ d : Type*}\n    [Fintype ι] [Fintype κ] [Fintype d] [DecidableEq d]\n    (weight : ι → ℝ)\n    (F : κ → Matrix d d ℂ)\n    (anchor : Matrix d d ℂ)\n    (positive : ∀ k, (F k).PosSemidef)\n    (hanchor : anchor.PosSemidef)\n    (choose : ι → κ) (meanIndex : κ)\n    (nonnegative : ∀ a, 0 ≤ weight a)\n    (normalized : (∑ a : ι, weight a) = 1)\n    (mean : (∑ a : ι, weight a • F (choose a)) = F meanIndex) :\n    ((∑ a : ι, weight a •\n        cfc (fun z : ℝ => z * Real.log z) (F (choose a))) -\n      cfc (fun z : ℝ => z * Real.log z) (F meanIndex) -\n      (∑ a : ι, weight a •\n        ((finitePurificationMatrix F anchor positive hanchor (choose a) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n          (finitePurificationMatrix F anchor positive hanchor (choose a) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex)))).PosSemidef",
+    "proof": " by\n  classical\n  let H : ι → Matrix d d ℂ := fun a => F (choose a)\n  let M : Matrix d d ℂ := F meanIndex\n  have hH : ∀ a, (H a).PosSemidef := fun a => positive (choose a)\n  have hM : M.PosSemidef := positive meanIndex\n  have hmean : (∑ a : ι, weight a • H a) = M := mean\n  have hlocal := finite_purification_log_entropy_jensen\n    weight H M nonnegative normalized hmean hH\n  change\n    ((∑ a : ι, weight a •\n        cfc (fun z : ℝ => z * Real.log z) (H a)) -\n      cfc (fun z : ℝ => z * Real.log z) M -\n      (∑ a : ι, weight a •\n        ((finitePurificationMatrix H M hH hM a -\n            meanFinitePurificationMatrix H M hH hM).conjTranspose *\n          (finitePurificationMatrix H M hH hM a -\n            meanFinitePurificationMatrix H M hH hM)))).PosSemidef at hlocal\n  have hpair (a : ι) :\n      (finitePurificationMatrix F anchor positive hanchor (choose a) -\n          finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n        (finitePurificationMatrix F anchor positive hanchor (choose a) -\n          finitePurificationMatrix F anchor positive hanchor meanIndex) =\n      (finitePurificationMatrix H M hH hM a -\n          meanFinitePurificationMatrix H M hH hM).conjTranspose *\n        (finitePurificationMatrix H M hH hM a -\n          meanFinitePurificationMatrix H M hH hM) := by\n    rw [finitePurificationMatrix_pair_difference_gram_eq_integral,\n      finitePurificationMatrix_difference_gram_eq_integral]\n  change\n    ((∑ a : ι, weight a •\n        cfc (fun z : ℝ => z * Real.log z) (H a)) -\n      cfc (fun z : ℝ => z * Real.log z) M -\n      (∑ a : ι, weight a •\n        ((finitePurificationMatrix F anchor positive hanchor (choose a) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex).conjTranspose *\n          (finitePurificationMatrix F anchor positive hanchor (choose a) -\n            finitePurificationMatrix F anchor positive hanchor meanIndex)))).PosSemidef\n  simp_rw [hpair]\n  exact hlocal",
+    "imports_theorems": []
+  }
+]

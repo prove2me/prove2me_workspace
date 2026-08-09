@@ -1,0 +1,217 @@
+[
+  {
+    "name": "QuantumParallelRepetition.exactRemainingCoordinate_card_pos",
+    "upstream_lines": [
+      27176,
+      27180
+    ],
+    "docstring": "",
+    "statement": "theorem exactRemainingCoordinate_card_pos\n    {n : ℕ} (D : Finset (Fin n))\n    (remaining : 0 < (Finset.univ \\ D).card) :\n    0 < Fintype.card (SourceRemainingCoordinate D)",
+    "proof": " by\n  simpa using remaining",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint",
+    "upstream_lines": [
+      28340,
+      28421
+    ],
+    "docstring": "",
+    "statement": "theorem exactAliceConditionalMatrix_eq_joint\n    {d : Type*} [Fintype d]\n    (G : Game X Y A B) (n : ℕ)\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (x : X) (y : Y)\n    (nonzero : exactFiberQuestionMass\n      G n D seed history x y ≠ 0)\n    (E : (Fin n → X) → Matrix d d ℂ) :\n    (∑ q : ExactFullQuestion X Y n,\n      if exactRevealCode D seed q = history ∧\n        q.1 seed.coordinate.val = x\n      then\n        (exactPriorQuestionWeight G n q /\n          exactAliceQuestionMass\n            G n D seed history x) • E q.1\n      else 0) =\n      ∑ xs : Fin n → X,\n        (exactFiberAliceMarginal\n          G n D seed history x y xs /\n          exactFiberQuestionMass\n            G n D seed history x y) • E xs",
+    "proof": " by\n  classical\n  rw [Fintype.sum_prod_type]\n  apply Finset.sum_congr rfl\n  intro xs _\n  calc\n    (∑ ys : Fin n → Y,\n      if exactRevealCode D seed (xs, ys) = history ∧\n        xs seed.coordinate.val = x\n      then\n        (exactPriorQuestionWeight G n (xs, ys) /\n          exactAliceQuestionMass\n            G n D seed history x) • E xs\n      else 0) =\n      (∑ ys : Fin n → Y,\n        ((if exactRevealCode D seed (xs, ys) = history ∧\n          xs seed.coordinate.val = x\n        then exactPriorQuestionWeight G n (xs, ys)\n        else 0) /\n          exactAliceQuestionMass\n            G n D seed history x) • E xs) := by\n      apply Finset.sum_congr rfl\n      intro ys _\n      split_ifs <;> simp\n    _ = ((∑ ys : Fin n → Y,\n        if exactRevealCode D seed (xs, ys) = history ∧\n          xs seed.coordinate.val = x\n        then exactPriorQuestionWeight G n (xs, ys)\n        else 0) /\n          exactAliceQuestionMass\n            G n D seed history x) • E xs := by\n      rw [Finset.sum_div, Finset.sum_smul]\n    _ = ((∑ yy : Y,\n        exactFiberAliceMarginal\n          G n D seed history x yy xs) /\n          exactAliceQuestionMass\n            G n D seed history x) • E xs := by\n      congr 2\n      calc\n        (∑ ys : Fin n → Y,\n          if exactRevealCode D seed (xs, ys) = history ∧\n            xs seed.coordinate.val = x\n          then exactPriorQuestionWeight G n (xs, ys)\n          else 0) =\n          ∑ ys : Fin n → Y, ∑ yy : Y,\n            exactFiberQuestionWeight\n              G n D seed history x yy xs ys := by\n          apply Finset.sum_congr rfl\n          intro ys _\n          exact (exactFiberQuestionWeight_sum_bobQuestion\n            G n D seed history x xs ys).symm\n        _ = ∑ yy : Y, ∑ ys : Fin n → Y,\n            exactFiberQuestionWeight\n              G n D seed history x yy xs ys := by\n          rw [Finset.sum_comm]\n        _ = _ := by\n          rfl\n    _ = _ := by\n      rw [← exactAliceFiberNormalizedRow\n        G n D seed history x y xs nonzero]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint",
+    "upstream_lines": [
+      28423,
+      28504
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobConditionalMatrix_eq_joint\n    {d : Type*} [Fintype d]\n    (G : Game X Y A B) (n : ℕ)\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (history : ExactRevealHistory X Y D seed)\n    (x : X) (y : Y)\n    (nonzero : exactFiberQuestionMass\n      G n D seed history x y ≠ 0)\n    (E : (Fin n → Y) → Matrix d d ℂ) :\n    (∑ q : ExactFullQuestion X Y n,\n      if exactRevealCode D seed q = history ∧\n        q.2 seed.coordinate.val = y\n      then\n        (exactPriorQuestionWeight G n q /\n          exactBobQuestionMass\n            G n D seed history y) • E q.2\n      else 0) =\n      ∑ ys : Fin n → Y,\n        (exactFiberBobMarginal\n          G n D seed history x y ys /\n          exactFiberQuestionMass\n            G n D seed history x y) • E ys",
+    "proof": " by\n  classical\n  rw [Fintype.sum_prod_type, Finset.sum_comm]\n  apply Finset.sum_congr rfl\n  intro ys _\n  calc\n    (∑ xs : Fin n → X,\n      if exactRevealCode D seed (xs, ys) = history ∧\n        ys seed.coordinate.val = y\n      then\n        (exactPriorQuestionWeight G n (xs, ys) /\n          exactBobQuestionMass\n            G n D seed history y) • E ys\n      else 0) =\n      (∑ xs : Fin n → X,\n        ((if exactRevealCode D seed (xs, ys) = history ∧\n          ys seed.coordinate.val = y\n        then exactPriorQuestionWeight G n (xs, ys)\n        else 0) /\n          exactBobQuestionMass\n            G n D seed history y) • E ys) := by\n      apply Finset.sum_congr rfl\n      intro xs _\n      split_ifs <;> simp\n    _ = ((∑ xs : Fin n → X,\n        if exactRevealCode D seed (xs, ys) = history ∧\n          ys seed.coordinate.val = y\n        then exactPriorQuestionWeight G n (xs, ys)\n        else 0) /\n          exactBobQuestionMass\n            G n D seed history y) • E ys := by\n      rw [Finset.sum_div, Finset.sum_smul]\n    _ = ((∑ xx : X,\n        exactFiberBobMarginal\n          G n D seed history xx y ys) /\n          exactBobQuestionMass\n            G n D seed history y) • E ys := by\n      congr 2\n      calc\n        (∑ xs : Fin n → X,\n          if exactRevealCode D seed (xs, ys) = history ∧\n            ys seed.coordinate.val = y\n          then exactPriorQuestionWeight G n (xs, ys)\n          else 0) =\n          ∑ xs : Fin n → X, ∑ xx : X,\n            exactFiberQuestionWeight\n              G n D seed history xx y xs ys := by\n          apply Finset.sum_congr rfl\n          intro xs _\n          exact (exactFiberQuestionWeight_sum_aliceQuestion\n            G n D seed history y xs ys).symm\n        _ = ∑ xx : X, ∑ xs : Fin n → X,\n            exactFiberQuestionWeight\n              G n D seed history xx y xs ys := by\n          rw [Finset.sum_comm]\n        _ = _ := by\n          rfl\n    _ = _ := by\n      rw [← exactBobFiberNormalizedColumn\n        G n D seed history x y ys nonzero]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem",
+    "upstream_lines": [
+      28863,
+      28867
+    ],
+    "docstring": "",
+    "statement": "@[simp] theorem exactReverseLeftSide_coordinate_mem\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    seed.coordinate ∈ exactReverseLeftSide seed",
+    "proof": " by\n  simp [exactReverseLeftSide]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseRightSide_coordinate_mem",
+    "upstream_lines": [
+      28869,
+      28873
+    ],
+    "docstring": "",
+    "statement": "@[simp] theorem exactReverseRightSide_coordinate_mem\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    seed.coordinate ∈ exactReverseRightSide seed",
+    "proof": " by\n  simp [exactReverseRightSide]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseLeftSide_card",
+    "upstream_lines": [
+      28875,
+      28881
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseLeftSide_card\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    (exactReverseLeftSide seed).card =\n      (exactLeft seed.coordinate seed.partition).card + 1",
+    "proof": " by\n  simp [exactReverseLeftSide,\n    exactLeft_coordinate_not_mem, Nat.add_comm]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactLeft_coordinate_not_mem"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseRightSide_card",
+    "upstream_lines": [
+      28883,
+      28889
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseRightSide_card\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    (exactReverseRightSide seed).card =\n      (exactRight seed.coordinate seed.partition).card + 1",
+    "proof": " by\n  simp [exactReverseRightSide,\n    exactRight_coordinate_not_mem, Nat.add_comm]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactRight_coordinate_not_mem"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactGlobalHistoryVector_norm",
+    "upstream_lines": [
+      29147,
+      29155
+    ],
+    "docstring": "",
+    "statement": "theorem exactGlobalHistoryVector_norm\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (r : ExactHistoryFlag X Y A B D)\n    (z : EuclideanSpace ℂ\n      (ExactPaddedLocalIndex G n S D r ×\n        ExactPaddedLocalIndex G n S D r)) :\n    ‖exactGlobalHistoryVector G n S D r z‖ = ‖z‖",
+    "proof": "  taggedTensorVector_norm r z",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactGlobalHistoryLocalIndex_card_pos",
+    "upstream_lines": [
+      29169,
+      29173
+    ],
+    "docstring": "",
+    "statement": "theorem exactGlobalHistoryLocalIndex_card_pos\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n)) :\n    0 < Fintype.card (ExactGlobalHistoryLocalIndex G n S D)",
+    "proof": " by\n  exact Fintype.card_pos_iff.mpr ⟨Sum.inl PUnit.unit⟩",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactSourceTupleGamma_norm",
+    "upstream_lines": [
+      29309,
+      29315
+    ],
+    "docstring": "",
+    "statement": "theorem exactSourceTupleGamma_norm\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (t : ExactLocallySampleableTuple X Y A B D) :\n    ‖exactSourceTupleGamma G n S D t‖ = 1",
+    "proof": "  (exactGlobalHistoryFinGamma\n    G n S D t.2.2.2 t.2.1).property",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef",
+      "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseLeftSide_complement",
+    "upstream_lines": [
+      30585,
+      30596
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseLeftSide_complement\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    exactRight seed.coordinate seed.partition =\n      Finset.univ \\ exactReverseLeftSide seed",
+    "proof": " by\n  ext j\n  by_cases hcoordinate : j = seed.coordinate\n  · subst j\n    simp [exactRight, exactReverseLeftSide]\n  · cases hbit : seed.partition j <;>\n      simp [exactRight, exactLeft,\n        exactReverseLeftSide, hcoordinate, hbit]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseRightSide_complement",
+    "upstream_lines": [
+      30598,
+      30609
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseRightSide_complement\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    exactLeft seed.coordinate seed.partition =\n      Finset.univ \\ exactReverseRightSide seed",
+    "proof": " by\n  ext j\n  by_cases hcoordinate : j = seed.coordinate\n  · subst j\n    simp [exactLeft, exactReverseRightSide]\n  · cases hbit : seed.partition j <;>\n      simp [exactRight, exactLeft,\n        exactReverseRightSide, hcoordinate, hbit]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side",
+    "upstream_lines": [
+      31184,
+      31199
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseAliceCanonicalPartition_side\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (side : Finset M) (coordinate : M)\n    (member : coordinate ∈ side) (ignored : Bool) :\n    insert coordinate\n        (exactLeft coordinate\n          (exactReverseAliceCanonicalPartition\n            side coordinate ignored)) = side",
+    "proof": " by\n  ext j\n  by_cases hj : j = coordinate\n  · subst j\n    simp [member]\n  · by_cases hs : j ∈ side <;>\n      simp [exactLeft,\n        exactReverseAliceCanonicalPartition,\n        hj, hs]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique",
+    "upstream_lines": [
+      31201,
+      31223
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseAliceCanonicalPartition_unique\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (side : Finset M) (coordinate : M)\n    (partition : M → Bool)\n    (fiber : insert coordinate\n      (exactLeft coordinate partition) = side) :\n    partition = exactReverseAliceCanonicalPartition\n      side coordinate (partition coordinate)",
+    "proof": " by\n  funext j\n  by_cases hj : j = coordinate\n  · subst j\n    simp [exactReverseAliceCanonicalPartition]\n  · cases hb : partition j\n    · have hs : j ∈ side := by\n        rw [← fiber]\n        simp [exactLeft, hj, hb]\n      simp [exactReverseAliceCanonicalPartition,\n        hj, hs]\n    · have hs : j ∉ side := by\n        rw [← fiber]\n        simp [exactLeft, hj, hb]\n      simp [exactReverseAliceCanonicalPartition,\n        hj, hs]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side",
+    "upstream_lines": [
+      31250,
+      31265
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseBobCanonicalPartition_side\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (side : Finset M) (coordinate : M)\n    (member : coordinate ∈ side) (ignored : Bool) :\n    insert coordinate\n        (exactRight coordinate\n          (exactReverseBobCanonicalPartition\n            side coordinate ignored)) = side",
+    "proof": " by\n  ext j\n  by_cases hj : j = coordinate\n  · subst j\n    simp [member]\n  · by_cases hs : j ∈ side <;>\n      simp [exactRight,\n        exactReverseBobCanonicalPartition,\n        hj, hs]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique",
+    "upstream_lines": [
+      31267,
+      31289
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseBobCanonicalPartition_unique\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (side : Finset M) (coordinate : M)\n    (partition : M → Bool)\n    (fiber : insert coordinate\n      (exactRight coordinate partition) = side) :\n    partition = exactReverseBobCanonicalPartition\n      side coordinate (partition coordinate)",
+    "proof": " by\n  funext j\n  by_cases hj : j = coordinate\n  · subst j\n    simp [exactReverseBobCanonicalPartition]\n  · cases hb : partition j\n    · have hs : j ∉ side := by\n        rw [← fiber]\n        simp [exactRight, hj, hb]\n      simp [exactReverseBobCanonicalPartition,\n        hj, hs]\n    · have hs : j ∈ side := by\n        rw [← fiber]\n        simp [exactRight, hj, hb]\n      simp [exactReverseBobCanonicalPartition,\n        hj, hs]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg",
+    "upstream_lines": [
+      31580,
+      31588
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseAliceConditionalSeedWeight_nonneg\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (side : Finset M) (seed : ExactForwardSeed M) :\n    0 ≤ exactReverseAliceConditionalSeedWeight side seed",
+    "proof": " by\n  unfold exactReverseAliceConditionalSeedWeight\n  split_ifs\n  · exact div_nonneg (exactSeedWeight_nonneg seed)\n      (reversePartitionWeight_nonneg side)\n  · exact le_rfl",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactSeedWeight_nonneg"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_nonneg",
+    "upstream_lines": [
+      31590,
+      31598
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseBobConditionalSeedWeight_nonneg\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (side : Finset M) (seed : ExactForwardSeed M) :\n    0 ≤ exactReverseBobConditionalSeedWeight side seed",
+    "proof": " by\n  unfold exactReverseBobConditionalSeedWeight\n  split_ifs\n  · exact div_nonneg (exactSeedWeight_nonneg seed)\n      (reversePartitionWeight_nonneg side)\n  · exact le_rfl",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactSeedWeight_nonneg"
+    ]
+  }
+]
