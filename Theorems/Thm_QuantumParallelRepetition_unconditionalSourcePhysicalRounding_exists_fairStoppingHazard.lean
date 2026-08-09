@@ -489,4 +489,42 @@ theorem QuantumParallelRepetition.unconditionalSourcePhysicalRounding_exists_fai
           w / (N : ℝ) ≤ 3 * alpha ^ (1 / 3 : ℝ) / 2) ∧
       ∃ UA UB : Fin B' → Option ℕ →
           Matrix.unitaryGroup (Fin (N * m)) ℂ,
-        let width : Fin 1 → ℝ := by sorry
+        let width : Fin 1 → ℝ := fun _ => w
+        let schedule : Fin L → Fin 1 := fun _ => 0
+        let eta : ℝ := martingaleRate G n S D
+        let delta : ℝ := alpha ^ (1 / 3 : ℝ)
+        let t : ℝ := Real.sqrt (64 * Real.sqrt eta + delta)
+        let rho : ℝ := alpha ^ (1 / 12 : ℝ)
+        (∀ ξ : BipartiteUnitVector
+            (Fintype.card (ExactGlobalHistoryLocalIndex G n S D)),
+          ‖ξ.val - dSVDensityRationalCanonicalAcceptedTarget
+              w N ξ‖ ^ 2 ≤ 3 * delta / 2) ∧
+        ((∑ h : ExactLocallySampleableTuple X Y A B D,
+          exactLocallySampleableLaw G n S D h *
+            dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+              N width schedule
+              (exactGlobalHistoryFinGamma
+                G n S D h.2.2.2 h.2.1)
+              (exactGlobalHistoryFinPhi
+                G n S D h.2.2.2 h.2.2.1)) ≤
+            64 * Real.sqrt eta + delta) ∧
+        ((∑ h : ExactLocallySampleableTuple X Y A B D,
+          exactLocallySampleableLaw G n S D h *
+            dSVDensityRationalHeterogeneousPhysicalTerminalMass
+              N width schedule
+              (exactGlobalHistoryFinGamma
+                G n S D h.2.2.2 h.2.1)
+              (exactGlobalHistoryFinPhi
+                G n S D h.2.2.2 h.2.2.1)) ≤ delta ^ 2) ∧
+        ((∑ h : ExactLocallySampleableTuple X Y A B D,
+          exactLocallySampleableLaw G n S D h *
+            dSVDensityRationalHeterogeneousStoppedCommonPrefixHazard
+              Q m width schedule
+              (exactGlobalHistoryFinGamma
+                G n S D h.2.2.2 h.2.1)
+              (exactGlobalHistoryFinPhi
+                G n S D h.2.2.2 h.2.2.1)
+              UA UB) ≤
+            (34 / t) * (64 * Real.sqrt eta + delta) +
+              4 * rho ^ 2 +
+                unconditionalPrefactorBucketCoefficient * t) := by sorry

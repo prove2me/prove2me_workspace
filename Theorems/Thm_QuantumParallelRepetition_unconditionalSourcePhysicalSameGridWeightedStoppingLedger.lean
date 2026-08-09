@@ -476,4 +476,25 @@ theorem QuantumParallelRepetition.unconditionalSourcePhysicalSameGridWeightedSto
       0 < L ∧ 0 < B ∧ 0 < Q ∧ 0 < m ∧
       ∃ A C : Fin B → Option ℕ →
           Matrix.unitaryGroup (Fin (N * m)) ℂ,
-        let width : Fin 1 → ℝ := by sorry
+        let width : Fin 1 → ℝ := fun _ => w
+        let schedule : Fin L → Fin 1 := fun _ => 0
+        (∀ i,
+          dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+              N width schedule (ξ i) (ζ i) ≤
+            8 * Real.sqrt 2 * ‖(ξ i).val - (ζ i).val‖ + δ) ∧
+        (∀ i,
+          dSVDensityRationalHeterogeneousPhysicalTerminalMass
+              N width schedule (ξ i) (ζ i) ≤ δ ^ 2) ∧
+        ((∑ i, weight i *
+          dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+            N width schedule (ξ i) (ζ i)) ≤
+              64 * Real.sqrt eta + δ) ∧
+        ((∑ i, weight i *
+          dSVDensityRationalHeterogeneousPhysicalTerminalMass
+            N width schedule (ξ i) (ζ i)) ≤ δ ^ 2) ∧
+        ((∑ i, weight i *
+          dSVDensityRationalHeterogeneousStoppedCommonPrefixHazard
+            Q m width schedule (ξ i) (ζ i) A C) ≤
+          (34 / t) * (64 * Real.sqrt eta + δ) +
+            4 * rho ^ 2 +
+              (16 * (Real.exp 1 - 1) + 4) * t) := by sorry

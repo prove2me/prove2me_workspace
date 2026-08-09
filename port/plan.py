@@ -23,12 +23,15 @@ Three things force a cut, and the rest is a size cap:
 """
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import stage  # noqa: E402
 
 DEF_KINDS = ("def", "inductive", "ctor", "rec")
+_IDENT_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_'!?]*(?:\.[A-Za-z_][A-Za-z0-9_'!?]*)*")
+_COMMENT_RE = re.compile(r"--[^\n]*|/-.*?-/", re.S)
 CAP_LINES = 1400          # largest staged solution file, in source lines
 CAP_BUNDLE = 900          # largest definition bundle, in source lines
 BATCH1 = json.load(open(os.path.join(stage.ROOT, "port", "batch1_names.json")))
@@ -62,6 +65,8 @@ class Plan:
         self.is_def_block = [
             any(self.G[n]["kind"] in DEF_KINDS for n in S.decls_in[bi]) for bi in range(self.nb)
         ]
+        self._scope_memo = {}
+        self._def_closure_memo = {}
         self.bdeps = self._block_deps()
         self.order = sorted(range(self.nb), key=lambda b: S.blocks[b][0])
         self.pos = {b: i for i, b in enumerate(self.order)}
@@ -79,11 +84,73 @@ class Plan:
                     if b is not None and b != bi:
                         d.add(b)
             out.append(d)
+        for bi, extra in enumerate(self._textual_deps()):
+            out[bi] |= extra - {bi}
+        return out
+
+    def _textual_deps(self):
+        """Constants a block *names* but whose proof term does not retain them.
+
+        `getUsedConstants` reports what the elaborated proof keeps, which under-approximates
+        what the source needs: `simp only [Game.repeat_questionWeight]` can close a goal by
+        reduction and leave no trace of the lemma in the term, yet the text still has to
+        elaborate.  Staging on semantic dependencies alone produces files that name constants
+        they never imported.
+
+        Identifiers are resolved the way Lean resolves them — against the enclosing namespaces
+        and the `open`s in scope — so a local hypothesis is not mistaken for a declaration.  A
+        spurious hit would only inline one extra block, while a miss is a build failure.
+        """
+        S = self.S
+        names = set(S.G)
+        out = []
+        for bi in range(self.nb):
+            s, e = S.blocks[bi]
+            text = _COMMENT_RE.sub(" ", "\n".join(S.src[s - 1:e]))
+            found = set()
+            for m in _IDENT_RE.finditer(text):
+                t = m.group(0)
+                for p in self.scope_prefixes(bi):
+                    full = f"{p}.{t}" if p else t
+                    if full in names:
+                        ob = self.owner.get(full)
+                        if ob is not None:
+                            found.add(ob)
+                        break
+            out.append(found)
+        return out
+
+    def scope_prefixes(self, bi):
+        """Namespace prefixes and `open`ed namespaces visible at block `bi`."""
+        if bi in self._scope_memo:
+            return self._scope_memo[bi]
+        S = self.S
+        chain, f = [], S.frame_of_block[bi]
+        while f is not None:
+            chain.append(f)
+            f = S.frames[f]["parent"]
+        out, ns = {""}, []
+        for fi in reversed(chain):
+            fr = S.frames[fi]
+            if fr["open"] is not None:
+                m = re.match(r"^(?:noncomputable\s+)?namespace\s+(\S+)",
+                             S.src[fr["open"] - 1].strip())
+                if m:
+                    ns.append(m.group(1))
+            for i in fr["header"]:
+                t = S.src[i - 1].strip()
+                if t.startswith("open "):
+                    for w in t[5:].replace(" in", "").split():
+                        if w != "scoped":
+                            out.add(w)
+        for k in range(len(ns)):
+            out.add(".".join(ns[:k + 1]))
+        self._scope_memo[bi] = out
         return out
 
     # ---------------------------------------------------------------- bundles
 
-    def def_closure(self, b, _memo={}):
+    def def_closure(self, b):
         """Every definition block `b` needs, transitively.
 
         This is the set whose bundles a node's staged file must import, because its solution
@@ -91,9 +158,8 @@ class Plan:
         `b`'s direct dependencies: a bundle that imports `Thm_t` while `t` reaches back into
         that same bundle through an inlined helper would be an import cycle.
         """
-        key = (id(self), b)
-        if key in _memo:
-            return _memo[key]
+        if b in self._def_closure_memo:
+            return self._def_closure_memo[b]
         out, stack, seen = set(), list(self.bdeps[b]), set()
         while stack:
             x = stack.pop()
@@ -103,7 +169,7 @@ class Plan:
             if self.is_def_block[x]:
                 out.add(x)
             stack.extend(self.bdeps[x])
-        _memo[key] = out
+        self._def_closure_memo[b] = out
         return out
 
     def cut_bundles(self):

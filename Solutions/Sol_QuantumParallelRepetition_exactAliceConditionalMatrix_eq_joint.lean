@@ -453,6 +453,26 @@ import Mathlib.Topology.UniformSpace.Real
 
 namespace QuantumParallelRepetition
 
+noncomputable section
+
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder
+open Matrix
+
+variable {X Y A B : Type*}
+
+namespace Game
+
+variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
+
+@[simp] theorem repeat_questionWeight (G : Game X Y A B) (n : ℕ)
+    (xs : Fin n → X) (ys : Fin n → Y) :
+    (G.repeat n).questionWeight xs ys =
+      ∏ i : Fin n, G.questionWeight (xs i) (ys i) := rfl
+
+end Game
+
+end
+
 open scoped ComplexOrder Matrix BigOperators InnerProductSpace
 open Complex Matrix Finset
 

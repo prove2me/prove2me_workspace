@@ -477,6 +477,11 @@ theorem marginalY_normalized (G : Game X Y A B) :
   rw [Finset.sum_comm]
   exact G.weight_normalized
 
+@[simp] theorem repeat_questionWeight (G : Game X Y A B) (n : ℕ)
+    (xs : Fin n → X) (ys : Fin n → Y) :
+    (G.repeat n).questionWeight xs ys =
+      ∏ i : Fin n, G.questionWeight (xs i) (ys i) := rfl
+
 end Game
 
 end

@@ -45,7 +45,9 @@ def load_metadata():
         for f in sorted(os.listdir(META_DIR)):
             if f.endswith(".json"):
                 for m in json.load(open(os.path.join(META_DIR, f))):
-                    meta[m["name"]] = m
+                    # Metadata is written against the source names; one node is renamed on the
+                    # way to the platform because `'` cannot survive the module-name mapping.
+                    meta[generate.apply_renames(m["name"])] = m
     return meta
 
 

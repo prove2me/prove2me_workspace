@@ -67,12 +67,28 @@ def split_statement(text):
     """Split a theorem's source into (statement, proof) at its top-level `:=`.
 
     Bracket depth is tracked so a `:=` inside a binder default or a structure instance in the
-    statement is not mistaken for the start of the proof.
+    statement is not mistaken for the start of the proof.  Depth alone is not enough: several
+    statements in this file bind local abbreviations with `let width : Fin 1 → ℝ := fun _ => w`
+    *inside* the proposition, and that `:=` also sits at depth zero.  So pending `let` / `have`
+    binders are counted, and a `:=` closes the innermost one before any is treated as the start
+    of the proof.
     """
     depth = 0
+    pending = 0
     i, n = 0, len(text)
     while i < n:
         c = text[i]
+        if depth == 0 and (c == "l" or c == "h") and (i == 0 or not (
+                text[i - 1].isalnum() or text[i - 1] in "_'.")):
+            for kw in ("let", "have"):
+                if text.startswith(kw, i) and i + len(kw) < n and not (
+                        text[i + len(kw)].isalnum() or text[i + len(kw)] in "_'"):
+                    pending += 1
+                    i += len(kw)
+                    break
+            else:
+                i += 1
+            continue
         if c == "-" and text.startswith("--", i):
             j = text.find("\n", i)
             i = n if j == -1 else j
@@ -92,7 +108,11 @@ def split_statement(text):
         elif c in _CLOSERS:
             depth -= 1
         elif depth == 0 and text.startswith(":=", i):
-            return text[:i].rstrip(), text[i + 2:].lstrip("\n")
+            if pending == 0:
+                return text[:i].rstrip(), text[i + 2:].lstrip("\n")
+            pending -= 1
+            i += 2
+            continue
         i += 1
     raise ValueError("no top-level ':=' in:\n" + text[:400])
 

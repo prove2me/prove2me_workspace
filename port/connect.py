@@ -27,6 +27,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import api  # noqa: E402
 import upload  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -275,3 +276,161 @@ def transport_nodes():
             explanation=nd["explanation"],
         ))
     return out
+
+
+# ------------------------------------------------------------- the mission targets
+
+# These three already exist on the platform — the captain raised them with the mission — so
+# they are never created, only proved.  Their ids are recorded so a resumed run never tries.
+MISSION_IDS = {
+    f"{NS}.entangledValue_polynomial_decay": "469992c3-d88c-4642-8dc1-be8aebe208bd",
+    f"{NS}.entangledValue_exponential_decay": "e18d53d3-db05-49b5-86a5-3154da376483",
+    f"{NS}.entangledValue_tendsto_zero": "5d4a9804-19de-4ef4-8c84-8e1d9d8584db",
+}
+
+MISSION_EXPLANATIONS = {
+    f"{NS}.entangledValue_exponential_decay": (
+        "A reduction to OpenAI's headline theorem `distributionUniformExponential`, across the "
+        "universe gap and across the missing $n = 0$ case.\n\n"
+        "OpenAI's theorem is stated for alphabets in `Type`, while the mission's target "
+        "quantifies over `Type*`. Every finite alphabet is equivalent to "
+        "$\\mathrm{Fin}\\,|{\\cdot}|$, which lives in `Type`, so `entangledValue_eq_fin` and "
+        "`repeatedEntangledValue_eq_fin` move the game down and carry both values across "
+        "unchanged.\n\nApplied to the lowered game, OpenAI's theorem supplies a universal "
+        "$c_0 > 0$ and the bound\n\n$$\\omega^*(G^n) \\le \\exp\\!\\big(-c_0 K n\\big), \\qquad "
+        "K = \\frac{(1-\\omega^*(G))^{13}}{(1-\\omega^*(G)) + \\log(|A||B|)},$$\n\nfor every "
+        "$n \\ge 1$. Here $K > 0$: the numerator is positive because $\\omega^*(G) < 1$, and "
+        "the denominator is positive because $\\log(|A||B|) \\ge 0$ whenever both alphabets are "
+        "nonempty. Taking $C = 1$ and $c = c_0 K$ gives the required form.\n\nOpenAI's bound "
+        "starts at $n = 1$, so $n = 0$ is handled separately: there the claim is "
+        "$\\omega^*(G^0) \\le 1$, which is `entangledValue_le_one` applied to $G^0$."),
+    f"{NS}.entangledValue_polynomial_decay": (
+        "A reduction to the exponential bound: exponential decay is polynomial decay with "
+        "exponent $\\alpha = 1$.\n\nFrom $1 + x \\le e^{x}$ with $x = c(n+1)$ one gets "
+        "$c(n+1) \\le e^{c(n+1)}$, hence\n\n$$(n+1)\\,e^{-c(n+1)} \\le \\frac{1}{c}.$$\n\n"
+        "Multiplying the exponential bound $\\omega^*(G^{n+1}) \\le C e^{-c(n+1)}$ by $(n+1)$ "
+        "and applying this gives $\\omega^*(G^{n+1}) \\le (C/c)\\,(n+1)^{-1}$, so the constants "
+        "$C/c$ and $\\alpha = 1$ witness the claim. The final rewriting uses "
+        "`Real.rpow_neg_one` to identify $(n+1)^{-1}$ with the real power "
+        "$\\mathrm{rpow}\\,(n+1)\\,(-1)$."),
+    f"{NS}.entangledValue_tendsto_zero": (
+        "A squeeze between the two bounds that are already available.\n\nBelow, "
+        "`entangledValue_nonneg` applied to $G^n$ gives $0 \\le \\omega^*(G^n)$ for every $n$. "
+        "Above, the exponential bound gives $\\omega^*(G^n) \\le C e^{-cn}$ with $c > 0$, and "
+        "$n \\mapsto -cn$ tends to $-\\infty$, so composing with `Real.tendsto_exp_atBot` and "
+        "scaling by the constant $C$ sends the upper bound to $0$.\n\n"
+        "`tendsto_of_tendsto_of_tendsto_of_le_of_le` then forces the middle sequence to "
+        "converge to $0$ as well. Note the theorem asserts no rate — the rate is exactly what "
+        "the exponential milestone carries."),
+}
+
+MISSION_DEPS = {
+    f"{NS}.entangledValue_exponential_decay": [
+        f"{NS}.entangledValue_le_one", f"{NS}.entangledValue_eq_fin",
+        f"{NS}.repeatedEntangledValue_eq_fin", f"{NS}.distributionUniformExponential"],
+    f"{NS}.entangledValue_polynomial_decay": [f"{NS}.entangledValue_exponential_decay"],
+    f"{NS}.entangledValue_tendsto_zero": [
+        f"{NS}.entangledValue_nonneg", f"{NS}.entangledValue_exponential_decay"],
+}
+
+RELABEL_BUNDLE_TITLE = "Alphabet relabelling for entangled games"
+RELABEL_BUNDLE_NL = (
+    "Transport of a two-player game, and of a strategy for it, along equivalences of the "
+    "question and answer alphabets.\n\nGiven a game $G$ with alphabets $X, Y, A, B$ and "
+    "equivalences $e_X : X \\simeq X'$, $e_Y : Y \\simeq Y'$, $e_A : A \\simeq A'$, "
+    "$e_B : B \\simeq B'$, the relabelled game assigns the question pair $(x', y')$ the weight "
+    "$G$ gave $(e_X^{-1}x', e_Y^{-1}y')$ and accepts $(a', b')$ exactly when $G$ accepted the "
+    "corresponding preimages. A strategy transports the same way: it keeps its local systems "
+    "and its shared state, and precomposes its measurement families with the equivalences, so "
+    "the POVM conditions carry over by reindexing a finite sum.\n\nThe point of the "
+    "construction is universe-lowering. A parallel-repetition theorem proved for alphabets in "
+    "`Type` applies verbatim to arbitrary finite alphabets once one knows every finite type is "
+    "equivalent to $\\mathrm{Fin}\\,|{\\cdot}|$, which lives in `Type`.\n\nThe transport of a "
+    "strategy needs no compatibility hypothesis between the two games, because a strategy "
+    "never mentions the game it plays: the game argument of `Strategy` is a phantom parameter. "
+    "A single transport therefore serves both directions of the resulting equality of "
+    "entangled values, and no extensionality principle for games is required.")
+
+
+def mission_nodes():
+    """The three mission targets, proved as reductions.  Statements already exist."""
+    targets = json.load(open(os.path.join(ROOT, "port", "mission_targets.json")))
+    out = []
+    for name, (_pre, _stmt) in targets.items():
+        sol = open(os.path.join(ROOT, "Solutions",
+                                f"Sol_{name.replace('.', '_')}.lean")).read()
+        out.append(dict(name=name, deps=MISSION_DEPS[name], solution=sol,
+                        explanation=MISSION_EXPLANATIONS[name],
+                        theorem_id=MISSION_IDS[name]))
+    return out
+
+
+def stage():
+    for n in transport_nodes():
+        s = n["name"].replace(".", "_")
+        open(os.path.join(ROOT, "Theorems", f"Thm_{s}.lean"), "w").write(
+            n["preamble"] + "\n\n" + n["formal_statement"] + "\n")
+        open(os.path.join(ROOT, "Solutions", f"Sol_{s}.lean"), "w").write(n["solution"])
+    return len(TRANSPORT)
+
+
+def run_transport(journal):
+    nodes = transport_nodes()
+    return upload.run(nodes, ACCOUNT, journal)
+
+
+def run_bundle(journal):
+    key = "def:qpr_alphabet_relabelling"
+    if key in journal["created"]:
+        return True
+    body = {
+        "definition_name": "qpr_alphabet_relabelling",
+        "definition_title": RELABEL_BUNDLE_TITLE,
+        "definition": open(os.path.join(
+            ROOT, "Definitions", "Def_qpr_alphabet_relabelling.lean")).read(),
+        "natural_language_statement": RELABEL_BUNDLE_NL,
+        "source": SRC_TRANSPORT,
+        "tags": TAGS,
+    }
+    journal.setdefault("inflight", {})[key] = "definition"
+    upload.save(journal)
+    r = api.call("POST", "/submit-definition", body=body, account=ACCOUNT, timeout=900)
+    did = r.get("definition_id")
+    if not did:
+        if "already exists" in json.dumps(r):
+            did = "exists"
+        else:
+            print(f"  [FAIL] relabelling bundle: {json.dumps(r)[:800]}")
+            return False
+    journal["created"][key] = did
+    journal["inflight"].pop(key, None)
+    upload.save(journal)
+    print(f"  [def] qpr_alphabet_relabelling -> {did}")
+    return True
+
+
+def run_mission(journal):
+    for node in mission_nodes():
+        name = node["name"]
+        if journal["verdict"].get(name, {}).get("status") in ("ACCEPTED", "SKETCH_ACCEPTED"):
+            print(f"  [skip] {name} already {journal['verdict'][name]['status']}")
+            continue
+        journal["created"].setdefault(name, node["theorem_id"])
+        upload.save(journal)
+        v = upload.verify(node, node["theorem_id"], ACCOUNT, journal)
+        print(f"  [mission] {name} -> {v['status']} {v.get('error_message', '')[:400]}")
+        if v["status"] not in ("ACCEPTED", "SKETCH_ACCEPTED"):
+            return False
+    return True
+
+
+if __name__ == "__main__":
+    cmd = sys.argv[1] if len(sys.argv) > 1 else "stage"
+    if cmd == "stage":
+        print(f"staged {stage()} transport nodes")
+    else:
+        j = upload.load()
+        ok = run_bundle(j) and run_transport(j)
+        if cmd == "run" and ok:
+            ok = run_mission(j)
+        print("connectors complete" if ok else "connectors stopped early")
