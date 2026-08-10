@@ -251,3 +251,9 @@ Terminated
   (18/136 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide -> ACCEPTED 
   (19/136 attempted, 0 failed)
+  [def] qpr_core_20 -> db3f071e-9e8e-4236-8907-550ca3244111
+  (20/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobCanonicalPartition_card -> ACCEPTED 
+  (21/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_nonneg -> ACCEPTED 
+  (22/136 attempted, 0 failed)
