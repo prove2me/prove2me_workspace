@@ -20,6 +20,7 @@ import concurrent.futures as cf
 import json
 import os
 import sys
+import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import api  # noqa: E402
@@ -33,6 +34,7 @@ SHA = "94bc0feb6a9ff12c7d31d6de640a725c9d43d2b6"
 TAGS = ["quantum-parallel-repetition", "openai-ten-proofs", "quantum-information"]
 META_DIR = os.path.join(generate.ROOT, "port", "metadata")
 BUNDLE_META = os.path.join(generate.ROOT, "port", "bundle_metadata.json")
+DISPATCH_STAGGER = 8   # seconds between dispatches, so creates do not arrive as a burst
 
 
 def source_link(a, b):
@@ -224,6 +226,9 @@ class Tree:
                 for k in ready[:max(0, workers - len(inflight))]:
                     dispatched.add(k)
                     inflight[ex.submit(self.do_item, k, journal)] = k
+                    # Staggered: `submit-problem` compile-checks server-side, and firing a wave
+                    # of them at once got connections closed mid-build rather than answered.
+                    time.sleep(DISPATCH_STAGGER)
                 if not inflight:
                     break
                 got, _ = cf.wait(list(inflight), return_when=cf.FIRST_COMPLETED)

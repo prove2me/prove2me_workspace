@@ -105,11 +105,15 @@
     "def:qpr_core_17": "db4c7bdb-380e-4680-8e9c-21fa60070e05"
   },
   "inflight": {
+    "QuantumParallelRepetition.answerLogCost_nonneg_of_postselection": "create",
     "QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint": "create",
     "QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint": "create",
-    "QuantumParallelRepetition.exactReverseLeftSide_card": "create",
+    "QuantumParallelRepetition.exactGlobalHistoryLocalIndex_card_pos": "create",
+    "QuantumParallelRepetition.exactGlobalHistoryVector_norm": "create",
+    "QuantumParallelRepetition.exactReverseLeftSide_complement": "create",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "create",
     "QuantumParallelRepetition.exactReverseRightSide_card": "create",
+    "QuantumParallelRepetition.exactReverseRightSide_complement": "create",
     "QuantumParallelRepetition.exactReverseRightSide_coordinate_mem": "create",
     "QuantumParallelRepetition.martingale_log_cost_eq": "create"
   },
@@ -569,6 +573,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "121f163b-6494-4770-a33a-f2286490d19e"
+    },
+    "QuantumParallelRepetition.sourceHistoryAcceptedMass_eq_uniform": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "977337b6-26ef-4219-9246-da91597653ee"
     },
     "QuantumParallelRepetition.spectralPurificationFilter_memLp_two": {
       "error_message": "",
