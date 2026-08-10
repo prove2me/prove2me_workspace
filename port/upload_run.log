@@ -169,3 +169,11 @@ Terminated
   (5/154 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactBobCoordinateFilter_sum -> ACCEPTED 
   (6/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactAliceQuestionPurificationMatrix_gram -> ACCEPTED 
+  (7/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactRemainingCoordinate_card_pos -> ACCEPTED 
+  (8/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactBobQuestionPurificationMatrix_gram -> ACCEPTED 
+  (9/154 attempted, 0 failed)
+  [def] qpr_core_17 -> db4c7bdb-380e-4680-8e9c-21fa60070e05
+  (10/154 attempted, 0 failed)

@@ -53,6 +53,7 @@
     "QuantumParallelRepetition.exactRight_coordinate_not_mem": "775ba4a3-6864-441e-9f1b-31e27856ef1f",
     "QuantumParallelRepetition.exactSeedWeight_nonneg": "707f128b-05cf-4871-8d6c-ae210b049f8b",
     "QuantumParallelRepetition.exactSeedWeight_sum": "c6637cd0-da64-44ae-aa6f-b335a191270d",
+    "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining": "d4a41469-15e7-4a16-8d70-2827c7c8df20",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "2303ae02-e1d1-4f22-9fd8-46ceccafc79d",
     "QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst": "61d397ca-d32f-4a03-8233-58f66d732e0b",
     "QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram": "3d833c85-8fda-4588-b46c-6d02d76e5b25",
@@ -98,9 +99,19 @@
     "def:qpr_core_13": "3ad2f99c-f942-418e-b3a3-d173f6b703ce",
     "def:qpr_core_14": "706ec6bf-9f93-4ff2-9f5c-946fdccdf3cc",
     "def:qpr_core_15": "49600f50-f53c-418d-81ee-7a658e088b9f",
-    "def:qpr_core_16": "4ad21990-8322-4c0b-af8b-b9e814215034"
+    "def:qpr_core_16": "4ad21990-8322-4c0b-af8b-b9e814215034",
+    "def:qpr_core_17": "db4c7bdb-380e-4680-8e9c-21fa60070e05"
   },
-  "inflight": {},
+  "inflight": {
+    "QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint": "create",
+    "QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint": "create",
+    "QuantumParallelRepetition.exactPaddedDefault_norm": "create",
+    "QuantumParallelRepetition.exactReverseLeftSide_card": "create",
+    "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "create",
+    "QuantumParallelRepetition.exactReverseRightSide_coordinate_mem": "create",
+    "QuantumParallelRepetition.martingale_log_cost_eq": "create",
+    "QuantumParallelRepetition.sourceHistoryAcceptedMass_eq_uniform": "create"
+  },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_positive": "26f3efe6-29c6-4573-b82e-fab41a5d643c",
@@ -154,6 +165,7 @@
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "8efb2c74-ec66-4126-90b1-efbb9be7433a",
     "QuantumParallelRepetition.exactSeedWeight_nonneg": "6c984755-a290-477a-9e15-8e7d0eff7aa2",
     "QuantumParallelRepetition.exactSeedWeight_sum": "2bd30395-59dc-45cf-a296-1029713ab558",
+    "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining": "465565da-15be-494d-9849-2c321c1d6207",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "51279b5a-3e01-4ad3-b205-95cc2d7133c1",
     "QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst": "ab7b200e-90c4-4f32-899f-3e0be7b019ee",
     "QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram": "88e6eff2-f6e3-4f63-b6af-657698dedb1b",
@@ -390,6 +402,11 @@
       "status": "ACCEPTED",
       "submission_id": "8c6052db-ceef-479a-98d6-e2bcd52a5395"
     },
+    "QuantumParallelRepetition.exactAliceQuestionPurificationMatrix_gram": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "37765f8f-e3cc-4e52-886e-7274aff183b4"
+    },
     "QuantumParallelRepetition.exactBobCoordinateFilter_posSemidef": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -410,10 +427,20 @@
       "status": "ACCEPTED",
       "submission_id": "0b7a2a65-c1f0-4fb9-aac8-ddef816a11d3"
     },
+    "QuantumParallelRepetition.exactBobQuestionPurificationMatrix_gram": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "bf497fe6-7311-4a0d-9ce7-df0ea6afa0a3"
+    },
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": {
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "399f1a83-223f-493a-9ac2-b44e9a57af16"
+    },
+    "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "8efb2c74-ec66-4126-90b1-efbb9be7433a"
     },
     "QuantumParallelRepetition.exactSeedWeight_nonneg": {
       "error_message": "",
