@@ -209,3 +209,8 @@ Terminated
   (5/141 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseRightSide_coordinate_mem -> ACCEPTED 
   (6/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseLeftSide_card -> ACCEPTED 
+  (7/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseRightSide_card -> SKETCH_ACCEPTED 
+  (8/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow -> ACCEPTED 

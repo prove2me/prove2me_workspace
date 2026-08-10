@@ -181,10 +181,13 @@ class Tree:
     def is_done(self, k, journal):
         if k[0] == "def":
             return ("def:" + self.g.bundle_name(k[1])) in journal["created"]
-        name = self.g.name_of[k[1]]
-        if name in self.frozen:
-            return True
-        v = journal["verdict"].get(generate.apply_renames(name), {})
+        # `frozen` means "the statement is published, so never regenerate the stub" — it does
+        # NOT mean the node is finished.  It is read from the journal's `created` map, which
+        # grows with every create, so treating it as done here marked created-but-unproved nodes
+        # complete: their dependents went up early (SKETCH_ACCEPTED instead of ACCEPTED) and
+        # their own proofs were never submitted at all.  Only a verdict settles a node.
+        name = generate.apply_renames(self.g.name_of[k[1]])
+        v = journal["verdict"].get(name, {})
         return v.get("status") in ("ACCEPTED", "SKETCH_ACCEPTED")
 
     def do_item(self, k, journal):
