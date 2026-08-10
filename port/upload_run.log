@@ -147,3 +147,13 @@ Terminated
   (2/161 attempted, 0 failed)
   [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_le_targetDistance -> ACCEPTED 
   (3/161 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactAliceQuestionFilter_posSemidef -> ACCEPTED 
+  (4/161 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactAliceCoordinateFilter_posSemidef -> ACCEPTED 
+  (5/161 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactBobCoordinateFilter_posSemidef -> ACCEPTED 
+  (6/161 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef -> ACCEPTED 
+  (7/161 attempted, 0 failed)
+  [error] ('thm', 1057): submit-problem failed for QuantumParallelRepetition.exactAliceCoordinateFilter_sum: {"_transport_error": "Remote end closed connection without response"}
+  (8/161 attempted, 1 failed)

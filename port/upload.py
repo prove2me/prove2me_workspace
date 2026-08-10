@@ -90,29 +90,47 @@ def create(node, account, journal):
     }]}
     journal.setdefault("inflight", {})[name] = "create"
     save(journal)
-    # `submit-problem` compile-checks the preamble and statement server-side, so it is a build,
-    # not an insert: measured at 245s for one node whose 450-module preamble was not cached.
-    # The timeout has to cover that; a short one turns a slow success into a spurious failure.
-    r = api.call("POST", "/submit-problem", body=body, account=account, timeout=900)
-    # `submit-problem` returns HTTP success with a populated `errors` list on rejection, so the
-    # message is not a reliable success signal — key on `submitted`/`errors`.  A response with
-    # neither (an HTTP 5xx, or a transport failure that exhausted its retries) is *ambiguous*:
-    # the insert may well have landed, so look the name up before concluding anything.
-    if r.get("errors") or not r.get("submitted"):
-        tid = resolve(name, account)
+    tid, last = None, None
+    for attempt in range(3):
+        # `submit-problem` compile-checks the preamble and statement server-side, so it is a
+        # build, not an insert: measured at 245s for one node whose 450-module preamble was not
+        # cached.  The timeout has to cover that; a short one turns a slow success into a
+        # spurious failure.
+        r = api.call("POST", "/submit-problem", body=body, account=account,
+                     timeout=900, retries=1)
+        last = r
+        # HTTP success with a populated `errors` list is a rejection, so the message is not a
+        # reliable success signal — key on `submitted`/`errors`.  A response with neither is
+        # *ambiguous*: the connection died but the server may still be finishing the insert.
+        if r.get("submitted"):
+            tid = r["submitted"][0]["theorem_id"]
+            break
+        tid = resolve_with_grace(name, account)
         if tid:
-            journal["created"][name] = tid
-            journal["inflight"].pop(name, None)
-            save(journal)
-            return tid
-        journal["inflight"].pop(name, None)
-        save(journal)
-        raise RuntimeError(f"submit-problem failed for {name}: {json.dumps(r)[:600]}")
-    tid = r["submitted"][0]["theorem_id"]
-    journal["created"][name] = tid
+            break
     journal["inflight"].pop(name, None)
+    if not tid:
+        save(journal)
+        raise RuntimeError(f"submit-problem failed for {name}: {json.dumps(last)[:600]}")
+    journal["created"][name] = tid
     save(journal)
     return tid
+
+
+def resolve_with_grace(name, account, seconds=240, interval=20):
+    """Wait for a name to appear, for when the response was lost but the work was not.
+
+    A long `submit-problem` can have its connection closed by an intermediary while the server
+    carries on building and inserts the theorem anyway.  Giving up at the moment the socket dies
+    reports a spurious failure — and because these theorems sit low in the import order, one
+    spurious failure blocks most of the tree behind it.
+    """
+    deadline = time.time() + seconds
+    while True:
+        tid = resolve(name, account)
+        if tid or time.time() >= deadline:
+            return tid
+        time.sleep(interval)
 
 
 def resolve(name, account):
