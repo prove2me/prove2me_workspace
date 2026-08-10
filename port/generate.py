@@ -249,8 +249,20 @@ class Generator:
         blocks = self.bundles[i]
         node_deps = {d for b in blocks for d in self.P.bdeps[b] if d in self.nodes}
         prev = i - 1 if i > 0 else None
-        header = self.imports_for(blocks, node_deps, prev)
-        return apply_renames(self.S.render_blocks(set(blocks), header))
+        # `submit-definition` compile-checks synchronously too, so bundles are subject to the
+        # same ~300s ceiling as statements and get the same treatment: their own modules plus
+        # the scopes the source opens, rather than the whole 450-module set.
+        mods = set(SCOPE_PRELUDE)
+        for b in blocks:
+            for d in self.S.decls_in[b]:
+                mods |= {m for m in self.S.G[d]["mathlibMods"] if m.startswith("Mathlib")}
+        lines = [f"import {BASE_IMPORT}"]
+        if prev is not None:
+            lines.append(f"import Definitions.Def_{self.bundle_name(prev)}")
+        for d in sorted(node_deps, key=lambda x: self.P.pos[x]):
+            lines.append(f"import {thm_module(self.name_of[d])}")
+        lines += [f"import {m}" for m in sorted(mods)]
+        return apply_renames(self.S.render_blocks(set(blocks), "\n".join(lines)))
 
     def statement_of(self, b):
         s, _e = self.S.blocks[b]
