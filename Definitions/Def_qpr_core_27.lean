@@ -1,72 +1,56 @@
 import Definitions.Def_quantum_parallel_repetition_game
 import Definitions.Def_qpr_core_26
-import Theorems.Thm_QuantumParallelRepetition_exactAlicePurificationFamily_posSemidef
-import Theorems.Thm_QuantumParallelRepetition_exactBobPurificationFamily_posSemidef
-import Theorems.Thm_QuantumParallelRepetition_unconditionalActualFairSourceSamplerData_of_positive
-import Theorems.Thm_QuantumParallelRepetition_unconditionalActualFairSourceStoppingHazardData_of_positive
+import Mathlib.Algebra.Algebra.Basic
+import Mathlib.Algebra.Algebra.Defs
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Algebra.Field.Defs
-import Mathlib.Algebra.Group.Basic
+import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Defs
-import Mathlib.Algebra.Group.Subgroup.Defs
-import Mathlib.Algebra.GroupWithZero.Action.Defs
+import Mathlib.Algebra.Group.Submonoid.Defs
 import Mathlib.Algebra.GroupWithZero.Defs
 import Mathlib.Algebra.Module.Defs
-import Mathlib.Algebra.Module.Submodule.Defs
+import Mathlib.Algebra.Module.LinearMap.Defs
+import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Ring.Defs
+import Mathlib.Algebra.Ring.Hom.Defs
 import Mathlib.Algebra.Star.Basic
 import Mathlib.AlgebraicTopology.SimplexCategory.Basic
 import Mathlib.AlgebraicTopology.SimplexCategory.Defs
 import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Complex.Norm
-import Mathlib.Analysis.Complex.Order
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.InnerProductSpace.Defs
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.Normed.Field.Basic
 import Mathlib.Analysis.Normed.Group.Defs
-import Mathlib.Analysis.Normed.Group.Uniform
 import Mathlib.Analysis.Normed.Lp.WithLp
 import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Analysis.Normed.Ring.Basic
 import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.ENNReal.Basic
-import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.SDiff
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Fintype.Prod
+import Mathlib.Data.Fintype.Sets
 import Mathlib.Data.Fintype.Sigma
-import Mathlib.Data.Fintype.Sum
+import Mathlib.Data.FunLike.Basic
 import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Nat.Cast.Defs
-import Mathlib.Data.Nat.Init
 import Mathlib.Data.Real.Basic
-import Mathlib.Data.Real.Sqrt
 import Mathlib.Data.SetLike.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.MeasureTheory.Function.AEEqFun
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+import Mathlib.LinearAlgebra.UnitaryGroup
+import Mathlib.Logic.Equiv.Defs
 import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.MeasureTheory.Measure.Restrict
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Topology.Algebra.Group.Defs
 import Mathlib.Topology.Defs.Filter
-import Mathlib.Topology.MetricSpace.Algebra
-import Mathlib.Topology.MetricSpace.Pseudo.Defs
-import Mathlib.Topology.UniformSpace.Defs
 
 namespace QuantumParallelRepetition
 
@@ -75,117 +59,212 @@ open Complex Matrix Finset
 
 noncomputable section
 
-open WithLp
-open scoped BigOperators Kronecker ComplexOrder MatrixOrder
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder
   Matrix.Norms.L2Operator InnerProductSpace
 
-open QuantumParallelRepetition.ClassicalSampling
+set_option backward.isDefEq.respectTransparency false
+set_option maxHeartbeats 7000000
+set_option maxRecDepth 2048
 
 attribute [local instance] Classical.propDecidable
 
-def unconditionalActualFairSourceRoundingContext_of_positive
-    {X Y A B : Type}
-    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
+variable {X Y A B : Type*}
+variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
+
+def exactFairAliceSeedScalarEntropy
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
-    (remaining : 0 < (Finset.univ \ D).card)
-    (positive : 0 < repeatedPostselectionMass G n S D)
-    (alpha gamma : ℝ)
-    (alpha_positive : 0 < alpha)
-    (alpha_bounded : alpha ≤ 1)
-    (gamma_positive : 0 < gamma)
-    (small :
-      64 * Real.sqrt (martingaleRate G n S D) +
-        alpha ^ (1 / 3 : ℝ) ≤ 1)
-    (failure :
-      uniformRemainingFailure
-        (strategyEventLaw (G.repeat n) S)
-        (repeatedCoordinateWin G n) D <
-          (1 - entangledValue G) / 2) :
-    UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma := by
-  classical
-  exact {
-    remaining := remaining
-    positive := positive
-    failure := failure
-    sampler := Classical.choice
-      (unconditionalActualFairSourceSamplerData_of_positive
-        G n S D remaining positive gamma gamma_positive)
-    stopping := Classical.choice
-      (unconditionalActualFairSourceStoppingHazardData_of_positive
-        G n S D remaining positive alpha alpha_positive alpha_bounded small)
-  }
+    (seed : ExactRemainingSeed D) : ℝ :=
+  ∑ history : ExactRevealHistory X Y D seed,
+  ∑ aliceAnswer : {j : Fin n // j ∈ D} → A,
+  ∑ bobAnswer : {j : Fin n // j ∈ D} → B,
+    if exactHistoryAccepted G n D
+      ⟨seed, history, aliceAnswer, bobAnswer⟩ then
+      exactRevealMass G n D seed history *
+        (∑ y : Y, G.marginalY y *
+          Real.negMulLog
+            (bornTracePairing S.state.matrix
+              (exactAliceMeanFilter
+                G n S D seed history aliceAnswer y)
+              (exactBobQuestionFilter
+                G n S D seed history bobAnswer y)))
+    else 0
 
-namespace UnconditionalActualFairSourceRoundingContext
+def exactFairBobSeedScalarEntropy
+    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
+    (D : Finset (Fin n))
+    (seed : ExactRemainingSeed D) : ℝ :=
+  ∑ history : ExactRevealHistory X Y D seed,
+  ∑ aliceAnswer : {j : Fin n // j ∈ D} → A,
+  ∑ bobAnswer : {j : Fin n // j ∈ D} → B,
+    if exactHistoryAccepted G n D
+      ⟨seed, history, aliceAnswer, bobAnswer⟩ then
+      exactRevealMass G n D seed history *
+        (∑ x : X, G.marginalX x *
+          Real.negMulLog
+            (bornTracePairing S.state.matrix
+              (exactAliceQuestionFilter
+                G n S D seed history aliceAnswer x)
+              (exactBobMeanFilter
+                G n S D seed history bobAnswer x)))
+    else 0
 
-variable {X Y A B : Type}
+end
+
+noncomputable section
+
+open scoped BigOperators InnerProductSpace
+
+variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-variable {G : Game X Y A B} {n : ℕ} {S : Strategy (G.repeat n)}
-variable {D : Finset (Fin n)} {alpha gamma : ℝ}
 
-def d (_c : UnconditionalActualFairSourceRoundingContext
-    G n S D alpha gamma) : ℕ :=
-  Fintype.card (ExactGlobalHistoryLocalIndex G n S D)
+def sourceAnswerAlphabetBound (A B : Type*) [Fintype A] [Fintype B] : ℝ :=
+  max 1 ((Fintype.card A : ℝ) * (Fintype.card B : ℝ))
 
-def width
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) : Fin 1 → ℝ :=
-  fun _ => c.stopping.w
+end
 
-def schedule
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) : Fin c.stopping.L → Fin 1 :=
-  fun _ => 0
+noncomputable section
 
-abbrev sourceIndex
-    (_c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) : Type :=
-  ExactLocallySampleableTuple X Y A B D
+open WithLp
+open scoped BigOperators Kronecker ComplexOrder MatrixOrder
 
-def law
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) : sourceIndex c → ℝ :=
-  exactLocallySampleableLaw G n S D
+def dSVDensityRationalPublicMultiscaleFirstHitPhysicalFlagMismatchMass
+    {A C : Type*} [Fintype A] [Fintype C] {L : ℕ}
+    (alice : A → Fin (L + 1))
+    (bob : C → Fin (L + 1))
+    (z : EuclideanSpace ℂ (A × C)) : ℝ :=
+  ∑ a : A, ∑ b : C,
+    ‖z (a, b)‖ ^ 2 *
+      if alice a = bob b then (0 : ℝ) else 1
 
-def gammaVector
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) :
-    sourceIndex c → BipartiteUnitVector (d c) :=
-  fun h => unconditionalExactFairGammaUnit G n S D h
+end
 
-def phiVector
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) :
-    sourceIndex c → BipartiteUnitVector (d c) :=
-  fun h => exactGlobalHistoryFinPhi G n S D h.2.2.2 h.2.2.1
+noncomputable section
 
-def psiVector
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) :
-    sourceIndex c → EuclideanSpace ℂ (Fin (d c) × Fin (d c)) :=
-  fun h => exactSourceTuplePsi G n S D h
+open WithLp
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder
 
-abbrev branchSpace
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma)
-    (p : sourceIndex c × Fin c.stopping.L) : Type :=
-  IntegratorActualC485BranchSpace
-    1 c.stopping.P c.stopping.N (d c)
-    c.stopping.L c.stopping.m p.2
+attribute [local instance] Classical.propDecidable
 
-def actual
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma)
-    (p : sourceIndex c × Fin c.stopping.L) : branchSpace c p :=
-  integratorActualC485CleanedVector
-    (S := 1) (B := c.stopping.P) (N := c.stopping.N)
-    (d := d c) (L := c.stopping.L) (m := c.stopping.m)
-    c.stopping.Q (width c) (schedule c)
-    (gammaVector c p.1) (phiVector c p.1)
-    c.stopping.UA c.stopping.UB p.2
+def dSVDensityRationalHeterogeneousActualPhysicalFlagMass
+    (N : ℕ) {S d L : ℕ}
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d)
+    (flagAlice flagBob : Fin (L + 1)) : ℝ :=
+  ∑ alice : DSVUniformDensityIndependentHistoryLocalIndex
+      (L + 1) N d,
+    ∑ bob : DSVUniformDensityIndependentHistoryLocalIndex
+        (L + 1) N d,
+      ‖dSVDensityRationalHeterogeneousActualPhysicalState
+          N width schedule ξ ζ
+          (⟨flagAlice, alice⟩, ⟨flagBob, bob⟩)‖ ^ 2
 
-end UnconditionalActualFairSourceRoundingContext
+def dSVDensityRationalHeterogeneousActualAsynchronousFlagMass
+    (N : ℕ) {S d L : ℕ}
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d) : ℝ :=
+  dSVDensityRationalPublicMultiscaleFirstHitPhysicalFlagMismatchMass
+    (fun q : DSVUniformDensityThresholdWholeHistoryLocalIndex
+      N d L => q.1)
+    (fun q : DSVUniformDensityThresholdWholeHistoryLocalIndex
+      N d L => q.1)
+    (dSVDensityRationalHeterogeneousActualPhysicalState
+      N width schedule ξ ζ)
+
+end
+
+noncomputable section
+
+open WithLp
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder
+
+attribute [local instance] Classical.propDecidable
+
+def dSVDensityRationalHeterogeneousActualPhysicalFlagBornCopyWidth
+    {S L : ℕ} (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (i : Fin (L + 1)) : ℝ :=
+  if active : i.val < L then width (schedule ⟨i.val, active⟩) else 0
+
+def dSVDensityRationalHeterogeneousActualPhysicalFlagBornCopyMatrix
+    {β : Type*} [Fintype β] [DecidableEq β] {L : ℕ}
+    (accepted : Fin L → β → Prop) (U : Matrix.unitaryGroup β ℂ)
+    (flag : Fin (L + 1)) (i : Fin (L + 1)) : Matrix β β ℂ :=
+  fun output input =>
+    ∑ atom : β, star ((U : Matrix β β ℂ) atom output) *
+      (if dSVDensityRationalHeterogeneousActualCopyCondition
+          accepted flag i atom
+       then (U : Matrix β β ℂ) atom input else 0)
+
+end
+
+noncomputable section
+
+open WithLp
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder
+
+def dSVDensityRationalHeterogeneousTargetFirstSpectralAlice
+    (S B N d L m : ℕ)
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ : BipartiteUnitVector d) :
+    Matrix.unitaryGroup
+      (Fin (d *
+        dSVDensityRationalPublicMultiscalePhaseResidual
+          S B N d L m)) ℂ :=
+  dSVDensityRationalPublicLogPhaseActualTargetFirstLocalLift
+    (Fintype.card (DSVDensityRationalPublicMultiscalePhase S B))
+    N d L m
+    (dSVDensityRationalPublicLogPhasePhysicalHistoryUnitary
+      (Fintype.card (DSVDensityRationalPublicMultiscalePhase S B))
+      (dSVDensityRationalHeterogeneousActualAliceUnitary
+        N width schedule ξ))
+
+def dSVDensityRationalHeterogeneousTargetFirstSpectralBob
+    (S B N d L m : ℕ)
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ζ : BipartiteUnitVector d) :
+    Matrix.unitaryGroup
+      (Fin (d *
+        dSVDensityRationalPublicMultiscalePhaseResidual
+          S B N d L m)) ℂ :=
+  dSVDensityRationalPublicLogPhaseActualTargetFirstLocalLift
+    (Fintype.card (DSVDensityRationalPublicMultiscalePhase S B))
+    N d L m
+    (dSVDensityRationalPublicLogPhasePhysicalHistoryUnitary
+      (Fintype.card (DSVDensityRationalPublicMultiscalePhase S B))
+      (dSVDensityRationalHeterogeneousActualBobUnitary
+        N width schedule ζ))
+
+def dSVDensityRationalHeterogeneousTargetFirstSpectralPhysicalSource
+    (S B N d L m : ℕ)
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d) :
+    EuclideanSpace ℂ
+      (Fin (d *
+         dSVDensityRationalPublicMultiscalePhaseResidual
+           S B N d L m) ×
+       Fin (d *
+         dSVDensityRationalPublicMultiscalePhaseResidual
+           S B N d L m)) :=
+  localUnitaryAction
+    (dSVDensityRationalHeterogeneousTargetFirstSpectralAlice
+      S B N d L m width schedule ξ)
+    (dSVDensityRationalHeterogeneousTargetFirstSpectralBob
+      S B N d L m width schedule ζ)
+    (dSVDensityRationalPublicMultiscalePhaseTargetFirstPreparedSource
+      S B N d L m)
+
+end
+
+noncomputable section
+
+open WithLp
+open scoped BigOperators Kronecker ComplexOrder MatrixOrder
+
+def dSVDensityRationalPublicBucketCoherentPhaseSigmaProductEquiv
+    {H : Type*} (B m : ℕ) :
+    (Σ _ : Fin B × H, Fin m) ≃
+      (Fin B × H) × Fin m :=
+  Equiv.sigmaEquivProd (Fin B × H) (Fin m)
 
 end
 

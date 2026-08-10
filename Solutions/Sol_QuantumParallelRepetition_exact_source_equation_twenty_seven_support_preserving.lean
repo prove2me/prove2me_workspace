@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_24
+import Definitions.Def_qpr_core_36
 import Theorems.Thm_QuantumParallelRepetition_exact_exists_support_preserving_local_shared_permutation
 import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Algebra.Algebra.Defs
