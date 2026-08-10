@@ -157,3 +157,15 @@ Terminated
   (7/161 attempted, 0 failed)
   [error] ('thm', 1057): submit-problem failed for QuantumParallelRepetition.exactAliceCoordinateFilter_sum: {"_transport_error": "Remote end closed connection without response"}
   (8/161 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.exactAliceCoordinateFilter_sum -> ACCEPTED 
+  (1/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactBobPurificationFamily_posSemidef -> ACCEPTED 
+  (2/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactSeedWeight_sum -> ACCEPTED 
+  (3/154 attempted, 0 failed)
+  [def] qpr_core_16 -> 4ad21990-8322-4c0b-af8b-b9e814215034
+  (4/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalDiagonalSurvival_budget -> ACCEPTED 
+  (5/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactBobCoordinateFilter_sum -> ACCEPTED 
+  (6/154 attempted, 0 failed)
