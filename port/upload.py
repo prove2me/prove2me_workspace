@@ -42,6 +42,13 @@ def load():
 
 LOCK = threading.Lock()
 
+# `submit-problem` compile-checks server-side and is answered synchronously, so it is the one
+# call in this pipeline that must not run concurrently: the same node fails with "Remote end
+# closed connection without response" when four workers create at once, and succeeds in ~245s
+# when run alone.  Verification is unaffected — /verify returns a submission id immediately and
+# builds asynchronously — so polling stays parallel and only the build is serialised.
+CREATE_LOCK = threading.Lock()
+
 
 def save(j):
     """Atomic, and safe to call from the parallel runner's workers."""
@@ -96,8 +103,9 @@ def create(node, account, journal):
         # build, not an insert: measured at 245s for one node whose 450-module preamble was not
         # cached.  The timeout has to cover that; a short one turns a slow success into a
         # spurious failure.
-        r = api.call("POST", "/submit-problem", body=body, account=account,
-                     timeout=900, retries=1)
+        with CREATE_LOCK:
+            r = api.call("POST", "/submit-problem", body=body, account=account,
+                         timeout=900, retries=1)
         last = r
         # HTTP success with a populated `errors` list is a rejection, so the message is not a
         # reliable success signal — key on `submitted`/`errors`.  A response with neither is

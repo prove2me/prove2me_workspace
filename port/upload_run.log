@@ -189,3 +189,11 @@ Terminated
   (5/143 attempted, 3 failed)
   [error] ('thm', 1326): submit-problem failed for QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint: {"_transport_error": "Remote end closed connection without response"}
   (6/143 attempted, 4 failed)
+  [error] ('thm', 1179): submit-problem failed for QuantumParallelRepetition.martingale_log_cost_eq: {"_transport_error": "Remote end closed connection without response"}
+  (1/141 attempted, 1 failed)
+  [error] ('thm', 1326): submit-problem failed for QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint: {"_transport_error": "Remote end closed connection without response"}
+  (2/141 attempted, 2 failed)
+  [error] ('thm', 1341): submit-problem failed for QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem: {"_transport_error": "Remote end closed connection without response"}
+  (3/141 attempted, 3 failed)
+  [error] ('thm', 1327): submit-problem failed for QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint: {"_transport_error": "Remote end closed connection without response"}
+  (4/141 attempted, 4 failed)

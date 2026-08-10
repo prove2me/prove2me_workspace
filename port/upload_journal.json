@@ -110,6 +110,7 @@
     "QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint": "create",
     "QuantumParallelRepetition.exactGlobalHistoryLocalIndex_card_pos": "create",
     "QuantumParallelRepetition.exactGlobalHistoryVector_norm": "create",
+    "QuantumParallelRepetition.exactReverseLeftSide_card": "create",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "create",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "create",
     "QuantumParallelRepetition.exactReverseRightSide_card": "create",
