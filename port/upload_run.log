@@ -197,3 +197,15 @@ Terminated
   (3/141 attempted, 3 failed)
   [error] ('thm', 1327): submit-problem failed for QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint: {"_transport_error": "Remote end closed connection without response"}
   (4/141 attempted, 4 failed)
+  [thm] QuantumParallelRepetition.martingale_log_cost_eq -> ACCEPTED 
+  (1/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint -> ACCEPTED 
+  (2/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint -> ACCEPTED 
+  (3/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem -> ACCEPTED 
+  (4/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.aliceMartingaleEntropyBudget -> ACCEPTED 
+  (5/141 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseRightSide_coordinate_mem -> ACCEPTED 
+  (6/141 attempted, 0 failed)
