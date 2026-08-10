@@ -36,6 +36,23 @@ BASE_IMPORT = "Definitions.Def_quantum_parallel_repetition_game"
 MATHLIB_IMPORTS = json.load(open(os.path.join(ROOT, "port", "mathlib_imports.json")))
 RENAMES = [("posSemidef_blockDiagonal'", "posSemidef_blockDiagonal_prime")]
 
+# Modules that supply the *scopes* the source opens (`open scoped MatrixOrder`, the
+# `Matrix.Norms.*` instances, `attribute [local instance] Matrix.normedAddCommGroup`, ...).
+# These carry no constants of their own into `mathlibMods`, so they have to be listed.
+SCOPE_PRELUDE = [
+    "Mathlib.Algebra.BigOperators.Group.Finset.Defs",
+    "Mathlib.Algebra.Star.Basic",
+    "Mathlib.Analysis.RCLike.Basic",
+    "Mathlib.Data.Matrix.Basic",
+    "Mathlib.LinearAlgebra.Matrix.Kronecker",
+    "Mathlib.Analysis.Matrix.Order",
+    "Mathlib.Analysis.Matrix.Normed",
+    "Mathlib.Analysis.InnerProductSpace.Basic",
+    "Mathlib.Analysis.Normed.Lp.WithLp",
+    "Mathlib.Topology.Defs.Filter",
+    "Mathlib.MeasureTheory.Measure.MeasureSpace",
+]
+
 _OPENERS = "([{⟨⦃"
 _CLOSERS = ")]}⟩⦄"
 
@@ -188,6 +205,26 @@ class Generator:
             out.append(S.src[i - 1])
         return out
 
+    def stub_imports(self, b, node_deps, up_to_bundle):
+        """A *statement's* imports, kept as small as the statement actually needs.
+
+        `submit-problem` compile-checks synchronously and the platform's gateway closes the
+        connection at ~300s, discarding the work — so a statement whose preamble takes longer
+        than that to elaborate can never be submitted at all.  The 450-module set the solutions
+        use is far more than a statement needs (measured: 5-33 modules for the nodes that were
+        timing out), so stubs carry only their own modules plus the scopes the source opens.
+        """
+        mods = set(SCOPE_PRELUDE)
+        for d in self.S.decls_in[b]:
+            mods |= {m for m in self.S.G[d]["mathlibMods"] if m.startswith("Mathlib")}
+        lines = [f"import {BASE_IMPORT}"]
+        if up_to_bundle is not None:
+            lines.append(f"import Definitions.Def_{self.bundle_name(up_to_bundle)}")
+        for d in sorted(node_deps, key=lambda x: self.P.pos[x]):
+            lines.append(f"import {thm_module(self.name_of[d])}")
+        lines += [f"import {m}" for m in sorted(mods)]
+        return "\n".join(lines)
+
     def imports_for(self, blocks, node_deps, up_to_bundle):
         lines = [f"import {BASE_IMPORT}"]
         if up_to_bundle is not None:
@@ -232,7 +269,7 @@ class Generator:
                 ob = self.P.owner.get(x)
                 if ob is not None and ob != b and ob in self.nodes:
                     tdeps.add(ob)
-        pre = self.imports_for([b], tdeps & deps, self.max_bundle([b]))
+        pre = self.stub_imports(b, tdeps & deps, self.max_bundle([b]))
         ctx = "\n".join(self.context_lines(b))
         stmt = self.statement_of(b)
         preamble = pre + "\n\n" + ctx
