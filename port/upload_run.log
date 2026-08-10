@@ -278,3 +278,68 @@ blocked by failures:
 blocked by failures:
    def  qpr_core_21
   round 2 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 1 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 2 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 3 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 4 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)>"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 5 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 6 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 7 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 8 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 9 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 10 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "<urlopen error [Errno 111] Connection refused>"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 11 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "<urlopen error [Errno 111] Connection refused>"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 12 stopped early; 111 items left, pausing
+  [FAIL] qpr_core_21: {"_transport_error": "<urlopen error [Errno 111] Connection refused>"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 13 stopped early; 111 items left, pausing
