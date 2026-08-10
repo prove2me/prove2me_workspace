@@ -343,3 +343,11 @@ blocked by failures:
 blocked by failures:
    def  qpr_core_21
   round 13 stopped early; 111 items left, pausing
+  [retry] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  [retry] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  [retry] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (1/111 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 1 stopped early; 111 items left, pausing
