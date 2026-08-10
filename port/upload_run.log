@@ -257,3 +257,12 @@ Terminated
   (21/136 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_nonneg -> ACCEPTED 
   (22/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg -> ACCEPTED 
+  (23/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum -> ACCEPTED 
+  (24/136 attempted, 0 failed)
+  [error] ('thm', 1490): submit-problem failed for QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum: {"_transport_error": "Remote end closed connection without response"}
+  (25/136 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum
+tree stopped early

@@ -319,5 +319,20 @@ if __name__ == "__main__":
         print("tree complete" if ok else "tree stopped early")
     elif cmd == "parallel":
         w = int(sys.argv[2]) if len(sys.argv) > 2 else 4
-        ok = t.run_parallel(j, workers=w)
-        print("tree complete" if ok else "tree stopped early")
+        rounds = int(sys.argv[3]) if len(sys.argv) > 3 else 12
+        # The platform's ~300s ceiling on `submit-problem` is hit intermittently, when the
+        # server is busy enough that queueing pushes a create past it.  A node that fails this
+        # way succeeds on a later attempt, but everything above it in the import order is
+        # blocked until then — so a single transient failure ends the run with most of the tree
+        # untouched.  Retry whole rounds, pausing between them, rather than needing a human to
+        # restart after each one.
+        ok = False
+        for attempt in range(rounds):
+            ok = t.run_parallel(j, workers=w)
+            if ok:
+                break
+            remaining = sum(1 for k in t.items() if not t.is_done(k, j))
+            print(f"  round {attempt + 1} stopped early; {remaining} items left, pausing")
+            time.sleep(120)
+            j = upload.load()
+        print("tree complete" if ok else "tree stopped early after all rounds")

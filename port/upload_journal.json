@@ -61,6 +61,8 @@
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide": "387a3c2a-551d-41b2-8906-839af423520b",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": "980bf9ee-0904-408c-b670-f243efe16f8d",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "7084938c-8df8-493d-8540-0e8a8548c823",
+    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": "777f21e0-e1ca-497f-8405-7955866e69d0",
+    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": "5e060006-72a4-4f4f-87c4-0800d03f9653",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_card": "71006a32-cf20-49c5-bdeb-a7a853ace832",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide": "a6a82f2f-e446-4903-a9f1-a965027003b2",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "78300519-1908-45d2-a71c-0b65af58d059",
@@ -132,8 +134,6 @@
     "def:qpr_core_20": "db3f071e-9e8e-4236-8907-550ca3244111"
   },
   "inflight": {
-    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": "create",
-    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": "create",
     "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum": "create"
   },
   "submitted": {
@@ -198,6 +198,8 @@
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide": "be221576-5563-4657-b0f6-838d5be15f59",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": "e2120571-1290-4dcf-9e20-419f9fc4597e",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "45a9e55e-4193-4ba0-a689-86f6b750b0dc",
+    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": "c5cca0e7-5d7c-46ad-bc77-d4e718d0f088",
+    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": "8081f259-5d01-44d6-a4f4-f7beb4b2407c",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_card": "843cfc71-5dfb-4977-aabb-db65e2990274",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide": "ea236b8a-859c-4d88-acba-98da84dcbac9",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "85c928d8-b912-4fe1-8ecf-114586eb34b6",
@@ -552,6 +554,16 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "45a9e55e-4193-4ba0-a689-86f6b750b0dc"
+    },
+    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "c5cca0e7-5d7c-46ad-bc77-d4e718d0f088"
+    },
+    "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "8081f259-5d01-44d6-a4f4-f7beb4b2407c"
     },
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_card": {
       "error_message": "",
