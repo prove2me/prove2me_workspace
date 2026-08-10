@@ -177,3 +177,5 @@ Terminated
   (9/154 attempted, 0 failed)
   [def] qpr_core_17 -> db4c7bdb-380e-4680-8e9c-21fa60070e05
   (10/154 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactPaddedDefault_norm -> ACCEPTED 
+  (1/143 attempted, 0 failed)
