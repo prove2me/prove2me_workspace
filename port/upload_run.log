@@ -266,3 +266,10 @@ Terminated
 blocked by failures:
    thm  QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum
 tree stopped early
+  [thm] QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum -> ACCEPTED 
+  (1/112 attempted, 0 failed)
+  [FAIL] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
+  (2/112 attempted, 1 failed)
+blocked by failures:
+   def  qpr_core_21
+  round 1 stopped early; 111 items left, pausing

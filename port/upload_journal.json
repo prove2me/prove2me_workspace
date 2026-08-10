@@ -68,6 +68,7 @@
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "78300519-1908-45d2-a71c-0b65af58d059",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique": "0331fbad-5156-41f3-8af6-9bf007388ece",
     "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_nonneg": "2b3f8f03-515b-49c9-8c4f-adc071e680ab",
+    "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum": "5f91fa11-2a3e-4d9e-9a8c-420935c570f0",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "ff6b59e0-67f8-4b4d-bedd-bcf755aaa001",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "a0997ac8-d777-4fc7-bc5c-f4cf71ae808f",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "b59f09a6-0dcc-480b-b5e3-40559d498665",
@@ -134,7 +135,7 @@
     "def:qpr_core_20": "db3f071e-9e8e-4236-8907-550ca3244111"
   },
   "inflight": {
-    "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum": "create"
+    "def:qpr_core_21": "definition"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -205,6 +206,7 @@
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "85c928d8-b912-4fe1-8ecf-114586eb34b6",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique": "0d0db9cd-7959-4097-973a-96c2c6486c9e",
     "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_nonneg": "18d71e28-792d-48a4-ad13-f90bee3e45de",
+    "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum": "b13844e2-b8c4-458f-8320-5a28df796de2",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "b9985b19-2c8a-4a65-8c28-3504ae7d1b42",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "5573efde-cb23-4b77-ae5a-31ef2a8cd97d",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "af5ecb7a-aa95-4752-854c-9ecdfcd938c9",
@@ -589,6 +591,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "18d71e28-792d-48a4-ad13-f90bee3e45de"
+    },
+    "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "b13844e2-b8c4-458f-8320-5a28df796de2"
     },
     "QuantumParallelRepetition.exactReverseLeftSide_card": {
       "error_message": "",
