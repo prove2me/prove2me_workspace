@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_38
+import Definitions.Def_qpr_core_24
 import Theorems.Thm_QuantumParallelRepetition_exactSourceSharedFlagWeight_nonneg
 import Theorems.Thm_QuantumParallelRepetition_exactSourceSharedFlagWeight_sum
 import Mathlib.Algebra.Algebra.Basic

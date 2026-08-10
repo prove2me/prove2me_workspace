@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_25
+import Definitions.Def_qpr_core_22
 import Theorems.Thm_QuantumParallelRepetition_exactLeft_coordinate_not_mem
 import Theorems.Thm_QuantumParallelRepetition_exactRight_coordinate_not_mem
 import Mathlib.Algebra.Algebra.Basic

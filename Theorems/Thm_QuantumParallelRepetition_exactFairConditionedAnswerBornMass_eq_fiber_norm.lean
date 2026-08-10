@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_24
+import Definitions.Def_qpr_core_22
 import Theorems.Thm_QuantumParallelRepetition_exactAlicePurificationFamily_posSemidef
 import Theorems.Thm_QuantumParallelRepetition_exactBobPurificationFamily_posSemidef
 import Mathlib.Algebra.Algebra.Basic

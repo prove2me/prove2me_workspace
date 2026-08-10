@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_32
+import Definitions.Def_qpr_core_23
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Algebra.Star.Basic
 import Mathlib.Analysis.InnerProductSpace.Basic

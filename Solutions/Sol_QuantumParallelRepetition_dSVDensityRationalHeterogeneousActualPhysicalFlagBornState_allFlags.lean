@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_27
+import Definitions.Def_qpr_core_22
 import Theorems.Thm_QuantumParallelRepetition_dSVSoftBobLeftReducedDensity_posSemidef
 import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Algebra.Algebra.Defs

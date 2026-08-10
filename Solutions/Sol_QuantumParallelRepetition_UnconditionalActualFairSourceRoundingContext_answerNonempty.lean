@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_48
+import Definitions.Def_qpr_core_26
 import Theorems.Thm_QuantumParallelRepetition_exactSourceAnswerTypes_nonempty_of_remaining
 import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Algebra.Algebra.Defs

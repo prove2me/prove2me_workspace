@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_31
+import Definitions.Def_qpr_core_23
 import Theorems.Thm_QuantumParallelRepetition_Strategy_outcomeProbability_normalized
 import Theorems.Thm_QuantumParallelRepetition_exactRemainingCoordinate_card_pos
 import Mathlib.Algebra.Algebra.Basic

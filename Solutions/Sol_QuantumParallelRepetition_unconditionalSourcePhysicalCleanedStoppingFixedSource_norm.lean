@@ -1,5 +1,5 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_39
+import Definitions.Def_qpr_core_24
 import Theorems.Thm_QuantumParallelRepetition_embezzlementState_norm
 import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Algebra.Algebra.Defs

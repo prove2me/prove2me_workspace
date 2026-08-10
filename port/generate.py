@@ -152,7 +152,6 @@ class Generator:
         self.P = plan.Plan()
         self.S = self.P.S
         self.bundles, self.nodes, self.sizes = self.P.choose(target)
-        self._split_tail_bundles()
         self._close_statement_deps()
         self.bundle_of = {}
         for i, bl in enumerate(self.bundles):
@@ -160,22 +159,6 @@ class Generator:
                 self.bundle_of[b] = i
         self.node_list = sorted(self.nodes, key=lambda b: self.P.pos[b])
         self.name_of = {b: self.P.principal[b] for b in self.node_list}
-
-    # Bundles 0-20 are published, so their cut is fixed.  Everything after is still free, and
-    # `submit-definition` compile-checks synchronously against a ~300s response ceiling that the
-    # larger bundles exceed — 69 and 73 blocks in a single request.  The tail is therefore
-    # re-cut into smaller pieces; renumbering past the published prefix costs nothing.
-    PUBLISHED_BUNDLES = 21
-    TAIL_BLOCKS = 12
-
-    def _split_tail_bundles(self):
-        head = self.bundles[:self.PUBLISHED_BUNDLES]
-        tail = []
-        for bl in self.bundles[self.PUBLISHED_BUNDLES:]:
-            ordered = sorted(bl, key=lambda b: self.P.pos[b])
-            for i in range(0, len(ordered), self.TAIL_BLOCKS):
-                tail.append(ordered[i:i + self.TAIL_BLOCKS])
-        self.bundles = head + tail
 
     def _close_statement_deps(self):
         """A theorem cited by another node's *statement* must itself be a node: the citing
