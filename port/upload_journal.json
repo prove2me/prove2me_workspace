@@ -63,6 +63,7 @@
     "QuantumParallelRepetition.fullHistoryRemaining_insert_conditioned": "e960375b-bc16-46ef-8eb4-f3cbf1ba1e9e",
     "QuantumParallelRepetition.fullHistoryRemaining_insert_subset": "3e8111a5-17ab-4b53-a3c2-99299afb1064",
     "QuantumParallelRepetition.fullSubsetHistory_mass_eq_postselection": "6c2949d8-ff5c-4f88-a43f-dee8b57a5a30",
+    "QuantumParallelRepetition.martingale_log_cost_eq": "4202f6c3-406b-4e47-b447-3f306b822463",
     "QuantumParallelRepetition.matrixLogEntropy_born_lower_bound_left": "5fa4fb95-e386-4a3c-a43d-0e03386a6076",
     "QuantumParallelRepetition.matrixLogEntropy_weighted_jensen_posSemidef": "8899a9b7-b5b1-44fb-ac92-9f752bcd2f45",
     "QuantumParallelRepetition.mean_spectralPurificationFilterEntryLp_mem_common": "84400a0a-2c43-4428-b157-8d4ea931193a",
@@ -115,8 +116,7 @@
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "create",
     "QuantumParallelRepetition.exactReverseRightSide_card": "create",
     "QuantumParallelRepetition.exactReverseRightSide_complement": "create",
-    "QuantumParallelRepetition.exactReverseRightSide_coordinate_mem": "create",
-    "QuantumParallelRepetition.martingale_log_cost_eq": "create"
+    "QuantumParallelRepetition.exactReverseRightSide_coordinate_mem": "create"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -181,6 +181,7 @@
     "QuantumParallelRepetition.fullHistoryRemaining_insert_conditioned": "2c9b15ce-1e24-4c37-aafe-f4878df8d312",
     "QuantumParallelRepetition.fullHistoryRemaining_insert_subset": "bf5b69b8-bc31-4185-b471-0ebb4478223a",
     "QuantumParallelRepetition.fullSubsetHistory_mass_eq_postselection": "1137f795-77b5-415c-8755-a0a8396cbe43",
+    "QuantumParallelRepetition.martingale_log_cost_eq": "915ec83a-6a9b-4f84-a032-a950581c5dec",
     "QuantumParallelRepetition.matrixLogEntropy_born_lower_bound_left": "5880f3c0-ce51-428e-a0a8-361f3cc390c6",
     "QuantumParallelRepetition.matrixLogEntropy_weighted_jensen_posSemidef": "26f9c3f4-a5a6-4b65-bfc8-2840c4f43c61",
     "QuantumParallelRepetition.mean_spectralPurificationFilterEntryLp_mem_common": "fe8226de-0c52-4299-9394-8dc4bc9eb062",
