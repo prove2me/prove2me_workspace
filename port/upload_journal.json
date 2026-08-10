@@ -57,6 +57,9 @@
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "b3bee34d-5239-4461-b2f4-c7c747c421fd",
     "QuantumParallelRepetition.exactPaddedDefault_norm": "0630ab8a-b8a9-4ad1-b973-a0991bb4dd29",
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "2649ea84-dade-4b30-89b4-cabcf3a548d3",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide": "387a3c2a-551d-41b2-8906-839af423520b",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": "980bf9ee-0904-408c-b670-f243efe16f8d",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "7084938c-8df8-493d-8540-0e8a8548c823",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "ff6b59e0-67f8-4b4d-bedd-bcf755aaa001",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "a0997ac8-d777-4fc7-bc5c-f4cf71ae808f",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "b59f09a6-0dcc-480b-b5e3-40559d498665",
@@ -67,6 +70,8 @@
     "QuantumParallelRepetition.exactSeedWeight_nonneg": "707f128b-05cf-4871-8d6c-ae210b049f8b",
     "QuantumParallelRepetition.exactSeedWeight_sum": "c6637cd0-da64-44ae-aa6f-b335a191270d",
     "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining": "d4a41469-15e7-4a16-8d70-2827c7c8df20",
+    "QuantumParallelRepetition.exactSourceTupleGamma_norm": "4e789233-0666-4a0a-99c1-16707110f50a",
+    "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": "80b92da9-8217-48a5-aa49-27e17d57a28c",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "2303ae02-e1d1-4f22-9fd8-46ceccafc79d",
     "QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst": "61d397ca-d32f-4a03-8233-58f66d732e0b",
     "QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram": "3d833c85-8fda-4588-b46c-6d02d76e5b25",
@@ -115,11 +120,12 @@
     "def:qpr_core_14": "706ec6bf-9f93-4ff2-9f5c-946fdccdf3cc",
     "def:qpr_core_15": "49600f50-f53c-418d-81ee-7a658e088b9f",
     "def:qpr_core_16": "4ad21990-8322-4c0b-af8b-b9e814215034",
-    "def:qpr_core_17": "db4c7bdb-380e-4680-8e9c-21fa60070e05"
+    "def:qpr_core_17": "db4c7bdb-380e-4680-8e9c-21fa60070e05",
+    "def:qpr_core_18": "f746aa6e-28ac-4433-bda5-053187bd83c5"
   },
   "inflight": {
-    "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": "create",
-    "def:qpr_core_18": "definition"
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card": "create",
+    "def:qpr_core_19": "definition"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -179,6 +185,9 @@
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "399f1a83-223f-493a-9ac2-b44e9a57af16",
     "QuantumParallelRepetition.exactPaddedDefault_norm": "324d8efa-99c4-4ad0-a0de-068eddbb91d0",
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "8efb2c74-ec66-4126-90b1-efbb9be7433a",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide": "be221576-5563-4657-b0f6-838d5be15f59",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": "e2120571-1290-4dcf-9e20-419f9fc4597e",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "45a9e55e-4193-4ba0-a689-86f6b750b0dc",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "b9985b19-2c8a-4a65-8c28-3504ae7d1b42",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "5573efde-cb23-4b77-ae5a-31ef2a8cd97d",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "af5ecb7a-aa95-4752-854c-9ecdfcd938c9",
@@ -189,6 +198,8 @@
     "QuantumParallelRepetition.exactSeedWeight_nonneg": "6c984755-a290-477a-9e15-8e7d0eff7aa2",
     "QuantumParallelRepetition.exactSeedWeight_sum": "2bd30395-59dc-45cf-a296-1029713ab558",
     "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining": "465565da-15be-494d-9849-2c321c1d6207",
+    "QuantumParallelRepetition.exactSourceTupleGamma_norm": "7b09841f-b35f-4c49-891e-23c615d36f92",
+    "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": "1ada63d7-f4ed-4749-8610-3cd783f8fdb3",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "51279b5a-3e01-4ad3-b205-95cc2d7133c1",
     "QuantumParallelRepetition.exists_proofUniversalHarmonicCatalyst": "ab7b200e-90c4-4f32-899f-3e0be7b019ee",
     "QuantumParallelRepetition.finiteTensorLocalUnitaryMatrix_gram": "88e6eff2-f6e3-4f63-b6af-657698dedb1b",
@@ -256,6 +267,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "94846d8c-23f6-4c02-9c61-991a942f4a1a"
+    },
+    "QuantumParallelRepetition.answerLogCost_nonneg_of_postselection": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "bb44a19f-8f7f-43c4-84de-b6a4b54fe614"
     },
     "QuantumParallelRepetition.commonFinitePurification_weighted_left_variation_le": {
       "error_message": "",
@@ -502,6 +518,16 @@
       "status": "ACCEPTED",
       "submission_id": "8efb2c74-ec66-4126-90b1-efbb9be7433a"
     },
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "e2120571-1290-4dcf-9e20-419f9fc4597e"
+    },
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "45a9e55e-4193-4ba0-a689-86f6b750b0dc"
+    },
     "QuantumParallelRepetition.exactReverseLeftSide_card": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -551,6 +577,16 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "465565da-15be-494d-9849-2c321c1d6207"
+    },
+    "QuantumParallelRepetition.exactSourceTupleGamma_norm": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "7b09841f-b35f-4c49-891e-23c615d36f92"
+    },
+    "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "1ada63d7-f4ed-4749-8610-3cd783f8fdb3"
     },
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": {
       "error_message": "",

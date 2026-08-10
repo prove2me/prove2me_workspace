@@ -227,3 +227,15 @@ Terminated
   (6/136 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseRightSide_complement -> ACCEPTED 
   (7/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.answerLogCost_nonneg_of_postselection -> ACCEPTED 
+  (8/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation -> ACCEPTED 
+  (9/136 attempted, 0 failed)
+  [def] qpr_core_18 -> f746aa6e-28ac-4433-bda5-053187bd83c5
+  (10/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactSourceTupleGamma_norm -> ACCEPTED 
+  (11/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side -> ACCEPTED 
+  (12/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique -> ACCEPTED 
+  (13/136 attempted, 0 failed)
