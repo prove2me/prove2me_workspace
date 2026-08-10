@@ -37,6 +37,17 @@ BUNDLE_META = os.path.join(generate.ROOT, "port", "bundle_metadata.json")
 DISPATCH_STAGGER = 3   # seconds between dispatches, so creates do not arrive as a burst
 
 
+def definition_exists(name):
+    """Whether a definition bundle is already published.
+
+    The submit response can be lost while the server still completes the insert, so this is
+    what distinguishes "did not land" from "landed but we never heard".
+    """
+    r = api.call("GET", "/theorems", {"q": name, "status": "Definition", "limit": 20},
+                 account=ACCOUNT, timeout=60, retries=2)
+    return any(t.get("theorem_name") == name for t in r.get("theorems", []))
+
+
 def source_link(a, b):
     return (f"OpenAI, ten-proofs, QuantumParallelRepetition.lean, "
             f"{REPO}/blob/{SHA}/QuantumParallelRepetition.lean#L{a}-L{b}")
@@ -159,17 +170,32 @@ class Tree:
         payload = self.bundle_payload(i)
         journal.setdefault("inflight", {})[key] = "definition"
         upload.save(journal)
-        r = api.call("POST", "/submit-definition", body=payload, account=ACCOUNT, timeout=900)
-        did = r.get("definition_id")
-        if not did:
-            # A duplicate name on a retry means the first attempt landed.  The server reports
-            # this two ways: a validation message, or a raw unique-constraint violation.
+        # Bounded, visible attempts.  `api.call`'s default is four transport retries at 900s
+        # each, which meant one bad bundle could hang for the better part of an hour before it
+        # logged anything at all — and every item above it in the import order waits meanwhile.
+        did = None
+        for attempt in range(3):
+            with upload.CREATE_LOCK:
+                r = api.call("POST", "/submit-definition", body=payload, account=ACCOUNT,
+                             timeout=420, retries=1)
+            did = r.get("definition_id")
+            if did:
+                break
+            # A duplicate name means the first attempt landed.  The server reports this two
+            # ways: a validation message, or a raw unique-constraint violation.
             blob = json.dumps(r)
             if "already exists" in blob or "duplicate key" in blob:
                 did = "exists"
-            else:
-                print(f"  [FAIL] {name}: {json.dumps(r)[:600]}")
-                return False
+                break
+            if definition_exists(name):
+                did = "exists"
+                break
+            print(f"  [retry] {name}: {blob[:200]}", flush=True)
+        if not did:
+            print(f"  [FAIL] {name}: {json.dumps(r)[:400]}", flush=True)
+            journal["inflight"].pop(key, None)
+            upload.save(journal)
+            return False
         journal["created"][key] = did
         journal["inflight"].pop(key, None)
         upload.save(journal)
