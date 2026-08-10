@@ -141,3 +141,9 @@
   [error] ('thm', 993): 'submitted'
   (63/225 attempted, 1 failed)
 Terminated
+  [thm] QuantumParallelRepetition.exactSeedWeight_nonneg -> ACCEPTED 
+  (1/161 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactBobQuestionFilter_posSemidef -> ACCEPTED 
+  (2/161 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_le_targetDistance -> ACCEPTED 
+  (3/161 attempted, 0 failed)
