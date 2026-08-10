@@ -57,9 +57,13 @@
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "b3bee34d-5239-4461-b2f4-c7c747c421fd",
     "QuantumParallelRepetition.exactPaddedDefault_norm": "0630ab8a-b8a9-4ad1-b973-a0991bb4dd29",
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "2649ea84-dade-4b30-89b4-cabcf3a548d3",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card": "26b03e2a-b1e2-4001-865e-eee197795f86",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide": "387a3c2a-551d-41b2-8906-839af423520b",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": "980bf9ee-0904-408c-b670-f243efe16f8d",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "7084938c-8df8-493d-8540-0e8a8548c823",
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide": "a6a82f2f-e446-4903-a9f1-a965027003b2",
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "78300519-1908-45d2-a71c-0b65af58d059",
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique": "0331fbad-5156-41f3-8af6-9bf007388ece",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "ff6b59e0-67f8-4b4d-bedd-bcf755aaa001",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "a0997ac8-d777-4fc7-bc5c-f4cf71ae808f",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "b59f09a6-0dcc-480b-b5e3-40559d498665",
@@ -121,11 +125,12 @@
     "def:qpr_core_15": "49600f50-f53c-418d-81ee-7a658e088b9f",
     "def:qpr_core_16": "4ad21990-8322-4c0b-af8b-b9e814215034",
     "def:qpr_core_17": "db4c7bdb-380e-4680-8e9c-21fa60070e05",
-    "def:qpr_core_18": "f746aa6e-28ac-4433-bda5-053187bd83c5"
+    "def:qpr_core_18": "f746aa6e-28ac-4433-bda5-053187bd83c5",
+    "def:qpr_core_19": "ffe41fdf-8422-4306-a238-500527742e4c"
   },
   "inflight": {
-    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card": "create",
-    "def:qpr_core_19": "definition"
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_card": "create",
+    "def:qpr_core_20": "definition"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -185,9 +190,13 @@
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "399f1a83-223f-493a-9ac2-b44e9a57af16",
     "QuantumParallelRepetition.exactPaddedDefault_norm": "324d8efa-99c4-4ad0-a0de-068eddbb91d0",
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "8efb2c74-ec66-4126-90b1-efbb9be7433a",
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card": "4a519f5f-c74a-4d29-bc0a-a2cc4146bf70",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide": "be221576-5563-4657-b0f6-838d5be15f59",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": "e2120571-1290-4dcf-9e20-419f9fc4597e",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "45a9e55e-4193-4ba0-a689-86f6b750b0dc",
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide": "ea236b8a-859c-4d88-acba-98da84dcbac9",
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "85c928d8-b912-4fe1-8ecf-114586eb34b6",
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique": "0d0db9cd-7959-4097-973a-96c2c6486c9e",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "b9985b19-2c8a-4a65-8c28-3504ae7d1b42",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "5573efde-cb23-4b77-ae5a-31ef2a8cd97d",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "af5ecb7a-aa95-4752-854c-9ecdfcd938c9",
@@ -518,6 +527,16 @@
       "status": "ACCEPTED",
       "submission_id": "8efb2c74-ec66-4126-90b1-efbb9be7433a"
     },
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "4a519f5f-c74a-4d29-bc0a-a2cc4146bf70"
+    },
+    "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "be221576-5563-4657-b0f6-838d5be15f59"
+    },
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_side": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -527,6 +546,21 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "45a9e55e-4193-4ba0-a689-86f6b750b0dc"
+    },
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "ea236b8a-859c-4d88-acba-98da84dcbac9"
+    },
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "85c928d8-b912-4fe1-8ecf-114586eb34b6"
+    },
+    "QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "0d0db9cd-7959-4097-973a-96c2c6486c9e"
     },
     "QuantumParallelRepetition.exactReverseLeftSide_card": {
       "error_message": "",

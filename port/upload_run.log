@@ -239,3 +239,15 @@ Terminated
   (12/136 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique -> ACCEPTED 
   (13/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceCanonicalPartition_otherSide -> ACCEPTED 
+  (14/136 attempted, 0 failed)
+  [def] qpr_core_19 -> ffe41fdf-8422-4306-a238-500527742e4c
+  (15/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card -> ACCEPTED 
+  (16/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobCanonicalPartition_side -> ACCEPTED 
+  (17/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique -> ACCEPTED 
+  (18/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide -> ACCEPTED 
+  (19/136 attempted, 0 failed)
