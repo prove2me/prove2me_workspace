@@ -215,3 +215,15 @@ Terminated
   (8/141 attempted, 0 failed)
   [thm] QuantumParallelRepetition.dSVDensityRationalHeterogeneousPhysicalTerminalMass_le_pow -> ACCEPTED 
   (1/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactGlobalHistoryVector_norm -> ACCEPTED 
+  (2/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactRight_coordinate_not_mem -> ACCEPTED 
+  (3/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactGlobalHistoryLocalIndex_card_pos -> ACCEPTED 
+  (4/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseLeftSide_complement -> ACCEPTED 
+  (5/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining -> ACCEPTED 
+  (6/136 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseRightSide_complement -> ACCEPTED 
+  (7/136 attempted, 0 failed)
