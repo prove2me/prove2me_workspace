@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import api  # noqa: E402
 
 JOURNAL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "upload_journal.json")
-POLL_INTERVAL = 15
+POLL_INTERVAL = 6
 POLL_TIMEOUT = 1800
 TERMINAL = {"ACCEPTED", "SKETCH_ACCEPTED", "CE", "WA", "SORRY", "FAILED", "ERROR"}
 
@@ -42,12 +42,14 @@ def load():
 
 LOCK = threading.Lock()
 
-# `submit-problem` compile-checks server-side and is answered synchronously, so it is the one
-# call in this pipeline that must not run concurrently: the same node fails with "Remote end
-# closed connection without response" when four workers create at once, and succeeds in ~245s
-# when run alone.  Verification is unaffected — /verify returns a submission id immediately and
-# builds asynchronously — so polling stays parallel and only the build is serialised.
-CREATE_LOCK = threading.Lock()
+# `submit-problem` compile-checks server-side and is answered synchronously, so it is throttled
+# rather than left free-running: with the original 450-module preambles a create took minutes and
+# four at once got their connections closed.  Trimmed preambles (about 30 imports) made each
+# create far cheaper, so a small amount of concurrency is affordable again — but not unlimited,
+# because the platform closes any request that passes ~300s and the work is then discarded.
+# Verification is unaffected: /verify returns a submission id immediately and builds
+# asynchronously, so polling stays fully parallel.
+CREATE_LOCK = threading.Semaphore(2)
 
 
 def save(j):
@@ -176,11 +178,17 @@ def existing_submission(theorem_id, account):
     return None
 
 
-def verify(node, theorem_id, account, journal):
-    """POST /verify, recording the submission_id *before* polling so a killed poll resumes."""
+def verify(node, theorem_id, account, journal, fresh=False):
+    """POST /verify, recording the submission_id *before* polling so a killed poll resumes.
+
+    `fresh` says the theorem was created by this very call, so it cannot already have a
+    submission — which lets us skip `existing_submission`.  That lookup is not cheap: the
+    platform's /submissions endpoint ignores `limit` and returns every submission on the
+    instance (700+ and growing), so paying it once per node was costing more than the verify.
+    """
     name = node["name"]
     if name not in journal["submitted"]:
-        sid = existing_submission(theorem_id, account)
+        sid = None if fresh else existing_submission(theorem_id, account)
         if sid is None:
             body, ctype = _multipart(
                 {"theorem_id": theorem_id, "explanation": node["explanation"]},

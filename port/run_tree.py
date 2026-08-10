@@ -34,7 +34,7 @@ SHA = "94bc0feb6a9ff12c7d31d6de640a725c9d43d2b6"
 TAGS = ["quantum-parallel-repetition", "openai-ten-proofs", "quantum-information"]
 META_DIR = os.path.join(generate.ROOT, "port", "metadata")
 BUNDLE_META = os.path.join(generate.ROOT, "port", "bundle_metadata.json")
-DISPATCH_STAGGER = 8   # seconds between dispatches, so creates do not arrive as a burst
+DISPATCH_STAGGER = 3   # seconds between dispatches, so creates do not arrive as a burst
 
 
 def source_link(a, b):
@@ -197,13 +197,14 @@ class Tree:
         if not node["nl"] or not node["explanation"]:
             print(f"  [skip] {node['name']}: metadata not written yet", flush=True)
             return False
+        fresh = node["name"] not in journal["created"]
         tid = upload.create(node, ACCOUNT, journal)
-        v = upload.verify(node, tid, ACCOUNT, journal)
+        v = upload.verify(node, tid, ACCOUNT, journal, fresh=fresh)
         print(f"  [thm] {node['name']} -> {v['status']} "
               f"{v.get('error_message', '')[:400]}", flush=True)
         return v["status"] in ("ACCEPTED", "SKETCH_ACCEPTED")
 
-    def run_parallel(self, journal, workers=4):
+    def run_parallel(self, journal, workers=8):
         """Upload with several items in flight, still strictly leaves-first.
 
         An item is dispatched only once every item it imports is done, so the ordering
