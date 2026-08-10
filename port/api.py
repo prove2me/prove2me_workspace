@@ -22,6 +22,14 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+# The platform cannot absorb many requests at once: submit-problem and submit-definition are
+# answered synchronously after a server-side Lean build, and concurrent ones queue until they
+# pass the ~300s response ceiling and are discarded.  So every call this client makes — creates,
+# verifies and polls alike — passes through one semaphore.  This is a property of the service,
+# not of any one endpoint, which is why it lives here rather than at a call site.
+MAX_CONCURRENT = 2
+GATE = threading.Semaphore(MAX_CONCURRENT)
+
 BASE = "https://beta.prove2.me/api/v1"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ACCOUNTS = {
@@ -92,8 +100,9 @@ def call(method, path, params=None, body=None, account="self", timeout=120, retr
         if data:
             req.add_header("Content-Type", "application/json")
         try:
-            with urllib.request.urlopen(req, timeout=timeout) as r:
-                return json.load(r)
+            with GATE:
+                with urllib.request.urlopen(req, timeout=timeout) as r:
+                    return json.load(r)
         except urllib.error.HTTPError as e:
             return {"_http_error": e.code, "_body": e.read().decode()[:4000]}
         except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:

@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import api  # noqa: E402
 
 JOURNAL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "upload_journal.json")
-POLL_INTERVAL = 6
+POLL_INTERVAL = 15
 POLL_TIMEOUT = 1800
 TERMINAL = {"ACCEPTED", "SKETCH_ACCEPTED", "CE", "WA", "SORRY", "FAILED", "ERROR"}
 
@@ -49,7 +49,7 @@ LOCK = threading.Lock()
 # because the platform closes any request that passes ~300s and the work is then discarded.
 # Verification is unaffected: /verify returns a submission id immediately and builds
 # asynchronously, so polling stays fully parallel.
-CREATE_LOCK = threading.Semaphore(2)
+CREATE_LOCK = threading.Semaphore(api.MAX_CONCURRENT)
 
 
 def save(j):
@@ -198,8 +198,9 @@ def verify(node, theorem_id, account, journal, fresh=False):
                 req.add_header("Authorization", "Bearer " + api.token(account))
                 req.add_header("Content-Type", ctype)
                 try:
-                    with urllib.request.urlopen(req, timeout=900) as r:
-                        sid = json.load(r)["submission_id"]
+                    with api.GATE:
+                        with urllib.request.urlopen(req, timeout=900) as r:
+                            sid = json.load(r)["submission_id"]
                     break
                 except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:
                     # The POST may have landed anyway; look before firing again.
