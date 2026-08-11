@@ -1,41 +1,43 @@
-  [error] ('thm', 1698): no top-level ':=' in:
-            aliceAnswer, bobAnswer⟩ := by
-        exact accepted
-      simp only [if_neg sourceRejected, if_neg accepted]
-
-theorem exactReverseBobLowQuestionPotential_eq_alignedPrefix
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (side : Finset (SourceRemainingCoordinate D))
-    (context : ExactReverseSideContext
-      (SourceRemainingCoordinate D) side)
- 
-  (1/21 attempted, 1 failed)
-  [error] ('thm', 2443): 'NoneType' object has no attribute 'start'
-  (2/21 attempted, 2 failed)
-  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ACCEPTED 
-  (3/21 attempted, 2 failed)
-  [thm] QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional -> ACCEPTED 
-  (4/21 attempted, 2 failed)
-  [error] ('thm', 2474): no top-level ':=' in:
-    norm_nonneg (integratorActualC485CanonicalVector
-      (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-      (width := width) schedule ξ ζ j positive grid fine)]
-
-end
-
-noncomputable section
-
-open scoped BigOperators ComplexOrder Kronecker MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-open QuantumParallelRepetition.ClassicalSampling
-open QuantumParallelRepetition.Pinsker
-
-attri
-  (5/21 attempted, 3 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  (1/19 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualSourceSamplerBounds -> ACCEPTED 
+  (2/19 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceSamplerData_of_positive -> ACCEPTED 
+  (3/19 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ERROR Verification timed out after 300s
+  (4/19 attempted, 2 failed)
 blocked by failures:
    thm  QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix
    thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
-   thm  QuantumParallelRepetition.unconditionalActualSourceSamplerBounds
-  round 1 stopped early; 19 items left, pausing
+  round 1 stopped early; 17 items left, pausing
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ACCEPTED 
+  (1/17 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobFilterOperatorMarkerEntropy_sum_le_scalarEntropy -> ACCEPTED 
+  (2/17 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ERROR Verification timed out after 300s
+  (3/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.exactFairAcceptedBobEntropy_le_sourceRate -> ACCEPTED 
+  (4/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalSourcePhysicalRounding_exists_fairStoppingHazard -> ACCEPTED 
+  (5/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalExactFairStoppedPhaseHarmonicClippedUnit_le -> ACCEPTED 
+  (6/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceStoppingHazardData_of_positive -> ACCEPTED 
+  (7/17 attempted, 1 failed)
+  [def] qpr_core_27 -> bd65d42f-f0f8-4a19-a132-e707d45a08ea
+  (8/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all -> ACCEPTED 
+  (9/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all -> ACCEPTED 
+  (10/17 attempted, 1 failed)
+  [def] qpr_core_28 -> 71f073af-ef78-4091-8c96-467a83ac43bb
+  (11/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_cleanBound -> ACCEPTED 
+  (12/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_verifierLedger -> ACCEPTED 
+  (13/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_analyticLedger -> ACCEPTED 
+  (14/17 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
+  round 2 stopped early; 4 items left, pausing
