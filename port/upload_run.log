@@ -375,3 +375,5 @@ blocked by failures:
   (4/45 attempted, 2 failed)
   [thm] QuantumParallelRepetition.exactReverseBobActualMarkedEntropy_eq_source -> ACCEPTED 
   (5/45 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exactSourceGlobalCatalystWinningEffect_law_supported_verifier -> ACCEPTED 
+  (6/45 attempted, 2 failed)

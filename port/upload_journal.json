@@ -178,6 +178,7 @@
     "QuantumParallelRepetition.targetReducedDensity_posSemidef": "39bce2c8-ab35-4be9-bd12-2732fe3dbe64",
     "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "86fe3927-cc85-4b14-b3b9-e3b4e09d2a5b",
     "QuantumParallelRepetition.unconditionalExactSourceScalarClipping": "36e655bf-0edb-4bd4-a5c7-f6cb600e1c9f",
+    "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "b08abd41-1e5a-4a7e-8fc1-03d972ceaa1f",
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": "ac0fd92e-0669-4587-8521-ccd2db22c880",
     "QuantumParallelRepetition.winProbabilities_bddAbove": "a9dd6609-4698-4986-aaaf-5b0f48cbe917",
     "def:qpr_core_00": "4e1135b7-b1e4-4088-a631-2b394b814ef5",
@@ -210,6 +211,7 @@
     "def:qpr_core_21": "definition"
   },
   "jobs": {
+    "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "d9c45d44-cffb-470f-8611-097768082906",
     "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass": "50957f97-c97a-4f20-a6cb-926a177c1086",
     "QuantumParallelRepetition.exactBobSourceMarginalInformation_le": "5617f869-aa0e-459d-87af-4be54ffde021",
     "QuantumParallelRepetition.exactReverseAliceSideMarkedPosteriorConditional_eq_fixedSeedFiber": "00157e9b-ebea-4627-a5aa-ff3fdd58c558",
@@ -349,6 +351,7 @@
     "QuantumParallelRepetition.targetReducedDensity_posSemidef": "a02da3b7-0ea8-4a14-bcfb-e32e40ecf768",
     "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "32ade1fe-f331-4f13-9a1d-f09f78429f2e",
     "QuantumParallelRepetition.unconditionalExactSourceScalarClipping": "3411aeaa-7551-4f7d-9ccd-a25ca3d096a2",
+    "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "ee961dbe-9717-4c62-ab30-348d7cd72629",
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": "684c6e5f-0aec-42b9-a6c6-24543f21d72d",
     "QuantumParallelRepetition.winProbabilities_bddAbove": "5e918e7b-a6e9-44ea-a021-b3b24ea06c35"
   },
@@ -987,6 +990,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": ""
+    },
+    "QuantumParallelRepetition.exactSourceGlobalCatalystWinningEffect_law_supported_verifier": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "6f491a27-5f3f-40c3-aad2-1cbde55de90e"
     },
     "QuantumParallelRepetition.exactSourceNormalizedWinningEffect_eq_conditional": {
       "error_message": "",
