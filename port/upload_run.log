@@ -372,3 +372,11 @@ blocked by failures:
   (4/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseBobMarkerCode_injective -> ACCEPTED 
   (5/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_conditional -> ACCEPTED 
+  (6/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceMarkerDecode_rightInverse -> ACCEPTED 
+  (7/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobMarkerDecode_rightInverse -> ACCEPTED 
+  (8/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_actual_atom_sum -> ACCEPTED 
+  (9/110 attempted, 0 failed)
