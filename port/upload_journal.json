@@ -97,6 +97,7 @@
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": "777f21e0-e1ca-497f-8405-7955866e69d0",
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": "5e060006-72a4-4f4f-87c4-0800d03f9653",
     "QuantumParallelRepetition.exactReverseAliceContext_prefix_before_marked": "b10e7ac1-4e69-4311-96c9-db263dff96f7",
+    "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_le_scalarEntropy": "50655e69-5b7f-40b0-b372-67f6a2d39976",
     "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope": "ddd9bdfd-5815-49aa-a66c-27f56130f9c5",
     "QuantumParallelRepetition.exactReverseAliceHighQuestionPotential_eq_alignedPrefix": "b2e7aed4-335e-4f1f-9ec6-e3f27fb6d985",
     "QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix": "a0581060-a021-49e0-bc24-53b0d4cf6d34",
@@ -180,7 +181,10 @@
     "QuantumParallelRepetition.targetReducedDensity_posSemidef": "39bce2c8-ab35-4be9-bd12-2732fe3dbe64",
     "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "86fe3927-cc85-4b14-b3b9-e3b4e09d2a5b",
     "QuantumParallelRepetition.unconditionalExactSourceScalarClipping": "36e655bf-0edb-4bd4-a5c7-f6cb600e1c9f",
+    "QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer": "408fcc56-bfd3-46e6-868c-f53b85343910",
+    "QuantumParallelRepetition.unconditionalNormalizedCanonicalRetainedWork_norm_sq": "fe2d37de-c3a8-46ad-a1a9-fd147407216a",
     "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "b08abd41-1e5a-4a7e-8fc1-03d972ceaa1f",
+    "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedSelectedHistoryEquiv_hit": "16156155-7fb9-4b44-ac70-055075ba85aa",
     "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "060e02ea-c000-439d-aff2-8b5f2325cbd7",
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": "ac0fd92e-0669-4587-8521-ccd2db22c880",
     "QuantumParallelRepetition.winProbabilities_bddAbove": "a9dd6609-4698-4986-aaaf-5b0f48cbe917",
@@ -847,6 +851,11 @@
       "submission_id": "8081f259-5d01-44d6-a4f4-f7beb4b2407c"
     },
     "QuantumParallelRepetition.exactReverseAliceContext_prefix_before_marked": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": ""
+    },
+    "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_le_scalarEntropy": {
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": ""
