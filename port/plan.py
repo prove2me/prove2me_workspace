@@ -83,6 +83,14 @@ FORCE_NODES = [
     "QuantumParallelRepetition.exactReverseAliceContext_prefix_before_marked",
     "QuantumParallelRepetition.exactFixedAliceQuestionMass_eq_product",
     "QuantumParallelRepetition.exactInsertedPrefixBefore_marker_eq",
+    # Same reason, later node: `unconditionalActualFairSourceRoundingData_exists_stoppedVerifier`
+    # timed out four times running, and the cost is kernel type-checking rather than tactics —
+    # its first six skeleton declarations check in 7s and the last few in about 240s. These three
+    # are the heavy ones, and their `_cleanBound` / `_analyticLedger` / `_verifierLedger` siblings
+    # were already nodes, so promoting them makes the group consistent.
+    "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_clippingBound",
+    "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch",
+    "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_stoppedVerifier",
 ]
 
 
