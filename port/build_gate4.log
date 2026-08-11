@@ -6,3 +6,6 @@
 ✔ [3734/3746] Built Theorems.Thm_QuantumParallelRepetition_exactBobQuestionMass_eq_jointPrefixQuestionMass (3.1s)
 ✔ [3735/3746] Built Theorems.Thm_QuantumParallelRepetition_exactReverseAliceFilterOperatorMarkerEntropy_sum_le_scalarEntropy (3.2s)
 ✔ [3736/3746] Built Theorems.Thm_QuantumParallelRepetition_exactAliceQuestionFilter_eq_jointPrefixOperatorFilter (3.1s)
+✔ [7682/7802] Built Theorems.Thm_QuantumParallelRepetition_exactRevealCode_eq_iff_fair_question_masks (2.9s)
+✔ [8779/8980] Built Solutions.Sol_QuantumParallelRepetition_exactFairBobMeanFilter_eq_jointPrefixOperatorFilter (15s)
+✔ [8780/8980] Built Solutions.Sol_QuantumParallelRepetition_exactFairAcceptedAliceEntropy_le_sourceRate (15s)
