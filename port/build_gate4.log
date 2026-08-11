@@ -22,3 +22,4 @@
 ✔ [8917/8980] Built Solutions.Sol_QuantumParallelRepetition_exactReverseAliceLowQuestionPotential_eq_alignedPrefix (27s)
 ✔ [8920/8980] Built Solutions.Sol_QuantumParallelRepetition_exactReverseAliceContext_prefix_before_marked (4.0s)
 ✔ [8932/8980] Built Solutions.Sol_QuantumParallelRepetition_exactAliceQuestionFilter_eq_jointPrefixOperatorFilter (4.0s)
+✔ [8934/8980] Built Solutions.Sol_QuantumParallelRepetition_exactReverseBobFilterOperatorMarkerEntropy_sum_le_scalarEntropy (19s)
