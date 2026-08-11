@@ -61,6 +61,7 @@
     "QuantumParallelRepetition.exactBobQuestionFilter_posSemidef": "9e9bcf0a-6292-4b29-844c-050f0e9e4136",
     "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass": "efdad28c-97bb-480c-bd28-9f01361a36c5",
     "QuantumParallelRepetition.exactBobQuestionPurificationMatrix_gram": "c3cc469b-63db-4bc6-b6be-75264dc5fdbf",
+    "QuantumParallelRepetition.exactBobSourceMarginalInformation_le": "13325ef3-7f87-4fb3-863d-623cbdce1633",
     "QuantumParallelRepetition.exactFairAcceptedAliceEntropy_le_sourceRate": "5ea4787e-edbc-4aec-be3c-4794a13d615a",
     "QuantumParallelRepetition.exactFairAcceptedJointStatistic_reindex": "c0abf427-9f6c-4225-9d8d-15ab22e63cfc",
     "QuantumParallelRepetition.exactFairAliceMeanBornMass_eq_fullOutcome_sum": "89967bdc-efd4-4296-807c-e4b501ba9477",
@@ -77,6 +78,7 @@
     "QuantumParallelRepetition.exactGlobalHistoryVector_norm": "12e80da3-e4e1-4bb9-b436-c8240208a49c",
     "QuantumParallelRepetition.exactInsertedPrefixBefore_marker_eq": "9ec49441-b0f3-4f84-81d9-f5a7b81cc906",
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "b3bee34d-5239-4461-b2f4-c7c747c421fd",
+    "QuantumParallelRepetition.exactLocallySampleableLaw_absolute_continuous_roundedJA": "154dec0e-355f-4194-af5e-8061f5ea2bbe",
     "QuantumParallelRepetition.exactLocallySampleableLaw_eq_fair_born": "9ffaba0a-4bc1-4350-ac4a-72d6aa7c946a",
     "QuantumParallelRepetition.exactPaddedDefault_norm": "0630ab8a-b8a9-4ad1-b973-a0991bb4dd29",
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "2649ea84-dade-4b30-89b4-cabcf3a548d3",
@@ -114,6 +116,7 @@
     "QuantumParallelRepetition.exactRight_coordinate_not_mem": "775ba4a3-6864-441e-9f1b-31e27856ef1f",
     "QuantumParallelRepetition.exactSeedWeight_nonneg": "707f128b-05cf-4871-8d6c-ae210b049f8b",
     "QuantumParallelRepetition.exactSeedWeight_sum": "c6637cd0-da64-44ae-aa6f-b335a191270d",
+    "QuantumParallelRepetition.exactSourceAliceSampleTuple_expectation": "9de96256-09cf-40db-8626-261df0440b6b",
     "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining": "d4a41469-15e7-4a16-8d70-2827c7c8df20",
     "QuantumParallelRepetition.exactSourceSharedFlagWeight_nonneg": "5ca9529f-0c4e-4ab3-a843-b4ca8d8df030",
     "QuantumParallelRepetition.exactSourceSharedFlagWeight_sum": "61a3ea56-f105-4d77-b9f9-21610e8a5054",
@@ -121,6 +124,7 @@
     "QuantumParallelRepetition.exactSourceTupleGamma_norm": "4e789233-0666-4a0a-99c1-16707110f50a",
     "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": "80b92da9-8217-48a5-aa49-27e17d57a28c",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalHeterogeneousCommonStopSpectralGaugeContinuity_sq": "8920c291-207e-41fb-8729-2c92931839bb",
+    "QuantumParallelRepetition.exists_proofDSVDensityRationalHeterogeneousStoppedCommonStopGaugeErrorBound": "9581ed76-47eb-4655-8f08-62fd65fea3ba",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalMixedPrefixCleanup_sq": "f1a0247f-2dad-455f-957f-99c6617136df",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalQuantitativeMixedPrefixCleanup_sq": "9b2bc5e5-51f3-4184-99aa-5264f7c2a927",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "2303ae02-e1d1-4f22-9fd8-46ceccafc79d",
@@ -193,6 +197,8 @@
     "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass": "50957f97-c97a-4f20-a6cb-926a177c1086",
     "QuantumParallelRepetition.exactBobSourceMarginalInformation_le": "5617f869-aa0e-459d-87af-4be54ffde021",
     "QuantumParallelRepetition.exactSourceAliceSampleTuple_expectation": "a9124595-a6fc-4434-9173-db3161505633",
+    "QuantumParallelRepetition.exactSourceNormalizedWinningEffect_eq_conditional": "7a582f69-bff5-44c7-8a0c-998f7bd526e9",
+    "QuantumParallelRepetition.exact_source_equation_twenty_three_of_conditioned_reverse_prefix": "d93acba4-dade-43f2-94be-6f824130fb17",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalQuantitativeMixedPrefixCleanup_sq": "6737cde2-94af-4240-ae65-f9ffbd8d2393"
   },
   "submitted": {
@@ -255,6 +261,7 @@
     "QuantumParallelRepetition.exactGlobalHistoryLocalIndex_card_pos": "c0123892-5d70-4dac-b2f8-a590fc45c8d7",
     "QuantumParallelRepetition.exactGlobalHistoryVector_norm": "1baacc91-114f-4df6-b788-7ee8f49e69e1",
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "399f1a83-223f-493a-9ac2-b44e9a57af16",
+    "QuantumParallelRepetition.exactLocallySampleableLaw_absolute_continuous_roundedJA": "ed8ff230-bd66-4f42-b5ed-2bddf0e5360e",
     "QuantumParallelRepetition.exactPaddedDefault_norm": "324d8efa-99c4-4ad0-a0de-068eddbb91d0",
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "8efb2c74-ec66-4126-90b1-efbb9be7433a",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card": "4a519f5f-c74a-4d29-bc0a-a2cc4146bf70",
@@ -622,6 +629,11 @@
       "status": "ACCEPTED",
       "submission_id": "bf497fe6-7311-4a0d-9ce7-df0ea6afa0a3"
     },
+    "QuantumParallelRepetition.exactBobSourceMarginalInformation_le": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": ""
+    },
     "QuantumParallelRepetition.exactFairAcceptedAliceEntropy_le_sourceRate": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -877,6 +889,11 @@
       "status": "ACCEPTED",
       "submission_id": "2bd30395-59dc-45cf-a296-1029713ab558"
     },
+    "QuantumParallelRepetition.exactSourceAliceSampleTuple_expectation": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": ""
+    },
     "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -906,6 +923,16 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "1ada63d7-f4ed-4749-8610-3cd783f8fdb3"
+    },
+    "QuantumParallelRepetition.exists_proofDSVDensityRationalHeterogeneousCommonStopSpectralGaugeContinuity_sq": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": ""
+    },
+    "QuantumParallelRepetition.exists_proofDSVDensityRationalHeterogeneousStoppedCommonStopGaugeErrorBound": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalMixedPrefixCleanup_sq": {
       "error_message": "",
