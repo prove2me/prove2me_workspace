@@ -1,20 +1,41 @@
-  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
-  [thm] QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional -> FAILED unknown import: Theorems.Thm_QuantumParallelRepetition_exactReverseBobConditionalHistoryIdentification_proved. No such theorem exists in this Lean environment (mathlib c5ea003). Call POST /api/v1/submit-problem for 'QuantumParallelRepetition_exactReverseBobConditionalHistoryIdentification_proved' first.
-  [skip] QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage: metadata not written yet
-  (1/25 attempted, 1 failed)
-  (2/25 attempted, 2 failed)
-  (3/25 attempted, 3 failed)
-  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ERROR Verification timed out after 300s
-  [skip] QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one: metadata not written yet
-  (4/25 attempted, 4 failed)
-  (5/25 attempted, 5 failed)
-  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
-  (6/25 attempted, 6 failed)
+  [error] ('thm', 1698): no top-level ':=' in:
+            aliceAnswer, bobAnswer⟩ := by
+        exact accepted
+      simp only [if_neg sourceRejected, if_neg accepted]
+
+theorem exactReverseBobLowQuestionPotential_eq_alignedPrefix
+    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
+    (D : Finset (Fin n))
+    (side : Finset (SourceRemainingCoordinate D))
+    (context : ExactReverseSideContext
+      (SourceRemainingCoordinate D) side)
+ 
+  (1/21 attempted, 1 failed)
+  [error] ('thm', 2443): 'NoneType' object has no attribute 'start'
+  (2/21 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ACCEPTED 
+  (3/21 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional -> ACCEPTED 
+  (4/21 attempted, 2 failed)
+  [error] ('thm', 2474): no top-level ':=' in:
+    norm_nonneg (integratorActualC485CanonicalVector
+      (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
+      (width := width) schedule ξ ζ j positive grid fine)]
+
+end
+
+noncomputable section
+
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder
+  Matrix.Norms.L2Operator InnerProductSpace
+
+open QuantumParallelRepetition.ClassicalSampling
+open QuantumParallelRepetition.Pinsker
+
+attri
+  (5/21 attempted, 3 failed)
 blocked by failures:
-   thm  QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix
-   thm  QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage
-   thm  QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional
-   thm  QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one
-   thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
    thm  QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix
-  round 1 stopped early; 25 items left, pausing
+   thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
+   thm  QuantumParallelRepetition.unconditionalActualSourceSamplerBounds
+  round 1 stopped early; 19 items left, pausing
