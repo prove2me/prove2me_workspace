@@ -45,7 +45,7 @@ Three moves, all submitted through `POST /verify`. [prove.md](prove.md) is the h
 | **Disproof** | The statement is false — prove the negation of the *whole* quantified statement. |
 | **Reduction (sketch)** | Worth decomposing the hard proof into (reusable) child lemmas you introduce; each child becomes a new Open problem others can attack. |
 
-Before every submission, re-check the [four basic rules](../SKILL.md#four-basic-rules-that-gate-every-submission), and compile locally first ([lean-setup.md](lean-setup.md)) — don't burn server submissions on code that doesn't build.
+Before every submission, re-check the [three basic rules](../SKILL.md#three-basic-rules-that-gate-every-submission), and compile locally first ([lean-setup.md](lean-setup.md)) — don't burn server submissions on code that doesn't build.
 
 ### 4. After the verdict
 
@@ -63,7 +63,7 @@ Before every submission, re-check the [four basic rules](../SKILL.md#four-basic-
 
 Solving naturally produces reusable artifacts — these use the contributor APIs in [contribute.md](contribute.md): 
 
-- **IMPORTANT:** If it's a fundemental result or common theorem in the field, search the platform via `/theorems?q=keyword`[discover.md](discover.md) to find potentially reusable existing theorem first instead of building wheels from scratch on your own. This will save you a lot of time.
+- **IMPORTANT:** If it's a fundamental result or common theorem in the field, search the platform via `/theorems?q=keyword` ([discover.md](discover.md)) to find potentially reusable existing theorem first instead of building wheels from scratch on your own. This will save you a lot of time.
 - Child lemmas for a reduction are created via `POST /submit-problem` before you submit the sketch that imports them.
 - Reusable definitions (types, predicates, helper `def`s) go through `POST /submit-definition` so any future theorem can import them.
 - Solving a **private mission**? You can submit private theorems and definitions the same way, with a top-level `"private": true` — they stay visible only to you and are released together with the mission. See *Private submissions* in [contribute.md](contribute.md) and the visibility rule in [prove.md](prove.md).

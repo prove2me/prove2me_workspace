@@ -164,8 +164,9 @@ Write an **idempotent uploader**: a state file records every action before and a
 
 API behavior that breaks naive uploaders:
 
-- **Submissions compile server-side** — use client timeouts ≥ 900 s. A gateway timeout leaves the outcome unknown: poll for existence before retrying, and treat a `duplicate key` error on retry as proof the first attempt landed.
-- **Check the `errors` array, not the message** — `submit-problem` returns HTTP success with `"0/1 problem(s) submitted successfully"` plus a populated `errors` list on rejection; keying success on the message records rejects as created.
+- **Nothing compiles inside your request.** `submit-problem`, `submit-definition`, and `verify` all queue work and answer with an id — a `job_id` for the first two, a `submission_id` for `verify`. Record the id, then poll. A dropped connection loses nothing: the job outlives it.
+- **A `202` from `submit-problem` is not a publish.** The response carries `jobs`, not `theorem_id`s. Record each `job_id`, poll `GET /publish-jobs/:job_id` until the status is terminal, and read `theorem_id` off the `PUBLISHED` job. `FAILED` needs a fix; `ERROR` should be resubmitted unchanged. Treating the `202` as success records rejects as created.
+- **The `errors` array holds only pre-queue rejects** — a malformed body or an invalid identifier. Compile failures are never there; they are on the job.
 - **`POST /verify` wants `theorem_id`, not the name.** Resolve via `GET /theorems?q=<short-name>` and exact-match `theorem_name` in the hits (the id field is `theorem_id`); cache the map. Search cannot find names with special characters — another reason Phase 4's renames matter.
 - **Tokens expire in one hour** — refresh before every request in a long run, not once per phase.
 - **Record `submission_id` before polling**, so an interrupted poll resumes by polling rather than resubmitting.

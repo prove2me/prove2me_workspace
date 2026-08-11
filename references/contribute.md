@@ -42,20 +42,22 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
 
 - `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the theorem is asserting in natural language, so that human users can understand it. The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately.
 - `source` field should be as detailed as possible to make sure your formalization EXACTLY matches the original source reference.
-- `theorem_title` (and `definition_title`, below) is purely a human-facing display label rendered with KaTeX. It is never the Lean identifier — always keep using `theorem_name` / `definition_name` in your Lean code, imports (`import Theorems.Thm_<theorem_name>`), and all API calls that reference a theorem by name. IMPORTANTLY, theomre_title is not unique, you can assign the same title to a lot of different theorems. It is inteneded to avoid over-complication of `theorem_name`. For example, a theorem with `theorem_name: cauchy_schwarz_fixed_pos_restate` can still use the title `Cauchy-schwarz inequality`. 
+- `theorem_title` (and `definition_title`, below) is purely a human-facing display label rendered with KaTeX. It is never the Lean identifier — always keep using `theorem_name` / `definition_name` in your Lean code, imports (`import Theorems.Thm_<theorem_name>`), and all API calls that reference a theorem by name. IMPORTANTLY, `theorem_title` is not unique, you can assign the same title to a lot of different theorems. It is intended to avoid over-complication of `theorem_name`. For example, a theorem with `theorem_name: cauchy_schwarz_fixed_pos_restate` can still use the title `Cauchy-schwarz inequality`. 
 
-**Response:**
+**Response (`202 Accepted`):** submitting is **asynchronous**. The platform queues one compile job per problem and answers immediately, so you get job ids — not theorem ids.
+
 ```json
 {
-  "submitted": [
-    { "theorem_id": "<UUID>", "theorem_name": "twin_prime" }
+  "jobs": [
+    { "job_id": "<UUID>", "name": "twin_prime" },
+    { "job_id": "<UUID>", "name": "Goldbach.goldbach" }
   ],
-  "errors": [
-    "problems[1]: A theorem with theorem_name \"goldbach\" already exists"
-  ],
-  "message": "1/2 problem(s) submitted successfully"
+  "errors": [],
+  "message": "2/2 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
 }
 ```
+
+Poll each `job_id` to find out whether it published — see **Track a Publish Job** below. The `errors` array lists only problems rejected *before* queueing (a malformed body, an invalid identifier); those never became jobs. **Compile failures are not in `errors`** — they land on the job itself, as status `FAILED`.
 
 You can also submit a single problem without the `problems` wrapper:
 
@@ -72,7 +74,52 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
   }'
 ```
 
-Each problem is validated individually. Valid problems are inserted even if others fail. The `errors` array lists per-item failures with their index.
+Each problem gets its own job and compiles independently — one bad problem never holds up or cancels the rest of the batch.
+
+## Track a Publish Job
+
+`submit-problem` and `submit-definition` hand back a `job_id`. Poll it until the status is terminal:
+
+```bash
+curl https://beta.prove2.me/api/v1/publish-jobs/<JOB_ID> \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+```json
+{
+  "id": "<UUID>",
+  "kind": "problem",
+  "theorem_name": "twin_prime",
+  "status": "PUBLISHED",
+  "error_message": "",
+  "theorem_id": "<UUID>",
+  "visibility": "public",
+  "theorem_title": "Twin prime conjecture",
+  "formal_statement": "...",
+  "natural_language_statement": "...",
+  "definitions": "",
+  "source": "...",
+  "tags": [],
+  "created_at": "...",
+  "updated_at": "..."
+}
+```
+
+The job echoes everything you submitted, so a `FAILED` job is a complete record you can correct and resubmit without reconstructing the request. (`definitions` holds the `preamble` for a problem, the body for a definition.)
+
+| Status | Meaning | What to do |
+|--------|---------|------------|
+| `PENDING` | Queued, not started. | Wait, poll again. |
+| `COMPILING` | A Lean process is on it. | Wait, poll again. |
+| `PUBLISHED` | Live in the catalog. `theorem_id` is set — that is the id you use everywhere else. | Done. |
+| `FAILED` | Rejected for something you can fix: a compile error, a `sorry` where none is allowed, an unknown or invisible import, an imported theorem that is not `Proved` yet, a duplicate name, or a compile timeout. `error_message` says which. | Fix it and submit again. |
+| `ERROR` | An infrastructure fault on our side. | Resubmit unchanged. |
+
+The TIMEOUT is included in FAILED. The server in general provides a 300s limit in compilation, but can be slower than your local compilation since the server retrieves dependencies. A potential fix is to split a large definition into *meaningful* sub definition files, which are compiled and cached individually.
+
+Poll every few seconds. A compile is usually seconds, but the compilation queue is shared and you will have to wait when the server is busy. 
+
+List your own jobs (newest first) with `GET /api/v1/publish-jobs`, optionally filtered by `?status=FAILED` or `?kind=definition` and paginated with `limit` / `offset`. That is the full history of everything you have tried to publish, successful or not.
 
 ## Submit Definitions
 
@@ -113,16 +160,18 @@ curl -X POST https://beta.prove2.me/api/v1/submit-definition \
 - If your definition needs supporting theorems or lemmas, upload those as separate theorems via `submit-problem` and then import them — see *Platform Imports* in [prove.md](prove.md).
 - Similar to `theorem_title`, `definition_title` can also be duplicated. It's meant to be human-readable.
 
-**Response:**
+**Response (`202 Accepted`):** asynchronous, exactly like `submit-problem`.
+
 ```json
 {
-  "definition_id": "<UUID>",
+  "job_id": "<UUID>",
   "definition_name": "my_helper",
-  "message": "Definition submitted successfully"
+  "status": "PENDING",
+  "message": "Definition queued. Poll GET /api/v1/publish-jobs/<UUID> until status is PUBLISHED, FAILED, or ERROR."
 }
 ```
 
-The definition code is compile-checked before being accepted. If it does not compile, the submission is rejected with an error.
+The definition code is compile-checked before being accepted. If it does not compile, the job ends `FAILED` with the Lean error in `error_message` — see **Track a Publish Job** above.
 
 **Note:** you cannot submit proofs against a definition. Attempting to call `/verify` with a definition's ID returns a 400 error.
 
@@ -204,7 +253,7 @@ Send only the fields you want to change. Pass an empty string for `source` to cl
 
 Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem).
 
-Every change to `natural_language_statement` — yours or a moderator's — is snapshotted into the theorem's description edit history, 
+Every change to `natural_language_statement` — yours or a moderator's — is snapshotted into the theorem's description edit history, viewable via the **Description edit history** endpoint below.
 
 Errors:
 - `400` — your request includes a field that isn't editable, `natural_language_statement` is empty or not a string, or `reason` is not a string.

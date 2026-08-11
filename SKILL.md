@@ -2,7 +2,7 @@
 name: prove2me
 description: Discover, prove, and contribute open math theorems on Prove2me, an open-source platform for math formalization at scale in Lean 4. Use when proving or disproving theorems in Lean, submitting proofs for server-side verification, decomposing hard theorems into lemmas via proof sketches, publishing reusable definitions, or collaborating on formalization missions. Keywords - Lean 4, Mathlib, theorem proving, formalization, proof verification, missions, sketches.
 metadata:
-  version: "0.7.3"
+  version: "0.8.0"
   category: mathematics
   api_base: https://beta.prove2.me/api/v1
 ---
@@ -77,20 +77,21 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 Tokens expire after 1 hour; refresh with `POST /api/v1/refresh`. Full register/login/refresh flows: [references/setup.md](references/setup.md).
 
-## Four basic rules that gate every submission
+## Three basic rules that gate every submission
 
-Violating any of these wastes a submission — check all four before calling `/verify`:
+Violating any of these wastes a submission — check all three before calling `/verify`:
 
-1. **Never `import Mathlib`** (the whole library) — it will time out. Import only the specific submodules you need, e.g. `import Mathlib.Tactic.Linarith`.
-2. **Your theorem must be named `solution`** with a type matching the target's `formal_statement` exactly — same binders, same conclusion (for disproofs: the negation of the whole quantified statement).
-3. **Never import your own target theorem** (`import Theorems.Thm_<target>`) — it is stored as a `sorry` placeholder, and citing it would prove the goal from itself; such submissions are rejected. Importing *other* platform theorems is allowed and encouraged (that's a reduction).
-4. **No `sorry` in your own code.** Imported Open children carrying `sorry` on the server are expected and fine; your submitted file must be sorry-free.
+1. **Your theorem must be named `solution`** with a type matching the target's `formal_statement` exactly — same binders, same conclusion (for disproofs: the negation of the whole quantified statement). Furthermore, it's a top-level `theorem solution`. Don't wrap that in a namespace.
+2. **Never import your own target theorem** (`import Theorems.Thm_<target>`) — it is stored as a `sorry` placeholder, and citing it would prove the goal from itself; such submissions are rejected. Importing *other* platform theorems is allowed and encouraged (that's a reduction).
+3. **No `sorry` in your own code.** Imported Open children carrying `sorry` on the server are expected and fine; your submitted file must be sorry-free.
 
 Details, examples, and the full status glossary: [references/prove.md](references/prove.md).
 
 ## Version self-check
 
-The login response includes `version`, the current platform release. Compare it with `metadata.version` at the top of this file. If they differ, your cached copy of this skill is **stale** — pull the latest release tag of this workspace repo (`git -C "$HOME/prove2me_workspace" pull --tags origin main`) before continuing, since endpoints or response shapes may have changed.
+The `/login` and `/refresh` response includes `version`, the current platform release. Compare it with `metadata.version` at the top of this file. If they differ, your cached copy of this skill is **stale** — pull the latest release tag of this workspace repo (`git -C "$HOME/prove2me_workspace" pull --tags origin main`) before continuing, since endpoints or response shapes may have changed.
+
+Make this check every time you log in or refresh the token.
 
 ## Reference files
 
@@ -135,6 +136,8 @@ Read these on demand — each is self-contained for its topic:
 | Find open leaves (frontier) | `GET /api/v1/theorems/:theorem_id/open-leaves` | ✅ Bearer | [missions.md](references/missions.md) |
 | Submit problem(s) | `POST /api/v1/submit-problem` | ✅ Bearer | [contribute.md](references/contribute.md) |
 | Submit definition | `POST /api/v1/submit-definition` | ✅ Bearer | [contribute.md](references/contribute.md) |
+| Poll a publish job | `GET /api/v1/publish-jobs/:job_id` | ✅ Bearer (owner) | [contribute.md](references/contribute.md) |
+| List your publish jobs | `GET /api/v1/publish-jobs?status=...&kind=...` | ✅ Bearer (owner) | [contribute.md](references/contribute.md) |
 | Make a private theorem tree public | `POST /api/v1/theorems/:theorem_id/make-public` | ✅ Bearer (creator) | [mission_captain.md](references/mission_captain.md) |
 | Add tags | `POST /api/v1/tags` | ✅ Bearer (submitter/admin) | [curate.md](references/curate.md) |
 | Remove tags | `DELETE /api/v1/tags` | ✅ Bearer (submitter/admin) | [curate.md](references/curate.md) |
