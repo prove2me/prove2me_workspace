@@ -1,0 +1,20 @@
+  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  [thm] QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional -> FAILED unknown import: Theorems.Thm_QuantumParallelRepetition_exactReverseBobConditionalHistoryIdentification_proved. No such theorem exists in this Lean environment (mathlib c5ea003). Call POST /api/v1/submit-problem for 'QuantumParallelRepetition_exactReverseBobConditionalHistoryIdentification_proved' first.
+  [skip] QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage: metadata not written yet
+  (1/25 attempted, 1 failed)
+  (2/25 attempted, 2 failed)
+  (3/25 attempted, 3 failed)
+  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ERROR Verification timed out after 300s
+  [skip] QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one: metadata not written yet
+  (4/25 attempted, 4 failed)
+  (5/25 attempted, 5 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  (6/25 attempted, 6 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix
+   thm  QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage
+   thm  QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional
+   thm  QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one
+   thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
+   thm  QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix
+  round 1 stopped early; 25 items left, pausing
