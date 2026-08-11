@@ -380,3 +380,7 @@ blocked by failures:
   (8/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_actual_atom_sum -> ACCEPTED 
   (9/110 attempted, 0 failed)
+  [def] qpr_core_22 -> 6cd920e9-3a99-4144-b9b9-3aee62600aeb
+  (10/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.reweightedSeedPrefixPriorMarginal_ne_zero_of_positive_atom -> ACCEPTED 
+  (11/110 attempted, 0 failed)
