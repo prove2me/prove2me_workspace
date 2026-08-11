@@ -345,3 +345,7 @@ blocked by failures:
   round 13 stopped early; 111 items left, pausing
   [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
   [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  [thm] QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope -> ACCEPTED 
+  (1/80 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactFairAliceSeedScalarEntropy_le -> ACCEPTED 
+  (2/80 attempted, 0 failed)
