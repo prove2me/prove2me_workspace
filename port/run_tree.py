@@ -233,7 +233,15 @@ class Tree:
         v = upload.verify(node, tid, ACCOUNT, journal, fresh=fresh)
         print(f"  [thm] {node['name']} -> {v['status']} "
               f"{v.get('error_message', '')[:400]}", flush=True)
-        return v["status"] in ("ACCEPTED", "SKETCH_ACCEPTED")
+        ok = v["status"] in ("ACCEPTED", "SKETCH_ACCEPTED")
+        if not ok:
+            # A terminal non-accepting verdict is cached in the journal, and `verify` returns
+            # the cache before resubmitting — so without this the node could never be retried,
+            # even for an ERROR the platform explicitly says to resubmit unchanged.
+            journal["submitted"].pop(node["name"], None)
+            journal["verdict"].pop(node["name"], None)
+            upload.save(journal)
+        return ok
 
     def run_parallel(self, journal, workers=8):
         """Upload with several items in flight, still strictly leaves-first.

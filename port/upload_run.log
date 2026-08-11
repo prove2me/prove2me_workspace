@@ -408,3 +408,5 @@ blocked by failures:
   (22/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactFairGammaPsiDistance_mul_postselection_le -> ACCEPTED 
   (23/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  (24/110 attempted, 1 failed)

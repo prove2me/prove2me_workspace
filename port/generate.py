@@ -226,6 +226,26 @@ class Generator:
         return "\n".join(lines)
 
     def imports_for(self, blocks, node_deps, up_to_bundle):
+        """Imports for a solution file, scoped to what these blocks actually reference.
+
+        `/verify` compiles the submitted file with its own ~300s budget, so a solution carrying
+        the whole 450-module set can time out on nothing but imports — one did, at 456 imports
+        for a proof whose declarations reference 81 modules.  Same treatment as statements and
+        bundles: the modules these blocks name, plus the scopes the source opens.
+        """
+        mods = set(SCOPE_PRELUDE)
+        for b in blocks:
+            for d in self.S.decls_in[b]:
+                mods |= {m for m in self.S.G[d]["mathlibMods"] if m.startswith("Mathlib")}
+        lines = [f"import {BASE_IMPORT}"]
+        if up_to_bundle is not None:
+            lines.append(f"import Definitions.Def_{self.bundle_name(up_to_bundle)}")
+        for d in sorted(node_deps, key=lambda x: self.P.pos[x]):
+            lines.append(f"import {thm_module(self.name_of[d])}")
+        lines += [f"import {m}" for m in sorted(mods)]
+        return "\n".join(lines)
+
+    def _imports_all_mathlib(self, blocks, node_deps, up_to_bundle):
         lines = [f"import {BASE_IMPORT}"]
         if up_to_bundle is not None:
             lines.append(f"import Definitions.Def_{self.bundle_name(up_to_bundle)}")
