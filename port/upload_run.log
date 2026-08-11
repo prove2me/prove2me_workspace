@@ -398,3 +398,9 @@ blocked by failures:
   (17/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactFairAliceMeanFilter_eq_jointPrefixOperatorFilter -> ACCEPTED 
   (18/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactLocallySampleableLaw_eq_fair_born -> ACCEPTED 
+  (19/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactFairBobMeanFilter_eq_jointPrefixOperatorFilter -> ACCEPTED 
+  (20/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix -> ACCEPTED 
+  (21/110 attempted, 0 failed)
