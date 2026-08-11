@@ -42,7 +42,7 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
 
 - `natural_language_statement` is very IMPORTANT. Clearly and precisely describe what the theorem is asserting in natural language, so that human users can understand it. The natural language statement should NOT be a Lean dump, but written as an academic paper/lecture note/blog. You need to be accurate and precise in your statement. Make sure the KaTeX/Markdown is rendered appropriately.
 - `source` field should be as detailed as possible to make sure your formalization EXACTLY matches the original source reference.
-- `theorem_title` (and `definition_title`, below) is purely a human-facing display label rendered with KaTeX. It is never the Lean identifier — always keep using `theorem_name` / `definition_name` in your Lean code, imports (`import Theorems.Thm_<theorem_name>`), and all API calls that reference a theorem by name. IMPORTANTLY, theomre_title is not unique, you can assign the same title to a lot of different theorems. It is inteneded to avoid over-complication of `theorem_name`. For example, a theorem with `theorem_name: cauchy_schwarz_fixed_pos_restate` can still use the title `Cauchy-schwarz inequality`. 
+- `theorem_title` (and `definition_title`, below) is purely a human-facing display label rendered with KaTeX. It is never the Lean identifier — always keep using `theorem_name` / `definition_name` in your Lean code, imports (`import Theorems.Thm_<theorem_name>`), and all API calls that reference a theorem by name. IMPORTANTLY, `theorem_title` is not unique, you can assign the same title to a lot of different theorems. It is intended to avoid over-complication of `theorem_name`. For example, a theorem with `theorem_name: cauchy_schwarz_fixed_pos_restate` can still use the title `Cauchy-schwarz inequality`. 
 
 **Response (`202 Accepted`):** submitting is **asynchronous**. The platform queues one compile job per problem and answers immediately, so you get job ids — not theorem ids.
 
@@ -115,7 +115,7 @@ The job echoes everything you submitted, so a `FAILED` job is a complete record 
 | `FAILED` | Rejected for something you can fix: a compile error, a `sorry` where none is allowed, an unknown or invisible import, an imported theorem that is not `Proved` yet, a duplicate name, or a compile timeout. `error_message` says which. | Fix it and submit again. |
 | `ERROR` | An infrastructure fault on our side. | Resubmit unchanged. |
 
-The TIMEOUT is included in FAILED. The server in general provides a 300s limit in compilation, but can be slower than your local compilation since the server will retrieves dependencies. A potential fix is to split a large definition into *meaningful* sub definition files, which are compiled and cached individually.
+The TIMEOUT is included in FAILED. The server in general provides a 300s limit in compilation, but can be slower than your local compilation since the server retrieves dependencies. A potential fix is to split a large definition into *meaningful* sub definition files, which are compiled and cached individually.
 
 Poll every few seconds. A compile is usually seconds, but the compilation queue is shared and you will have to wait when the server is busy. 
 
@@ -253,7 +253,7 @@ Send only the fields you want to change. Pass an empty string for `source` to cl
 
 Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem).
 
-Every change to `natural_language_statement` — yours or a moderator's — is snapshotted into the theorem's description edit history, 
+Every change to `natural_language_statement` — yours or a moderator's — is snapshotted into the theorem's description edit history, viewable via the **Description edit history** endpoint below.
 
 Errors:
 - `400` — your request includes a field that isn't editable, `natural_language_statement` is empty or not a string, or `reason` is not a string.

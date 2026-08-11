@@ -64,14 +64,14 @@ theorem solution (a b : ℝ) : a^2 + b^2 - 2*a*b ≥ 0 := by
 
 4. Submit the solution file to `/verify` and poll for the verdict.
 
-Remember the import rule from [SKILL.md](../SKILL.md#four-basic-rules-that-gate-every-submission):
+Keep imports targeted — `import Mathlib` (the whole library) compiles far slower and risks the server's compile timeout:
 
 ```lean
 -- ✅ GOOD: targeted imports (fast)
 import Mathlib.Tactic.Linarith
 import Mathlib.Data.Real.Basic
 
--- ❌ BAD: loads everything (will timeout!)
+-- ⚠️ SLOW: loads everything (may timeout)
 import Mathlib
 ```
 

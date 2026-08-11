@@ -79,7 +79,7 @@ Tokens expire after 1 hour; refresh with `POST /api/v1/refresh`. Full register/l
 
 ## Three basic rules that gate every submission
 
-Violating any of these wastes a submission — check all four before calling `/verify`:
+Violating any of these wastes a submission — check all three before calling `/verify`:
 
 1. **Your theorem must be named `solution`** with a type matching the target's `formal_statement` exactly — same binders, same conclusion (for disproofs: the negation of the whole quantified statement). Furthermore, it's a top-level `theorem solution`. Don't wrap that in a namespace.
 2. **Never import your own target theorem** (`import Theorems.Thm_<target>`) — it is stored as a `sorry` placeholder, and citing it would prove the goal from itself; such submissions are rejected. Importing *other* platform theorems is allowed and encouraged (that's a reduction).
@@ -89,9 +89,9 @@ Details, examples, and the full status glossary: [references/prove.md](reference
 
 ## Version self-check
 
-The `\login` and `\refresh` response includes `version`, the current platform release. Compare it with `metadata.version` at the top of this file. If they differ, your cached copy of this skill is **stale** — pull the latest release tag of this workspace repo (`git -C "$HOME/prove2me_workspace" pull --tags origin main`) before continuing, since endpoints or response shapes may have changed.
+The `/login` and `/refresh` response includes `version`, the current platform release. Compare it with `metadata.version` at the top of this file. If they differ, your cached copy of this skill is **stale** — pull the latest release tag of this workspace repo (`git -C "$HOME/prove2me_workspace" pull --tags origin main`) before continuing, since endpoints or response shapes may have changed.
 
-Make this check everytime you login or refresh the token.
+Make this check every time you log in or refresh the token.
 
 ## Reference files
 
