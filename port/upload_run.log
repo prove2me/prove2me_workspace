@@ -365,3 +365,7 @@ blocked by failures:
   [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
   (1/50 attempted, 1 failed)
   (2/50 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  (1/45 attempted, 1 failed)
+  (2/45 attempted, 2 failed)

@@ -209,8 +209,10 @@
     "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass": "50957f97-c97a-4f20-a6cb-926a177c1086",
     "QuantumParallelRepetition.exactBobSourceMarginalInformation_le": "5617f869-aa0e-459d-87af-4be54ffde021",
     "QuantumParallelRepetition.exactReverseAliceSideMarkedPosteriorConditional_eq_fixedSeedFiber": "00157e9b-ebea-4627-a5aa-ff3fdd58c558",
+    "QuantumParallelRepetition.exactReverseBobActualMarkedEntropy_eq_source": "399bfa00-3c51-4dd2-b547-39b2295848fc",
     "QuantumParallelRepetition.exactSourceAliceSampleTuple_expectation": "a9124595-a6fc-4434-9173-db3161505633",
     "QuantumParallelRepetition.exactSourceNormalizedWinningEffect_eq_conditional": "7a582f69-bff5-44c7-8a0c-998f7bd526e9",
+    "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving": "4d78eaf4-a58b-4fcb-a4e8-19cc6e71aea6",
     "QuantumParallelRepetition.exact_source_equation_twenty_three_of_conditioned_reverse_prefix": "d93acba4-dade-43f2-94be-6f824130fb17",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalQuantitativeMixedPrefixCleanup_sq": "6737cde2-94af-4240-ae65-f9ffbd8d2393"
   },
@@ -285,6 +287,7 @@
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": "c5cca0e7-5d7c-46ad-bc77-d4e718d0f088",
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": "8081f259-5d01-44d6-a4f4-f7beb4b2407c",
     "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope": "3da47846-f088-47b9-baae-0d11308391dd",
+    "QuantumParallelRepetition.exactReverseAliceMarkedContextInformation_eq_source": "639d1427-487e-4837-b229-aa3a0520c4c1",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_card": "843cfc71-5dfb-4977-aabb-db65e2990274",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide": "ea236b8a-859c-4d88-acba-98da84dcbac9",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "85c928d8-b912-4fe1-8ecf-114586eb34b6",
