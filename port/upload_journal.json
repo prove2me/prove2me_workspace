@@ -56,6 +56,7 @@
     "QuantumParallelRepetition.exactFairAcceptedJointStatistic_reindex": "c0abf427-9f6c-4225-9d8d-15ab22e63cfc",
     "QuantumParallelRepetition.exactFairAliceMeanBornMass_eq_fullOutcome_sum": "89967bdc-efd4-4296-807c-e4b501ba9477",
     "QuantumParallelRepetition.exactFairAliceMeanFilter_eq_jointPrefixOperatorFilter": "2b784448-0a2b-449c-a510-00699fdfeffa",
+    "QuantumParallelRepetition.exactFairAliceSeedScalarEntropy_le": "c5d3c91c-fe28-4365-b11a-df11eb7f9a7e",
     "QuantumParallelRepetition.exactFairBobMeanBornMass_eq_fullOutcome_sum": "454ac6d5-6f41-40b4-b133-e3065ed7f320",
     "QuantumParallelRepetition.exactFairBobMeanFilter_eq_jointPrefixOperatorFilter": "bdb9c5a4-7d80-482b-9832-60a1142b4431",
     "QuantumParallelRepetition.exactFairConditionedAnswerBornMass_eq_fiber_norm": "ca2d91b6-d928-45df-a6ad-b56958da74be",
@@ -73,6 +74,7 @@
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "7084938c-8df8-493d-8540-0e8a8548c823",
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": "777f21e0-e1ca-497f-8405-7955866e69d0",
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": "5e060006-72a4-4f4f-87c4-0800d03f9653",
+    "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope": "ddd9bdfd-5815-49aa-a66c-27f56130f9c5",
     "QuantumParallelRepetition.exactReverseAliceHighQuestionPotential_eq_alignedPrefix": "b2e7aed4-335e-4f1f-9ec6-e3f27fb6d985",
     "QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix": "a0581060-a021-49e0-bc24-53b0d4cf6d34",
     "QuantumParallelRepetition.exactReverseAliceMarkerCode_injective": "ee4907ed-03c0-42a6-ac4e-c87c95e57fae",
@@ -165,44 +167,8 @@
     "def:qpr_core_23": "063cdc96-2b56-4025-a1b9-1c42b5cb7558",
     "def:qpr_core_24": "a2494bd2-4ed9-4020-920a-32a52d6d68b8"
   },
-  "inflight": {},
-  "jobs": {
-    "QuantumParallelRepetition.exactAliceQuestionFilter_eq_fullJointPrefixOperatorFilter": "094d3ceb-e67f-4ded-85f3-3d1461e113ff",
-    "QuantumParallelRepetition.exactFairAcceptedJointStatistic_reindex": "0119e841-6c2c-4de3-952e-e4a5ab4c25e5",
-    "QuantumParallelRepetition.exactFairAliceMeanBornMass_eq_fullOutcome_sum": "d7e9adf7-b167-43e1-97c2-f034d27f3736",
-    "QuantumParallelRepetition.exactFairAliceMeanFilter_eq_jointPrefixOperatorFilter": "ab699e90-ba9b-4810-acfe-37a4f6ac4994",
-    "QuantumParallelRepetition.exactFairAliceSeedScalarEntropy_le": "ea582a77-f206-427b-9666-8e63e7592aff",
-    "QuantumParallelRepetition.exactFairBobMeanBornMass_eq_fullOutcome_sum": "7f94d97f-dcc7-479e-b83a-ea8564c24655",
-    "QuantumParallelRepetition.exactFairBobMeanFilter_eq_jointPrefixOperatorFilter": "5aedd373-5e13-463d-8d12-35ee1f48c512",
-    "QuantumParallelRepetition.exactFairConditionedAnswerBornMass_eq_fiber_norm": "dcb6dc29-cc98-4ecc-b8b0-9ac380f9c79c",
-    "QuantumParallelRepetition.exactFairGammaPsiDistance_mul_postselection_le": "757ead75-da5b-4ea5-8c36-5b992053fe6c",
-    "QuantumParallelRepetition.exactFairPsiPhiDistance_mul_postselection_le": "957f5365-8ab9-4fde-a1fb-8bd12d586db8",
-    "QuantumParallelRepetition.exactFixedAliceQuestionMass_eq_product": "ad01f65f-2015-4aa4-a1a7-2469de6c0cef",
-    "QuantumParallelRepetition.exactInsertedPrefixBefore_marker_eq": "8316fe98-3f38-4d71-b5ac-47069baa1975",
-    "QuantumParallelRepetition.exactLocallySampleableLaw_eq_fair_born": "a3e520f6-7461-484d-9491-d0865cdec5bb",
-    "QuantumParallelRepetition.exactRevealCode_eq_iff_fair_question_masks": "73a13171-363e-4560-9d0d-d847d5e408ac",
-    "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope": "4ab753e1-153c-46a3-a377-fc1c1e17e90a",
-    "QuantumParallelRepetition.exactReverseAliceHighQuestionPotential_eq_alignedPrefix": "c73a8104-0749-4dd3-9ceb-a796851eb25a",
-    "QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix": "37172f2c-8192-4648-9d90-47422a63c2e0",
-    "QuantumParallelRepetition.exactReverseAliceMarkerCode_injective": "1e4e568a-298a-4344-a357-6fc3dbdc96a7",
-    "QuantumParallelRepetition.exactReverseAliceMarkerDecode_rightInverse": "a7f8cb6f-09f7-48e0-b73e-7b73dcfaf915",
-    "QuantumParallelRepetition.exactReverseAliceUniformMarkedSeed_sum": "01ad4354-d284-49f5-bb11-d95152777585",
-    "QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix": "a9cdbf70-a042-4b89-8e6c-44b336805e30",
-    "QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix": "033819cc-2f07-40a0-ae53-f3bfb62f2d76",
-    "QuantumParallelRepetition.exactReverseBobMarkerCode_injective": "ee05ed6e-1432-4b0f-8133-3a1e15a015fc",
-    "QuantumParallelRepetition.exactReverseBobMarkerDecode_rightInverse": "d0c89d5b-a90f-4d34-96be-c3e12ce039b6",
-    "QuantumParallelRepetition.exactReverseBobUniformMarkedSeed_sum": "e5d1dcce-f1e3-46e1-9a23-e2c14bcb409d",
-    "QuantumParallelRepetition.exactSourceStateDistanceBound_of_fair_operator_entropy": "9eccb12d-e4bf-473e-9c4c-46b4f3b7543b",
-    "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_actual_atom_sum": "db13d18e-1dd3-4ec6-bf8b-7e4e6133d111",
-    "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_conditional": "88fdd73a-34c7-427b-846e-fc6cb83a6b61",
-    "QuantumParallelRepetition.reweightedSeedPrefixPriorMarginal_ne_zero_of_positive_atom": "77315841-6e07-4a91-8417-23d7726423dc",
-    "QuantumParallelRepetition.reweightedSeedPrefix_absolute_continuity": "d5756537-eedb-45fd-8cc5-d9121fa0cc53",
-    "QuantumParallelRepetition.reweightedSeed_flagged_projection_relativeEntropy_le": "56a75827-ed79-4f5e-9a12-f62123844d98",
-    "QuantumParallelRepetition.reweightedSeed_source_equation_twenty_six": "28f8218b-59f1-4fe7-a327-4d47c85e72ed",
-    "def:qpr_core_21": "8beb4930-216a-46e5-92de-61dba571ec80",
-    "def:qpr_core_22": "0f175a70-266a-456c-8b92-c035704f9b69",
-    "def:qpr_core_23": "00717652-34e4-420e-b303-c5a91ff814a2",
-    "def:qpr_core_24": "6e06aaaf-1777-41c6-826c-0a17bcf6b967"
+  "inflight": {
+    "def:qpr_core_21": "definition"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -249,7 +215,6 @@
     "QuantumParallelRepetition.exactAliceCoordinateFilter_posSemidef": "ff58be61-02a1-4f25-91c0-38d9998a12bc",
     "QuantumParallelRepetition.exactAliceCoordinateFilter_sum": "0b29bbfa-4166-4b7a-a924-c9e1868b5e81",
     "QuantumParallelRepetition.exactAlicePurificationFamily_posSemidef": "8df9cadc-2777-4194-8579-56f3fc5cad5b",
-    "QuantumParallelRepetition.exactAliceQuestionFilter_eq_fullJointPrefixOperatorFilter": "46a46048-9450-4a53-9337-6ad84d48e0a2",
     "QuantumParallelRepetition.exactAliceQuestionFilter_posSemidef": "8c6052db-ceef-479a-98d6-e2bcd52a5395",
     "QuantumParallelRepetition.exactAliceQuestionPurificationMatrix_gram": "37765f8f-e3cc-4e52-886e-7274aff183b4",
     "QuantumParallelRepetition.exactBobConditionalMatrix_eq_joint": "1d3df102-98ea-4e2b-a344-14d08e94198b",
@@ -258,18 +223,9 @@
     "QuantumParallelRepetition.exactBobPurificationFamily_posSemidef": "a247be7e-79a9-4a37-bdda-82afd0af5498",
     "QuantumParallelRepetition.exactBobQuestionFilter_posSemidef": "0b7a2a65-c1f0-4fb9-aac8-ddef816a11d3",
     "QuantumParallelRepetition.exactBobQuestionPurificationMatrix_gram": "bf497fe6-7311-4a0d-9ce7-df0ea6afa0a3",
-    "QuantumParallelRepetition.exactFairAcceptedJointStatistic_reindex": "5a979c19-2094-496f-b1ea-9a007424500f",
-    "QuantumParallelRepetition.exactFairAliceMeanBornMass_eq_fullOutcome_sum": "183826d7-c741-4d1f-996f-8eacb986752b",
-    "QuantumParallelRepetition.exactFairAliceMeanFilter_eq_jointPrefixOperatorFilter": "9e99c0e8-01dc-4753-b206-4a12d3a3e0ce",
-    "QuantumParallelRepetition.exactFairBobMeanBornMass_eq_fullOutcome_sum": "353e8ee1-c0e6-4006-b0f0-135e01bf34d5",
-    "QuantumParallelRepetition.exactFairBobMeanFilter_eq_jointPrefixOperatorFilter": "3de1720a-f0f6-485e-88e6-7f4283e1fff2",
-    "QuantumParallelRepetition.exactFairConditionedAnswerBornMass_eq_fiber_norm": "ec8b0e5e-1e48-435d-b164-5f84dcea1bae",
-    "QuantumParallelRepetition.exactFairGammaPsiDistance_mul_postselection_le": "91b745bb-1732-451f-a5cc-6c611121d465",
-    "QuantumParallelRepetition.exactFairPsiPhiDistance_mul_postselection_le": "e9a5438b-9a15-4fd8-8412-fed248f8a8e0",
     "QuantumParallelRepetition.exactGlobalHistoryLocalIndex_card_pos": "c0123892-5d70-4dac-b2f8-a590fc45c8d7",
     "QuantumParallelRepetition.exactGlobalHistoryVector_norm": "1baacc91-114f-4df6-b788-7ee8f49e69e1",
     "QuantumParallelRepetition.exactLeft_coordinate_not_mem": "399f1a83-223f-493a-9ac2-b44e9a57af16",
-    "QuantumParallelRepetition.exactLocallySampleableLaw_eq_fair_born": "a42845fe-ee3d-4b32-80d7-d70d8b07e499",
     "QuantumParallelRepetition.exactPaddedDefault_norm": "324d8efa-99c4-4ad0-a0de-068eddbb91d0",
     "QuantumParallelRepetition.exactRemainingCoordinate_card_pos": "8efb2c74-ec66-4126-90b1-efbb9be7433a",
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_card": "4a519f5f-c74a-4d29-bc0a-a2cc4146bf70",
@@ -278,20 +234,15 @@
     "QuantumParallelRepetition.exactReverseAliceCanonicalPartition_unique": "45a9e55e-4193-4ba0-a689-86f6b750b0dc",
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_nonneg": "c5cca0e7-5d7c-46ad-bc77-d4e718d0f088",
     "QuantumParallelRepetition.exactReverseAliceConditionalSeedWeight_sum": "8081f259-5d01-44d6-a4f4-f7beb4b2407c",
-    "QuantumParallelRepetition.exactReverseAliceHighQuestionPotential_eq_alignedPrefix": "4db9c38b-2f07-4023-9aaf-161cc3eb767d",
-    "QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix": "47e502f6-a0c1-40c8-9976-b451872747b9",
-    "QuantumParallelRepetition.exactReverseAliceMarkerCode_injective": "f69e08fd-25e3-4eca-acb3-8feacdc56bfe",
-    "QuantumParallelRepetition.exactReverseAliceMarkerDecode_rightInverse": "42129c0c-e0de-4a1c-96b8-51dd156ec282",
-    "QuantumParallelRepetition.exactReverseAliceUniformMarkedSeed_sum": "0b691360-5c16-4452-9ecc-551310568ffa",
+    "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope": "3da47846-f088-47b9-baae-0d11308391dd",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_card": "843cfc71-5dfb-4977-aabb-db65e2990274",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_otherSide": "ea236b8a-859c-4d88-acba-98da84dcbac9",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_side": "85c928d8-b912-4fe1-8ecf-114586eb34b6",
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_unique": "0d0db9cd-7959-4097-973a-96c2c6486c9e",
     "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_nonneg": "18d71e28-792d-48a4-ad13-f90bee3e45de",
     "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum": "b13844e2-b8c4-458f-8320-5a28df796de2",
-    "QuantumParallelRepetition.exactReverseBobMarkerCode_injective": "be5d0b82-fa29-46ac-806a-d769a6028fc5",
-    "QuantumParallelRepetition.exactReverseBobMarkerDecode_rightInverse": "625f268d-2db1-4182-9685-383f61e419fa",
-    "QuantumParallelRepetition.exactReverseBobUniformMarkedSeed_sum": "9de794cf-50b6-4455-b742-259ecf8e26a9",
+    "QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix": "20a879b4-7711-4782-8bbc-d3175f7e6fc8",
+    "QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix": "b5757098-e448-4bb1-9e07-7fa0d71fee08",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "b9985b19-2c8a-4a65-8c28-3504ae7d1b42",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "5573efde-cb23-4b77-ae5a-31ef2a8cd97d",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "af5ecb7a-aa95-4752-854c-9ecdfcd938c9",
@@ -302,7 +253,6 @@
     "QuantumParallelRepetition.exactSeedWeight_nonneg": "6c984755-a290-477a-9e15-8e7d0eff7aa2",
     "QuantumParallelRepetition.exactSeedWeight_sum": "2bd30395-59dc-45cf-a296-1029713ab558",
     "QuantumParallelRepetition.exactSourceAnswerTypes_nonempty_of_remaining": "465565da-15be-494d-9849-2c321c1d6207",
-    "QuantumParallelRepetition.exactSourceStateDistanceBound_of_fair_operator_entropy": "14fc5659-ba71-4545-9b27-12ef2cabd037",
     "QuantumParallelRepetition.exactSourceTupleGamma_norm": "7b09841f-b35f-4c49-891e-23c615d36f92",
     "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": "1ada63d7-f4ed-4749-8610-3cd783f8fdb3",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "51279b5a-3e01-4ad3-b205-95cc2d7133c1",
@@ -327,12 +277,6 @@
     "QuantumParallelRepetition.positiveMatrixSpectralAtom_sum": "ebdc2cc6-f33b-4a7a-b153-1b07a728ed54",
     "QuantumParallelRepetition.purifiedRefinedEffect_complete": "13654fb7-e0d0-4fde-98a7-64a71b0ea4d0",
     "QuantumParallelRepetition.purifiedRefinedEffect_posSemidef": "37843b2b-385f-4cae-aff0-b85c6ec76ca3",
-    "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_actual_atom_sum": "449d40fb-0b03-497c-a690-1494a018eb1d",
-    "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_conditional": "4e354185-0835-446e-8b15-fc69a864936c",
-    "QuantumParallelRepetition.reweightedSeedPrefixPriorMarginal_ne_zero_of_positive_atom": "f8cedb15-e31c-4e42-9e19-1ccf3d153880",
-    "QuantumParallelRepetition.reweightedSeedPrefix_absolute_continuity": "0418327c-d2e1-42b4-9f55-a9e57c1aed8e",
-    "QuantumParallelRepetition.reweightedSeed_flagged_projection_relativeEntropy_le": "dd13c69a-ea1e-4257-8bde-c7425ce4ede3",
-    "QuantumParallelRepetition.reweightedSeed_source_equation_twenty_six": "a1ab87d9-41cb-4fbc-a1e9-3dcb9def752d",
     "QuantumParallelRepetition.scalarResolventFilter_memLp_two": "121f163b-6494-4770-a33a-f2286490d19e",
     "QuantumParallelRepetition.sourceHistoryAcceptedMass_eq_uniform": "977337b6-26ef-4219-9246-da91597653ee",
     "QuantumParallelRepetition.spectralPurificationFilter_memLp_two": "81ae0617-1f8f-4abf-8b39-c390a0340efd",
@@ -567,7 +511,7 @@
     "QuantumParallelRepetition.exactAliceQuestionFilter_eq_fullJointPrefixOperatorFilter": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "46a46048-9450-4a53-9337-6ad84d48e0a2"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactAliceQuestionFilter_posSemidef": {
       "error_message": "",
@@ -612,37 +556,42 @@
     "QuantumParallelRepetition.exactFairAcceptedJointStatistic_reindex": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "5a979c19-2094-496f-b1ea-9a007424500f"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactFairAliceMeanBornMass_eq_fullOutcome_sum": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "183826d7-c741-4d1f-996f-8eacb986752b"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactFairAliceMeanFilter_eq_jointPrefixOperatorFilter": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "9e99c0e8-01dc-4753-b206-4a12d3a3e0ce"
+      "submission_id": ""
+    },
+    "QuantumParallelRepetition.exactFairBobMeanBornMass_eq_fullOutcome_sum": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactFairBobMeanFilter_eq_jointPrefixOperatorFilter": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "3de1720a-f0f6-485e-88e6-7f4283e1fff2"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactFairConditionedAnswerBornMass_eq_fiber_norm": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "ec8b0e5e-1e48-435d-b164-5f84dcea1bae"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactFairGammaPsiDistance_mul_postselection_le": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "91b745bb-1732-451f-a5cc-6c611121d465"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactFairPsiPhiDistance_mul_postselection_le": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "e9a5438b-9a15-4fd8-8412-fed248f8a8e0"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactGlobalHistoryLocalIndex_card_pos": {
       "error_message": "",
@@ -662,7 +611,7 @@
     "QuantumParallelRepetition.exactLocallySampleableLaw_eq_fair_born": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "a42845fe-ee3d-4b32-80d7-d70d8b07e499"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactPaddedDefault_norm": {
       "error_message": "",
@@ -707,27 +656,27 @@
     "QuantumParallelRepetition.exactReverseAliceHighQuestionPotential_eq_alignedPrefix": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "4db9c38b-2f07-4023-9aaf-161cc3eb767d"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "47e502f6-a0c1-40c8-9976-b451872747b9"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseAliceMarkerCode_injective": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "f69e08fd-25e3-4eca-acb3-8feacdc56bfe"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseAliceMarkerDecode_rightInverse": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "42129c0c-e0de-4a1c-96b8-51dd156ec282"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseAliceUniformMarkedSeed_sum": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "0b691360-5c16-4452-9ecc-551310568ffa"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseBobCanonicalPartition_card": {
       "error_message": "",
@@ -759,20 +708,30 @@
       "status": "ACCEPTED",
       "submission_id": "b13844e2-b8c4-458f-8320-5a28df796de2"
     },
+    "QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix": {
+      "error_message": "Verification timed out after 300s",
+      "status": "ERROR",
+      "submission_id": "20a879b4-7711-4782-8bbc-d3175f7e6fc8"
+    },
+    "QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix": {
+      "error_message": "Verification timed out after 300s",
+      "status": "ERROR",
+      "submission_id": "b5757098-e448-4bb1-9e07-7fa0d71fee08"
+    },
     "QuantumParallelRepetition.exactReverseBobMarkerCode_injective": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "be5d0b82-fa29-46ac-806a-d769a6028fc5"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseBobMarkerDecode_rightInverse": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "625f268d-2db1-4182-9685-383f61e419fa"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseBobUniformMarkedSeed_sum": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "9de794cf-50b6-4455-b742-259ecf8e26a9"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseLeftSide_card": {
       "error_message": "",
@@ -791,8 +750,8 @@
     },
     "QuantumParallelRepetition.exactReverseRightSide_card": {
       "error_message": "",
-      "status": "SKETCH_ACCEPTED",
-      "submission_id": "ce47d17f-ff91-4abe-8c5d-af80963477cf"
+      "status": "ACCEPTED",
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactReverseRightSide_complement": {
       "error_message": "",
@@ -827,7 +786,7 @@
     "QuantumParallelRepetition.exactSourceStateDistanceBound_of_fair_operator_entropy": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "14fc5659-ba71-4545-9b27-12ef2cabd037"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.exactSourceTupleGamma_norm": {
       "error_message": "",
@@ -952,32 +911,32 @@
     "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_actual_atom_sum": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "449d40fb-0b03-497c-a690-1494a018eb1d"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_conditional": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "4e354185-0835-446e-8b15-fc69a864936c"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.reweightedSeedPrefixPriorMarginal_ne_zero_of_positive_atom": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "f8cedb15-e31c-4e42-9e19-1ccf3d153880"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.reweightedSeedPrefix_absolute_continuity": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "0418327c-d2e1-42b4-9f55-a9e57c1aed8e"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.reweightedSeed_flagged_projection_relativeEntropy_le": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "dd13c69a-ea1e-4257-8bde-c7425ce4ede3"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.reweightedSeed_source_equation_twenty_six": {
       "error_message": "",
       "status": "ACCEPTED",
-      "submission_id": "a1ab87d9-41cb-4fbc-a1e9-3dcb9def752d"
+      "submission_id": ""
     },
     "QuantumParallelRepetition.scalarResolventFilter_memLp_two": {
       "error_message": "",
