@@ -4,10 +4,10 @@ import Theorems.Thm_QuantumParallelRepetition_exactRight_coordinate_not_mem
 import Theorems.Thm_QuantumParallelRepetition_exactRemainingCoordinate_card_pos
 import Theorems.Thm_QuantumParallelRepetition_exactReverseRightSide_coordinate_mem
 import Theorems.Thm_QuantumParallelRepetition_exactReverseRightSide_card
+import Theorems.Thm_QuantumParallelRepetition_exactInsertedPrefixBefore_marker_eq
 import Theorems.Thm_QuantumParallelRepetition_exactReverseRightSide_complement
 import Theorems.Thm_QuantumParallelRepetition_exactReverseBobConditionalSeedWeight_nonneg
 import Theorems.Thm_QuantumParallelRepetition_exactReverseBobConditionalSeedWeight_sum
-import Theorems.Thm_QuantumParallelRepetition_exactReverseBob_history_of_marked_context
 import Theorems.Thm_QuantumParallelRepetition_reweightedSeedPrefixPriorMarginal_ne_zero_of_positive_atom
 import Theorems.Thm_QuantumParallelRepetition_exactConditionedReverseBobNextPrior_marked_joint_factor
 import Theorems.Thm_QuantumParallelRepetition_exactConditionedReverseBobNextJoint_marked_conditional_eq_fixedOutcome
@@ -40,6 +40,7 @@ import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.Normed.Lp.WithLp
 import Mathlib.Analysis.Normed.Ring.Basic
 import Mathlib.Analysis.RCLike.Basic
+import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Fin.SuccPred
 import Mathlib.Data.Finset.BooleanAlgebra
 import Mathlib.Data.Finset.Card
@@ -69,7 +70,6 @@ import Mathlib.Data.Nat.Init
 import Mathlib.Data.Real.Archimedean
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.SetLike.Basic
-import Mathlib.Data.Subtype
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -199,21 +199,6 @@ attribute [local instance] Classical.propDecidable
   simp [exactInsertedRank,
     Finset.subtypeInsertEquivOption]
 
-theorem exactInsertedRank_old
-    {M : Type*} [DecidableEq M]
-    (i : M) (side : Finset M) (not_mem : i ∉ side)
-    (rank : {j : M // j ∈ side} ≃ Fin side.card)
-    (cut : Fin (side.card + 1))
-    (j : {j : M // j ∈ side}) :
-    exactInsertedRank i side not_mem rank cut
-      ⟨j.val, Finset.mem_insert_of_mem j.property⟩ =
-      cut.succAbove (rank j) := by
-  have hne : j.val ≠ i := by
-    intro h
-    exact not_mem (h ▸ j.property)
-  simp [exactInsertedRank,
-    Finset.subtypeInsertEquivOption, hne]
-
 @[simp] theorem exactReverseRightRank_coordinate
     {M : Type*} [Fintype M] [DecidableEq M]
     (seed : ExactForwardSeed M) :
@@ -227,59 +212,6 @@ theorem exactInsertedRank_old
     (exactRight_coordinate_not_mem
       seed.coordinate seed.partition)
     (exactRightRank seed) seed.rightCut
-
-theorem exactInsertedPrefixBefore_marker_eq
-    {M : Type*} [Fintype M] [DecidableEq M]
-    (i : M) (side : Finset M) (not_mem : i ∉ side)
-    (rank : {j : M // j ∈ side} ≃ Fin side.card)
-    (cut : Fin (side.card + 1)) :
-    exactInsertedPrefixBefore i side not_mem rank cut =
-      (Finset.univ.filter
-        (fun j : {j : M // j ∈ side} =>
-          (rank j).val < cut.val)).image Subtype.val := by
-  ext j
-  constructor
-  · intro hj
-    obtain ⟨a, ha, haval⟩ := Finset.mem_image.mp hj
-    have hlt :
-        (exactInsertedRank i side not_mem rank cut a).val <
-          cut.val := (Finset.mem_filter.mp ha).2
-    have hne : a.val ≠ i := by
-      intro heq
-      have hsub : a = ⟨i, Finset.mem_insert_self i side⟩ :=
-        Subtype.ext heq
-      rw [hsub, exactInsertedRank_marker] at hlt
-      exact (Nat.lt_irrefl cut.val) hlt
-    have hside : a.val ∈ side :=
-      (Finset.mem_insert.mp a.property).resolve_left hne
-    let b : {j : M // j ∈ side} := ⟨a.val, hside⟩
-    refine Finset.mem_image.mpr ⟨b, ?_, haval⟩
-    apply Finset.mem_filter.mpr
-    refine ⟨Finset.mem_univ b, ?_⟩
-    have hbefore :
-        cut.succAbove (rank b) < cut := by
-      change (cut.succAbove (rank b)).val < cut.val
-      rw [← exactInsertedRank_old
-        i side not_mem rank cut b]
-      exact hlt
-    have hcast : (rank b).castSucc < cut :=
-      (Fin.succAbove_lt_iff_castSucc_lt cut (rank b)).mp hbefore
-    exact hcast
-  · intro hj
-    obtain ⟨b, hb, hbval⟩ := Finset.mem_image.mp hj
-    have hlt : (rank b).val < cut.val :=
-      (Finset.mem_filter.mp hb).2
-    let a : {j : M // j ∈ insert i side} :=
-      ⟨b.val, Finset.mem_insert_of_mem b.property⟩
-    refine Finset.mem_image.mpr ⟨a, ?_, hbval⟩
-    apply Finset.mem_filter.mpr
-    refine ⟨Finset.mem_univ a, ?_⟩
-    have hcast : (rank b).castSucc < cut := hlt
-    have hbefore : cut.succAbove (rank b) < cut :=
-      (Fin.succAbove_lt_iff_castSucc_lt cut (rank b)).mpr hcast
-    rw [exactInsertedRank_old
-      i side not_mem rank cut b]
-    exact hbefore
 
 theorem exactReverseRightPrefixBeforeMarked_eq
     {M : Type*} [Fintype M] [DecidableEq M]
@@ -931,6 +863,181 @@ theorem exactReverseBobMarkedHistoryContext_eq_of_history
     · exact hfixed
     · exact hflag
   · exact hprefix
+
+theorem exactReverseBob_history_of_marked_context
+    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
+    (D : Finset (Fin n)) (default : X)
+    (seed : ExactRemainingSeed D)
+    (outcome outcome' : ExactOutcome X Y A B n)
+    (same_context :
+      exactReverseBobMarkedHistoryContext
+          G n S D default seed outcome =
+        exactReverseBobMarkedHistoryContext
+          G n S D default seed outcome') :
+    outcome.2.1 seed.coordinate.val =
+        outcome'.2.1 seed.coordinate.val ∧
+      exactHistoryCode D (seed, outcome) =
+        exactHistoryCode D (seed, outcome') := by
+  let side := exactReverseRightSide seed
+  let context := exactReverseBobContext seed
+  let marker : Fin side.card :=
+    context.sideRank
+      ⟨seed.coordinate,
+        exactReverseRightSide_coordinate_mem seed⟩
+  have hfixed :
+      (exactReverseBobSourceProjection
+        (X := X) (Y := Y) (A := A) (B := B)
+        D side (seed, outcome)).1 =
+      (exactReverseBobSourceProjection
+        (X := X) (Y := Y) (A := A) (B := B)
+        D side (seed, outcome')).1 := by
+    have h := congrArg
+      (fun t : ExactReverseBobNextContext
+        X Y A B D (exactReverseRightSide seed) => t.1.1)
+      same_context
+    simpa only [exactReverseBobMarkedHistoryContext,
+      finitePrefixMask, side] using h
+  have hflag :
+      repeatedConditionedAnswerFlag G n S D outcome =
+        repeatedConditionedAnswerFlag G n S D outcome' := by
+    have h := congrArg
+      (fun t : ExactReverseBobNextContext
+        X Y A B D (exactReverseRightSide seed) => t.1.2)
+      same_context
+    simpa only [exactReverseBobMarkedHistoryContext,
+      finitePrefixMask] using h
+  have hprefix :
+      (finitePrefixMask default marker.castSucc
+        (exactReverseBobSourceProjection
+          (X := X) (Y := Y) (A := A) (B := B)
+          D side (seed, outcome))).2 =
+      (finitePrefixMask default marker.castSucc
+        (exactReverseBobSourceProjection
+          (X := X) (Y := Y) (A := A) (B := B)
+          D side (seed, outcome'))).2 := by
+    have h := congrArg
+      (fun t : ExactReverseBobNextContext
+        X Y A B D (exactReverseRightSide seed) => t.2)
+      same_context
+    simpa only [exactReverseBobMarkedHistoryContext,
+      finitePrefixMask, side, context, marker] using h
+  have hfields := eq_of_heq (Sigma.mk.inj hfixed).2
+  have hac := congrArg (fun t => t.1) hfields
+  have hbc := congrArg (fun t => t.2.1) hfields
+  have hside := congrArg (fun t => t.2.2.1) hfields
+  have hother := congrArg (fun t => t.2.2.2.1) hfields
+  have hoppositePrefix := congrArg (fun t => t.2.2.2.2) hfields
+  have hquestion :
+      outcome.2.1 seed.coordinate.val =
+        outcome'.2.1 seed.coordinate.val := by
+    have h := congrFun hside
+      ⟨seed.coordinate,
+        exactReverseRightSide_coordinate_mem seed⟩
+    exact h
+  have hreveal :
+      exactRevealCode D seed
+          (outcome.1, outcome.2.1) =
+        exactRevealCode D seed
+          (outcome'.1, outcome'.2.1) := by
+    apply (exactRevealHistoryEquiv
+      (X := X) (Y := Y) D seed).injective
+    apply Prod.ext
+    · exact hac
+    apply Prod.ext
+    · exact hbc
+    apply Prod.ext
+    · funext j
+      have hotherSide :
+          (exactReverseBobContextAt side seed).otherSide =
+            exactLeft seed.coordinate seed.partition := by
+        change
+          (exactReverseBobContextAt
+            (exactReverseRightSide seed) seed).otherSide = _
+        rw [exactReverseBobContextAt_actual]
+        rfl
+      have hj :
+          j.val ∈
+            (exactReverseBobContextAt side seed).otherSide :=
+        (Finset.ext_iff.mp hotherSide j.val).mpr j.property
+      exact congrFun hother ⟨j.val, hj⟩
+    apply Prod.ext
+    · funext j
+      have hj : j.val ∈ side := by
+        change j.val ∈ insert seed.coordinate
+          (exactRight seed.coordinate seed.partition)
+        exact Finset.mem_insert_of_mem j.property
+      exact congrFun hside ⟨j.val, hj⟩
+    apply Prod.ext
+    · funext j
+      have hotherPrefix :
+          exactReverseContextOtherPrefix
+              (exactReverseBobContextAt side seed) =
+            exactLeftPrefix seed := by
+        change
+          exactReverseContextOtherPrefix
+            (exactReverseBobContextAt
+              (exactReverseRightSide seed) seed) = _
+        rw [exactReverseBobContextAt_actual,
+          exactReverseBobContext_otherPrefix]
+      have hj :
+          j.val ∈ exactReverseContextOtherPrefix
+            (exactReverseBobContextAt side seed) :=
+        (Finset.ext_iff.mp hotherPrefix j.val).mpr j.property
+      exact congrFun hoppositePrefix ⟨j.val, hj⟩
+    · funext j
+      have hbefore :
+          j.val ∈ exactReverseContextPrefixBefore
+            context marker := by
+        change
+          j.val ∈ exactReverseContextPrefixBefore
+            (exactReverseBobContext seed)
+            ((exactReverseBobContext seed).sideRank
+              ⟨seed.coordinate,
+                exactReverseRightSide_coordinate_mem seed⟩)
+        rw [exactReverseBobContext_prefix_before_marked]
+        exact j.property
+      have hparts :=
+        (exactOrderedSidePrefix_mem_iff
+          side context.sideRank marker.castSucc j.val).mp
+          (by simpa [exactReverseContextPrefixBefore]
+            using hbefore)
+      let position : Fin side.card :=
+        context.sideRank ⟨j.val, hparts.1⟩
+      have hlt : position.val < marker.val := by
+        simpa [position] using hparts.2
+      have hltCut : position.val < seed.rightCut.val := by
+        calc
+          position.val < marker.val := hlt
+          _ = seed.rightCut.val := by
+            exact exactReverseBobContext_marked_rank seed
+      have h := congrFun hprefix position
+      change outcome.1 j.val.val = outcome'.1 j.val.val
+      simpa [finitePrefixMask,
+        exactReverseBobSourceProjection,
+        exactReverseBobContextAt, side,
+        context, marker, position, hlt, hltCut] using h
+  refine ⟨hquestion, ?_⟩
+  apply (exactHistoryFlagEquiv
+    (X := X) (Y := Y) (A := A) (B := B) D).injective
+  change
+    (⟨seed,
+       (exactRevealCode D seed (outcome.1, outcome.2.1),
+        (fun j : {j : Fin n // j ∈ D} => outcome.2.2.1 j.val),
+        (fun j : {j : Fin n // j ∈ D} => outcome.2.2.2 j.val))⟩ :
+      ExactHistoryFlagTuple X Y A B D) =
+    (⟨seed,
+       (exactRevealCode D seed (outcome'.1, outcome'.2.1),
+        (fun j : {j : Fin n // j ∈ D} => outcome'.2.2.1 j.val),
+        (fun j : {j : Fin n // j ∈ D} => outcome'.2.2.2 j.val))⟩ :
+      ExactHistoryFlagTuple X Y A B D)
+  apply Sigma.ext
+  · rfl
+  · apply heq_of_eq
+    apply Prod.ext
+    · exact hreveal
+    apply Prod.ext
+    · exact congrArg Prod.fst hflag
+    · exact congrArg Prod.snd hflag
 
 theorem exactReverseBobMarkedHistoryContext_fiber_iff
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))

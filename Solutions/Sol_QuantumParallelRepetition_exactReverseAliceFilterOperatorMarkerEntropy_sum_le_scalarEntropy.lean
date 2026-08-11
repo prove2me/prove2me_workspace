@@ -1,28 +1,25 @@
 import Definitions.Def_quantum_parallel_repetition_game
 import Definitions.Def_qpr_core_22
 import Theorems.Thm_QuantumParallelRepetition_trace_mul_posSemidef_nonneg
-import Theorems.Thm_QuantumParallelRepetition_positiveMatrixSpectralAtom_posSemidef
-import Theorems.Thm_QuantumParallelRepetition_positiveMatrixSpectralAtom_sum
+import Theorems.Thm_QuantumParallelRepetition_matrixLogEntropy_born_lower_bound_left
 import Theorems.Thm_QuantumParallelRepetition_exactAliceQuestionFilter_posSemidef
 import Theorems.Thm_QuantumParallelRepetition_exactBobQuestionFilter_posSemidef
 import Theorems.Thm_QuantumParallelRepetition_exactFairAcceptedJointStatistic_reindex
-import Theorems.Thm_QuantumParallelRepetition_exactReverseBobLowQuestionPotential_eq_alignedPrefix
-import Theorems.Thm_QuantumParallelRepetition_exactReverseBobHighQuestionPotential_eq_alignedPrefix
+import Theorems.Thm_QuantumParallelRepetition_exactReverseAliceLowQuestionPotential_eq_alignedPrefix
+import Theorems.Thm_QuantumParallelRepetition_exactReverseAliceHighQuestionPotential_eq_alignedPrefix
 import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Algebra.Algebra.Defs
 import Mathlib.Algebra.Algebra.Spectrum.Basic
 import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Field.Defs
 import Mathlib.Algebra.Group.Action.Defs
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Group.Defs
 import Mathlib.Algebra.Group.Hom.Defs
-import Mathlib.Algebra.Group.Submonoid.Defs
 import Mathlib.Algebra.GroupWithZero.Action.Defs
 import Mathlib.Algebra.GroupWithZero.Basic
 import Mathlib.Algebra.GroupWithZero.Defs
@@ -32,9 +29,8 @@ import Mathlib.Algebra.Module.BigOperators
 import Mathlib.Algebra.Module.Defs
 import Mathlib.Algebra.Module.LinearMap.Defs
 import Mathlib.Algebra.Module.NatInt
+import Mathlib.Algebra.Module.Submodule.LinearMap
 import Mathlib.Algebra.NeZero
-import Mathlib.Algebra.Notation.Defs
-import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Algebra.Order.Group.Unbundled.Basic
 import Mathlib.Algebra.Order.GroupWithZero.Unbundled.Basic
@@ -55,7 +51,6 @@ import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Unital
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Analysis.Complex.Order
-import Mathlib.Analysis.Convex.Jensen
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.InnerProductSpace.Defs
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
@@ -75,7 +70,6 @@ import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Defs
 import Mathlib.Data.Finset.Range
 import Mathlib.Data.Finset.SDiff
-import Mathlib.Data.Finsupp.Defs
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Defs
@@ -99,34 +93,27 @@ import Mathlib.Data.Set.Defs
 import Mathlib.Data.Set.Operations
 import Mathlib.Data.SetLike.Basic
 import Mathlib.GroupTheory.GroupAction.Hom
+import Mathlib.GroupTheory.GroupAction.Ring
 import Mathlib.LinearAlgebra.Complex.Module
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.Order.Basic
 import Mathlib.Order.Defs.LinearOrder
 import Mathlib.Order.Defs.PartialOrder
-import Mathlib.Order.Interval.Set.Defs
 import Mathlib.Order.Lattice
 import Mathlib.Order.RelClasses
-import Mathlib.RingTheory.Etale.Weakly
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.TotallySplit
 import Mathlib.Tactic.FieldSimp.Lemmas
 import Mathlib.Tactic.Linarith.Lemmas
 import Mathlib.Tactic.Module
 import Mathlib.Tactic.NormNum.Basic
 import Mathlib.Tactic.NormNum.Ineq
-import Mathlib.Tactic.NormNum.Inv
 import Mathlib.Tactic.NormNum.Result
 import Mathlib.Tactic.Ring.Basic
 import Mathlib.Tactic.Ring.Common
-import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Basic
 import Mathlib.Topology.Algebra.Ring.Basic
 import Mathlib.Topology.Algebra.Ring.Real
 import Mathlib.Topology.Algebra.Star.Real
@@ -151,115 +138,12 @@ namespace Game
 
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem marginalX_nonneg (G : Game X Y A B) (x : X) :
-    0 ≤ G.marginalX x := by
-  unfold marginalX
-  exact Finset.sum_nonneg fun y _ => G.weight_nonneg x y
+theorem marginalY_nonneg (G : Game X Y A B) (y : Y) :
+    0 ≤ G.marginalY y := by
+  unfold marginalY
+  exact Finset.sum_nonneg fun x _ => G.weight_nonneg x y
 
 end Game
-
-end
-
-noncomputable section
-
-open scoped BigOperators
-
-variable {ι : Type*}
-
-theorem negMulLog_rescale
-    {W p : ℝ} (hW : 0 < W) (hp : 0 < p) :
-    W * Real.negMulLog (p / W) = p * Real.log (W / p) := by
-  unfold Real.negMulLog
-  rw [Real.log_div hp.ne' hW.ne', Real.log_div hW.ne' hp.ne']
-  field_simp
-  ring
-
-theorem finite_weighted_entropy_le
-    (s : Finset ι) (w h : ι → ℝ) {W p : ℝ}
-    (hw : ∀ i ∈ s, 0 ≤ w i)
-    (hh : ∀ i ∈ s, 0 ≤ h i)
-    (hW : 0 < W)
-    (hp : 0 < p)
-    (hw_sum : (∑ i ∈ s, w i) = W)
-    (hp_sum : (∑ i ∈ s, w i * h i) = p) :
-    (∑ i ∈ s, w i * Real.negMulLog (h i))
-      ≤ p * Real.log (W / p) := by
-  classical
-  have h_normalized :
-      (∑ i ∈ s, w i / W) = 1 := by
-    calc
-      (∑ i ∈ s, w i / W) = (∑ i ∈ s, w i) / W := by
-        rw [Finset.sum_div]
-      _ = W / W := by rw [hw_sum]
-      _ = 1 := div_self hW.ne'
-  have h_mean :
-      (∑ i ∈ s, (w i / W) * h i) = p / W := by
-    calc
-      (∑ i ∈ s, (w i / W) * h i) =
-          ∑ i ∈ s, (w i * h i) / W := by
-            apply Finset.sum_congr rfl
-            intro i hi
-            ring
-      _ = (∑ i ∈ s, w i * h i) / W := by
-            rw [Finset.sum_div]
-      _ = p / W := by rw [hp_sum]
-  have h_jensen :
-      (∑ i ∈ s, (w i / W) * Real.negMulLog (h i))
-        ≤ Real.negMulLog (∑ i ∈ s, (w i / W) * h i) := by
-    simpa only [smul_eq_mul] using
-      (Real.concaveOn_negMulLog.le_map_sum
-        (t := s) (w := fun i => w i / W) (p := h)
-        (fun i hi => div_nonneg (hw i hi) hW.le)
-        h_normalized
-        (fun i hi => show h i ∈ Set.Ici (0 : ℝ) from hh i hi))
-  calc
-    (∑ i ∈ s, w i * Real.negMulLog (h i)) =
-        W * (∑ i ∈ s, (w i / W) * Real.negMulLog (h i)) := by
-          rw [Finset.mul_sum]
-          apply Finset.sum_congr rfl
-          intro i hi
-          field_simp
-    _ ≤ W * Real.negMulLog (∑ i ∈ s, (w i / W) * h i) :=
-          mul_le_mul_of_nonneg_left h_jensen hW.le
-    _ = W * Real.negMulLog (p / W) := by rw [h_mean]
-    _ = p * Real.log (W / p) := negMulLog_rescale hW hp
-
-theorem finite_weighted_entropy_le_of_weight_bound
-    (s : Finset ι) (w h : ι → ℝ) {W N p : ℝ}
-    (hw : ∀ i ∈ s, 0 ≤ w i)
-    (hh : ∀ i ∈ s, 0 ≤ h i)
-    (hW : 0 < W)
-    (hp : 0 < p)
-    (hw_sum : (∑ i ∈ s, w i) = W)
-    (hp_sum : (∑ i ∈ s, w i * h i) = p)
-    (hWN : W ≤ N) :
-    (∑ i ∈ s, w i * Real.negMulLog (h i))
-      ≤ p * Real.log (N / p) := by
-  have hquot : W / p ≤ N / p := by
-    exact (div_le_div_iff_of_pos_right hp).mpr hWN
-  have hlog : Real.log (W / p) ≤ Real.log (N / p) :=
-    Real.log_le_log (div_pos hW hp) hquot
-  exact
-    (finite_weighted_entropy_le s w h hw hh hW hp hw_sum hp_sum).trans
-      (mul_le_mul_of_nonneg_left hlog hp.le)
-
-end
-
-noncomputable section
-
-open MeasureTheory Filter Set
-open scoped BigOperators Topology ComplexOrder MatrixOrder Matrix.Norms.Elementwise
-
-set_option backward.isDefEq.respectTransparency false
-
-attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
-
-@[simp] theorem spectralConjugationCLM_apply
-    {d : Type*} [Fintype d] [DecidableEq d]
-    (U : Matrix.unitaryGroup d ℂ) (A : Matrix d d ℂ) :
-    spectralConjugationCLM U A =
-      (U : Matrix d d ℂ) * A * star (U : Matrix d d ℂ) := by
-  rfl
 
 end
 
@@ -272,42 +156,42 @@ namespace Game
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem questionWeight_le_marginalX
+theorem questionWeight_le_marginalY
     (G : Game X Y A B) (x : X) (y : Y) :
-    G.questionWeight x y ≤ G.marginalX x := by
-  unfold marginalX
+    G.questionWeight x y ≤ G.marginalY y := by
+  unfold marginalY
   exact Finset.single_le_sum
-    (fun y _ => G.weight_nonneg x y)
-    (Finset.mem_univ y)
+    (fun x _ => G.weight_nonneg x y)
+    (Finset.mem_univ x)
 
-theorem conditionalYGivenX_nonneg
-    (G : Game X Y A B) (x : X) (y : Y) :
-    0 ≤ G.conditionalYGivenX x y := by
+theorem conditionalXGivenY_nonneg
+    (G : Game X Y A B) (y : Y) (x : X) :
+    0 ≤ G.conditionalXGivenY y x := by
   exact div_nonneg (G.weight_nonneg x y)
-    (G.marginalX_nonneg x)
+    (G.marginalY_nonneg y)
 
-theorem marginalX_mul_conditionalYGivenX
+theorem marginalY_mul_conditionalXGivenY
     (G : Game X Y A B) (x : X) (y : Y) :
-    G.marginalX x * G.conditionalYGivenX x y =
+    G.marginalY y * G.conditionalXGivenY y x =
       G.questionWeight x y := by
-  unfold conditionalYGivenX
-  by_cases hx : G.marginalX x = 0
+  unfold conditionalXGivenY
+  by_cases hy : G.marginalY y = 0
   · have hzero : G.questionWeight x y = 0 := by
-      have hle := G.questionWeight_le_marginalX x y
+      have hle := G.questionWeight_le_marginalY x y
       have hnonneg := G.weight_nonneg x y
-      rw [hx] at hle
+      rw [hy] at hle
       linarith
-    simp [hx, hzero]
+    simp [hy, hzero]
   · field_simp
 
-theorem conditionalYGivenX_sum
-    (G : Game X Y A B) (x : X)
-    (hx : 0 < G.marginalX x) :
-    (∑ y : Y, G.conditionalYGivenX x y) = 1 := by
-  unfold conditionalYGivenX
+theorem conditionalXGivenY_sum
+    (G : Game X Y A B) (y : Y)
+    (hy : 0 < G.marginalY y) :
+    (∑ x : X, G.conditionalXGivenY y x) = 1 := by
+  unfold conditionalXGivenY
   rw [← Finset.sum_div]
-  change G.marginalX x / G.marginalX x = 1
-  exact div_self hx.ne'
+  change G.marginalY y / G.marginalY y = 1
+  exact div_self hy.ne'
 
 end Game
 
@@ -396,14 +280,14 @@ section HistoryContractions
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem Game.conditionalYGivenX_sum_le_one
-    (G : Game X Y A B) (x : X) :
-    (∑ y : Y, G.conditionalYGivenX x y) ≤ 1 := by
-  by_cases hx : G.marginalX x = 0
-  · simp [Game.conditionalYGivenX, hx]
-  · have hpos : 0 < G.marginalX x :=
-      lt_of_le_of_ne (G.marginalX_nonneg x) (Ne.symm hx)
-    rw [G.conditionalYGivenX_sum x hpos]
+theorem Game.conditionalXGivenY_sum_le_one
+    (G : Game X Y A B) (y : Y) :
+    (∑ x : X, G.conditionalXGivenY y x) ≤ 1 := by
+  by_cases hy : G.marginalY y = 0
+  · simp [Game.conditionalXGivenY, hy]
+  · have hpos : 0 < G.marginalY y :=
+      lt_of_le_of_ne (G.marginalY_nonneg y) (Ne.symm hy)
+    rw [G.conditionalXGivenY_sum y hpos]
 
 theorem matrixLogEntropy_nonpos_of_contraction
     {d : Type*} [Fintype d] [DecidableEq d]
@@ -427,7 +311,7 @@ theorem matrixLogEntropy_nonpos_of_contraction
     exact Real.mul_log_nonpos (hlower z hz) (hupper z hz)
   simpa using Matrix.le_iff.mp hnonpos
 
-theorem matrixLogEntropy_born_nonpos_right
+theorem matrixLogEntropy_born_nonpos_left
     {dA dB : Type*}
     [Fintype dA] [Fintype dB]
     [DecidableEq dA] [DecidableEq dB]
@@ -435,329 +319,28 @@ theorem matrixLogEntropy_born_nonpos_right
     (F : Matrix dA dA ℂ)
     (G : Matrix dB dB ℂ)
     (hF : F.PosSemidef)
-    (hG : G.PosSemidef)
-    (hGcomplement : (1 - G).PosSemidef) :
-    bornTracePairing ρ.matrix F
-        (cfc (fun z : ℝ => z * Real.log z) G) ≤ 0 := by
-  have hneg := matrixLogEntropy_nonpos_of_contraction hG hGcomplement
-  have hpair : 0 ≤ bornTracePairing ρ.matrix F
-      (-(cfc (fun z : ℝ => z * Real.log z) G)) := by
-    exact trace_mul_posSemidef_nonneg ρ.positive (hF.kronecker hneg)
-  have hrewrite : bornTracePairing ρ.matrix F
-      (-(cfc (fun z : ℝ => z * Real.log z) G)) =
-      -bornTracePairing ρ.matrix F
-        (cfc (fun z : ℝ => z * Real.log z) G) :=
-    (bornTracePairing ρ.matrix F).map_neg _
+    (hFcomplement : (1 - F).PosSemidef)
+    (hG : G.PosSemidef) :
+    bornTracePairing ρ.matrix
+        (cfc (fun z : ℝ => z * Real.log z) F) G ≤ 0 := by
+  have hneg := matrixLogEntropy_nonpos_of_contraction hF hFcomplement
+  have hpair : 0 ≤ bornTracePairing ρ.matrix
+      (-(cfc (fun z : ℝ => z * Real.log z) F)) G := by
+    exact trace_mul_posSemidef_nonneg ρ.positive (hneg.kronecker hG)
+  have hrewrite : bornTracePairing ρ.matrix
+      (-(cfc (fun z : ℝ => z * Real.log z) F)) G =
+      -bornTracePairing ρ.matrix
+        (cfc (fun z : ℝ => z * Real.log z) F) G := by
+    simp
   rw [hrewrite] at hpair
   exact neg_nonneg.mp hpair
 
 end HistoryContractions
 
-theorem positiveMatrix_cfc_spectral_sum
-    {d : Type*} [Fintype d] [DecidableEq d]
-    (F : Matrix d d ℂ) (hF : F.PosSemidef)
-    (f : ℝ → ℝ) :
-    cfc f F =
-      ∑ i : d,
-        f (hF.isHermitian.eigenvalues i) •
-          positiveMatrixSpectralAtom F hF i := by
-  classical
-  let U := hF.isHermitian.eigenvectorUnitary
-  let eigenvalue := hF.isHermitian.eigenvalues
-  have hdiag :
-      (∑ i : d,
-        f (eigenvalue i) •
-          Matrix.diagonal (Pi.single i (1 : ℂ))) =
-        Matrix.diagonal fun i => (f (eigenvalue i) : ℂ) := by
-    ext j k
-    by_cases hjk : j = k
-    · subst k
-      simp [Matrix.sum_apply, Pi.single_apply]
-    · simp [Matrix.sum_apply,         hjk]
-  calc
-    cfc f F =
-        spectralConjugationCLM U
-          (Matrix.diagonal fun i => (f (eigenvalue i) : ℂ)) := by
-      rw [hF.isHermitian.cfc_eq]
-      rfl
-    _ = spectralConjugationCLM U
-          (∑ i : d,
-            f (eigenvalue i) •
-              Matrix.diagonal (Pi.single i (1 : ℂ))) := by
-      rw [hdiag]
-    _ = ∑ i : d,
-        f (eigenvalue i) •
-          positiveMatrixSpectralAtom F hF i := by
-      simp [positiveMatrixSpectralAtom, U, eigenvalue]
-
-theorem bornTracePairing_one_one
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB)) :
-    bornTracePairing ρ.matrix
-      (1 : Matrix dA dA ℂ) (1 : Matrix dB dB ℂ) = 1 := by
-  simp [bornTracePairing, ρ.trace_one]
-
-theorem positiveContraction_eigenvalue_le_one
-    {d : Type*} [Fintype d] [DecidableEq d]
-    (F : Matrix d d ℂ) (hF : F.PosSemidef)
-    (hcomplement : (1 - F).PosSemidef)
-    (i : d) :
-    hF.isHermitian.eigenvalues i ≤ 1 := by
-  have hFle : F ≤ (1 : Matrix d d ℂ) :=
-    Matrix.le_iff.mpr hcomplement
-  have hspectrum : ∀ z ∈ spectrum ℝ F, z ≤ 1 :=
-    (CFC.le_one_iff (R := ℝ) F hF.isHermitian).mp hFle
-  exact hspectrum _ (hF.isHermitian.eigenvalues_mem_spectrum_real i)
-
 end
 
 open scoped ComplexOrder Matrix BigOperators InnerProductSpace
 open Complex Matrix Finset
-
-noncomputable section
-
-open Matrix
-open scoped BigOperators Kronecker ComplexOrder MatrixOrder
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 800000
-
-theorem rightSpectralBornWeight_nonneg
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB))
-    (F : Matrix dA dA ℂ) (hF : F.PosSemidef)
-    (G : Matrix dB dB ℂ) (hG : G.PosSemidef)
-    (i : dB) :
-    0 ≤ rightSpectralBornWeight ρ F G hG i := by
-  exact trace_mul_posSemidef_nonneg ρ.positive
-    (hF.kronecker (positiveMatrixSpectralAtom_posSemidef G hG i))
-
-theorem rightSpectralBornWeight_sum
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB))
-    (F : Matrix dA dA ℂ)
-    (G : Matrix dB dB ℂ) (hG : G.PosSemidef) :
-    (∑ i : dB, rightSpectralBornWeight ρ F G hG i) =
-      bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ) := by
-  unfold rightSpectralBornWeight
-  calc
-    (∑ i : dB,
-      bornTracePairing ρ.matrix F
-        (positiveMatrixSpectralAtom G hG i)) =
-      bornTracePairing ρ.matrix F
-        (∑ i : dB, positiveMatrixSpectralAtom G hG i) := by
-          simp [map_sum]
-    _ = bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ) := by
-      rw [positiveMatrixSpectralAtom_sum]
-
-theorem rightSpectralBornWeight_moment
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB))
-    (F : Matrix dA dA ℂ)
-    (G : Matrix dB dB ℂ) (hG : G.PosSemidef) :
-    (∑ i : dB,
-      rightSpectralBornWeight ρ F G hG i *
-        hG.isHermitian.eigenvalues i) =
-      bornTracePairing ρ.matrix F G := by
-  have hspectral : G =
-      ∑ i : dB,
-        hG.isHermitian.eigenvalues i •
-          positiveMatrixSpectralAtom G hG i := by
-    calc
-      G = cfc (fun z : ℝ => z) G :=
-        (cfc_id' ℝ G hG.isHermitian).symm
-      _ = _ := positiveMatrix_cfc_spectral_sum G hG (fun z : ℝ => z)
-  have h := congrArg (bornTracePairing ρ.matrix F) hspectral
-  simp only [map_sum, map_smul, smul_eq_mul] at h
-  calc
-    (∑ i : dB,
-      rightSpectralBornWeight ρ F G hG i *
-        hG.isHermitian.eigenvalues i) =
-      ∑ i : dB,
-        hG.isHermitian.eigenvalues i *
-          bornTracePairing ρ.matrix F
-            (positiveMatrixSpectralAtom G hG i) := by
-        apply Finset.sum_congr rfl
-        intro i _
-        unfold rightSpectralBornWeight
-        ring
-    _ = bornTracePairing ρ.matrix F G := h.symm
-
-theorem rightSpectralBornWeight_entropy
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB))
-    (F : Matrix dA dA ℂ)
-    (G : Matrix dB dB ℂ) (hG : G.PosSemidef) :
-    bornTracePairing ρ.matrix F
-        (cfc (fun z : ℝ => z * Real.log z) G) =
-      ∑ i : dB,
-        rightSpectralBornWeight ρ F G hG i *
-          (hG.isHermitian.eigenvalues i *
-            Real.log (hG.isHermitian.eigenvalues i)) := by
-  have hspectral := positiveMatrix_cfc_spectral_sum G hG
-    (fun z : ℝ => z * Real.log z)
-  have h := congrArg (bornTracePairing ρ.matrix F) hspectral
-  simp only [map_sum, map_smul, smul_eq_mul] at h
-  calc
-    bornTracePairing ρ.matrix F
-        (cfc (fun z : ℝ => z * Real.log z) G) =
-      ∑ i : dB,
-        (hG.isHermitian.eigenvalues i *
-          Real.log (hG.isHermitian.eigenvalues i)) *
-          bornTracePairing ρ.matrix F
-            (positiveMatrixSpectralAtom G hG i) := h
-    _ = _ := by
-      apply Finset.sum_congr rfl
-      intro i _
-      unfold rightSpectralBornWeight
-      ring
-
-theorem rightSpectralBornWeight_negEntropy
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB))
-    (F : Matrix dA dA ℂ)
-    (G : Matrix dB dB ℂ) (hG : G.PosSemidef) :
-    -bornTracePairing ρ.matrix F
-        (cfc (fun z : ℝ => z * Real.log z) G) =
-      ∑ i : dB,
-        rightSpectralBornWeight ρ F G hG i *
-          Real.negMulLog (hG.isHermitian.eigenvalues i) := by
-  rw [rightSpectralBornWeight_entropy ρ F G hG,
-    ← Finset.sum_neg_distrib]
-  apply Finset.sum_congr rfl
-  intro i _
-  simp [Real.negMulLog]
-
-theorem bornTracePairing_le_one_one
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB))
-    (F : Matrix dA dA ℂ)
-    (hFcomplement : (1 - F).PosSemidef) :
-    bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ) ≤ 1 := by
-  have hpositive : 0 ≤ bornTracePairing ρ.matrix
-      (1 - F) (1 : Matrix dB dB ℂ) :=
-    trace_mul_posSemidef_nonneg ρ.positive
-      (hFcomplement.kronecker Matrix.PosSemidef.one)
-  have hdiff : bornTracePairing ρ.matrix
-      (1 - F) (1 : Matrix dB dB ℂ) =
-      bornTracePairing ρ.matrix
-        (1 : Matrix dA dA ℂ) (1 : Matrix dB dB ℂ) -
-      bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ) := by
-    simp
-  rw [hdiff, bornTracePairing_one_one] at hpositive
-  linarith
-
-theorem matrixLogEntropy_born_lower_bound_right
-    {dA dB : Type*}
-    [Fintype dA] [Fintype dB]
-    [DecidableEq dA] [DecidableEq dB]
-    (ρ : DensityMatrix (dA × dB))
-    (F : Matrix dA dA ℂ) (hF : F.PosSemidef)
-    (hFcomplement : (1 - F).PosSemidef)
-    (G : Matrix dB dB ℂ) (hG : G.PosSemidef)
-    (hGcomplement : (1 - G).PosSemidef) :
-    -bornTracePairing ρ.matrix F
-        (cfc (fun z : ℝ => z * Real.log z) G) ≤
-      Real.negMulLog (bornTracePairing ρ.matrix F G) := by
-  classical
-  have hp_nonneg : 0 ≤ bornTracePairing ρ.matrix F G :=
-    trace_mul_posSemidef_nonneg ρ.positive (hF.kronecker hG)
-  have hmass_le :
-      bornTracePairing ρ.matrix F G ≤
-        bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ) := by
-    calc
-      bornTracePairing ρ.matrix F G =
-        ∑ i : dB,
-          rightSpectralBornWeight ρ F G hG i *
-            hG.isHermitian.eigenvalues i :=
-          (rightSpectralBornWeight_moment ρ F G hG).symm
-      _ ≤ ∑ i : dB, rightSpectralBornWeight ρ F G hG i := by
-        apply Finset.sum_le_sum
-        intro i _
-        exact mul_le_of_le_one_right
-          (rightSpectralBornWeight_nonneg ρ F hF G hG i)
-          (positiveContraction_eigenvalue_le_one G hG hGcomplement i)
-      _ = bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ) :=
-        rightSpectralBornWeight_sum ρ F G hG
-  by_cases hp : bornTracePairing ρ.matrix F G = 0
-  · have hzero :
-        (∑ i : dB,
-          rightSpectralBornWeight ρ F G hG i *
-            hG.isHermitian.eigenvalues i) = 0 := by
-        rw [rightSpectralBornWeight_moment, hp]
-    have hterm (i : dB) :
-        rightSpectralBornWeight ρ F G hG i *
-          hG.isHermitian.eigenvalues i = 0 :=
-      (Finset.sum_eq_zero_iff_of_nonneg
-        (fun j _ => mul_nonneg
-          (rightSpectralBornWeight_nonneg ρ F hF G hG j)
-          (hG.eigenvalues_nonneg j))).mp hzero i (Finset.mem_univ i)
-    have hentropy :
-        (∑ i : dB,
-          rightSpectralBornWeight ρ F G hG i *
-            Real.negMulLog (hG.isHermitian.eigenvalues i)) = 0 := by
-      apply Finset.sum_eq_zero
-      intro i _
-      rcases mul_eq_zero.mp (hterm i) with hw | he
-      · simp [hw]
-      · simp [he]
-    calc
-      -bornTracePairing ρ.matrix F
-          (cfc (fun z : ℝ => z * Real.log z) G) =
-        ∑ i : dB,
-          rightSpectralBornWeight ρ F G hG i *
-            Real.negMulLog (hG.isHermitian.eigenvalues i) :=
-          rightSpectralBornWeight_negEntropy ρ F G hG
-      _ = 0 := hentropy
-      _ ≤ Real.negMulLog (bornTracePairing ρ.matrix F G) := by
-        rw [hp]
-        simp
-  · have hp_pos : 0 < bornTracePairing ρ.matrix F G :=
-      lt_of_le_of_ne hp_nonneg (Ne.symm hp)
-    have hW_pos : 0 <
-        bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ) :=
-      lt_of_lt_of_le hp_pos hmass_le
-    have hscalar := finite_weighted_entropy_le_of_weight_bound
-      (Finset.univ : Finset dB)
-      (rightSpectralBornWeight ρ F G hG)
-      hG.isHermitian.eigenvalues
-      (W := bornTracePairing ρ.matrix F (1 : Matrix dB dB ℂ))
-      (N := (1 : ℝ))
-      (p := bornTracePairing ρ.matrix F G)
-      (fun i _ => rightSpectralBornWeight_nonneg ρ F hF G hG i)
-      (fun i _ => hG.eigenvalues_nonneg i)
-      hW_pos hp_pos
-      (rightSpectralBornWeight_sum ρ F G hG)
-      (rightSpectralBornWeight_moment ρ F G hG)
-      (bornTracePairing_le_one_one ρ F hFcomplement)
-    calc
-      -bornTracePairing ρ.matrix F
-          (cfc (fun z : ℝ => z * Real.log z) G) =
-        ∑ i : dB,
-          rightSpectralBornWeight ρ F G hG i *
-            Real.negMulLog (hG.isHermitian.eigenvalues i) :=
-        rightSpectralBornWeight_negEntropy ρ F G hG
-      _ ≤ bornTracePairing ρ.matrix F G *
-          Real.log (1 / bornTracePairing ρ.matrix F G) := hscalar
-      _ = Real.negMulLog (bornTracePairing ρ.matrix F G) := by
-        rw [one_div, Real.log_inv]
-        simp [Real.negMulLog]
-
-end
 
 noncomputable section
 
@@ -821,21 +404,21 @@ theorem exactBobQuestionMass_nonneg
   · exact exactPriorQuestionWeight_nonneg G n q
   · exact le_rfl
 
-theorem exactBobMeanFilter_posSemidef
+theorem exactAliceMeanFilter_posSemidef
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (seed : ExactRemainingSeed D)
     (history : ExactRevealHistory X Y D seed)
-    (answer : {j : Fin n // j ∈ D} → B)
-    (x : X) :
-    (exactBobMeanFilter
-      G n S D seed history answer x).PosSemidef := by
-  unfold exactBobMeanFilter
+    (answer : {j : Fin n // j ∈ D} → A)
+    (y : Y) :
+    (exactAliceMeanFilter
+      G n S D seed history answer y).PosSemidef := by
+  unfold exactAliceMeanFilter
   apply Matrix.posSemidef_sum Finset.univ
-  intro y _
-  exact (exactBobQuestionFilter_posSemidef
-    G n S D seed history answer y).smul
-    (G.conditionalYGivenX_nonneg x y)
+  intro x _
+  exact (exactAliceQuestionFilter_posSemidef
+    G n S D seed history answer x).smul
+    (G.conditionalXGivenY_nonneg y x)
 
 end
 
@@ -843,7 +426,7 @@ noncomputable section
 
 open scoped BigOperators ComplexOrder MatrixOrder
 
-theorem source_equation_nineteen_bob
+theorem source_equation_nineteen_alice
     {dA dB : Type*}
     [Fintype dA] [Fintype dB]
     [DecidableEq dA] [DecidableEq dB]
@@ -852,10 +435,10 @@ theorem source_equation_nineteen_bob
     (hFcomplement : (1 - F).PosSemidef)
     (G : Matrix dB dB ℂ) (hG : G.PosSemidef)
     (hGcomplement : (1 - G).PosSemidef) :
-    -bornTracePairing ρ.matrix F
-        (cfc (fun z : ℝ => z * Real.log z) G) ≤
+    -bornTracePairing ρ.matrix
+        (cfc (fun z : ℝ => z * Real.log z) F) G ≤
       Real.negMulLog (bornTracePairing ρ.matrix F G) :=
-  matrixLogEntropy_born_lower_bound_right
+  matrixLogEntropy_born_lower_bound_left
     ρ F hF hFcomplement G hG hGcomplement
 
 end
@@ -874,38 +457,39 @@ attribute [local instance] Classical.propDecidable
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem exactFairBobHistoryEntropy_eq_operatorPotential_sub
+theorem exactFairAliceHistoryEntropy_eq_operatorPotential_sub
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (r : ExactHistoryFlag X Y A B D) :
-    exactFairBobHistoryEntropyIncrement G n S D r =
-      exactFairBobHistoryHighOperatorPotential G n S D r -
-      exactFairBobHistoryLowOperatorPotential G n S D r := by
-  unfold exactFairBobHistoryEntropyIncrement
-    exactFairBobQuestionEntropyIncrement
-    exactFairBobHistoryHighOperatorPotential
-    exactFairBobHistoryLowOperatorPotential
+    exactFairAliceHistoryEntropyIncrement G n S D r =
+      exactFairAliceHistoryHighOperatorPotential G n S D r -
+      exactFairAliceHistoryLowOperatorPotential G n S D r := by
+  unfold exactFairAliceHistoryEntropyIncrement
+    exactFairAliceQuestionEntropyIncrement
+    exactFairAliceHistoryHighOperatorPotential
+    exactFairAliceHistoryLowOperatorPotential
   rw [← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
-  intro x _
+  intro y _
   rw [← mul_sub, map_sub]
+  rfl
 
-theorem exactReverseBobFilterOperatorMarkerEntropy_eq_sub
+theorem exactReverseAliceFilterOperatorMarkerEntropy_eq_sub
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
     (marker : Fin side.card) :
-    exactReverseBobFilterOperatorMarkerEntropy
+    exactReverseAliceFilterOperatorMarkerEntropy
         G n S D side context marker =
-      exactReverseBobFilterHighOperatorPotential
+      exactReverseAliceFilterHighOperatorPotential
           G n S D side context marker -
-        exactReverseBobFilterLowOperatorPotential
+        exactReverseAliceFilterLowOperatorPotential
           G n S D side context marker := by
-  unfold exactReverseBobFilterOperatorMarkerEntropy
-    exactReverseBobFilterHighOperatorPotential
-    exactReverseBobFilterLowOperatorPotential
+  unfold exactReverseAliceFilterOperatorMarkerEntropy
+    exactReverseAliceFilterHighOperatorPotential
+    exactReverseAliceFilterLowOperatorPotential
   simp only [← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro history _
@@ -914,10 +498,10 @@ theorem exactReverseBobFilterOperatorMarkerEntropy_eq_sub
   apply Finset.sum_congr rfl
   intro bobAnswer _
   by_cases accepted : exactHistoryAccepted G n D
-    ⟨exactReverseAliceMarkerDecode side context marker,
+    ⟨exactReverseBobMarkerDecode side context marker,
       history, aliceAnswer, bobAnswer⟩
   · simp only [if_pos accepted]
-    rw [exactFairBobHistoryEntropy_eq_operatorPotential_sub]
+    rw [exactFairAliceHistoryEntropy_eq_operatorPotential_sub]
     ring
   · simp [accepted]
 
@@ -1143,148 +727,149 @@ theorem exactBobQuestionFilter_complement_posSemidef
     exact (conditionedBobEffect_complement_positive
       G n S D answer q.2).smul (weights_nonnegative q)
 
-theorem exactBobMeanFilter_complement_posSemidef
+theorem exactAliceMeanFilter_complement_posSemidef
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (seed : ExactRemainingSeed D)
     (history : ExactRevealHistory X Y D seed)
-    (answer : {i : Fin n // i ∈ D} → B)
-    (x : X) :
-    (1 - exactBobMeanFilter
-      G n S D seed history answer x).PosSemidef := by
+    (answer : {i : Fin n // i ∈ D} → A)
+    (y : Y) :
+    (1 - exactAliceMeanFilter
+      G n S D seed history answer y).PosSemidef := by
   classical
-  let w : Y → ℝ := G.conditionalYGivenX x
-  let E : Y → Matrix S.Bob S.Bob ℂ := fun y =>
-    exactBobQuestionFilter G n S D seed history answer y
-  have weights_sum : (∑ y, w y) ≤ 1 :=
-    G.conditionalYGivenX_sum_le_one x
+  let w : X → ℝ := G.conditionalXGivenY y
+  let E : X → Matrix S.Alice S.Alice ℂ := fun x =>
+    exactAliceQuestionFilter G n S D seed history answer x
+  have weights_sum : (∑ x, w x) ≤ 1 :=
+    G.conditionalXGivenY_sum_le_one y
   have split :
-      1 - (∑ y, w y • E y) =
-        (1 - (∑ y, w y)) •
-            (1 : Matrix S.Bob S.Bob ℂ) +
-          ∑ y, w y • (1 - E y) := by
+      1 - (∑ x, w x • E x) =
+        (1 - (∑ x, w x)) •
+            (1 : Matrix S.Alice S.Alice ℂ) +
+          ∑ x, w x • (1 - E x) := by
     simp_rw [smul_sub]
     rw [Finset.sum_sub_distrib, ← Finset.sum_smul]
     module
-  change (1 - ∑ y, w y • E y).PosSemidef
+  change (1 - ∑ x, w x • E x).PosSemidef
   rw [split]
   apply Matrix.PosSemidef.add
   · exact Matrix.PosSemidef.one.smul (sub_nonneg.mpr weights_sum)
   · apply Matrix.posSemidef_sum Finset.univ
-    intro y _
-    exact (exactBobQuestionFilter_complement_posSemidef
-      G n S D seed history answer y).smul
-        (G.conditionalYGivenX_nonneg x y)
+    intro x _
+    exact (exactAliceQuestionFilter_complement_posSemidef
+      G n S D seed history answer x).smul
+        (G.conditionalXGivenY_nonneg y x)
 
-theorem exactFairBobMean_spectral_entropy_le
+theorem exactFairAliceMean_spectral_entropy_le
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (r : ExactHistoryFlag X Y A B D)
-    (x : X) :
+    (y : Y) :
     -bornTracePairing S.state.matrix
-        (exactAliceQuestionFilter
-          G n S D r.seed r.history r.aliceAnswer x)
         (cfc (fun z : ℝ => z * Real.log z)
-          (exactBobMeanFilter
-            G n S D r.seed r.history r.bobAnswer x)) ≤
+          (exactAliceMeanFilter
+            G n S D r.seed r.history r.aliceAnswer y))
+        (exactBobQuestionFilter
+          G n S D r.seed r.history r.bobAnswer y) ≤
       Real.negMulLog
         (bornTracePairing S.state.matrix
-          (exactAliceQuestionFilter
-            G n S D r.seed r.history r.aliceAnswer x)
-          (exactBobMeanFilter
-            G n S D r.seed r.history r.bobAnswer x)) := by
+          (exactAliceMeanFilter
+            G n S D r.seed r.history r.aliceAnswer y)
+          (exactBobQuestionFilter
+            G n S D r.seed r.history r.bobAnswer y)) := by
   classical
-  exact source_equation_nineteen_bob S.state
-    (exactAliceQuestionFilter
-      G n S D r.seed r.history r.aliceAnswer x)
-    (exactAliceQuestionFilter_posSemidef
-      G n S D r.seed r.history r.aliceAnswer x)
-    (exactAliceQuestionFilter_complement_posSemidef
-      G n S D r.seed r.history r.aliceAnswer x)
-    (exactBobMeanFilter
-      G n S D r.seed r.history r.bobAnswer x)
-    (exactBobMeanFilter_posSemidef
-      G n S D r.seed r.history r.bobAnswer x)
-    (exactBobMeanFilter_complement_posSemidef
-      G n S D r.seed r.history r.bobAnswer x)
+  exact source_equation_nineteen_alice S.state
+    (exactAliceMeanFilter
+      G n S D r.seed r.history r.aliceAnswer y)
+    (exactAliceMeanFilter_posSemidef
+      G n S D r.seed r.history r.aliceAnswer y)
+    (exactAliceMeanFilter_complement_posSemidef
+      G n S D r.seed r.history r.aliceAnswer y)
+    (exactBobQuestionFilter
+      G n S D r.seed r.history r.bobAnswer y)
+    (exactBobQuestionFilter_posSemidef
+      G n S D r.seed r.history r.bobAnswer y)
+    (exactBobQuestionFilter_complement_posSemidef
+      G n S D r.seed r.history r.bobAnswer y)
 
-theorem exactFairBobHistoryHighOperatorPotential_nonpos
+theorem exactFairAliceHistoryHighOperatorPotential_nonpos
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (r : ExactHistoryFlag X Y A B D) :
-    exactFairBobHistoryHighOperatorPotential
+    exactFairAliceHistoryHighOperatorPotential
       G n S D r ≤ 0 := by
   classical
-  unfold exactFairBobHistoryHighOperatorPotential
+  unfold exactFairAliceHistoryHighOperatorPotential
   apply Finset.sum_nonpos
-  intro x _
-  apply mul_nonpos_of_nonneg_of_nonpos (G.marginalX_nonneg x)
+  intro y _
+  apply mul_nonpos_of_nonneg_of_nonpos (G.marginalY_nonneg y)
   calc
     bornTracePairing S.state.matrix
-        (exactAliceQuestionFilter
-          G n S D r.seed r.history r.aliceAnswer x)
-        (∑ y : Y, G.conditionalYGivenX x y •
+        (∑ x : X, G.conditionalXGivenY y x •
           cfc (fun z : ℝ => z * Real.log z)
-            (exactBobQuestionFilter
-              G n S D r.seed r.history r.bobAnswer y)) =
-      ∑ y : Y, G.conditionalYGivenX x y *
+            (exactAliceQuestionFilter
+              G n S D r.seed r.history r.aliceAnswer x))
+        (exactBobQuestionFilter
+          G n S D r.seed r.history r.bobAnswer y) =
+      ∑ x : X, G.conditionalXGivenY y x *
         bornTracePairing S.state.matrix
-          (exactAliceQuestionFilter
-            G n S D r.seed r.history r.aliceAnswer x)
           (cfc (fun z : ℝ => z * Real.log z)
-            (exactBobQuestionFilter
-              G n S D r.seed r.history r.bobAnswer y)) := by
-              simp only [map_sum, map_smul, smul_eq_mul]
+            (exactAliceQuestionFilter
+              G n S D r.seed r.history r.aliceAnswer x))
+          (exactBobQuestionFilter
+            G n S D r.seed r.history r.bobAnswer y) := by
+              simp only [map_sum, map_smul, LinearMap.sum_apply,
+                LinearMap.smul_apply, smul_eq_mul]
     _ ≤ 0 := by
       apply Finset.sum_nonpos
-      intro y _
+      intro x _
       exact mul_nonpos_of_nonneg_of_nonpos
-        (G.conditionalYGivenX_nonneg x y)
-        (matrixLogEntropy_born_nonpos_right S.state
+        (G.conditionalXGivenY_nonneg y x)
+        (matrixLogEntropy_born_nonpos_left S.state
           (exactAliceQuestionFilter
             G n S D r.seed r.history r.aliceAnswer x)
           (exactBobQuestionFilter
             G n S D r.seed r.history r.bobAnswer y)
           (exactAliceQuestionFilter_posSemidef
             G n S D r.seed r.history r.aliceAnswer x)
+          (exactAliceQuestionFilter_complement_posSemidef
+            G n S D r.seed r.history r.aliceAnswer x)
           (exactBobQuestionFilter_posSemidef
-            G n S D r.seed r.history r.bobAnswer y)
-          (exactBobQuestionFilter_complement_posSemidef
             G n S D r.seed r.history r.bobAnswer y))
 
-theorem exactFairBobHistoryLowOperatorPotential_neg_le_entropy
+theorem exactFairAliceHistoryLowOperatorPotential_neg_le_entropy
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (r : ExactHistoryFlag X Y A B D) :
-    -exactFairBobHistoryLowOperatorPotential G n S D r ≤
-      ∑ x : X, G.marginalX x *
+    -exactFairAliceHistoryLowOperatorPotential G n S D r ≤
+      ∑ y : Y, G.marginalY y *
         Real.negMulLog
           (bornTracePairing S.state.matrix
-            (exactAliceQuestionFilter
-              G n S D r.seed r.history r.aliceAnswer x)
-            (exactBobMeanFilter
-              G n S D r.seed r.history r.bobAnswer x)) := by
+            (exactAliceMeanFilter
+              G n S D r.seed r.history r.aliceAnswer y)
+            (exactBobQuestionFilter
+              G n S D r.seed r.history r.bobAnswer y)) := by
   classical
-  unfold exactFairBobHistoryLowOperatorPotential
+  unfold exactFairAliceHistoryLowOperatorPotential
   rw [← Finset.sum_neg_distrib]
   apply Finset.sum_le_sum
-  intro x _
+  intro y _
   have bound := mul_le_mul_of_nonneg_left
-    (exactFairBobMean_spectral_entropy_le G n S D r x)
-    (G.marginalX_nonneg x)
+    (exactFairAliceMean_spectral_entropy_le G n S D r y)
+    (G.marginalY_nonneg y)
   nlinarith
 
-theorem exactReverseBobFilterHighOperatorPotential_nonpos
+theorem exactReverseAliceFilterHighOperatorPotential_nonpos
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
     (marker : Fin side.card) :
-    exactReverseBobFilterHighOperatorPotential
+    exactReverseAliceFilterHighOperatorPotential
       G n S D side context marker ≤ 0 := by
   classical
-  unfold exactReverseBobFilterHighOperatorPotential
+  unfold exactReverseAliceFilterHighOperatorPotential
   dsimp only
   apply Finset.sum_nonpos
   intro history _
@@ -1295,11 +880,11 @@ theorem exactReverseBobFilterHighOperatorPotential_nonpos
   split
   · exact mul_nonpos_of_nonneg_of_nonpos
       (exactRevealMass_nonneg G n D
-        (exactReverseAliceMarkerDecode side context marker)
+        (exactReverseBobMarkerDecode side context marker)
         history)
-      (exactFairBobHistoryHighOperatorPotential_nonpos
+      (exactFairAliceHistoryHighOperatorPotential_nonpos
         G n S D
-        ⟨exactReverseAliceMarkerDecode side context marker,
+        ⟨exactReverseBobMarkerDecode side context marker,
           history, aliceAnswer, bobAnswer⟩)
   · exact le_rfl
 
@@ -1319,47 +904,93 @@ attribute [local instance] Classical.propDecidable
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem exactFairBobHistoryHighOperatorPotential_eq_joint
+theorem exactFairAliceHistoryHighOperatorPotential_eq_joint
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (r : ExactHistoryFlag X Y A B D) :
-    exactFairBobHistoryHighOperatorPotential G n S D r =
+    exactFairAliceHistoryHighOperatorPotential G n S D r =
       ∑ x : X, ∑ y : Y, G.questionWeight x y *
         bornTracePairing S.state.matrix
-          (exactAliceQuestionFilter
-            G n S D r.seed r.history r.aliceAnswer x)
           (cfc (fun z : ℝ => z * Real.log z)
+            (exactAliceQuestionFilter
+              G n S D r.seed r.history r.aliceAnswer x))
+          (exactBobQuestionFilter
+            G n S D r.seed r.history r.bobAnswer y) := by
+  classical
+  unfold exactFairAliceHistoryHighOperatorPotential
+  simp only [map_sum, map_smul, LinearMap.sum_apply,
+    LinearMap.smul_apply, smul_eq_mul]
+  calc
+    (∑ y : Y, G.marginalY y *
+      (∑ x : X, G.conditionalXGivenY y x *
+        bornTracePairing S.state.matrix
+          (cfc (fun z : ℝ => z * Real.log z)
+            (exactAliceQuestionFilter
+              G n S D r.seed r.history r.aliceAnswer x))
+          (exactBobQuestionFilter
+            G n S D r.seed r.history r.bobAnswer y))) =
+      ∑ y : Y, ∑ x : X,
+        (G.marginalY y * G.conditionalXGivenY y x) *
+          bornTracePairing S.state.matrix
+            (cfc (fun z : ℝ => z * Real.log z)
+              (exactAliceQuestionFilter
+                G n S D r.seed r.history r.aliceAnswer x))
             (exactBobQuestionFilter
-              G n S D r.seed r.history r.bobAnswer y)) := by
-  classical
-  unfold exactFairBobHistoryHighOperatorPotential
-  simp only [map_sum, map_smul, smul_eq_mul]
-  apply Finset.sum_congr rfl
-  intro x _
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro y _
-  rw [← G.marginalX_mul_conditionalYGivenX x y]
-  ring
+              G n S D r.seed r.history r.bobAnswer y) := by
+        simp only [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro y _
+        apply Finset.sum_congr rfl
+        intro x _
+        ring
+    _ = ∑ y : Y, ∑ x : X, G.questionWeight x y *
+        bornTracePairing S.state.matrix
+          (cfc (fun z : ℝ => z * Real.log z)
+            (exactAliceQuestionFilter
+              G n S D r.seed r.history r.aliceAnswer x))
+          (exactBobQuestionFilter
+            G n S D r.seed r.history r.bobAnswer y) := by
+        apply Finset.sum_congr rfl
+        intro y _
+        apply Finset.sum_congr rfl
+        intro x _
+        rw [← G.marginalY_mul_conditionalXGivenY x y]
+    _ = _ := Finset.sum_comm
 
-theorem exactFairBobHistoryLowOperatorPotential_eq_joint
+theorem exactFairAliceHistoryLowOperatorPotential_eq_joint
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (r : ExactHistoryFlag X Y A B D) :
-    exactFairBobHistoryLowOperatorPotential G n S D r =
+    exactFairAliceHistoryLowOperatorPotential G n S D r =
       ∑ x : X, ∑ y : Y, G.questionWeight x y *
         bornTracePairing S.state.matrix
-          (exactAliceQuestionFilter
-            G n S D r.seed r.history r.aliceAnswer x)
           (cfc (fun z : ℝ => z * Real.log z)
-            (exactBobMeanFilter
-              G n S D r.seed r.history r.bobAnswer x)) := by
+            (exactAliceMeanFilter
+              G n S D r.seed r.history r.aliceAnswer y))
+          (exactBobQuestionFilter
+            G n S D r.seed r.history r.bobAnswer y) := by
   classical
-  unfold exactFairBobHistoryLowOperatorPotential
-  apply Finset.sum_congr rfl
-  intro x _
-  unfold Game.marginalX
-  rw [Finset.sum_mul]
+  unfold exactFairAliceHistoryLowOperatorPotential
+  calc
+    (∑ y : Y, G.marginalY y *
+      bornTracePairing S.state.matrix
+        (cfc (fun z : ℝ => z * Real.log z)
+          (exactAliceMeanFilter
+            G n S D r.seed r.history r.aliceAnswer y))
+        (exactBobQuestionFilter
+          G n S D r.seed r.history r.bobAnswer y)) =
+      ∑ y : Y, ∑ x : X, G.questionWeight x y *
+        bornTracePairing S.state.matrix
+          (cfc (fun z : ℝ => z * Real.log z)
+            (exactAliceMeanFilter
+              G n S D r.seed r.history r.aliceAnswer y))
+          (exactBobQuestionFilter
+            G n S D r.seed r.history r.bobAnswer y) := by
+        apply Finset.sum_congr rfl
+        intro y _
+        unfold Game.marginalY
+        rw [Finset.sum_mul]
+    _ = _ := Finset.sum_comm
 
 end
 
@@ -1377,55 +1008,55 @@ attribute [local instance] Classical.propDecidable
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem exactReverseBobHighOperatorPotential_eq_question
+theorem exactReverseAliceHighOperatorPotential_eq_question
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
     (marker : Fin side.card) :
-    exactReverseBobFilterHighOperatorPotential
+    exactReverseAliceFilterHighOperatorPotential
         G n S D side context marker =
-      exactReverseBobHighQuestionPotential
+      exactReverseAliceHighQuestionPotential
         G n S D side context marker := by
   classical
-  unfold exactReverseBobFilterHighOperatorPotential
-    exactReverseBobHighQuestionPotential
+  unfold exactReverseAliceFilterHighOperatorPotential
+    exactReverseAliceHighQuestionPotential
   dsimp only
   calc
     (∑ history : ExactRevealHistory X Y D
-        (exactReverseAliceMarkerDecode side context marker),
+        (exactReverseBobMarkerDecode side context marker),
       ∑ aliceAnswer : {j : Fin n // j ∈ D} → A,
       ∑ bobAnswer : {j : Fin n // j ∈ D} → B,
         if exactHistoryAccepted G n D
-          ⟨exactReverseAliceMarkerDecode side context marker,
+          ⟨exactReverseBobMarkerDecode side context marker,
             history, aliceAnswer, bobAnswer⟩ then
           exactRevealMass G n D
-            (exactReverseAliceMarkerDecode side context marker)
+            (exactReverseBobMarkerDecode side context marker)
             history *
-          exactFairBobHistoryHighOperatorPotential G n S D
-            ⟨exactReverseAliceMarkerDecode side context marker,
+          exactFairAliceHistoryHighOperatorPotential G n S D
+            ⟨exactReverseBobMarkerDecode side context marker,
               history, aliceAnswer, bobAnswer⟩
         else 0) =
       ∑ history : ExactRevealHistory X Y D
-        (exactReverseAliceMarkerDecode side context marker),
+        (exactReverseBobMarkerDecode side context marker),
       ∑ aliceAnswer : {j : Fin n // j ∈ D} → A,
       ∑ bobAnswer : {j : Fin n // j ∈ D} → B,
         if exactHistoryAccepted G n D
-          ⟨exactReverseAliceMarkerDecode side context marker,
+          ⟨exactReverseBobMarkerDecode side context marker,
             history, aliceAnswer, bobAnswer⟩ then
           exactRevealMass G n D
-            (exactReverseAliceMarkerDecode side context marker)
+            (exactReverseBobMarkerDecode side context marker)
             history *
             (∑ x : X, ∑ y : Y, G.questionWeight x y *
               bornTracePairing S.state.matrix
-                (exactAliceQuestionFilter G n S D
-                  (exactReverseAliceMarkerDecode side context marker)
-                  history aliceAnswer x)
                 (cfc (fun z : ℝ => z * Real.log z)
-                  (exactBobQuestionFilter G n S D
-                    (exactReverseAliceMarkerDecode side context marker)
-                    history bobAnswer y)))
+                  (exactAliceQuestionFilter G n S D
+                    (exactReverseBobMarkerDecode side context marker)
+                    history aliceAnswer x))
+                (exactBobQuestionFilter G n S D
+                  (exactReverseBobMarkerDecode side context marker)
+                  history bobAnswer y))
         else 0 := by
           apply Finset.sum_congr rfl
           intro history _
@@ -1434,69 +1065,69 @@ theorem exactReverseBobHighOperatorPotential_eq_question
           apply Finset.sum_congr rfl
           intro bobAnswer _
           split
-          · rw [exactFairBobHistoryHighOperatorPotential_eq_joint]
+          · rw [exactFairAliceHistoryHighOperatorPotential_eq_joint]
           · rfl
     _ = _ := exactFairAcceptedJointStatistic_reindex
-      G n S D (exactReverseAliceMarkerDecode side context marker)
+      G n S D (exactReverseBobMarkerDecode side context marker)
       (fun history aliceAnswer bobAnswer x y =>
         bornTracePairing S.state.matrix
-          (exactAliceQuestionFilter G n S D
-            (exactReverseAliceMarkerDecode side context marker)
-            history aliceAnswer x)
           (cfc (fun z : ℝ => z * Real.log z)
-            (exactBobQuestionFilter G n S D
-              (exactReverseAliceMarkerDecode side context marker)
-              history bobAnswer y)))
+            (exactAliceQuestionFilter G n S D
+              (exactReverseBobMarkerDecode side context marker)
+              history aliceAnswer x))
+          (exactBobQuestionFilter G n S D
+            (exactReverseBobMarkerDecode side context marker)
+            history bobAnswer y))
 
-theorem exactReverseBobLowOperatorPotential_eq_question
+theorem exactReverseAliceLowOperatorPotential_eq_question
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
     (marker : Fin side.card) :
-    exactReverseBobFilterLowOperatorPotential
+    exactReverseAliceFilterLowOperatorPotential
         G n S D side context marker =
-      exactReverseBobLowQuestionPotential
+      exactReverseAliceLowQuestionPotential
         G n S D side context marker := by
   classical
-  unfold exactReverseBobFilterLowOperatorPotential
-    exactReverseBobLowQuestionPotential
+  unfold exactReverseAliceFilterLowOperatorPotential
+    exactReverseAliceLowQuestionPotential
   dsimp only
   calc
     (∑ history : ExactRevealHistory X Y D
-        (exactReverseAliceMarkerDecode side context marker),
+        (exactReverseBobMarkerDecode side context marker),
       ∑ aliceAnswer : {j : Fin n // j ∈ D} → A,
       ∑ bobAnswer : {j : Fin n // j ∈ D} → B,
         if exactHistoryAccepted G n D
-          ⟨exactReverseAliceMarkerDecode side context marker,
+          ⟨exactReverseBobMarkerDecode side context marker,
             history, aliceAnswer, bobAnswer⟩ then
           exactRevealMass G n D
-            (exactReverseAliceMarkerDecode side context marker)
+            (exactReverseBobMarkerDecode side context marker)
             history *
-          exactFairBobHistoryLowOperatorPotential G n S D
-            ⟨exactReverseAliceMarkerDecode side context marker,
+          exactFairAliceHistoryLowOperatorPotential G n S D
+            ⟨exactReverseBobMarkerDecode side context marker,
               history, aliceAnswer, bobAnswer⟩
         else 0) =
       ∑ history : ExactRevealHistory X Y D
-        (exactReverseAliceMarkerDecode side context marker),
+        (exactReverseBobMarkerDecode side context marker),
       ∑ aliceAnswer : {j : Fin n // j ∈ D} → A,
       ∑ bobAnswer : {j : Fin n // j ∈ D} → B,
         if exactHistoryAccepted G n D
-          ⟨exactReverseAliceMarkerDecode side context marker,
+          ⟨exactReverseBobMarkerDecode side context marker,
             history, aliceAnswer, bobAnswer⟩ then
           exactRevealMass G n D
-            (exactReverseAliceMarkerDecode side context marker)
+            (exactReverseBobMarkerDecode side context marker)
             history *
             (∑ x : X, ∑ y : Y, G.questionWeight x y *
               bornTracePairing S.state.matrix
-                (exactAliceQuestionFilter G n S D
-                  (exactReverseAliceMarkerDecode side context marker)
-                  history aliceAnswer x)
                 (cfc (fun z : ℝ => z * Real.log z)
-                  (exactBobMeanFilter G n S D
-                    (exactReverseAliceMarkerDecode side context marker)
-                    history bobAnswer x)))
+                  (exactAliceMeanFilter G n S D
+                    (exactReverseBobMarkerDecode side context marker)
+                    history aliceAnswer y))
+                (exactBobQuestionFilter G n S D
+                  (exactReverseBobMarkerDecode side context marker)
+                  history bobAnswer y))
         else 0 := by
           apply Finset.sum_congr rfl
           intro history _
@@ -1505,36 +1136,36 @@ theorem exactReverseBobLowOperatorPotential_eq_question
           apply Finset.sum_congr rfl
           intro bobAnswer _
           split
-          · rw [exactFairBobHistoryLowOperatorPotential_eq_joint]
+          · rw [exactFairAliceHistoryLowOperatorPotential_eq_joint]
           · rfl
     _ = _ := exactFairAcceptedJointStatistic_reindex
-      G n S D (exactReverseAliceMarkerDecode side context marker)
+      G n S D (exactReverseBobMarkerDecode side context marker)
       (fun history aliceAnswer bobAnswer x y =>
         bornTracePairing S.state.matrix
-          (exactAliceQuestionFilter G n S D
-            (exactReverseAliceMarkerDecode side context marker)
-            history aliceAnswer x)
           (cfc (fun z : ℝ => z * Real.log z)
-            (exactBobMeanFilter G n S D
-              (exactReverseAliceMarkerDecode side context marker)
-              history bobAnswer x)))
+            (exactAliceMeanFilter G n S D
+              (exactReverseBobMarkerDecode side context marker)
+              history aliceAnswer y))
+          (exactBobQuestionFilter G n S D
+            (exactReverseBobMarkerDecode side context marker)
+            history bobAnswer y))
 
-theorem exactReverseBobFilterOperatorMarkerEntropy_eq_question_sub
+theorem exactReverseAliceFilterOperatorMarkerEntropy_eq_question_sub
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
     (marker : Fin side.card) :
-    exactReverseBobFilterOperatorMarkerEntropy
+    exactReverseAliceFilterOperatorMarkerEntropy
         G n S D side context marker =
-      exactReverseBobHighQuestionPotential
+      exactReverseAliceHighQuestionPotential
           G n S D side context marker -
-        exactReverseBobLowQuestionPotential
+        exactReverseAliceLowQuestionPotential
           G n S D side context marker := by
-  rw [exactReverseBobFilterOperatorMarkerEntropy_eq_sub,
-    exactReverseBobHighOperatorPotential_eq_question,
-    exactReverseBobLowOperatorPotential_eq_question]
+  rw [exactReverseAliceFilterOperatorMarkerEntropy_eq_sub,
+    exactReverseAliceHighOperatorPotential_eq_question,
+    exactReverseAliceLowOperatorPotential_eq_question]
 
 end
 
@@ -1552,23 +1183,23 @@ attribute [local instance] Classical.propDecidable
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem exactReverseBobAlignedCfcPrefixPotential_telescope
+theorem exactReverseAliceAlignedCfcPrefixPotential_telescope
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side) :
     (∑ k ∈ Finset.range side.card,
-      (exactReverseBobAlignedCfcPrefixPotential
+      (exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context (k + 1) -
-        exactReverseBobAlignedCfcPrefixPotential
+        exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context k)) =
-      exactReverseBobAlignedCfcPrefixPotential
+      exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context side.card -
-        exactReverseBobAlignedCfcPrefixPotential
+        exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context 0 :=
   history_forward_telescope
-    (exactReverseBobAlignedCfcPrefixPotential
+    (exactReverseAliceAlignedCfcPrefixPotential
       G n S D side context) side.card
 
 end
@@ -1587,60 +1218,60 @@ attribute [local instance] Classical.propDecidable
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem exactReverseBobFilterOperatorMarkerEntropy_eq_aligned_step
+theorem exactReverseAliceFilterOperatorMarkerEntropy_eq_aligned_step
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
     (marker : Fin side.card) :
-    exactReverseBobFilterOperatorMarkerEntropy
+    exactReverseAliceFilterOperatorMarkerEntropy
         G n S D side context marker =
-      exactReverseBobAlignedCfcPrefixPotential
+      exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context (marker.val + 1) -
-        exactReverseBobAlignedCfcPrefixPotential
+        exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context marker.val := by
-  rw [exactReverseBobFilterOperatorMarkerEntropy_eq_question_sub,
-    exactReverseBobHighQuestionPotential_eq_alignedPrefix,
-    exactReverseBobLowQuestionPotential_eq_alignedPrefix]
+  rw [exactReverseAliceFilterOperatorMarkerEntropy_eq_question_sub,
+    exactReverseAliceHighQuestionPotential_eq_alignedPrefix,
+    exactReverseAliceLowQuestionPotential_eq_alignedPrefix]
 
-theorem exactReverseBobFilterOperatorMarkerEntropy_sum_telescope
+theorem exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side) :
     (∑ marker : Fin side.card,
-      exactReverseBobFilterOperatorMarkerEntropy
+      exactReverseAliceFilterOperatorMarkerEntropy
         G n S D side context marker) =
-      exactReverseBobAlignedCfcPrefixPotential
+      exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context side.card -
-        exactReverseBobAlignedCfcPrefixPotential
+        exactReverseAliceAlignedCfcPrefixPotential
           G n S D side context 0 := by
   classical
   calc
     (∑ marker : Fin side.card,
-      exactReverseBobFilterOperatorMarkerEntropy
+      exactReverseAliceFilterOperatorMarkerEntropy
         G n S D side context marker) =
       ∑ marker : Fin side.card,
-        (exactReverseBobAlignedCfcPrefixPotential
+        (exactReverseAliceAlignedCfcPrefixPotential
             G n S D side context (marker.val + 1) -
-          exactReverseBobAlignedCfcPrefixPotential
+          exactReverseAliceAlignedCfcPrefixPotential
             G n S D side context marker.val) := by
           apply Finset.sum_congr rfl
           intro marker _
-          exact exactReverseBobFilterOperatorMarkerEntropy_eq_aligned_step
+          exact exactReverseAliceFilterOperatorMarkerEntropy_eq_aligned_step
             G n S D side context marker
     _ = ∑ k ∈ Finset.range side.card,
-        (exactReverseBobAlignedCfcPrefixPotential
+        (exactReverseAliceAlignedCfcPrefixPotential
             G n S D side context (k + 1) -
-          exactReverseBobAlignedCfcPrefixPotential
+          exactReverseAliceAlignedCfcPrefixPotential
             G n S D side context k) := by
           rw [Finset.sum_fin_eq_sum_range]
           apply Finset.sum_congr rfl
           intro k hk
           simp [Finset.mem_range.mp hk]
-    _ = _ := exactReverseBobAlignedCfcPrefixPotential_telescope
+    _ = _ := exactReverseAliceAlignedCfcPrefixPotential_telescope
       G n S D side context
 
 end
@@ -1651,7 +1282,7 @@ open scoped BigOperators ComplexOrder Kronecker MatrixOrder
   Matrix.Norms.L2Operator InnerProductSpace
 
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2400000
+set_option maxHeartbeats 4000000
 set_option maxRecDepth 2048
 
 attribute [local instance] Classical.propDecidable
@@ -1659,61 +1290,64 @@ attribute [local instance] Classical.propDecidable
 variable {X Y A B : Type*}
 variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
 
-theorem exactReverseBobFilterLowOperatorPotential_neg_le_scalarEntropy
+theorem exactReverseAliceLowOperatorPotential_neg_le_scalarEntropy
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
     (marker : Fin side.card) :
-    -exactReverseBobFilterLowOperatorPotential
+    -exactReverseAliceFilterLowOperatorPotential
         G n S D side context marker ≤
-      exactReverseBobAcceptedScalarEntropy
+      exactReverseAliceAcceptedScalarEntropy
         G n S D side context marker := by
   classical
-  unfold exactReverseBobFilterLowOperatorPotential
-    exactReverseBobAcceptedScalarEntropy
+  unfold exactReverseAliceFilterLowOperatorPotential
+    exactReverseAliceAcceptedScalarEntropy
   dsimp only
-  simp_rw [← Finset.sum_neg_distrib]
+  rw [← Finset.sum_neg_distrib]
   apply Finset.sum_le_sum
   intro history _
+  rw [← Finset.sum_neg_distrib]
   apply Finset.sum_le_sum
   intro aliceAnswer _
+  rw [← Finset.sum_neg_distrib]
   apply Finset.sum_le_sum
   intro bobAnswer _
-  split
-  · rename_i accepted
-    have bound :=
-      exactFairBobHistoryLowOperatorPotential_neg_le_entropy
-        G n S D
-        ⟨exactReverseAliceMarkerDecode side context marker,
-          history, aliceAnswer, bobAnswer⟩
-    have scaled := mul_le_mul_of_nonneg_left bound
+  by_cases accepted : exactHistoryAccepted G n D
+      ⟨exactReverseBobMarkerDecode side context marker,
+        history, aliceAnswer, bobAnswer⟩
+  · simp only [if_pos accepted]
+    have spectral := exactFairAliceHistoryLowOperatorPotential_neg_le_entropy
+      G n S D
+      ⟨exactReverseBobMarkerDecode side context marker,
+        history, aliceAnswer, bobAnswer⟩
+    have weighted := mul_le_mul_of_nonneg_left spectral
       (exactRevealMass_nonneg G n D
-        (exactReverseAliceMarkerDecode side context marker)
+        (exactReverseBobMarkerDecode side context marker)
         history)
-    simpa only [mul_neg] using scaled
-  · simp
+    nlinarith
+  · simp [accepted]
 
-theorem exactReverseBobAlignedCfcPrefixPotential_terminal_nonpos
+theorem exactReverseAliceAlignedCfcPrefixPotential_last_nonpos
     (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
     (D : Finset (Fin n))
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
-    (sideNonempty : 0 < side.card) :
-    exactReverseBobAlignedCfcPrefixPotential
+    (nonempty : 0 < side.card) :
+    exactReverseAliceAlignedCfcPrefixPotential
       G n S D side context side.card ≤ 0 := by
-  let marker : Fin side.card :=
-    ⟨side.card - 1, Nat.sub_lt sideNonempty (by decide)⟩
-  have step : marker.val + 1 = side.card := by
+  classical
+  let marker : Fin side.card := ⟨side.card - 1, Nat.sub_lt nonempty Nat.one_pos⟩
+  have last : marker.val + 1 = side.card := by
     dsimp [marker]
     omega
-  have high := exactReverseBobFilterHighOperatorPotential_nonpos
+  have high := exactReverseAliceFilterHighOperatorPotential_nonpos
     G n S D side context marker
-  rw [exactReverseBobHighOperatorPotential_eq_question,
-    exactReverseBobHighQuestionPotential_eq_alignedPrefix,
-    step] at high
+  rw [exactReverseAliceHighOperatorPotential_eq_question,
+    exactReverseAliceHighQuestionPotential_eq_alignedPrefix,
+    last] at high
   exact high
 
 end
@@ -1727,7 +1361,7 @@ open Complex Matrix Finset
 open scoped BigOperators ComplexOrder Kronecker MatrixOrder
   Matrix.Norms.L2Operator InnerProductSpace
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2400000
+set_option maxHeartbeats 4000000
 set_option maxRecDepth 2048
 attribute [local instance] Classical.propDecidable
 variable {X Y A B : Type*}
@@ -1739,33 +1373,19 @@ theorem solution
     (side : Finset (SourceRemainingCoordinate D))
     (context : ExactReverseSideContext
       (SourceRemainingCoordinate D) side)
-    (sideNonempty : 0 < side.card) :
+    (nonempty : 0 < side.card) :
     (∑ marker : Fin side.card,
-      exactReverseBobFilterOperatorMarkerEntropy
+      exactReverseAliceFilterOperatorMarkerEntropy
         G n S D side context marker) ≤
-      exactReverseBobAcceptedScalarEntropy
-        G n S D side context ⟨0, sideNonempty⟩ := by
-  let initial : Fin side.card := ⟨0, sideNonempty⟩
-  have terminal :=
-    exactReverseBobAlignedCfcPrefixPotential_terminal_nonpos
-      G n S D side context sideNonempty
-  have scalar :=
-    exactReverseBobFilterLowOperatorPotential_neg_le_scalarEntropy
-      G n S D side context initial
-  have initialPotential :
-      exactReverseBobFilterLowOperatorPotential
-          G n S D side context initial =
-        exactReverseBobAlignedCfcPrefixPotential
-          G n S D side context 0 := by
-    rw [exactReverseBobLowOperatorPotential_eq_question,
-      exactReverseBobLowQuestionPotential_eq_alignedPrefix]
-  rw [exactReverseBobFilterOperatorMarkerEntropy_sum_telescope]
-  rw [initialPotential] at scalar
-  change
-    exactReverseBobAlignedCfcPrefixPotential
-        G n S D side context side.card -
-      exactReverseBobAlignedCfcPrefixPotential
-        G n S D side context 0 ≤
-      exactReverseBobAcceptedScalarEntropy
-        G n S D side context initial
+      exactReverseAliceAcceptedScalarEntropy
+        G n S D side context ⟨0, nonempty⟩ := by
+  classical
+  have last := exactReverseAliceAlignedCfcPrefixPotential_last_nonpos
+    G n S D side context nonempty
+  have low := exactReverseAliceLowOperatorPotential_neg_le_scalarEntropy
+    G n S D side context ⟨0, nonempty⟩
+  rw [exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope]
+  rw [exactReverseAliceLowOperatorPotential_eq_question,
+    exactReverseAliceLowQuestionPotential_eq_alignedPrefix] at low
+  dsimp only at low
   linarith

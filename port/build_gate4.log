@@ -1,0 +1,8 @@
+✔ [3655/3746] Built Theorems.Thm_QuantumParallelRepetition_exactReverseAliceContext_prefix_before_marked (7.8s)
+✔ [3656/3746] Built Theorems.Thm_QuantumParallelRepetition_exactFixedAliceQuestionMass_eq_product (7.7s)
+✔ [3657/3746] Built Theorems.Thm_QuantumParallelRepetition_exactInsertedPrefixBefore_marker_eq (7.5s)
+✔ [3700/3746] Built Theorems.Thm_QuantumParallelRepetition_exactBobQuestionFilter_eq_jointPrefixOperatorFilter (7.8s)
+✔ [3733/3746] Built Theorems.Thm_QuantumParallelRepetition_exactAliceQuestionMass_eq_jointPrefixQuestionMass (3.2s)
+✔ [3734/3746] Built Theorems.Thm_QuantumParallelRepetition_exactBobQuestionMass_eq_jointPrefixQuestionMass (3.1s)
+✔ [3735/3746] Built Theorems.Thm_QuantumParallelRepetition_exactReverseAliceFilterOperatorMarkerEntropy_sum_le_scalarEntropy (3.2s)
+✔ [3736/3746] Built Theorems.Thm_QuantumParallelRepetition_exactAliceQuestionFilter_eq_jointPrefixOperatorFilter (3.1s)

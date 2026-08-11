@@ -1,0 +1,116 @@
+[
+  {
+    "name": "QuantumParallelRepetition.exactFixedAliceQuestionMass_eq_product",
+    "upstream_lines": [
+      28698,
+      28757
+    ],
+    "docstring": "",
+    "statement": "theorem exactFixedAliceQuestionMass_eq_product\n    (G : Game X Y A B) (n : ℕ)\n    (fixed : Finset (Fin n))\n    (known : Fin n → X) (ys : Fin n → Y) :\n    exactFixedAliceQuestionMass G n fixed known ys =\n      ∏ j : Fin n,\n        if j ∈ fixed then G.questionWeight (known j) (ys j)\n        else G.marginalY (ys j)",
+    "proof": " by\n  classical\n  unfold exactFixedAliceQuestionMass\n  simp only [Game.repeat_questionWeight]\n  calc\n    (∑ xs : Fin n → X,\n      if ∀ j : Fin n, j ∈ fixed → xs j = known j then\n        ∏ j : Fin n, G.questionWeight (xs j) (ys j)\n      else 0) =\n      ∑ xs : Fin n → X,\n        ∏ j : Fin n,\n          if j ∈ fixed then\n            if xs j = known j then\n              G.questionWeight (xs j) (ys j)\n            else 0\n          else G.questionWeight (xs j) (ys j) := by\n            apply Finset.sum_congr rfl\n            intro xs _\n            calc\n              (if ∀ j : Fin n,\n                  j ∈ fixed → xs j = known j then\n                  ∏ j : Fin n,\n                    G.questionWeight (xs j) (ys j)\n                else 0) =\n                ∏ j : Fin n,\n                  if j ∈ fixed → xs j = known j then\n                    G.questionWeight (xs j) (ys j)\n                  else 0 :=\n                  by\n                    simp only [Fintype.prod_ite_zero]\n                    split <;> simp_all\n              _ = _ := by\n                apply Finset.prod_congr rfl\n                intro j _\n                by_cases hj : j ∈ fixed <;>\n                  by_cases he : xs j = known j <;>\n                    simp [hj, he]\n    _ = ∏ j : Fin n,\n        ∑ x : X,\n          if j ∈ fixed then\n            if x = known j then G.questionWeight x (ys j) else 0\n          else G.questionWeight x (ys j) :=\n      (Fintype.prod_sum\n        (fun (j : Fin n) (x : X) =>\n          if j ∈ fixed then\n            if x = known j then G.questionWeight x (ys j) else 0\n          else G.questionWeight x (ys j))).symm\n    _ = _ := by\n      apply Finset.prod_congr rfl\n      intro j _\n      by_cases hj : j ∈ fixed\n      · simp [hj]\n      · simp [hj, Game.marginalY]",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactInsertedPrefixBefore_marker_eq",
+    "upstream_lines": [
+      30407,
+      30458
+    ],
+    "docstring": "",
+    "statement": "theorem exactInsertedPrefixBefore_marker_eq\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (i : M) (side : Finset M) (not_mem : i ∉ side)\n    (rank : {j : M // j ∈ side} ≃ Fin side.card)\n    (cut : Fin (side.card + 1)) :\n    exactInsertedPrefixBefore i side not_mem rank cut =\n      (Finset.univ.filter\n        (fun j : {j : M // j ∈ side} =>\n          (rank j).val < cut.val)).image Subtype.val",
+    "proof": " by\n  ext j\n  constructor\n  · intro hj\n    obtain ⟨a, ha, haval⟩ := Finset.mem_image.mp hj\n    have hlt :\n        (exactInsertedRank i side not_mem rank cut a).val <\n          cut.val := (Finset.mem_filter.mp ha).2\n    have hne : a.val ≠ i := by\n      intro heq\n      have hsub : a = ⟨i, Finset.mem_insert_self i side⟩ :=\n        Subtype.ext heq\n      rw [hsub, exactInsertedRank_marker] at hlt\n      exact (Nat.lt_irrefl cut.val) hlt\n    have hside : a.val ∈ side :=\n      (Finset.mem_insert.mp a.property).resolve_left hne\n    let b : {j : M // j ∈ side} := ⟨a.val, hside⟩\n    refine Finset.mem_image.mpr ⟨b, ?_, haval⟩\n    apply Finset.mem_filter.mpr\n    refine ⟨Finset.mem_univ b, ?_⟩\n    have hbefore :\n        cut.succAbove (rank b) < cut := by\n      change (cut.succAbove (rank b)).val < cut.val\n      rw [← exactInsertedRank_old\n        i side not_mem rank cut b]\n      exact hlt\n    have hcast : (rank b).castSucc < cut :=\n      (Fin.succAbove_lt_iff_castSucc_lt cut (rank b)).mp hbefore\n    exact hcast\n  · intro hj\n    obtain ⟨b, hb, hbval⟩ := Finset.mem_image.mp hj\n    have hlt : (rank b).val < cut.val :=\n      (Finset.mem_filter.mp hb).2\n    let a : {j : M // j ∈ insert i side} :=\n      ⟨b.val, Finset.mem_insert_of_mem b.property⟩\n    refine Finset.mem_image.mpr ⟨a, ?_, hbval⟩\n    apply Finset.mem_filter.mpr\n    refine ⟨Finset.mem_univ a, ?_⟩\n    have hcast : (rank b).castSucc < cut := hlt\n    have hbefore : cut.succAbove (rank b) < cut :=\n      (Fin.succAbove_lt_iff_castSucc_lt cut (rank b)).mpr hcast\n    rw [exactInsertedRank_old\n      i side not_mem rank cut b]\n    exact hbefore",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseAliceContext_prefix_before_marked",
+    "upstream_lines": [
+      30788,
+      30846
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseAliceContext_prefix_before_marked\n    {M : Type*} [Fintype M] [DecidableEq M]\n    (seed : ExactForwardSeed M) :\n    exactReverseContextPrefixBefore\n        (exactReverseAliceContext seed)\n        ((exactReverseAliceContext seed).sideRank\n          ⟨seed.coordinate,\n            exactReverseLeftSide_coordinate_mem seed⟩) =\n      exactLeftPrefix seed",
+    "proof": " by\n  calc\n    exactReverseContextPrefixBefore\n        (exactReverseAliceContext seed)\n        ((exactReverseAliceContext seed).sideRank\n          ⟨seed.coordinate,\n            exactReverseLeftSide_coordinate_mem seed⟩) =\n        exactReverseLeftPrefixBeforeMarked seed := by\n      change\n        exactOrderedSidePrefix\n          (exactReverseLeftSide seed)\n          (exactReverseAliceContext seed).sideRank\n          ((exactReverseAliceContext seed).sideRank\n            ⟨seed.coordinate,\n              exactReverseLeftSide_coordinate_mem seed⟩).castSucc =\n        exactInsertedPrefixBefore seed.coordinate\n          (exactLeft seed.coordinate seed.partition)\n          (exactLeft_coordinate_not_mem\n            seed.coordinate seed.partition)\n          (exactLeftRank seed) seed.leftCut\n      ext j\n      simp only [exactOrderedSidePrefix_mem_iff,\n        exactInsertedPrefixBefore_mem_iff]\n      constructor\n      · rintro ⟨hj, hlt⟩\n        change j ∈ insert seed.coordinate\n          (exactLeft seed.coordinate seed.partition) at hj\n        refine ⟨hj, ?_⟩\n        have hlt' :\n            ((exactReverseAliceContext seed).sideRank\n              ⟨j, hj⟩).val < seed.leftCut.val := by\n          simpa only [Fin.val_castSucc,\n            exactReverseAliceContext_marked_rank] using hlt\n        convert hlt' using 1\n        all_goals simp [exactReverseAliceContext,\n            exactReverseLeftRank, Equiv.trans_apply]\n        all_goals congr 2\n      · rintro ⟨hj, hlt⟩\n        change j ∈ exactReverseLeftSide seed at hj\n        refine ⟨hj, ?_⟩\n        have hlt' :\n            ((exactReverseAliceContext seed).sideRank\n              ⟨j, hj⟩).val < seed.leftCut.val := by\n          convert hlt using 1\n          all_goals simp [exactReverseAliceContext,\n              exactReverseLeftRank, Equiv.trans_apply]\n          all_goals congr 2\n        simpa only [Fin.val_castSucc,\n          exactReverseAliceContext_marked_rank] using hlt'\n    _ = exactLeftPrefix seed :=\n      exactReverseLeftPrefixBeforeMarked_eq seed",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactLeft_coordinate_not_mem",
+      "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactRevealCode_eq_iff_fair_question_masks",
+    "upstream_lines": [
+      37092,
+      37182
+    ],
+    "docstring": "",
+    "statement": "theorem exactRevealCode_eq_iff_fair_question_masks\n    {n : ℕ} (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (q q' : ExactFullQuestion X Y n) :\n    exactRevealCode D seed q' =\n        exactRevealCode D seed q ↔\n      (∀ j : Fin n,\n        j ∈ exactFairAliceQuestionMask D seed →\n          q'.1 j = q.1 j) ∧\n      (∀ j : Fin n,\n        j ∈ exactFairBobQuestionMask D seed →\n          q'.2 j = q.2 j)",
+    "proof": " by\n  classical\n  constructor\n  · intro same\n    have aliceD := congrArg\n      (fun h : ExactRevealHistory X Y D seed =>\n        h.aliceConditioned) same\n    have bobD := congrArg\n      (fun h : ExactRevealHistory X Y D seed =>\n        h.bobConditioned) same\n    have aliceL := congrArg\n      (fun h : ExactRevealHistory X Y D seed =>\n        h.aliceLeft) same\n    have bobR := congrArg\n      (fun h : ExactRevealHistory X Y D seed =>\n        h.bobRight) same\n    have bobLP := congrArg\n      (fun h : ExactRevealHistory X Y D seed =>\n        h.bobLeftPrefix) same\n    have aliceRP := congrArg\n      (fun h : ExactRevealHistory X Y D seed =>\n        h.aliceRightPrefix) same\n    constructor\n    · intro j hj\n      change j ∈ (D ∪\n        (exactLeft seed.coordinate seed.partition).image\n          Subtype.val) ∪\n        (exactRightPrefix seed).image Subtype.val at hj\n      rcases Finset.mem_union.mp hj with hmain | hprefix\n      · rcases Finset.mem_union.mp hmain with hD | hleft\n        · exact congrFun aliceD ⟨j, hD⟩\n        · obtain ⟨k, hk, samej⟩ := Finset.mem_image.mp hleft\n          subst j\n          exact congrFun aliceL ⟨k, hk⟩\n      · obtain ⟨k, hk, samej⟩ := Finset.mem_image.mp hprefix\n        subst j\n        exact congrFun aliceRP ⟨k, hk⟩\n    · intro j hj\n      change j ∈ (D ∪\n        (exactRight seed.coordinate seed.partition).image\n          Subtype.val) ∪\n        (exactLeftPrefix seed).image Subtype.val at hj\n      rcases Finset.mem_union.mp hj with hmain | hprefix\n      · rcases Finset.mem_union.mp hmain with hD | hright\n        · exact congrFun bobD ⟨j, hD⟩\n        · obtain ⟨k, hk, samej⟩ := Finset.mem_image.mp hright\n          subst j\n          exact congrFun bobR ⟨k, hk⟩\n      · obtain ⟨k, hk, samej⟩ := Finset.mem_image.mp hprefix\n        subst j\n        exact congrFun bobLP ⟨k, hk⟩\n  · rintro ⟨alice, bob⟩\n    unfold exactRevealCode\n    congr 1\n    · funext j\n      exact alice j.val <|\n        Finset.mem_union_left _ <|\n          Finset.mem_union_left _ j.property\n    · funext j\n      exact bob j.val <|\n        Finset.mem_union_left _ <|\n          Finset.mem_union_left _ j.property\n    · funext j\n      exact alice j.val.val <|\n        Finset.mem_union_left _ <|\n          Finset.mem_union_right _ <|\n            Finset.mem_image.mpr ⟨j.val, j.property, rfl⟩\n    · funext j\n      exact bob j.val.val <|\n        Finset.mem_union_left _ <|\n          Finset.mem_union_right _ <|\n            Finset.mem_image.mpr ⟨j.val, j.property, rfl⟩\n    · funext j\n      exact bob j.val.val <|\n        Finset.mem_union_right _ <|\n          Finset.mem_image.mpr ⟨j.val, j.property, rfl⟩\n    · funext j\n      exact alice j.val.val <|\n        Finset.mem_union_right _ <|\n          Finset.mem_image.mpr ⟨j.val, j.property, rfl⟩",
+    "imports_theorems": []
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAliceQuestionMass_eq_jointPrefixQuestionMass",
+    "upstream_lines": [
+      37184,
+      37244
+    ],
+    "docstring": "",
+    "statement": "theorem exactAliceQuestionMass_eq_jointPrefixQuestionMass\n    (G : Game X Y A B) (n : ℕ)\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (q : ExactFullQuestion X Y n) :\n    exactAliceQuestionMass G n D seed\n        (exactRevealCode D seed q)\n        (q.1 seed.coordinate.val) =\n      exactJointPrefixQuestionMass G n\n        (insert seed.coordinate.val\n          (exactFairAliceQuestionMask D seed))\n        (exactFairBobQuestionMask D seed) q.1 q.2",
+    "proof": " by\n  classical\n  unfold exactAliceQuestionMass\n    exactJointPrefixQuestionMass\n  rw [Fintype.sum_prod_type]\n  apply Finset.sum_congr rfl\n  intro xs _\n  apply Finset.sum_congr rfl\n  intro ys _\n  have same :\n      (exactRevealCode D seed (xs, ys) =\n          exactRevealCode D seed q ∧\n        xs seed.coordinate.val = q.1 seed.coordinate.val) ↔\n      ((∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairAliceQuestionMask D seed) →\n          xs j = q.1 j) ∧\n       (∀ j : Fin n,\n        j ∈ exactFairBobQuestionMask D seed →\n          ys j = q.2 j)) := by\n    constructor\n    · rintro ⟨history, distinguished⟩\n      obtain ⟨alice, bob⟩ :=\n        (exactRevealCode_eq_iff_fair_question_masks\n          D seed q (xs, ys)).mp history\n      refine ⟨?_, bob⟩\n      intro j hj\n      rcases Finset.mem_insert.mp hj with samej | hj\n      · subst j\n        exact distinguished\n      · exact alice j hj\n    · rintro ⟨alice, bob⟩\n      refine ⟨(exactRevealCode_eq_iff_fair_question_masks\n        D seed q (xs, ys)).mpr ⟨?_, bob⟩, ?_⟩\n      · intro j hj\n        exact alice j (Finset.mem_insert_of_mem hj)\n      · exact alice seed.coordinate.val\n          (Finset.mem_insert_self _ _)\n  by_cases compatible :\n      (∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairAliceQuestionMask D seed) →\n          xs j = q.1 j) ∧\n      (∀ j : Fin n,\n        j ∈ exactFairBobQuestionMask D seed →\n          ys j = q.2 j)\n  · rw [if_pos (same.mpr compatible), if_pos compatible]\n    rfl\n  · rw [if_neg (fun h => compatible (same.mp h)),\n      if_neg compatible]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactRevealCode_eq_iff_fair_question_masks"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass",
+    "upstream_lines": [
+      37246,
+      37306
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobQuestionMass_eq_jointPrefixQuestionMass\n    (G : Game X Y A B) (n : ℕ)\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (q : ExactFullQuestion X Y n) :\n    exactBobQuestionMass G n D seed\n        (exactRevealCode D seed q)\n        (q.2 seed.coordinate.val) =\n      exactJointPrefixQuestionMass G n\n        (exactFairAliceQuestionMask D seed)\n        (insert seed.coordinate.val\n          (exactFairBobQuestionMask D seed)) q.1 q.2",
+    "proof": " by\n  classical\n  unfold exactBobQuestionMass\n    exactJointPrefixQuestionMass\n  rw [Fintype.sum_prod_type]\n  apply Finset.sum_congr rfl\n  intro xs _\n  apply Finset.sum_congr rfl\n  intro ys _\n  have same :\n      (exactRevealCode D seed (xs, ys) =\n          exactRevealCode D seed q ∧\n        ys seed.coordinate.val = q.2 seed.coordinate.val) ↔\n      ((∀ j : Fin n,\n        j ∈ exactFairAliceQuestionMask D seed →\n          xs j = q.1 j) ∧\n       (∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairBobQuestionMask D seed) →\n          ys j = q.2 j)) := by\n    constructor\n    · rintro ⟨history, distinguished⟩\n      obtain ⟨alice, bob⟩ :=\n        (exactRevealCode_eq_iff_fair_question_masks\n          D seed q (xs, ys)).mp history\n      refine ⟨alice, ?_⟩\n      intro j hj\n      rcases Finset.mem_insert.mp hj with samej | hj\n      · subst j\n        exact distinguished\n      · exact bob j hj\n    · rintro ⟨alice, bob⟩\n      refine ⟨(exactRevealCode_eq_iff_fair_question_masks\n        D seed q (xs, ys)).mpr ⟨alice, ?_⟩, ?_⟩\n      · intro j hj\n        exact bob j (Finset.mem_insert_of_mem hj)\n      · exact bob seed.coordinate.val\n          (Finset.mem_insert_self _ _)\n  by_cases compatible :\n      (∀ j : Fin n,\n        j ∈ exactFairAliceQuestionMask D seed →\n          xs j = q.1 j) ∧\n      (∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairBobQuestionMask D seed) →\n          ys j = q.2 j)\n  · rw [if_pos (same.mpr compatible), if_pos compatible]\n    rfl\n  · rw [if_neg (fun h => compatible (same.mp h)),\n      if_neg compatible]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactRevealCode_eq_iff_fair_question_masks"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactAliceQuestionFilter_eq_jointPrefixOperatorFilter",
+    "upstream_lines": [
+      37308,
+      37378
+    ],
+    "docstring": "",
+    "statement": "theorem exactAliceQuestionFilter_eq_jointPrefixOperatorFilter\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (q : ExactFullQuestion X Y n)\n    (answer : {j : Fin n // j ∈ D} → A) :\n    exactAliceQuestionFilter G n S D seed\n        (exactRevealCode D seed q) answer\n        (q.1 seed.coordinate.val) =\n      exactJointPrefixAliceOperatorFilter G n S D\n        (insert seed.coordinate.val\n          (exactFairAliceQuestionMask D seed))\n        (exactFairBobQuestionMask D seed)\n        answer q.1 q.2",
+    "proof": " by\n  classical\n  unfold exactAliceQuestionFilter\n  rw [exactAliceQuestionMass_eq_jointPrefixQuestionMass\n    G n D seed q]\n  unfold exactJointPrefixAliceOperatorFilter\n    exactJointPrefixAliceOperatorMass\n  rw [Fintype.sum_prod_type]\n  simp only [Finset.smul_sum]\n  apply Finset.sum_congr rfl\n  intro xs _\n  apply Finset.sum_congr rfl\n  intro ys _\n  have same :\n      (exactRevealCode D seed (xs, ys) =\n          exactRevealCode D seed q ∧\n        xs seed.coordinate.val = q.1 seed.coordinate.val) ↔\n      ((∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairAliceQuestionMask D seed) →\n          xs j = q.1 j) ∧\n       (∀ j : Fin n,\n        j ∈ exactFairBobQuestionMask D seed →\n          ys j = q.2 j)) := by\n    constructor\n    · rintro ⟨history, distinguished⟩\n      obtain ⟨alice, bob⟩ :=\n        (exactRevealCode_eq_iff_fair_question_masks\n          D seed q (xs, ys)).mp history\n      refine ⟨?_, bob⟩\n      intro j hj\n      rcases Finset.mem_insert.mp hj with samej | hj\n      · subst j\n        exact distinguished\n      · exact alice j hj\n    · rintro ⟨alice, bob⟩\n      refine ⟨(exactRevealCode_eq_iff_fair_question_masks\n        D seed q (xs, ys)).mpr ⟨?_, bob⟩, ?_⟩\n      · intro j hj\n        exact alice j (Finset.mem_insert_of_mem hj)\n      · exact alice seed.coordinate.val\n          (Finset.mem_insert_self _ _)\n  by_cases compatible :\n      (∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairAliceQuestionMask D seed) →\n          xs j = q.1 j) ∧\n      (∀ j : Fin n,\n        j ∈ exactFairBobQuestionMask D seed →\n          ys j = q.2 j)\n  · rw [if_pos (same.mpr compatible), if_pos compatible,\n      smul_smul]\n    unfold exactPriorQuestionWeight\n    rw [div_eq_mul_inv]\n    congr 1\n    ring\n  · rw [if_neg (fun h => compatible (same.mp h)),\n      if_neg compatible, smul_zero]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactAliceQuestionMass_eq_jointPrefixQuestionMass",
+      "QuantumParallelRepetition.exactRevealCode_eq_iff_fair_question_masks"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactBobQuestionFilter_eq_jointPrefixOperatorFilter",
+    "upstream_lines": [
+      37380,
+      37450
+    ],
+    "docstring": "",
+    "statement": "theorem exactBobQuestionFilter_eq_jointPrefixOperatorFilter\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (seed : ExactRemainingSeed D)\n    (q : ExactFullQuestion X Y n)\n    (answer : {j : Fin n // j ∈ D} → B) :\n    exactBobQuestionFilter G n S D seed\n        (exactRevealCode D seed q) answer\n        (q.2 seed.coordinate.val) =\n      exactJointPrefixBobOperatorFilter G n S D\n        (exactFairAliceQuestionMask D seed)\n        (insert seed.coordinate.val\n          (exactFairBobQuestionMask D seed))\n        answer q.1 q.2",
+    "proof": " by\n  classical\n  unfold exactBobQuestionFilter\n  rw [exactBobQuestionMass_eq_jointPrefixQuestionMass\n    G n D seed q]\n  unfold exactJointPrefixBobOperatorFilter\n    exactJointPrefixBobOperatorMass\n  rw [Fintype.sum_prod_type]\n  simp only [Finset.smul_sum]\n  apply Finset.sum_congr rfl\n  intro xs _\n  apply Finset.sum_congr rfl\n  intro ys _\n  have same :\n      (exactRevealCode D seed (xs, ys) =\n          exactRevealCode D seed q ∧\n        ys seed.coordinate.val = q.2 seed.coordinate.val) ↔\n      ((∀ j : Fin n,\n        j ∈ exactFairAliceQuestionMask D seed →\n          xs j = q.1 j) ∧\n       (∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairBobQuestionMask D seed) →\n          ys j = q.2 j)) := by\n    constructor\n    · rintro ⟨history, distinguished⟩\n      obtain ⟨alice, bob⟩ :=\n        (exactRevealCode_eq_iff_fair_question_masks\n          D seed q (xs, ys)).mp history\n      refine ⟨alice, ?_⟩\n      intro j hj\n      rcases Finset.mem_insert.mp hj with samej | hj\n      · subst j\n        exact distinguished\n      · exact bob j hj\n    · rintro ⟨alice, bob⟩\n      refine ⟨(exactRevealCode_eq_iff_fair_question_masks\n        D seed q (xs, ys)).mpr ⟨alice, ?_⟩, ?_⟩\n      · intro j hj\n        exact bob j (Finset.mem_insert_of_mem hj)\n      · exact bob seed.coordinate.val\n          (Finset.mem_insert_self _ _)\n  by_cases compatible :\n      (∀ j : Fin n,\n        j ∈ exactFairAliceQuestionMask D seed →\n          xs j = q.1 j) ∧\n      (∀ j : Fin n,\n        j ∈ insert seed.coordinate.val\n          (exactFairBobQuestionMask D seed) →\n          ys j = q.2 j)\n  · rw [if_pos (same.mpr compatible), if_pos compatible,\n      smul_smul]\n    unfold exactPriorQuestionWeight\n    rw [div_eq_mul_inv]\n    congr 1\n    ring\n  · rw [if_neg (fun h => compatible (same.mp h)),\n      if_neg compatible, smul_zero]",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass",
+      "QuantumParallelRepetition.exactRevealCode_eq_iff_fair_question_masks"
+    ]
+  },
+  {
+    "name": "QuantumParallelRepetition.exactReverseAliceFilterOperatorMarkerEntropy_sum_le_scalarEntropy",
+    "upstream_lines": [
+      40058,
+      40079
+    ],
+    "docstring": "",
+    "statement": "theorem exactReverseAliceFilterOperatorMarkerEntropy_sum_le_scalarEntropy\n    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))\n    (D : Finset (Fin n))\n    (side : Finset (SourceRemainingCoordinate D))\n    (context : ExactReverseSideContext\n      (SourceRemainingCoordinate D) side)\n    (nonempty : 0 < side.card) :\n    (∑ marker : Fin side.card,\n      exactReverseAliceFilterOperatorMarkerEntropy\n        G n S D side context marker) ≤\n      exactReverseAliceAcceptedScalarEntropy\n        G n S D side context ⟨0, nonempty⟩",
+    "proof": " by\n  classical\n  have last := exactReverseAliceAlignedCfcPrefixPotential_last_nonpos\n    G n S D side context nonempty\n  have low := exactReverseAliceLowOperatorPotential_neg_le_scalarEntropy\n    G n S D side context ⟨0, nonempty⟩\n  rw [exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope]\n  rw [exactReverseAliceLowOperatorPotential_eq_question,\n    exactReverseAliceLowQuestionPotential_eq_alignedPrefix] at low\n  dsimp only at low\n  linarith",
+    "imports_theorems": [
+      "QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix"
+    ]
+  }
+]

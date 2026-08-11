@@ -416,3 +416,9 @@ blocked by failures:
   (1/87 attempted, 0 failed)
   (2/87 attempted, 0 failed)
   (3/87 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.exactFairAliceMeanBornMass_eq_fullOutcome_sum -> ACCEPTED 
+  (4/87 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceHighQuestionPotential_eq_alignedPrefix -> ACCEPTED 
+  (5/87 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  (6/87 attempted, 2 failed)

@@ -37,6 +37,38 @@ CAP_BUNDLE = 900          # largest definition bundle, in source lines
 BATCH1 = json.load(open(os.path.join(stage.ROOT, "port", "batch1_names.json")))
 
 
+def published_nodes():
+    """Every theorem name already published, mapped back to its source name.
+
+    The cut is chosen greedily, so adding one node can change which others the size cap picks —
+    and a published statement that stops being a node would leave the plan describing a tree
+    that does not match what the platform holds.  Anything already created is therefore a fixed
+    point, exactly like batch 1.
+    """
+    p = os.path.join(stage.ROOT, "port", "upload_journal.json")
+    if not os.path.exists(p):
+        return []
+    created = json.load(open(p)).get("created", {})
+    return [n.replace("posSemidef_blockDiagonal_prime", "posSemidef_blockDiagonal'")
+            for n in created if not n.startswith("def:")]
+
+# Cut points added because the server, not the cap, said so.  `/verify` compiles a submission
+# under a ~300s budget, and two nodes exceeded it while their Alice-side twins passed: Bob's
+# proofs sum in the opposite order and carry extra `Finset.sum_comm` / `norm_sub_rev` steps, so
+# they are genuinely more expensive to elaborate.  These blocks are the heavy shared material in
+# both; promoting them to nodes means the solutions import them instead of re-elaborating them.
+FORCE_NODES = [
+    "QuantumParallelRepetition.exactRevealCode_eq_iff_fair_question_masks",
+    "QuantumParallelRepetition.exactAliceQuestionFilter_eq_jointPrefixOperatorFilter",
+    "QuantumParallelRepetition.exactBobQuestionFilter_eq_jointPrefixOperatorFilter",
+    "QuantumParallelRepetition.exactAliceQuestionMass_eq_jointPrefixQuestionMass",
+    "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass",
+    "QuantumParallelRepetition.exactReverseAliceContext_prefix_before_marked",
+    "QuantumParallelRepetition.exactFixedAliceQuestionMass_eq_product",
+    "QuantumParallelRepetition.exactInsertedPrefixBefore_marker_eq",
+]
+
+
 class Plan:
     def __init__(self):
         self.S = stage.Source()
@@ -216,8 +248,9 @@ class Plan:
         S = self.S
         bundles, forced = self.cut_bundles()
         nodes = set(forced)
-        for n in stage.ROOTS + BATCH1:
-            nodes.add(self.owner[n])
+        for n in stage.ROOTS + BATCH1 + FORCE_NODES + published_nodes():
+            if n in self.owner:
+                nodes.add(self.owner[n])
         nodes = {b for b in nodes if not self.is_def_block[b]}
         # Grow until every solution file fits the cap: repeatedly split the largest file at the
         # dependency inside it that removes the most lines.

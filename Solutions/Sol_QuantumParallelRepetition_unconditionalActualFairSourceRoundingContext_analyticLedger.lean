@@ -11,7 +11,6 @@ import Theorems.Thm_QuantumParallelRepetition_exactBobPurificationFamily_posSemi
 import Theorems.Thm_QuantumParallelRepetition_exactSeedWeight_sum
 import Theorems.Thm_QuantumParallelRepetition_exactGlobalHistoryLocalIndex_card_pos
 import Theorems.Thm_QuantumParallelRepetition_unconditionalActualC485NormalizedDiagonalWork_mass_sum_le_one
-import Theorems.Thm_QuantumParallelRepetition_unconditionalActualFairWeightedStoppedSuccess
 import Theorems.Thm_QuantumParallelRepetition_UnconditionalActualFairSourceRoundingContext_width_positive
 import Theorems.Thm_QuantumParallelRepetition_UnconditionalActualFairSourceRoundingContext_width_all
 import Theorems.Thm_QuantumParallelRepetition_UnconditionalActualFairSourceRoundingContext_fine_all
@@ -1553,6 +1552,64 @@ theorem unconditionalActualFairWeightedCleanedMass_le_one
           schedule (ξ h) (ζ h) Q A C)
         (weight_nonnegative h)
     _ = 1 := by simpa using weight_normalized
+
+theorem unconditionalActualFairWeightedStoppedSuccess
+    {I : Type} [Fintype I]
+    {S B N d L m : Nat}
+    (weight : I → ℝ)
+    (weight_normalized : (∑ h : I, weight h) = 1)
+    (phases : 0 < B) (grid : 0 < N)
+    (dimension : 0 < d) (harmonic : 0 < m)
+    (width : Fin S → ℝ) (width_positive : ∀ s, 0 < width s)
+    (schedule : Fin L → Fin S)
+    (ξ ζ : I → BipartiteUnitVector d)
+    (Q : Nat)
+    (A C : Fin B → Option Nat →
+      Matrix.unitaryGroup (Fin (N * m)) ℂ)
+    (async terminal : ℝ)
+    (asynchronous_bound :
+      (∑ h : I, weight h *
+        dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+          N width schedule (ξ h) (ζ h)) ≤ async)
+    (terminal_bound :
+      (∑ h : I, weight h *
+        dSVDensityRationalHeterogeneousPhysicalTerminalMass
+          N width schedule (ξ h) (ζ h)) ≤ terminal) :
+    1 - (async + terminal) ≤
+      ∑ h : I, weight h *
+        ∑ j : Fin L,
+          ‖integratorActualC485CleanedVector
+            Q width schedule (ξ h) (ζ h) A C j‖ ^ 2 := by
+  have partition :
+      (∑ h : I, weight h *
+        dSVDensityRationalHeterogeneousPhysicalStoppedSuccessMass
+          N width schedule (ξ h) (ζ h)) +
+      (∑ h : I, weight h *
+        dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+          N width schedule (ξ h) (ζ h)) +
+      (∑ h : I, weight h *
+        dSVDensityRationalHeterogeneousPhysicalTerminalMass
+          N width schedule (ξ h) (ζ h)) = 1 := by
+    calc
+      _ = ∑ h : I, weight h *
+        (dSVDensityRationalHeterogeneousPhysicalStoppedSuccessMass
+            N width schedule (ξ h) (ζ h) +
+          dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+            N width schedule (ξ h) (ζ h) +
+          dSVDensityRationalHeterogeneousPhysicalTerminalMass
+            N width schedule (ξ h) (ζ h)) := by
+            simp_rw [mul_add, Finset.sum_add_distrib]
+      _ = ∑ h : I, weight h := by
+        apply Finset.sum_congr rfl
+        intro h _
+        rw [dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition
+          grid dimension width schedule (ξ h) (ζ h)]
+        ring
+      _ = 1 := weight_normalized
+  simp_rw [unconditionalActualFairCleanedRow_eq_stoppedSuccess
+    phases grid dimension harmonic width width_positive
+    schedule _ _ Q A C]
+  linarith
 
 end
 
