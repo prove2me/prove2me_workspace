@@ -27,7 +27,7 @@ import urllib.request
 # pass the ~300s response ceiling and are discarded.  So every call this client makes — creates,
 # verifies and polls alike — passes through one semaphore.  This is a property of the service,
 # not of any one endpoint, which is why it lives here rather than at a call site.
-MAX_CONCURRENT = 2
+MAX_CONCURRENT = 4
 GATE = threading.Semaphore(MAX_CONCURRENT)
 
 BASE = "https://beta.prove2.me/api/v1"
