@@ -404,3 +404,7 @@ blocked by failures:
   (20/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix -> ACCEPTED 
   (21/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactFairPsiPhiDistance_mul_postselection_le -> ACCEPTED 
+  (22/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactFairGammaPsiDistance_mul_postselection_le -> ACCEPTED 
+  (23/110 attempted, 0 failed)
