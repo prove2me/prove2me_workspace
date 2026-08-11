@@ -1,2 +1,12 @@
   [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ACCEPTED 
   (1/4 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier -> ERROR Verification timed out after 300s
+  (2/4 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier
+  round 1 stopped early; 3 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier -> ERROR Verification timed out after 300s
+  (1/3 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier
+  round 2 stopped early; 3 items left, pausing
