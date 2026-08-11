@@ -362,3 +362,13 @@ blocked by failures:
   round 1 stopped early; 134 items left, pausing
   [retry] qpr_core_21: {"_transport_error": "Remote end closed connection without response"}
   [retry] qpr_core_21: {"_transport_error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)>"}
+  [thm] QuantumParallelRepetition.reweightedSeed_flagged_projection_relativeEntropy_le -> ACCEPTED 
+  (1/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.reweightedSeedPrefix_absolute_continuity -> ACCEPTED 
+  (2/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceMarkerCode_injective -> ACCEPTED 
+  (3/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.reweightedSeed_source_equation_twenty_six -> ACCEPTED 
+  (4/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobMarkerCode_injective -> ACCEPTED 
+  (5/110 attempted, 0 failed)
