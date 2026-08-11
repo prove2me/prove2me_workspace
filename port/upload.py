@@ -221,6 +221,12 @@ def verify(node, theorem_id, account, journal, fresh=False):
     """
     name = node["name"]
     dead = set(journal.get("dead", {}).get(name, []))
+    if journal["submitted"].get(name) in dead:
+        # `resync` rebuilds `submitted` from the platform, so a submission we already gave up on
+        # comes back as the journalled one. That entry short-circuits everything below — the
+        # POST never happens and the poll returns the same terminal failure — so drop it here
+        # too, not just in the `existing_submission` lookup.
+        journal["submitted"].pop(name, None)
     if name not in journal["submitted"]:
         sid = None if fresh else existing_submission(theorem_id, account, dead)
         if sid is None:
