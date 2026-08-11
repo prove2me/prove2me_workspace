@@ -1,43 +1,22 @@
-  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
-  (1/19 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalActualSourceSamplerBounds -> ACCEPTED 
-  (2/19 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalActualFairSourceSamplerData_of_positive -> ACCEPTED 
-  (3/19 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ERROR Verification timed out after 300s
-  (4/19 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ACCEPTED 
+  (1/4 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier -> ERROR Verification timed out after 300s
+  (2/4 attempted, 1 failed)
 blocked by failures:
-   thm  QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix
-   thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
-  round 1 stopped early; 17 items left, pausing
-  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ACCEPTED 
-  (1/17 attempted, 0 failed)
-  [thm] QuantumParallelRepetition.exactReverseBobFilterOperatorMarkerEntropy_sum_le_scalarEntropy -> ACCEPTED 
-  (2/17 attempted, 0 failed)
-  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ERROR Verification timed out after 300s
-  (3/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.exactFairAcceptedBobEntropy_le_sourceRate -> ACCEPTED 
-  (4/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalSourcePhysicalRounding_exists_fairStoppingHazard -> ACCEPTED 
-  (5/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalExactFairStoppedPhaseHarmonicClippedUnit_le -> ACCEPTED 
-  (6/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalActualFairSourceStoppingHazardData_of_positive -> ACCEPTED 
-  (7/17 attempted, 1 failed)
-  [def] qpr_core_27 -> bd65d42f-f0f8-4a19-a132-e707d45a08ea
-  (8/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all -> ACCEPTED 
-  (9/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all -> ACCEPTED 
-  (10/17 attempted, 1 failed)
-  [def] qpr_core_28 -> 71f073af-ef78-4091-8c96-467a83ac43bb
-  (11/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_cleanBound -> ACCEPTED 
-  (12/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_verifierLedger -> ACCEPTED 
-  (13/17 attempted, 1 failed)
-  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_analyticLedger -> ACCEPTED 
-  (14/17 attempted, 1 failed)
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier
+  round 1 stopped early; 3 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier -> ERROR Verification timed out after 300s
+  (1/3 attempted, 1 failed)
 blocked by failures:
-   thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
-  round 2 stopped early; 4 items left, pausing
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier
+  round 2 stopped early; 3 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier -> ERROR Verification timed out after 300s
+  (1/3 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier
+  round 3 stopped early; 3 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier -> ERROR Verification timed out after 300s
+  (1/3 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier
+  round 4 stopped early; 3 items left, pausing

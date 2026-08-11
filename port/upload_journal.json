@@ -301,6 +301,8 @@
     "QuantumParallelRepetition.unconditionalActualFairSourcePhysicalStopBornWitness": "f9088400-0728-4817-9b42-378bde5e1159",
     "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_analyticLedger": "bbfa3294-39b2-4d0d-8ebf-42bcab257c1e",
     "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_cleanBound": "4c88a091-b424-4784-829f-c5319ee6fcac",
+    "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_clippingBound": "65a5aea3-d327-4109-b511-1f41bf880a2f",
+    "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch": "4fbd9f5a-18b9-4a61-8051-256b564fdb88",
     "QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_verifierLedger": "2d7c804c-2120-45e9-a30a-846933315564",
     "QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier": "fb536950-1be5-4bc5-b664-295f40e539bb",
     "QuantumParallelRepetition.unconditionalActualFairSourceSamplerData_of_positive": "18eb510f-306c-4d00-8f9e-5dc8cbdf543c",
