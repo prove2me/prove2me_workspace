@@ -190,16 +190,24 @@ def _multipart(fields, files):
     return "".join(out).encode(), f"multipart/form-data; boundary={boundary}"
 
 
-def existing_submission(theorem_id, account):
+def existing_submission(theorem_id, account, avoid=()):
     """The newest submission this account already has against `theorem_id`, if any.
 
     A dropped connection on POST /verify leaves the outcome unknown — the submission may well
     have landed. Checking before resubmitting is what keeps a resumed run from duplicating.
+
+    `avoid` holds submissions already known to have failed. Without it this lookup resurrects
+    them: the caller clears a failed verdict to force a retry, this returns the very submission
+    that failed, and the poll replays its terminal ERROR — so a node retries forever while the
+    corrected proof is never sent. The platform is not consulted about a fix it never received.
     """
     r = api.call("GET", "/submissions", {"limit": 50}, account=account)
     for s in r.get("submissions", []):
         if s.get("theorem_id") == theorem_id:
-            return s.get("id") or s.get("submission_id")
+            sid = s.get("id") or s.get("submission_id")
+            if sid in avoid:
+                continue
+            return sid
     return None
 
 
@@ -212,8 +220,9 @@ def verify(node, theorem_id, account, journal, fresh=False):
     instance (700+ and growing), so paying it once per node was costing more than the verify.
     """
     name = node["name"]
+    dead = set(journal.get("dead", {}).get(name, []))
     if name not in journal["submitted"]:
-        sid = None if fresh else existing_submission(theorem_id, account)
+        sid = None if fresh else existing_submission(theorem_id, account, dead)
         if sid is None:
             body, ctype = _multipart(
                 {"theorem_id": theorem_id, "explanation": node["explanation"]},
@@ -229,7 +238,7 @@ def verify(node, theorem_id, account, journal, fresh=False):
                     break
                 except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:
                     # The POST may have landed anyway; look before firing again.
-                    sid = existing_submission(theorem_id, account)
+                    sid = existing_submission(theorem_id, account, dead)
                     if sid is not None:
                         break
                     if attempt == 3:

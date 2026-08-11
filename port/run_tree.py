@@ -238,7 +238,14 @@ class Tree:
             # A terminal non-accepting verdict is cached in the journal, and `verify` returns
             # the cache before resubmitting — so without this the node could never be retried,
             # even for an ERROR the platform explicitly says to resubmit unchanged.
-            journal["submitted"].pop(node["name"], None)
+            #
+            # Clearing is not enough on its own: the failed submission still exists on the
+            # platform, and `existing_submission` would hand it straight back, so the retry
+            # would re-poll the same dead submission instead of sending anything. Record it as
+            # dead so the next attempt actually posts.
+            sid = journal["submitted"].pop(node["name"], None)
+            if sid is not None:
+                journal.setdefault("dead", {}).setdefault(node["name"], []).append(sid)
             journal["verdict"].pop(node["name"], None)
             upload.save(journal)
         return ok

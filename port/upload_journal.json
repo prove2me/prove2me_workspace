@@ -233,6 +233,20 @@
     "def:qpr_core_25": "bfa04d95-82ae-4103-aa77-11a3f572f3e0",
     "def:qpr_core_26": "eac98a08-dde9-4a93-afb3-0c943ab176af"
   },
+  "dead": {
+    "QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix": [
+      "20a879b4-7711-4782-8bbc-d3175f7e6fc8"
+    ],
+    "QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix": [
+      "b5757098-e448-4bb1-9e07-7fa0d71fee08"
+    ],
+    "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional": [
+      "4c852789-ac7f-427f-a0a1-dfb007d5350f"
+    ],
+    "QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer": [
+      "6f660674-05cc-470b-8b9d-b1637b4757b5"
+    ]
+  },
   "inflight": {
     "def:qpr_core_21": "definition"
   },
@@ -346,6 +360,8 @@
     "QuantumParallelRepetition.exactReverseBobConditionalHistoryIdentification_proved": "d4f64433-d255-46ed-92d2-463e26518307",
     "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_nonneg": "18d71e28-792d-48a4-ad13-f90bee3e45de",
     "QuantumParallelRepetition.exactReverseBobConditionalSeedWeight_sum": "b13844e2-b8c4-458f-8320-5a28df796de2",
+    "QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix": "b18227f2-c23b-43a4-a577-7e546728a443",
+    "QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix": "b5757098-e448-4bb1-9e07-7fa0d71fee08",
     "QuantumParallelRepetition.exactReverseLeftSide_card": "b9985b19-2c8a-4a65-8c28-3504ae7d1b42",
     "QuantumParallelRepetition.exactReverseLeftSide_complement": "5573efde-cb23-4b77-ae5a-31ef2a8cd97d",
     "QuantumParallelRepetition.exactReverseLeftSide_coordinate_mem": "af5ecb7a-aa95-4752-854c-9ecdfcd938c9",
@@ -363,6 +379,7 @@
     "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": "1ada63d7-f4ed-4749-8610-3cd783f8fdb3",
     "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving": "1c2d499b-9ea1-4bba-b54e-277750e548ee",
     "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_of_information": "f538a438-ddd7-48c7-a55f-6edaea3104c7",
+    "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional": "64458219-8578-438c-8cac-2e396b6bd590",
     "QuantumParallelRepetition.exact_standardQuantumParallelRepetition_of_source_rounding": "089558e0-4e00-46e1-8659-2063335e68d0",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalHeterogeneousCommonStopSpectralGaugeContinuity_sq": "652c01df-0d64-454a-8aca-eb366ce0db46",
     "QuantumParallelRepetition.exists_proofDSVUniformDensityPolarLeftCanonicalSchmidt": "51279b5a-3e01-4ad3-b205-95cc2d7133c1",
