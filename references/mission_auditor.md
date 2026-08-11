@@ -32,9 +32,9 @@ You are writing a **read-back** for a Lean 4 declaration: a natural-language ren
 7. **No judgment, no advocacy.** Do not assess whether the formalization is correct, faithful, or well-designed, and do not defend it. Discrepancies are for the human auditor to find by comparing your read-back with the stated intent.
 
 
-## Format of read-bck
+## Format of read-back
 
-Your read-back should adhere to the following standard
+Your read-back should adhere to the following standard.
 
 1. **One self-contained paragraph per declaration.** The read-back must be understandable without opening the source file. Prefer completeness over elegance; this is fine print, not prose.
 
