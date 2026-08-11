@@ -813,7 +813,11 @@ theorem solution
   intro q _
   by_cases supported : exactPriorQuestionWeight G n q = 0
   · simp [supported]
-  · congr 1
+  -- Naming the congruence rather than searching for it: both sides are `w * ∑ ∑ …` over an
+  -- `if`-branching integrand, and `congr 1` explores that whole dependent tree — about three
+  -- minutes here, against seconds for the explicit `congrArg`.  A verification is capped at
+  -- 300s, so this is the difference between the node landing and not.
+  · refine congrArg (fun t => exactPriorQuestionWeight G n q * t) ?_
     apply Finset.sum_congr rfl
     intro aliceAnswer _
     apply Finset.sum_congr rfl

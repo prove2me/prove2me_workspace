@@ -189,8 +189,12 @@
     "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "86fe3927-cc85-4b14-b3b9-e3b4e09d2a5b",
     "QuantumParallelRepetition.unconditionalActualC485CompleteDecodedPhysicalBorn": "35f8764c-f0c3-4450-b689-5fff66ebe5e7",
     "QuantumParallelRepetition.unconditionalActualC485NormalizedDiagonalWork_mass_sum_le_one": "6daf4e9a-8487-47c3-bd70-a27867c86570",
+    "QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage": "aa575ace-7a71-4028-ab09-22a6e6bfce48",
+    "QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one": "ebb7a0fd-c08d-4fca-8964-059eae8a5334",
     "QuantumParallelRepetition.unconditionalActualFairSourceBaseSupportedBorn": "866789d5-4efc-4be4-abcf-ac14892db542",
     "QuantumParallelRepetition.unconditionalActualFairSourceOuterBorn_of_base": "11cb43db-bc37-444a-ad01-38d0beb07565",
+    "QuantumParallelRepetition.unconditionalActualFairSourcePhysicalStopBornWitness": "523511bd-881d-4ecb-8700-9470bd028967",
+    "QuantumParallelRepetition.unconditionalActualFixedSourceDecodedMatchedBranch": "61ab8d72-811a-474b-8330-bcfe550975d5",
     "QuantumParallelRepetition.unconditionalActualPhysicalMixedAcceptedSpectralGauge_stage": "50dbfdf7-7280-4f71-bf7e-cb3ae44f3e22",
     "QuantumParallelRepetition.unconditionalExactSourceScalarClipping": "36e655bf-0edb-4bd4-a5c7-f6cb600e1c9f",
     "QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer": "408fcc56-bfd3-46e6-868c-f53b85343910",
@@ -252,6 +256,8 @@
     "QuantumParallelRepetition.exists_proofUnconditionalStoppedCommonPrefixBalancedHazard": "38cb9c66-4c08-425b-aeee-f453987a5f45",
     "QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage": "4357fefb-e861-44b5-9065-0888e55810ee",
     "QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one": "77596360-5de7-497b-b711-18d6268be142",
+    "QuantumParallelRepetition.unconditionalActualFairSourcePhysicalStopBornWitness": "f9088400-0728-4817-9b42-378bde5e1159",
+    "QuantumParallelRepetition.unconditionalActualFixedSourceDecodedMatchedBranch": "a4fcaf3e-28dd-4a6e-a352-afb4aca6f1ee",
     "QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer": "8c7303d3-444a-432d-b6fd-eb6f1a8795cc",
     "QuantumParallelRepetition.unconditionalNormalizedCanonicalRetainedWork_norm_sq": "737f35d0-0aac-4914-bf11-b011c87874b8",
     "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "96da6bbd-1a04-4036-8281-67301dcca4b0",
@@ -388,6 +394,10 @@
     "QuantumParallelRepetition.strategyPurificationVector_norm": "369811af-db3a-478e-b7d8-8ac27bcfeefb",
     "QuantumParallelRepetition.targetReducedDensity_posSemidef": "a02da3b7-0ea8-4a14-bcfb-e32e40ecf768",
     "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "32ade1fe-f331-4f13-9a1d-f09f78429f2e",
+    "QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage": "359bc4ea-d75e-450e-86fd-6103e2c7dfbb",
+    "QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one": "f9a72a14-4a18-423d-aaa1-c4af25fdef60",
+    "QuantumParallelRepetition.unconditionalActualFairSourcePhysicalStopBornWitness": "18338324-d323-44bf-8688-f35cbf0974b3",
+    "QuantumParallelRepetition.unconditionalActualFixedSourceDecodedMatchedBranch": "bc056cdf-b1b1-40a7-96db-274675da8584",
     "QuantumParallelRepetition.unconditionalExactSourceScalarClipping": "3411aeaa-7551-4f7d-9ccd-a25ca3d096a2",
     "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "ee961dbe-9717-4c62-ab30-348d7cd72629",
     "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "719724fa-306f-49a7-917f-e3f0f08cf914",
@@ -1325,6 +1335,16 @@
       "status": "ACCEPTED",
       "submission_id": ""
     },
+    "QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "359bc4ea-d75e-450e-86fd-6103e2c7dfbb"
+    },
+    "QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "f9a72a14-4a18-423d-aaa1-c4af25fdef60"
+    },
     "QuantumParallelRepetition.unconditionalActualFairSourceBaseSupportedBorn": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -1334,6 +1354,16 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": ""
+    },
+    "QuantumParallelRepetition.unconditionalActualFairSourcePhysicalStopBornWitness": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "18338324-d323-44bf-8688-f35cbf0974b3"
+    },
+    "QuantumParallelRepetition.unconditionalActualFixedSourceDecodedMatchedBranch": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "bc056cdf-b1b1-40a7-96db-274675da8584"
     },
     "QuantumParallelRepetition.unconditionalActualPhysicalMixedAcceptedSpectralGauge_stage": {
       "error_message": "",
