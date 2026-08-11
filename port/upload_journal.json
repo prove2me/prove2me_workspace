@@ -160,6 +160,7 @@
     "QuantumParallelRepetition.exactFairBobMeanFilter_eq_jointPrefixOperatorFilter": "5aedd373-5e13-463d-8d12-35ee1f48c512",
     "QuantumParallelRepetition.exactFairConditionedAnswerBornMass_eq_fiber_norm": "dcb6dc29-cc98-4ecc-b8b0-9ac380f9c79c",
     "QuantumParallelRepetition.exactLocallySampleableLaw_eq_fair_born": "a3e520f6-7461-484d-9491-d0865cdec5bb",
+    "QuantumParallelRepetition.exactReverseAliceLowQuestionPotential_eq_alignedPrefix": "37172f2c-8192-4648-9d90-47422a63c2e0",
     "QuantumParallelRepetition.exactReverseAliceMarkerCode_injective": "1e4e568a-298a-4344-a357-6fc3dbdc96a7",
     "QuantumParallelRepetition.exactReverseAliceMarkerDecode_rightInverse": "a7f8cb6f-09f7-48e0-b73e-7b73dcfaf915",
     "QuantumParallelRepetition.exactReverseAliceUniformMarkedSeed_sum": "01ad4354-d284-49f5-bb11-d95152777585",
@@ -571,6 +572,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "5a979c19-2094-496f-b1ea-9a007424500f"
+    },
+    "QuantumParallelRepetition.exactFairAliceMeanFilter_eq_jointPrefixOperatorFilter": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "9e99c0e8-01dc-4753-b206-4a12d3a3e0ce"
     },
     "QuantumParallelRepetition.exactFairConditionedAnswerBornMass_eq_fiber_norm": {
       "error_message": "",

@@ -396,3 +396,5 @@ blocked by failures:
   (16/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactFairAcceptedJointStatistic_reindex -> ACCEPTED 
   (17/110 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactFairAliceMeanFilter_eq_jointPrefixOperatorFilter -> ACCEPTED 
+  (18/110 attempted, 0 failed)
