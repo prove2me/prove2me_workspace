@@ -221,9 +221,11 @@
     "QuantumParallelRepetition.exactSourceNormalizedWinningEffect_eq_conditional": "7a582f69-bff5-44c7-8a0c-998f7bd526e9",
     "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving": "4d78eaf4-a58b-4fcb-a4e8-19cc6e71aea6",
     "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_of_information": "ed0d3c17-f6d6-4f37-994c-bffb479498aa",
+    "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional": "270977b5-5e56-4203-a2af-84eafb1f6bf5",
     "QuantumParallelRepetition.exact_source_equation_twenty_three_of_conditioned_reverse_prefix": "d93acba4-dade-43f2-94be-6f824130fb17",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalQuantitativeMixedPrefixCleanup_sq": "6737cde2-94af-4240-ae65-f9ffbd8d2393",
-    "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "96da6bbd-1a04-4036-8281-67301dcca4b0"
+    "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "96da6bbd-1a04-4036-8281-67301dcca4b0",
+    "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "1a83aa6f-666f-4996-bbd3-bf5107acad35"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -1031,6 +1033,11 @@
       "status": "ACCEPTED",
       "submission_id": "1c2d499b-9ea1-4bba-b54e-277750e548ee"
     },
+    "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_of_information": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "f538a438-ddd7-48c7-a55f-6edaea3104c7"
+    },
     "QuantumParallelRepetition.exact_source_equation_twenty_three_of_conditioned_reverse_prefix": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -1230,6 +1237,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "3411aeaa-7551-4f7d-9ccd-a25ca3d096a2"
+    },
+    "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "ee961dbe-9717-4c62-ab30-348d7cd72629"
     },
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": {
       "error_message": "",

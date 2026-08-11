@@ -377,3 +377,7 @@ blocked by failures:
   (5/45 attempted, 2 failed)
   [thm] QuantumParallelRepetition.exactSourceGlobalCatalystWinningEffect_law_supported_verifier -> ACCEPTED 
   (6/45 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq -> ACCEPTED 
+  (7/45 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_of_information -> ACCEPTED 
+  (8/45 attempted, 2 failed)
