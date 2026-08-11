@@ -1056,11 +1056,11 @@ theorem exactSeedCoordinateFiber_sum
   apply Finset.sum_congr (by ext; simp)
   intro rightCut _
   simp only [exactSeedWeight]
-  congr 2
-  congr 3
-  · apply congrArg (fun k : ℕ => (k : ℝ))
-    exact exactFintypeCard_eq _ _
-  · exact exactFintypeCard_eq _ _
+  refine congrArg₂ (· * ·)
+    (congrArg₂ (· * ·)
+      (congrArg₂ (· * ·) (congrArg₂ (· * ·) rfl ?_) ?_) rfl) rfl
+  · exact congrArg (fun k : ℕ => 1 / (k : ℝ)) (exactFintypeCard_eq _ _)
+  · exact congrArg (fun k : ℕ => 1 / (k : ℝ)) (exactFintypeCard_eq _ _)
 
 theorem exactSeedWeight_coordinate_sum
     {M : Type*} [Fintype M] [DecidableEq M]

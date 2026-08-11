@@ -4,3 +4,11 @@
   (2/19 attempted, 1 failed)
   [thm] QuantumParallelRepetition.unconditionalActualFairSourceSamplerData_of_positive -> ACCEPTED 
   (3/19 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer -> ERROR Verification timed out after 300s
+  (4/19 attempted, 2 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix
+   thm  QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer
+  round 1 stopped early; 17 items left, pausing
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ACCEPTED 
+  (1/17 attempted, 0 failed)
