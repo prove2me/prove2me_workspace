@@ -7,6 +7,7 @@
     "QuantumParallelRepetition.Strategy.winProbability_le_one": "17570be4-4be1-4edf-83d7-5e038d97205c",
     "QuantumParallelRepetition.Strategy.winProbability_nonneg": "b992baa8-8874-451f-8a77-c3c2ac27a0fc",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.answerNonempty": "7c6bf12d-33f2-495a-bccd-898df2e58da3",
+    "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all": "51d81525-3616-449b-993f-0a1a60c9daa4",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_positive": "7bb06aa3-4499-439b-b256-6f8333ed4c88",
     "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "a4e2f7ce-82e5-4f11-b4f8-dc7021745129",
     "QuantumParallelRepetition.aliceMartingaleEntropyBudget": "c521fb08-6ff3-461b-a7bb-d9ccad133960",
@@ -238,7 +239,8 @@
     "def:qpr_core_23": "063cdc96-2b56-4025-a1b9-1c42b5cb7558",
     "def:qpr_core_24": "a2494bd2-4ed9-4020-920a-32a52d6d68b8",
     "def:qpr_core_25": "bfa04d95-82ae-4103-aa77-11a3f572f3e0",
-    "def:qpr_core_26": "eac98a08-dde9-4a93-afb3-0c943ab176af"
+    "def:qpr_core_26": "eac98a08-dde9-4a93-afb3-0c943ab176af",
+    "def:qpr_core_27": "bd65d42f-f0f8-4a19-a132-e707d45a08ea"
   },
   "dead": {
     "QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix": [
@@ -261,6 +263,8 @@
     "def:qpr_core_21": "definition"
   },
   "jobs": {
+    "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all": "54854e0d-53bb-452d-ac87-d1af23efade5",
+    "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all": "efe56bde-1040-4f82-ae05-2f5f76271cea",
     "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "d9c45d44-cffb-470f-8611-097768082906",
     "QuantumParallelRepetition.directDSVActualStoppingSelectedHistory_sourceProduct": "b7dbf63b-4ced-4c49-a1a3-120215fa03f2",
     "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass": "50957f97-c97a-4f20-a6cb-926a177c1086",
@@ -293,7 +297,8 @@
     "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "96da6bbd-1a04-4036-8281-67301dcca4b0",
     "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedSelectedHistoryEquiv_hit": "c836b339-2952-4669-b099-307b4d1d529c",
     "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "1a83aa6f-666f-4996-bbd3-bf5107acad35",
-    "QuantumParallelRepetition.unconditionalSourcePhysicalRounding_exists_fairStoppingHazard": "f5b38455-088c-4986-8cd8-03f7a95615cd"
+    "QuantumParallelRepetition.unconditionalSourcePhysicalRounding_exists_fairStoppingHazard": "f5b38455-088c-4986-8cd8-03f7a95615cd",
+    "def:qpr_core_27": "d7b905a1-bd7f-4675-ac05-1fb51839eb9f"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
@@ -302,6 +307,7 @@
     "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": "9bb7c873-c637-480e-9ae1-f15df69c2abb",
     "QuantumParallelRepetition.Strategy.winProbability_le_one": "05551136-d3b1-477a-97dc-2392ecbc1846",
     "QuantumParallelRepetition.Strategy.winProbability_nonneg": "6174924f-87b3-45b0-9712-7b494f8105ab",
+    "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all": "528d2655-7cd3-4e02-9231-0593c651622a",
     "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "4b25ffb3-215f-4688-976a-20dfe1090346",
     "QuantumParallelRepetition.aliceMartingaleEntropyBudget": "94846d8c-23f6-4c02-9c61-991a942f4a1a",
     "QuantumParallelRepetition.answerLogCost_nonneg_of_postselection": "bb44a19f-8f7f-43c4-84de-b6a4b54fe614",
@@ -1430,6 +1436,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "39208397-2d13-4d1e-a94d-21f13ef34944"
+    },
+    "QuantumParallelRepetition.unconditionalActualFairSourceStoppingHazardData_of_positive": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "68298591-bb03-4d78-a3b1-51de39aa6cf4"
     },
     "QuantumParallelRepetition.unconditionalActualFixedSourceDecodedMatchedBranch": {
       "error_message": "",

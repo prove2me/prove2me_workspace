@@ -22,3 +22,7 @@ blocked by failures:
   (5/17 attempted, 1 failed)
   [thm] QuantumParallelRepetition.unconditionalExactFairStoppedPhaseHarmonicClippedUnit_le -> ACCEPTED 
   (6/17 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceStoppingHazardData_of_positive -> ACCEPTED 
+  (7/17 attempted, 1 failed)
+  [def] qpr_core_27 -> bd65d42f-f0f8-4a19-a132-e707d45a08ea
+  (8/17 attempted, 1 failed)
