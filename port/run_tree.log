@@ -1,0 +1,12 @@
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_clippingBound -> ACCEPTED 
+  (1/6 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ERROR Verification timed out after 300s
+  (2/6 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
+  round 1 stopped early; 5 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ERROR Verification timed out after 300s
+  (1/5 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
+  round 2 stopped early; 5 items left, pausing

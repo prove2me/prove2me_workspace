@@ -170,23 +170,15 @@ theorem solution
               (c.U flag x) (c.V flag y) (c.prepared flag))
             j.succ j.succ) := by
   classical
-  apply le_of_eq
-  change
-    (∑ j : Fin c.stopping.L,
-      unconditionalActualFairSourceHistoryStopBorn
-        G n S D c.aliceDefault c.bobDefault
-        c.stopping.Q c.width c.schedule c.stopping.UA c.stopping.UB
-        (exactSourceAliceSampleTuple
-          D c.sampler.denominator c.sampler.numerator
-          c.sampler.nonempty (flag, (x, y))) j) =
-      ∑ j : Fin c.stopping.L,
-        unconditionalActualFairSourcePhysicalStopBorn
-          G n S D c.sampler.denominator c.sampler.numerator
-          c.sampler.nonempty c.aliceDefault c.bobDefault
-          c.stopping.Q c.width c.schedule
-          c.stopping.UA c.stopping.UB flag x y j
-  exact unconditionalActualFairSourcePhysicalBranchWitness
-    G n S D c.sampler.denominator c.sampler.numerator
-    c.sampler.nonempty c.aliceDefault c.bobDefault
-    c.stopping.Q c.width c.schedule c.stopping.UA c.stopping.UB
-    c.stopping.grid c.width_all flag x y matching
+  -- `change` here restates the goal so the witness applies, but the restatement is a defeq
+  -- check the kernel then redoes: 167s of this node's 170s, all of it on the right-hand sum
+  -- (the left-hand one costs 4s).  Rewriting with the two definitions instead lets simp do it
+  -- syntactically.
+  refine le_of_eq ?_
+  simpa only [unconditionalActualFairSourcePhysicalStopBorn,
+    unconditionalActualFairSourceHistoryStopBorn] using
+    unconditionalActualFairSourcePhysicalBranchWitness
+      G n S D c.sampler.denominator c.sampler.numerator
+      c.sampler.nonempty c.aliceDefault c.bobDefault
+      c.stopping.Q c.width c.schedule c.stopping.UA c.stopping.UB
+      c.stopping.grid c.width_all flag x y matching
