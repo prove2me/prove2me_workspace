@@ -170,32 +170,37 @@ class Tree:
         payload = self.bundle_payload(i)
         journal.setdefault("inflight", {})[key] = "definition"
         upload.save(journal)
-        # Bounded, visible attempts.  `api.call`'s default is four transport retries at 900s
-        # each, which meant one bad bundle could hang for the better part of an hour before it
-        # logged anything at all — and every item above it in the import order waits meanwhile.
-        did = None
-        for attempt in range(3):
+        # Publishing is asynchronous since 0.8.0: the POST queues a compile and answers with a
+        # job id.  The id is journalled before polling so an interrupted run resumes the job
+        # rather than queueing a second compile of the same bundle.
+        job_id = journal.setdefault("jobs", {}).get(key)
+        if not job_id:
             with upload.CREATE_LOCK:
                 r = api.call("POST", "/submit-definition", body=payload, account=ACCOUNT,
-                             timeout=420, retries=1)
-            did = r.get("definition_id")
-            if did:
-                break
-            # A duplicate name means the first attempt landed.  The server reports this two
-            # ways: a validation message, or a raw unique-constraint violation.
-            blob = json.dumps(r)
-            if "already exists" in blob or "duplicate key" in blob:
-                did = "exists"
-                break
-            if definition_exists(name):
-                did = "exists"
-                break
-            print(f"  [retry] {name}: {blob[:200]}", flush=True)
-        if not did:
-            print(f"  [FAIL] {name}: {json.dumps(r)[:400]}", flush=True)
+                             timeout=180, retries=2)
+            job_id = r.get("job_id")
+            if not job_id:
+                if definition_exists(name):
+                    journal["created"][key] = "exists"
+                    journal["inflight"].pop(key, None)
+                    upload.save(journal)
+                    print(f"  [def] {name} -> already published", flush=True)
+                    return True
+                print(f"  [FAIL] {name}: {json.dumps(r)[:400]}", flush=True)
+                journal["inflight"].pop(key, None)
+                upload.save(journal)
+                return False
+            journal["jobs"][key] = job_id
+            upload.save(journal)
+        res = upload.poll_job(job_id, ACCOUNT)
+        if res.get("status") != "PUBLISHED":
+            journal["jobs"].pop(key, None)
             journal["inflight"].pop(key, None)
             upload.save(journal)
+            print(f"  [FAIL] {name}: job {res.get('status')} "
+                  f"{res.get('error_message','')[:300]}", flush=True)
             return False
+        did = res.get("theorem_id") or "published"
         journal["created"][key] = did
         journal["inflight"].pop(key, None)
         upload.save(journal)

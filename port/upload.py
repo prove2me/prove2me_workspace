@@ -83,8 +83,32 @@ def toposort(nodes):
     return [by_name[n] for n in order]
 
 
+def poll_job(job_id, account, timeout=2400, interval=10):
+    """Wait for a publish job to reach a terminal state.
+
+    Since 0.8.0 publishing is asynchronous: `submit-problem` and `submit-definition` answer
+    `202 Accepted` with a job id and compile in the background.  That removes the failure mode
+    that dominated this run — a synchronous build whose response was cut at ~300s and whose work
+    was then discarded.  A compile that overruns now comes back as a FAILED job with a message,
+    which is a fact we can act on rather than a lost connection.
+    """
+    deadline = time.time() + timeout
+    while True:
+        r = api.call("GET", f"/publish-jobs/{job_id}", account=account, timeout=60, retries=3)
+        st = r.get("status")
+        if st in ("PUBLISHED", "FAILED", "ERROR"):
+            return r
+        if time.time() >= deadline:
+            return {"status": "PENDING", "error_message": "job poll timed out", "id": job_id}
+        time.sleep(interval)
+
+
 def create(node, account, journal):
-    """POST /submit-problem, unless the journal already records this name as created."""
+    """Queue a problem and wait for its publish job.
+
+    The job id is journalled before polling, so an interrupted run resumes the existing job
+    instead of queueing a second compile of the same statement.
+    """
     name = node["name"]
     if name in journal["created"]:
         return journal["created"][name]
@@ -97,31 +121,32 @@ def create(node, account, journal):
         "source": node["source"],
         "tags": node.get("tags", []),
     }]}
-    journal.setdefault("inflight", {})[name] = "create"
-    save(journal)
-    tid, last = None, None
-    for attempt in range(3):
-        # `submit-problem` compile-checks the preamble and statement server-side, so it is a
-        # build, not an insert: measured at 245s for one node whose 450-module preamble was not
-        # cached.  The timeout has to cover that; a short one turns a slow success into a
-        # spurious failure.
+    job_id = journal.setdefault("jobs", {}).get(name)
+    if not job_id:
         with CREATE_LOCK:
             r = api.call("POST", "/submit-problem", body=body, account=account,
-                         timeout=900, retries=1)
-        last = r
-        # HTTP success with a populated `errors` list is a rejection, so the message is not a
-        # reliable success signal — key on `submitted`/`errors`.  A response with neither is
-        # *ambiguous*: the connection died but the server may still be finishing the insert.
-        if r.get("submitted"):
-            tid = r["submitted"][0]["theorem_id"]
-            break
-        tid = resolve_with_grace(name, account)
-        if tid:
-            break
-    journal["inflight"].pop(name, None)
-    if not tid:
+                         timeout=180, retries=2)
+        jobs = r.get("jobs") or []
+        if not jobs:
+            # `errors` holds only what was rejected before queueing; a duplicate name means an
+            # earlier attempt already published it.
+            tid = resolve(name, account)
+            if tid:
+                journal["created"][name] = tid
+                save(journal)
+                return tid
+            raise RuntimeError(f"submit-problem did not queue {name}: {json.dumps(r)[:600]}")
+        job_id = jobs[0]["job_id"]
+        journal["jobs"][name] = job_id
         save(journal)
-        raise RuntimeError(f"submit-problem failed for {name}: {json.dumps(last)[:600]}")
+    res = poll_job(job_id, account)
+    if res.get("status") != "PUBLISHED":
+        # A failed job is retryable: drop the id so the next round queues a fresh compile.
+        journal["jobs"].pop(name, None)
+        save(journal)
+        raise RuntimeError(f"publish job {res.get('status')} for {name}: "
+                           f"{res.get('error_message', '')[:400]}")
+    tid = res["theorem_id"]
     journal["created"][name] = tid
     save(journal)
     return tid

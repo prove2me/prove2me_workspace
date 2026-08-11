@@ -132,10 +132,15 @@
     "def:qpr_core_17": "db4c7bdb-380e-4680-8e9c-21fa60070e05",
     "def:qpr_core_18": "f746aa6e-28ac-4433-bda5-053187bd83c5",
     "def:qpr_core_19": "ffe41fdf-8422-4306-a238-500527742e4c",
-    "def:qpr_core_20": "db3f071e-9e8e-4236-8907-550ca3244111"
+    "def:qpr_core_20": "db3f071e-9e8e-4236-8907-550ca3244111",
+    "def:qpr_core_21": "ba350207-ff46-4cfa-b11a-47fbbf812fd0"
   },
-  "inflight": {
-    "def:qpr_core_21": "definition"
+  "inflight": {},
+  "jobs": {
+    "QuantumParallelRepetition.exactReverseAliceMarkerCode_injective": "1e4e568a-298a-4344-a357-6fc3dbdc96a7",
+    "QuantumParallelRepetition.reweightedSeedPrefix_absolute_continuity": "d5756537-eedb-45fd-8cc5-d9121fa0cc53",
+    "QuantumParallelRepetition.reweightedSeed_flagged_projection_relativeEntropy_le": "56a75827-ed79-4f5e-9a12-f62123844d98",
+    "def:qpr_core_21": "8beb4930-216a-46e5-92de-61dba571ec80"
   },
   "submitted": {
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_complete": "643a9a96-f7b5-4182-8c95-02f896ff043d",
