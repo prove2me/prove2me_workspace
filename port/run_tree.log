@@ -1,0 +1,23 @@
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ERROR Failed to parse REPL output.
+stdout: 
+stderr: 
+  (1/5 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
+  round 1 stopped early; 5 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ERROR Verification timed out after 300s
+  (1/5 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
+  round 2 stopped early; 5 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ERROR Verification timed out after 300s
+  (1/5 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
+  round 3 stopped early; 5 items left, pausing
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ERROR Verification timed out after 300s
+  (1/5 attempted, 1 failed)
+blocked by failures:
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
+  round 4 stopped early; 5 items left, pausing
+tree stopped early after all rounds
