@@ -384,3 +384,5 @@ blocked by failures:
   (10/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.reweightedSeedPrefixPriorMarginal_ne_zero_of_positive_atom -> ACCEPTED 
   (11/110 attempted, 0 failed)
+  [def] qpr_core_23 -> 063cdc96-2b56-4025-a1b9-1c42b5cb7558
+  (12/110 attempted, 0 failed)
