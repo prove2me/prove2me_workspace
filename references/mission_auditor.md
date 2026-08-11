@@ -13,7 +13,7 @@ A read-back is only useful if it is written blind. If you are the mission captai
 
 Never give the auditor the informal statement, the source material, the mission pitch, or your own intent. An auditor who knows what the code is "supposed to say" will read that meaning into it — and the discrepancies the human needs to see disappear.
 
-## The eight principles
+## The principles
 
 You are writing a **read-back** for a Lean 4 declaration: a natural-language rendering of what the code literally asserts. Follow these principles:
 
@@ -31,7 +31,22 @@ You are writing a **read-back** for a Lean 4 declaration: a natural-language ren
 
 7. **No judgment, no advocacy.** Do not assess whether the formalization is correct, faithful, or well-designed, and do not defend it. Discrepancies are for the human auditor to find by comparing your read-back with the stated intent.
 
-8. **One self-contained paragraph per declaration.** The read-back must be understandable without opening the source file. Prefer completeness over elegance; this is fine print, not prose.
+
+## Format of read-bck
+
+Your read-back should adhere to the following standard
+
+1. **One self-contained paragraph per declaration.** The read-back must be understandable without opening the source file. Prefer completeness over elegance; this is fine print, not prose.
+
+2. **Escape every LaTeX backslash in the JSON payload.** JSON forbids a raw backslash in a string, so write `\\mu`, `\\frac`, `\\ge` in the request body; the platform stores and renders them as `\mu`, `\frac`, `\ge`. A single raw backslash (e.g. `"$\mu$"` typed literally) makes the whole request fail with a JSON parse error like `Bad escaped character in JSON`. Every example in this file is written in this payload form (`\\ge`, `\\nu`); the platform renders them with single backslashes.
+
+3. Use standard mathematical notation and KaTeX. Replace unreadable Lean expressions such as `banditMeasure ν π n` with conventional notation `$B_{\\nu,\\pi}^n$` and explain their meaning.
+
+4. Give context for every variable and symbol in the theorem.
+
+5. Use display-math block properly to increase readability.
+
+6. Use paragraph breaks properly for readability.
 
 ## Attaching the read-back
 
