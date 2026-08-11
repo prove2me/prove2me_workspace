@@ -348,6 +348,10 @@ def write_all(gen, only=None, outdir=ROOT):
         if only is not None and name not in only:
             continue
         if name in frozen:
+            # Already published: its statement is immutable and its proof is accepted, so the
+            # staged pair must keep mirroring what the platform holds.  Regenerating the
+            # solution from a later plan produced a file whose type no longer matched the frozen
+            # statement — caught by the type-agreement gate, on a node that was already Proved.
             continue
         pre, stmt = gen.stub_file(b)
         p = os.path.join(outdir, "Theorems", f"Thm_{slug(name)}.lean")
