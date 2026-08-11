@@ -410,3 +410,9 @@ blocked by failures:
   (23/110 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
   (24/110 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.exactSourceStateDistanceBound_of_fair_operator_entropy -> ACCEPTED 
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  [thm] QuantumParallelRepetition.exactAliceQuestionFilter_eq_fullJointPrefixOperatorFilter -> ACCEPTED 
+  (1/87 attempted, 0 failed)
+  (2/87 attempted, 0 failed)
+  (3/87 attempted, 1 failed)
