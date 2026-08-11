@@ -387,3 +387,7 @@ blocked by failures:
   (10/45 attempted, 2 failed)
   [thm] QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional -> FAILED unknown import: Theorems.Thm_QuantumParallelRepetition_exactReverseBobConditionalHistoryIdentification_proved. No such theorem exists in this Lean environment (mathlib c5ea003). Call POST /api/v1/submit-problem for 'QuantumParallelRepetition_exactReverseBobConditionalHistoryIdentification_proved' first.
   (11/45 attempted, 3 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  (1/42 attempted, 1 failed)
+  (2/42 attempted, 2 failed)
