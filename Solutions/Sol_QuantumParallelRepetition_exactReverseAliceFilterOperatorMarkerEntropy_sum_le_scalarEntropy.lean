@@ -7,6 +7,7 @@ import Theorems.Thm_QuantumParallelRepetition_exactBobQuestionFilter_posSemidef
 import Theorems.Thm_QuantumParallelRepetition_exactFairAcceptedJointStatistic_reindex
 import Theorems.Thm_QuantumParallelRepetition_exactReverseAliceLowQuestionPotential_eq_alignedPrefix
 import Theorems.Thm_QuantumParallelRepetition_exactReverseAliceHighQuestionPotential_eq_alignedPrefix
+import Theorems.Thm_QuantumParallelRepetition_exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope
 import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Algebra.Algebra.Defs
 import Mathlib.Algebra.Algebra.Spectrum.Basic
@@ -68,10 +69,8 @@ import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
 import Mathlib.Data.Finset.SDiff
 import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Fintype.Pi
@@ -260,11 +259,6 @@ theorem conditionedBobEffect_complement_positive
 
 end RepeatedQuantumFilters
 
-theorem history_forward_telescope (E : ℕ → ℝ) (m : ℕ) :
-    (∑ k ∈ Finset.range m, (E (k + 1) - E k))
-      = E m - E 0 := by
-  simpa [Nat.succ_eq_add_one] using Finset.sum_range_sub E m
-
 end
 
 noncomputable section
@@ -440,70 +434,6 @@ theorem source_equation_nineteen_alice
       Real.negMulLog (bornTracePairing ρ.matrix F G) :=
   matrixLogEntropy_born_lower_bound_left
     ρ F hF hFcomplement G hG hGcomplement
-
-end
-
-noncomputable section
-
-open scoped BigOperators ComplexOrder Kronecker MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 2200000
-set_option maxRecDepth 2048
-
-attribute [local instance] Classical.propDecidable
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem exactFairAliceHistoryEntropy_eq_operatorPotential_sub
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (r : ExactHistoryFlag X Y A B D) :
-    exactFairAliceHistoryEntropyIncrement G n S D r =
-      exactFairAliceHistoryHighOperatorPotential G n S D r -
-      exactFairAliceHistoryLowOperatorPotential G n S D r := by
-  unfold exactFairAliceHistoryEntropyIncrement
-    exactFairAliceQuestionEntropyIncrement
-    exactFairAliceHistoryHighOperatorPotential
-    exactFairAliceHistoryLowOperatorPotential
-  rw [← Finset.sum_sub_distrib]
-  apply Finset.sum_congr rfl
-  intro y _
-  rw [← mul_sub, map_sub]
-  rfl
-
-theorem exactReverseAliceFilterOperatorMarkerEntropy_eq_sub
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (side : Finset (SourceRemainingCoordinate D))
-    (context : ExactReverseSideContext
-      (SourceRemainingCoordinate D) side)
-    (marker : Fin side.card) :
-    exactReverseAliceFilterOperatorMarkerEntropy
-        G n S D side context marker =
-      exactReverseAliceFilterHighOperatorPotential
-          G n S D side context marker -
-        exactReverseAliceFilterLowOperatorPotential
-          G n S D side context marker := by
-  unfold exactReverseAliceFilterOperatorMarkerEntropy
-    exactReverseAliceFilterHighOperatorPotential
-    exactReverseAliceFilterLowOperatorPotential
-  simp only [← Finset.sum_sub_distrib]
-  apply Finset.sum_congr rfl
-  intro history _
-  apply Finset.sum_congr rfl
-  intro aliceAnswer _
-  apply Finset.sum_congr rfl
-  intro bobAnswer _
-  by_cases accepted : exactHistoryAccepted G n D
-    ⟨exactReverseBobMarkerDecode side context marker,
-      history, aliceAnswer, bobAnswer⟩
-  · simp only [if_pos accepted]
-    rw [exactFairAliceHistoryEntropy_eq_operatorPotential_sub]
-    ring
-  · simp [accepted]
 
 end
 
@@ -1149,130 +1079,6 @@ theorem exactReverseAliceLowOperatorPotential_eq_question
           (exactBobQuestionFilter G n S D
             (exactReverseBobMarkerDecode side context marker)
             history bobAnswer y))
-
-theorem exactReverseAliceFilterOperatorMarkerEntropy_eq_question_sub
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (side : Finset (SourceRemainingCoordinate D))
-    (context : ExactReverseSideContext
-      (SourceRemainingCoordinate D) side)
-    (marker : Fin side.card) :
-    exactReverseAliceFilterOperatorMarkerEntropy
-        G n S D side context marker =
-      exactReverseAliceHighQuestionPotential
-          G n S D side context marker -
-        exactReverseAliceLowQuestionPotential
-          G n S D side context marker := by
-  rw [exactReverseAliceFilterOperatorMarkerEntropy_eq_sub,
-    exactReverseAliceHighOperatorPotential_eq_question,
-    exactReverseAliceLowOperatorPotential_eq_question]
-
-end
-
-noncomputable section
-
-open scoped BigOperators ComplexOrder Kronecker MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 3000000
-set_option maxRecDepth 2048
-
-attribute [local instance] Classical.propDecidable
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem exactReverseAliceAlignedCfcPrefixPotential_telescope
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (side : Finset (SourceRemainingCoordinate D))
-    (context : ExactReverseSideContext
-      (SourceRemainingCoordinate D) side) :
-    (∑ k ∈ Finset.range side.card,
-      (exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context (k + 1) -
-        exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context k)) =
-      exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context side.card -
-        exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context 0 :=
-  history_forward_telescope
-    (exactReverseAliceAlignedCfcPrefixPotential
-      G n S D side context) side.card
-
-end
-
-noncomputable section
-
-open scoped BigOperators ComplexOrder Kronecker MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 6000000
-set_option maxRecDepth 2048
-
-attribute [local instance] Classical.propDecidable
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem exactReverseAliceFilterOperatorMarkerEntropy_eq_aligned_step
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (side : Finset (SourceRemainingCoordinate D))
-    (context : ExactReverseSideContext
-      (SourceRemainingCoordinate D) side)
-    (marker : Fin side.card) :
-    exactReverseAliceFilterOperatorMarkerEntropy
-        G n S D side context marker =
-      exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context (marker.val + 1) -
-        exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context marker.val := by
-  rw [exactReverseAliceFilterOperatorMarkerEntropy_eq_question_sub,
-    exactReverseAliceHighQuestionPotential_eq_alignedPrefix,
-    exactReverseAliceLowQuestionPotential_eq_alignedPrefix]
-
-theorem exactReverseAliceFilterOperatorMarkerEntropy_sum_telescope
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (side : Finset (SourceRemainingCoordinate D))
-    (context : ExactReverseSideContext
-      (SourceRemainingCoordinate D) side) :
-    (∑ marker : Fin side.card,
-      exactReverseAliceFilterOperatorMarkerEntropy
-        G n S D side context marker) =
-      exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context side.card -
-        exactReverseAliceAlignedCfcPrefixPotential
-          G n S D side context 0 := by
-  classical
-  calc
-    (∑ marker : Fin side.card,
-      exactReverseAliceFilterOperatorMarkerEntropy
-        G n S D side context marker) =
-      ∑ marker : Fin side.card,
-        (exactReverseAliceAlignedCfcPrefixPotential
-            G n S D side context (marker.val + 1) -
-          exactReverseAliceAlignedCfcPrefixPotential
-            G n S D side context marker.val) := by
-          apply Finset.sum_congr rfl
-          intro marker _
-          exact exactReverseAliceFilterOperatorMarkerEntropy_eq_aligned_step
-            G n S D side context marker
-    _ = ∑ k ∈ Finset.range side.card,
-        (exactReverseAliceAlignedCfcPrefixPotential
-            G n S D side context (k + 1) -
-          exactReverseAliceAlignedCfcPrefixPotential
-            G n S D side context k) := by
-          rw [Finset.sum_fin_eq_sum_range]
-          apply Finset.sum_congr rfl
-          intro k hk
-          simp [Finset.mem_range.mp hk]
-    _ = _ := exactReverseAliceAlignedCfcPrefixPotential_telescope
-      G n S D side context
 
 end
 

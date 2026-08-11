@@ -37,6 +37,23 @@ CAP_BUNDLE = 900          # largest definition bundle, in source lines
 BATCH1 = json.load(open(os.path.join(stage.ROOT, "port", "batch1_names.json")))
 
 
+NODE_SET = os.path.join(stage.ROOT, "port", "node_set.json")
+
+
+def frozen_node_set():
+    """The cut, once decided, read back rather than recomputed.
+
+    `choose` is greedy, so its result depends on its inputs — including the journal, via
+    `published_nodes`.  That made the plan a moving target: as uploads progressed the cut
+    shifted, and a solution generated under an earlier cut could import a node the later cut no
+    longer contained.  One did, and failed with `unknown import`.  Freezing the set makes the
+    staged tree and the platform describe the same graph for the rest of the run.
+    """
+    if os.path.exists(NODE_SET):
+        return json.load(open(NODE_SET))
+    return None
+
+
 def published_nodes():
     """Every theorem name already published, mapped back to its source name.
 
@@ -247,6 +264,11 @@ class Plan:
     def choose(self, target):
         S = self.S
         bundles, forced = self.cut_bundles()
+        pinned = frozen_node_set()
+        if pinned is not None:
+            nodes = {self.owner[n] for n in pinned if n in self.owner}
+            nodes = {b for b in nodes if not self.is_def_block[b]}
+            return bundles, nodes, {b: self.skeleton(b, nodes) for b in nodes}
         nodes = set(forced)
         for n in stage.ROOTS + BATCH1 + FORCE_NODES + published_nodes():
             if n in self.owner:

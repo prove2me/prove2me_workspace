@@ -1,20 +1,10 @@
 import Definitions.Def_quantum_parallel_repetition_game
-import Definitions.Def_qpr_core_28
+import Definitions.Def_qpr_core_25
 import Theorems.Thm_QuantumParallelRepetition_embezzlementState_norm
 import Theorems.Thm_QuantumParallelRepetition_dSVSoftBobLeftReducedDensity_posSemidef
 import Theorems.Thm_QuantumParallelRepetition_dSVUniformDensityThresholdSharedState_norm
 import Theorems.Thm_QuantumParallelRepetition_dSVDensityRationalMixedAcceptedPrefix_norm_sq
 import Theorems.Thm_QuantumParallelRepetition_dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition
-import Theorems.Thm_QuantumParallelRepetition_exactSeedWeight_nonneg
-import Theorems.Thm_QuantumParallelRepetition_exactAlicePurificationFamily_posSemidef
-import Theorems.Thm_QuantumParallelRepetition_exactBobPurificationFamily_posSemidef
-import Theorems.Thm_QuantumParallelRepetition_exactSeedWeight_sum
-import Theorems.Thm_QuantumParallelRepetition_exactGlobalHistoryLocalIndex_card_pos
-import Theorems.Thm_QuantumParallelRepetition_unconditionalActualC485NormalizedDiagonalWork_mass_sum_le_one
-import Theorems.Thm_QuantumParallelRepetition_unconditionalActualFairCleanedRow_le_one
-import Theorems.Thm_QuantumParallelRepetition_UnconditionalActualFairSourceRoundingContext_width_positive
-import Theorems.Thm_QuantumParallelRepetition_UnconditionalActualFairSourceRoundingContext_width_all
-import Theorems.Thm_QuantumParallelRepetition_UnconditionalActualFairSourceRoundingContext_fine_all
 import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Algebra.Algebra.Defs
 import Mathlib.Algebra.Algebra.Equiv
@@ -35,7 +25,6 @@ import Mathlib.Algebra.Group.Basic
 import Mathlib.Algebra.Group.Defs
 import Mathlib.Algebra.Group.Hom.Defs
 import Mathlib.Algebra.Group.Pi.Basic
-import Mathlib.Algebra.Group.Subgroup.Defs
 import Mathlib.Algebra.Group.Submonoid.Defs
 import Mathlib.Algebra.GroupWithZero.Action.Defs
 import Mathlib.Algebra.GroupWithZero.Action.Pi
@@ -47,20 +36,21 @@ import Mathlib.Algebra.GroupWithZero.Units.Basic
 import Mathlib.Algebra.Module.Defs
 import Mathlib.Algebra.Module.LinearMap.Defs
 import Mathlib.Algebra.Module.Pi
-import Mathlib.Algebra.Module.Submodule.Defs
 import Mathlib.Algebra.NeZero
 import Mathlib.Algebra.Notation.Defs
 import Mathlib.Algebra.Notation.Pi.Basic
 import Mathlib.Algebra.Notation.Pi.Defs
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
 import Mathlib.Algebra.Order.Floor.Defs
 import Mathlib.Algebra.Order.Group.Unbundled.Abs
 import Mathlib.Algebra.Order.GroupWithZero.Unbundled.Basic
-import Mathlib.Algebra.Order.GroupWithZero.Unbundled.Defs
 import Mathlib.Algebra.Order.Monoid.Defs
 import Mathlib.Algebra.Order.Monoid.Unbundled.Basic
 import Mathlib.Algebra.Order.Monoid.Unbundled.Defs
+import Mathlib.Algebra.Order.Monoid.Unbundled.ExistsOfLE
 import Mathlib.Algebra.Order.Ring.Abs
+import Mathlib.Algebra.Order.Ring.Basic
 import Mathlib.Algebra.Order.Ring.Defs
 import Mathlib.Algebra.Order.Ring.Unbundled.Basic
 import Mathlib.Algebra.Order.Star.Basic
@@ -68,10 +58,9 @@ import Mathlib.Algebra.Ring.CompTypeclasses
 import Mathlib.Algebra.Ring.Defs
 import Mathlib.Algebra.Ring.Hom.Defs
 import Mathlib.Algebra.Ring.Nat
+import Mathlib.Algebra.Ring.Parity
 import Mathlib.Algebra.Star.Basic
 import Mathlib.Algebra.Star.StarAlgHom
-import Mathlib.AlgebraicTopology.SimplexCategory.Basic
-import Mathlib.AlgebraicTopology.SimplexCategory.Defs
 import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.CStarAlgebra.Module.Constructions
@@ -97,27 +86,20 @@ import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Analysis.Normed.Operator.LinearIsometry
 import Mathlib.Analysis.Normed.Ring.Basic
 import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.ENNReal.Basic
 import Mathlib.Data.FinEnum
-import Mathlib.Data.Finset.BooleanAlgebra
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Empty
 import Mathlib.Data.Finset.Filter
-import Mathlib.Data.Finset.Lattice.Basic
 import Mathlib.Data.Finset.Range
-import Mathlib.Data.Finset.SDiff
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Defs
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Fintype.Sets
 import Mathlib.Data.Fintype.Sigma
-import Mathlib.Data.Fintype.Sum
 import Mathlib.Data.FunLike.Basic
 import Mathlib.Data.FunLike.Equiv
 import Mathlib.Data.Int.Cast.Defs
@@ -138,7 +120,6 @@ import Mathlib.Data.Real.StarOrdered
 import Mathlib.Data.SetLike.Basic
 import Mathlib.Data.Sigma.Basic
 import Mathlib.GroupTheory.GroupAction.Hom
-import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.LinearAlgebra.Matrix.Defs
 import Mathlib.LinearAlgebra.Matrix.Hermitian
@@ -149,16 +130,10 @@ import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Logic.Equiv.Fin.Basic
 import Mathlib.Logic.Equiv.Prod
-import Mathlib.MeasureTheory.Function.AEEqFun
-import Mathlib.MeasureTheory.Function.LpSpace.Basic
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
 import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.MeasureTheory.Measure.Restrict
 import Mathlib.Order.Basic
 import Mathlib.Order.Defs.LinearOrder
 import Mathlib.Order.Defs.PartialOrder
-import Mathlib.Order.Interval.Set.Defs
 import Mathlib.Order.Lattice
 import Mathlib.Tactic.FieldSimp.Lemmas
 import Mathlib.Tactic.Linarith.Lemmas
@@ -166,6 +141,7 @@ import Mathlib.Tactic.NormNum.Basic
 import Mathlib.Tactic.NormNum.Ineq
 import Mathlib.Tactic.NormNum.Inv
 import Mathlib.Tactic.NormNum.Result
+import Mathlib.Tactic.Positivity.Core
 import Mathlib.Tactic.Ring.Basic
 import Mathlib.Tactic.Ring.Common
 import Mathlib.Topology.Algebra.Group.Defs
@@ -427,6 +403,19 @@ theorem dSVCanonicalFailurePrefix_norm_sq
   have count := dSVCanonicalFailurePrefix_card r
   simpa [Finset.sum_boole] using congrArg
     (fun n : ℕ => (n : ℝ)) count
+
+end
+
+noncomputable section
+
+open scoped BigOperators ComplexOrder
+
+theorem dSVHeterogeneousRealPrefix_nonneg
+    (continuation : ℕ → ℝ)
+    (nonnegative : ∀ k, 0 ≤ continuation k) (k : ℕ) :
+    0 ≤ dSVHeterogeneousRealPrefix continuation k := by
+  unfold dSVHeterogeneousRealPrefix
+  exact Finset.prod_nonneg (fun i _ => nonnegative i)
 
 end
 
@@ -694,249 +683,59 @@ end
 
 noncomputable section
 
-open scoped BigOperators
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder
 
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 1600000
-set_option maxRecDepth 2048
+theorem dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg
+    {d S L : ℕ} (N : ℕ)
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d)
+    (k : ℕ) (alice bob : Bool) :
+    0 ≤ dSVDensityRationalHeterogeneousPhysicalStageOutcome
+      N width schedule ξ ζ k alice bob := by
+  unfold dSVDensityRationalHeterogeneousPhysicalStageOutcome
+  split_ifs <;> positivity
 
-open QuantumParallelRepetition.Pinsker
-open QuantumParallelRepetition.ClassicalInformation
-open QuantumParallelRepetition.ClassicalSampling
+theorem dSVDensityRationalHeterogeneousPhysicalSurvival_nonneg
+    {d S L : ℕ} (N : ℕ)
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d) (k : ℕ) :
+    0 ≤ dSVDensityRationalHeterogeneousPhysicalSurvival
+      N width schedule ξ ζ k := by
+  unfold dSVDensityRationalHeterogeneousPhysicalSurvival
+  apply dSVHeterogeneousRealPrefix_nonneg
+  intro j
+  exact dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg
+    N width schedule ξ ζ j false false
 
-attribute [local instance] Classical.propDecidable
+theorem
+    dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_nonneg
+    {d S L : ℕ} (N : ℕ)
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d) :
+    0 ≤
+      dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+        N width schedule ξ ζ := by
+  unfold
+    dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
+  apply Finset.sum_nonneg
+  intro k _
+  apply mul_nonneg
+    (dSVDensityRationalHeterogeneousPhysicalSurvival_nonneg
+      N width schedule ξ ζ k)
+  exact add_nonneg
+    (dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg
+      N width schedule ξ ζ k true false)
+    (dSVDensityRationalHeterogeneousPhysicalStageOutcome_nonneg
+      N width schedule ξ ζ k false true)
 
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem conditionedEventDistribution_nonneg
-    {Ω : Type*} [Fintype Ω]
-    (law : FiniteEventLaw Ω) (event : Finset Ω)
-    (positive : 0 < law.eventMass event) (ω : Ω) :
-    0 ≤ conditionedEventDistribution law event ω := by
-  unfold conditionedEventDistribution
-  split_ifs
-  · exact div_nonneg (law.weight_nonneg ω) positive.le
-  · exact le_rfl
-
-theorem conditionedEventDistribution_sum
-    {Ω : Type*} [Fintype Ω]
-    (law : FiniteEventLaw Ω) (event : Finset Ω)
-    (positive : 0 < law.eventMass event) :
-    (∑ ω : Ω, conditionedEventDistribution law event ω) = 1 := by
-  classical
-  unfold conditionedEventDistribution
-  calc
-    (∑ ω : Ω,
-      if ω ∈ event then law.weight ω / law.eventMass event else 0) =
-      (∑ ω ∈ event, law.weight ω) / law.eventMass event := by
-      rw [Finset.sum_div]
-      simp
-    _ = 1 := by
-      change law.eventMass event / law.eventMass event = 1
-      exact div_self positive.ne'
-
-end
-
-noncomputable section
-
-open scoped BigOperators
-
-open QuantumParallelRepetition.Pinsker
-open QuantumParallelRepetition.ClassicalInformation
-
-attribute [local instance] Classical.propDecidable
-
-theorem groupedMass_nonneg
-    {Ω κ : Type*} [Fintype Ω] [Fintype κ] [DecidableEq κ]
-    (f : Ω → κ) (p : Ω → ℝ)
-    (hp : ∀ ω, 0 ≤ p ω) (a : κ) :
-    0 ≤ groupedMass f p a := by
-  unfold groupedMass
-  exact Finset.sum_nonneg (fun ω _ => hp ω)
-
-end
-
-noncomputable section
-
-open scoped BigOperators
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 1600000
-set_option maxRecDepth 2048
-
-open QuantumParallelRepetition.Pinsker
-open QuantumParallelRepetition.ClassicalInformation
-
-attribute [local instance] Classical.propDecidable
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem groupedMass_sum
-    {Ω κ : Type*} [Fintype Ω] [Fintype κ] [DecidableEq κ]
-    (projection : Ω → κ) (mass : Ω → ℝ) :
-    (∑ a : κ, groupedMass projection mass a) =
-      ∑ ω : Ω, mass ω := by
-  unfold groupedMass
-  exact Finset.sum_fiberwise Finset.univ projection mass
-
-end
-
-noncomputable section
-
-open scoped BigOperators
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 1600000
-set_option maxRecDepth 2048
-
-open QuantumParallelRepetition.Pinsker
-open QuantumParallelRepetition.ClassicalInformation
-
-attribute [local instance] Classical.propDecidable
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem exactRemainingSeedWeight_sum
-    {n : ℕ} (D : Finset (Fin n))
-    (remaining : 0 < (Finset.univ \ D).card) :
-    (∑ seed : ExactRemainingSeed D,
-      exactSeedWeight seed) = 1 := by
-  apply exactSeedWeight_sum
-  simpa using remaining
-
-theorem exactPostselectedJointLaw_nonneg
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (positive : 0 < repeatedPostselectionMass G n S D)
-    (q : ExactJointOutcome X Y A B D) :
-    0 ≤ exactPostselectedJointLaw G n S D q := by
-  apply mul_nonneg (exactSeedWeight_nonneg q.1)
-  exact conditionedEventDistribution_nonneg
-    (strategyEventLaw (G.repeat n) S)
-    (FiniteEventLaw.winEvent (repeatedCoordinateWin G n) D)
-    positive q.2
-
-theorem exactPostselectedJointLaw_sum
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (remaining : 0 < (Finset.univ \ D).card)
-    (positive : 0 < repeatedPostselectionMass G n S D) :
-    (∑ q : ExactJointOutcome X Y A B D,
-      exactPostselectedJointLaw G n S D q) = 1 := by
-  have hconditional_sum :
-      (∑ outcome : ExactOutcome X Y A B n,
-        repeatedConditionedOutcomeLaw G n S D outcome) = 1 := by
-    exact conditionedEventDistribution_sum
-      (strategyEventLaw (G.repeat n) S)
-      (FiniteEventLaw.winEvent (repeatedCoordinateWin G n) D)
-      positive
-  unfold exactPostselectedJointLaw
-  rw [Fintype.sum_prod_type]
-  calc
-    (∑ seed : ExactRemainingSeed D,
-      ∑ outcome : ExactOutcome X Y A B n,
-        exactSeedWeight seed *
-          repeatedConditionedOutcomeLaw G n S D outcome) =
-      ∑ seed : ExactRemainingSeed D,
-        exactSeedWeight seed *
-          (∑ outcome : ExactOutcome X Y A B n,
-            repeatedConditionedOutcomeLaw G n S D outcome) := by
-          simp_rw [Finset.mul_sum]
-    _ = ∑ seed : ExactRemainingSeed D,
-        exactSeedWeight seed := by
-          rw [hconditional_sum]
-          simp
-    _ = 1 := exactRemainingSeedWeight_sum D remaining
-
-theorem exactSourcePushforward_nonneg
-    {K : Type*} [Fintype K]
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (positive : 0 < repeatedPostselectionMass G n S D)
-    (projection : ExactJointOutcome X Y A B D → K)
-    (k : K) :
-    0 ≤ exactSourcePushforward G n S D projection k := by
-  exact groupedMass_nonneg projection
-    (exactPostselectedJointLaw G n S D)
-    (exactPostselectedJointLaw_nonneg G n S D positive) k
-
-theorem exactSourcePushforward_sum
-    {K : Type*} [Fintype K]
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (remaining : 0 < (Finset.univ \ D).card)
-    (positive : 0 < repeatedPostselectionMass G n S D)
-    (projection : ExactJointOutcome X Y A B D → K) :
-    (∑ k : K,
-      exactSourcePushforward G n S D projection k) = 1 := by
-  unfold exactSourcePushforward
-  rw [groupedMass_sum]
-  exact exactPostselectedJointLaw_sum
-    G n S D remaining positive
-
-end
-
-noncomputable section
-
-open scoped BigOperators
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 1600000
-set_option maxRecDepth 2048
-
-open QuantumParallelRepetition.Pinsker
-open QuantumParallelRepetition.ClassicalInformation
-open QuantumParallelRepetition.ClassicalSampling
-
-attribute [local instance] Classical.propDecidable
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem exactLocallySampleableLaw_nonneg
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (positive : 0 < repeatedPostselectionMass G n S D)
-    (t : ExactLocallySampleableTuple X Y A B D) :
-    0 ≤ exactLocallySampleableLaw G n S D t :=
-  exactSourcePushforward_nonneg G n S D positive
-    (exactLocallySampleableCode D) t
-
-theorem exactLocallySampleableLaw_sum
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (remaining : 0 < (Finset.univ \ D).card)
-    (positive : 0 < repeatedPostselectionMass G n S D) :
-    (∑ t : ExactLocallySampleableTuple X Y A B D,
-      exactLocallySampleableLaw G n S D t) = 1 :=
-  exactSourcePushforward_sum G n S D remaining positive
-    (exactLocallySampleableCode D)
-
-end
-
-noncomputable section
-
-open scoped BigOperators
-
-set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 1600000
-set_option maxRecDepth 2048
-
-attribute [local instance] Classical.propDecidable
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem exactSourceTuplePsi_norm
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (t : ExactLocallySampleableTuple X Y A B D) :
-    ‖exactSourceTuplePsi G n S D t‖ = 1 :=
-  (exactGlobalHistoryFinPsi
-    G n S D t.2.2.2 t.2.1 t.2.2.1).property
+theorem dSVDensityRationalHeterogeneousPhysicalTerminalMass_nonneg
+    {d S L : ℕ} (N : ℕ)
+    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d) :
+    0 ≤ dSVDensityRationalHeterogeneousPhysicalTerminalMass
+      N width schedule ξ ζ :=
+  dSVDensityRationalHeterogeneousPhysicalSurvival_nonneg
+    N width schedule ξ ζ L
 
 end
 
@@ -1154,25 +953,6 @@ open WithLp
 open scoped BigOperators Kronecker ComplexOrder MatrixOrder
   Matrix.Norms.L2Operator InnerProductSpace
 
-@[simp] theorem unconditionalConjugatePureVector_apply
-    {ι : Type*} [Fintype ι]
-    (z : EuclideanSpace ℂ ι) (i : ι) :
-    unconditionalConjugatePureVector z i = star (z i) := by
-  rfl
-
-theorem unconditionalConjugatePureVector_norm_sq
-    {ι : Type*} [Fintype ι] (z : EuclideanSpace ℂ ι) :
-    ‖unconditionalConjugatePureVector z‖ ^ 2 = ‖z‖ ^ 2 := by
-  simp [EuclideanSpace.norm_sq_eq]
-
-end
-
-noncomputable section
-
-open WithLp
-open scoped BigOperators Kronecker ComplexOrder MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
 theorem unconditionalSelectedCopy_coherentPhaseSigma_norm_sq
     {H : Type*} [Fintype H] {B m : ℕ}
     (phases : 0 < B)
@@ -1223,25 +1003,6 @@ theorem unconditionalSelectedCopy_coherentPhaseSigma_norm_sq
             Fintype.card_fin, nsmul_eq_mul]
           field_simp
 
-theorem unconditionalSelectedCopy_coherentPhaseConstantWork_norm_sq
-    {H : Type*} [Fintype H] {B m : ℕ}
-    (phases : 0 < B)
-    (history : EuclideanSpace ℂ (H × H))
-    (work : EuclideanSpace ℂ (Fin m × Fin m)) :
-    ‖dSVDensityRationalPublicBucketCoherentPhaseSigmaState
-        B history (fun _ _ _ => work)‖ ^ 2 =
-      ‖history‖ ^ 2 * ‖work‖ ^ 2 := by
-  rw [unconditionalSelectedCopy_coherentPhaseSigma_norm_sq
-    phases history (fun _ _ => work),
-    dSVDensityRationalMixedCanonicalPrefixPhysicalSigmaWeighted_norm_sq]
-  calc
-    (∑ i : H, ∑ j : H, ‖history (i, j)‖ ^ 2 * ‖work‖ ^ 2) =
-        (∑ i : H, ∑ j : H, ‖history (i, j)‖ ^ 2) * ‖work‖ ^ 2 := by
-          simp_rw [Finset.sum_mul]
-    _ = _ := by
-      congr 1
-      rw [EuclideanSpace.norm_sq_eq, Fintype.sum_prod_type]
-
 theorem unconditionalSelectedCopyCleanedStage_norm_sq
     {d N B m : ℕ} {w : ℝ}
     (phases : 0 < B) (grid : 0 < N) (harmonic : 0 < m)
@@ -1287,27 +1048,6 @@ theorem unconditionalSelectedCopyCleanedMatchedBranch_norm_sq
   simp [dSVDensityRationalHeterogeneousPhysicalStageSuccess,
     dSVDensityRationalHeterogeneousPhysicalStageOutcome,
     j.isLt, mul_comm]
-
-end
-
-noncomputable section
-
-open WithLp
-open scoped BigOperators Kronecker ComplexOrder MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-variable {X Y A B : Type*}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-
-theorem unconditionalExactFairGammaUnit_eq_global
-    (G : Game X Y A B) (n : ℕ) (S : Strategy (G.repeat n))
-    (D : Finset (Fin n))
-    (u : ExactLocallySampleableTuple X Y A B D) :
-    unconditionalExactFairGammaUnit G n S D u =
-      exactGlobalHistoryFinGamma
-        G n S D u.2.2.2 u.2.1 := by
-  apply Subtype.ext
-  rfl
 
 end
 
@@ -1423,288 +1163,6 @@ theorem unconditionalActualFairCleanedRow_eq_stoppedSuccess
           dSVDensityRationalHeterogeneousPhysicalStageSuccess
             N width schedule ξ ζ k) L)
 
-theorem unconditionalActualFairWeightedCleanedMass_le_one
-    {I : Type} [Fintype I]
-    {S B N d L m : Nat}
-    (weight : I → ℝ)
-    (weight_nonnegative : ∀ h, 0 ≤ weight h)
-    (weight_normalized : (∑ h : I, weight h) = 1)
-    (phases : 0 < B) (grid : 0 < N)
-    (dimension : 0 < d) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (width_positive : ∀ s, 0 < width s)
-    (schedule : Fin L → Fin S)
-    (ξ ζ : I → BipartiteUnitVector d)
-    (Q : Nat)
-    (A C : Fin B → Option Nat →
-      Matrix.unitaryGroup (Fin (N * m)) ℂ) :
-    (∑ h : I, weight h *
-      ∑ j : Fin L,
-        ‖integratorActualC485CleanedVector
-          Q width schedule (ξ h) (ζ h) A C j‖ ^ 2) ≤ 1 := by
-  calc
-    _ ≤ ∑ h : I, weight h * 1 := by
-      apply Finset.sum_le_sum
-      intro h _
-      exact mul_le_mul_of_nonneg_left
-        (unconditionalActualFairCleanedRow_le_one
-          phases grid dimension harmonic width width_positive
-          schedule (ξ h) (ζ h) Q A C)
-        (weight_nonnegative h)
-    _ = 1 := by simpa using weight_normalized
-
-theorem unconditionalActualFairWeightedStoppedSuccess
-    {I : Type} [Fintype I]
-    {S B N d L m : Nat}
-    (weight : I → ℝ)
-    (weight_normalized : (∑ h : I, weight h) = 1)
-    (phases : 0 < B) (grid : 0 < N)
-    (dimension : 0 < d) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (width_positive : ∀ s, 0 < width s)
-    (schedule : Fin L → Fin S)
-    (ξ ζ : I → BipartiteUnitVector d)
-    (Q : Nat)
-    (A C : Fin B → Option Nat →
-      Matrix.unitaryGroup (Fin (N * m)) ℂ)
-    (async terminal : ℝ)
-    (asynchronous_bound :
-      (∑ h : I, weight h *
-        dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
-          N width schedule (ξ h) (ζ h)) ≤ async)
-    (terminal_bound :
-      (∑ h : I, weight h *
-        dSVDensityRationalHeterogeneousPhysicalTerminalMass
-          N width schedule (ξ h) (ζ h)) ≤ terminal) :
-    1 - (async + terminal) ≤
-      ∑ h : I, weight h *
-        ∑ j : Fin L,
-          ‖integratorActualC485CleanedVector
-            Q width schedule (ξ h) (ζ h) A C j‖ ^ 2 := by
-  have partition :
-      (∑ h : I, weight h *
-        dSVDensityRationalHeterogeneousPhysicalStoppedSuccessMass
-          N width schedule (ξ h) (ζ h)) +
-      (∑ h : I, weight h *
-        dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
-          N width schedule (ξ h) (ζ h)) +
-      (∑ h : I, weight h *
-        dSVDensityRationalHeterogeneousPhysicalTerminalMass
-          N width schedule (ξ h) (ζ h)) = 1 := by
-    calc
-      _ = ∑ h : I, weight h *
-        (dSVDensityRationalHeterogeneousPhysicalStoppedSuccessMass
-            N width schedule (ξ h) (ζ h) +
-          dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
-            N width schedule (ξ h) (ζ h) +
-          dSVDensityRationalHeterogeneousPhysicalTerminalMass
-            N width schedule (ξ h) (ζ h)) := by
-            simp_rw [mul_add, Finset.sum_add_distrib]
-      _ = ∑ h : I, weight h := by
-        apply Finset.sum_congr rfl
-        intro h _
-        rw [dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition
-          grid dimension width schedule (ξ h) (ζ h)]
-        ring
-      _ = 1 := weight_normalized
-  simp_rw [unconditionalActualFairCleanedRow_eq_stoppedSuccess
-    phases grid dimension harmonic width width_positive
-    schedule _ _ Q A C]
-  linarith
-
-end
-
-noncomputable section
-
-open WithLp
-open scoped BigOperators Kronecker ComplexOrder MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-attribute [local instance] Classical.propDecidable
-
-theorem unconditionalActualFairCanonicalVector_norm_sq
-    {S B N d L m : ℕ}
-    (phases : 0 < B) (grid : 0 < N) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
-    (ξ ζ : BipartiteUnitVector d) (j : Fin L)
-    (positive : 0 < width (schedule j))
-    (fine : (d : ℝ) / (N : ℝ) < 1 / (width (schedule j) + 1)) :
-    ‖integratorActualC485CanonicalVector
-        (B := B) (m := m) schedule ξ ζ j positive grid fine‖ ^ 2 =
-      ‖integratorActualC485NormalizedDiagonalWork
-          (B := B) (N := N) width schedule ξ ζ j‖ ^ 2 := by
-  unfold integratorActualC485CanonicalVector
-  rw [unconditionalMatchedVerifierTensor_norm_sq,
-    unconditionalSelectedCopy_coherentPhaseConstantWork_norm_sq
-      phases,
-    unconditionalConjugatePureVector_norm_sq,
-    (dSVDensityRationalCanonicalAcceptedUnitTarget
-      positive grid fine ξ).property,
-    embezzlementState_norm (N * m)
-      (Nat.mul_pos grid harmonic)]
-  ring
-
-theorem unconditionalActualFairCanonicalRow_le_one
-    {S B N d L m : ℕ}
-    (phases : 0 < B) (grid : 0 < N)
-    (dimension : 0 < d) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (width_positive : ∀ s, 0 < width s)
-    (schedule : Fin L → Fin S)
-    (ξ ζ : BipartiteUnitVector d)
-    (fine : ∀ s,
-      (d : ℝ) / (N : ℝ) < 1 / (width s + 1)) :
-    (∑ j : Fin L,
-      ‖integratorActualC485CanonicalVector
-        (B := B) (m := m) schedule ξ ζ j
-        (width_positive (schedule j)) grid
-        (fine (schedule j))‖ ^ 2) ≤ 1 := by
-  calc
-    _ = ∑ j : Fin L,
-      ‖integratorActualC485NormalizedDiagonalWork
-        (B := B) (N := N) width schedule ξ ζ j‖ ^ 2 := by
-      apply Finset.sum_congr rfl
-      intro j _
-      exact unconditionalActualFairCanonicalVector_norm_sq
-        phases grid harmonic width schedule ξ ζ j
-        (width_positive (schedule j)) (fine (schedule j))
-    _ ≤ 1 :=
-      unconditionalActualC485NormalizedDiagonalWork_mass_sum_le_one
-        (m := m) phases grid dimension harmonic
-        width width_positive schedule ξ ζ
-
-theorem unconditionalActualFairWeightedCanonicalMass_le_one
-    {I : Type} [Fintype I]
-    {S B N d L m : ℕ}
-    (weight : I → ℝ)
-    (weight_nonnegative : ∀ h, 0 ≤ weight h)
-    (weight_normalized : (∑ h : I, weight h) = 1)
-    (phases : 0 < B) (grid : 0 < N)
-    (dimension : 0 < d) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (width_positive : ∀ s, 0 < width s)
-    (schedule : Fin L → Fin S)
-    (ξ ζ : I → BipartiteUnitVector d)
-    (fine : ∀ s,
-      (d : ℝ) / (N : ℝ) < 1 / (width s + 1)) :
-    (∑ h : I, weight h *
-      ∑ j : Fin L,
-        ‖integratorActualC485CanonicalVector
-          (B := B) (m := m) schedule (ξ h) (ζ h) j
-          (width_positive (schedule j)) grid
-          (fine (schedule j))‖ ^ 2) ≤ 1 := by
-  calc
-    _ ≤ ∑ h : I, weight h * 1 := by
-      apply Finset.sum_le_sum
-      intro h _
-      exact mul_le_mul_of_nonneg_left
-        (unconditionalActualFairCanonicalRow_le_one
-          phases grid dimension harmonic width width_positive
-          schedule (ξ h) (ζ h) fine)
-        (weight_nonnegative h)
-    _ = 1 := by simpa using weight_normalized
-
-end
-
-noncomputable section
-
-open WithLp
-open scoped BigOperators Kronecker ComplexOrder MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-attribute [local instance] Classical.propDecidable
-
-theorem unconditionalActualFairSourceVector_norm_sq
-    {S B N d L m : ℕ}
-    (phases : 0 < B) (grid : 0 < N) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
-    (ξ ζ : BipartiteUnitVector d)
-    (ψ : EuclideanSpace ℂ (Fin d × Fin d))
-    (unit : ‖ψ‖ = 1) (j : Fin L) :
-    ‖integratorActualC485SourceVector
-        (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-        width schedule ξ ζ ψ j‖ ^ 2 =
-      ‖integratorActualC485NormalizedDiagonalWork
-          (S := S) (B := B) (N := N) (d := d) (L := L)
-          width schedule ξ ζ j‖ ^ 2 := by
-  unfold integratorActualC485SourceVector
-  rw [unconditionalMatchedVerifierTensor_norm_sq,
-    unconditionalSelectedCopy_coherentPhaseConstantWork_norm_sq
-      phases,
-    unconditionalConjugatePureVector_norm_sq,
-    unit,
-    embezzlementState_norm (N * m)
-      (Nat.mul_pos grid harmonic)]
-  ring
-
-theorem unconditionalActualFairSourceCanonicalVector_norm_sq
-    {S B N d L m : ℕ}
-    (phases : 0 < B) (grid : 0 < N) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
-    (ξ ζ : BipartiteUnitVector d)
-    (ψ : EuclideanSpace ℂ (Fin d × Fin d))
-    (unit : ‖ψ‖ = 1) (j : Fin L)
-    (positive : 0 < width (schedule j))
-    (fine : (d : ℝ) / (N : ℝ) < 1 / (width (schedule j) + 1)) :
-    ‖integratorActualC485SourceVector
-        (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-        width schedule ξ ζ ψ j‖ ^ 2 =
-      ‖integratorActualC485CanonicalVector
-          (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-          (width := width) schedule ξ ζ j positive grid fine‖ ^ 2 := by
-  rw [unconditionalActualFairSourceVector_norm_sq
-    phases grid harmonic width schedule ξ ζ ψ unit j,
-    unconditionalActualFairCanonicalVector_norm_sq
-      phases grid harmonic width schedule ξ ζ j positive fine]
-
-theorem unconditionalActualFairSourceCanonicalVector_norm
-    {S B N d L m : ℕ}
-    (phases : 0 < B) (grid : 0 < N) (harmonic : 0 < m)
-    (width : Fin S → ℝ) (schedule : Fin L → Fin S)
-    (ξ ζ : BipartiteUnitVector d)
-    (ψ : EuclideanSpace ℂ (Fin d × Fin d))
-    (unit : ‖ψ‖ = 1) (j : Fin L)
-    (positive : 0 < width (schedule j))
-    (fine : (d : ℝ) / (N : ℝ) < 1 / (width (schedule j) + 1)) :
-    ‖integratorActualC485SourceVector
-        (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-        width schedule ξ ζ ψ j‖ =
-      ‖integratorActualC485CanonicalVector
-          (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-          (width := width) schedule ξ ζ j positive grid fine‖ := by
-  have squared :=
-    unconditionalActualFairSourceCanonicalVector_norm_sq
-      phases grid harmonic width schedule ξ ζ ψ unit j positive fine
-  nlinarith [
-    norm_nonneg (integratorActualC485SourceVector
-      (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-      width schedule ξ ζ ψ j),
-    norm_nonneg (integratorActualC485CanonicalVector
-      (S := S) (B := B) (N := N) (d := d) (L := L) (m := m)
-      (width := width) schedule ξ ζ j positive grid fine)]
-
-end
-
-noncomputable section
-
-open WithLp
-open scoped BigOperators Kronecker ComplexOrder MatrixOrder
-  Matrix.Norms.L2Operator InnerProductSpace
-
-open QuantumParallelRepetition.ClassicalSampling
-
-attribute [local instance] Classical.propDecidable
-
-namespace UnconditionalActualFairSourceRoundingContext
-
-variable {X Y A B : Type}
-variable [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-variable {G : Game X Y A B} {n : ℕ} {S : Strategy (G.repeat n)}
-variable {D : Finset (Fin n)} {alpha gamma : ℝ}
-
-theorem dimension_pos
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) : 0 < d c :=
-  exactGlobalHistoryLocalIndex_card_pos G n S D
-
-end UnconditionalActualFairSourceRoundingContext
-
 end
 
 end QuantumParallelRepetition
@@ -1716,117 +1174,30 @@ open Complex Matrix Finset
 open WithLp
 open scoped BigOperators Kronecker ComplexOrder MatrixOrder
   Matrix.Norms.L2Operator InnerProductSpace
-open QuantumParallelRepetition.ClassicalSampling
-open UnconditionalActualFairSourceRoundingContext
 attribute [local instance] Classical.propDecidable
 
 theorem solution
-    {X Y A B : Type}
-    [Fintype X] [Fintype Y] [Fintype A] [Fintype B]
-    {G : Game X Y A B} {n : ℕ} {S : Strategy (G.repeat n)}
-    {D : Finset (Fin n)} {alpha gamma : ℝ}
-    (c : UnconditionalActualFairSourceRoundingContext
-      G n S D alpha gamma) :
-    UnconditionalActualFairCachedStoppedAnalyticLedger
-      (law c) (actual c) (canonical c) (source c)
-      (deviation c) (clipping c) (bad c) := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · exact unconditionalActualFairWeightedCleanedMass_le_one
-      (law c)
-      (exactLocallySampleableLaw_nonneg G n S D c.positive)
-      (exactLocallySampleableLaw_sum
-        G n S D c.remaining c.positive)
-      c.stopping.phases c.stopping.grid (dimension_pos c)
-      c.stopping.harmonic (width c) (width_all c) (schedule c)
-      (gammaVector c) (phiVector c)
-      c.stopping.Q c.stopping.UA c.stopping.UB
-  · exact unconditionalActualFairWeightedCanonicalMass_le_one
-      (law c)
-      (exactLocallySampleableLaw_nonneg G n S D c.positive)
-      (exactLocallySampleableLaw_sum
-        G n S D c.remaining c.positive)
-      c.stopping.phases c.stopping.grid (dimension_pos c)
-      c.stopping.harmonic (width c) (width_all c) (schedule c)
-      (gammaVector c) (phiVector c) (fine_all c)
-  · intro h
-    exact unconditionalActualFairCanonicalRow_le_one
-      c.stopping.phases c.stopping.grid (dimension_pos c)
-      c.stopping.harmonic (width c) (width_all c) (schedule c)
-      (gammaVector c h) (phiVector c h) (fine_all c)
-  · intro h j
-    exact unconditionalActualFairSourceCanonicalVector_norm
-      c.stopping.phases c.stopping.grid c.stopping.harmonic
-      (width c) (schedule c) (gammaVector c h) (phiVector c h)
-      (psiVector c h) (exactSourceTuplePsi_norm G n S D h) j
-      (width_all c (schedule c j)) (fine_all c (schedule c j))
-  · exact le_refl (deviation c)
-  · change
-      (∑ h : ExactLocallySampleableTuple X Y A B D,
-        law c h *
-          ∑ j : Fin c.stopping.L,
-            ‖canonical c (h, j) - source c (h, j)‖ ^ 2) ≤
-        unconditionalActualC485FairSourceClipEnergy
-          (P := c.stopping.P) (m := c.stopping.m)
-          G n S D (width_positive c) c.stopping.grid
-          c.stopping.fine (schedule c)
-    unfold unconditionalActualC485FairSourceClipEnergy
-    apply le_of_eq
-    apply Finset.sum_congr rfl
-    intro h _
-    congr 1
-    apply Finset.sum_congr rfl
-    intro j _
-    change
-      ‖canonical c (h, j) - source c (h, j)‖ ^ 2 =
-        ‖source c (h, j) - canonical c (h, j)‖ ^ 2
-    rw [norm_sub_rev]
-  · have async :
-        (∑ h : ExactLocallySampleableTuple X Y A B D,
-          law c h *
-            dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
-              c.stopping.N (width c) (schedule c)
-              (gammaVector c h) (phiVector c h)) ≤
-          64 * Real.sqrt (martingaleRate G n S D) +
-            alpha ^ (1 / 3 : ℝ) := by
-      change
-        (∑ h : ExactLocallySampleableTuple X Y A B D,
-          exactLocallySampleableLaw G n S D h *
-            dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass
-              c.stopping.N
-              (fun _ : Fin 1 => c.stopping.w)
-              (fun _ : Fin c.stopping.L => 0)
-              (unconditionalExactFairGammaUnit G n S D h)
-              (exactGlobalHistoryFinPhi
-                G n S D h.2.2.2 h.2.2.1)) ≤ _
-      simpa only [unconditionalExactFairGammaUnit_eq_global] using
-        c.stopping.asynchronous
-    have finish :
-        (∑ h : ExactLocallySampleableTuple X Y A B D,
-          law c h *
-            dSVDensityRationalHeterogeneousPhysicalTerminalMass
-              c.stopping.N (width c) (schedule c)
-              (gammaVector c h) (phiVector c h)) ≤
-          (alpha ^ (1 / 3 : ℝ)) ^ 2 := by
-      change
-        (∑ h : ExactLocallySampleableTuple X Y A B D,
-          exactLocallySampleableLaw G n S D h *
-            dSVDensityRationalHeterogeneousPhysicalTerminalMass
-              c.stopping.N
-              (fun _ : Fin 1 => c.stopping.w)
-              (fun _ : Fin c.stopping.L => 0)
-              (unconditionalExactFairGammaUnit G n S D h)
-              (exactGlobalHistoryFinPhi
-                G n S D h.2.2.2 h.2.2.1)) ≤ _
-      simpa only [unconditionalExactFairGammaUnit_eq_global] using
-        c.stopping.terminal
-    exact unconditionalActualFairWeightedStoppedSuccess
-      (law c)
-      (exactLocallySampleableLaw_sum
-        G n S D c.remaining c.positive)
-      c.stopping.phases c.stopping.grid (dimension_pos c)
-      c.stopping.harmonic (width c) (width_all c) (schedule c)
-      (gammaVector c) (phiVector c)
-      c.stopping.Q c.stopping.UA c.stopping.UB
-      (64 * Real.sqrt (martingaleRate G n S D) +
-        alpha ^ (1 / 3 : ℝ))
-      ((alpha ^ (1 / 3 : ℝ)) ^ 2) async finish
+    {S B N d L m : Nat}
+    (phases : 0 < B) (grid : 0 < N)
+    (dimension : 0 < d) (harmonic : 0 < m)
+    (width : Fin S → ℝ) (width_positive : ∀ s, 0 < width s)
+    (schedule : Fin L → Fin S)
+    (ξ ζ : BipartiteUnitVector d)
+    (Q : Nat)
+    (A C : Fin B → Option Nat →
+      Matrix.unitaryGroup (Fin (N * m)) ℂ) :
+    (∑ j : Fin L,
+      ‖integratorActualC485CleanedVector
+        Q width schedule ξ ζ A C j‖ ^ 2) ≤ 1 := by
+  rw [unconditionalActualFairCleanedRow_eq_stoppedSuccess
+    phases grid dimension harmonic width width_positive schedule ξ ζ Q A C]
+  have partition :=
+    dSVDensityRationalHeterogeneousPhysicalStopped_mass_partition
+      grid dimension width schedule ξ ζ
+  have asynchronous :=
+    dSVDensityRationalHeterogeneousPhysicalStoppedAsynchronousMass_nonneg
+      N width schedule ξ ζ
+  have terminal :=
+    dSVDensityRationalHeterogeneousPhysicalTerminalMass_nonneg
+      N width schedule ξ ζ
+  linarith

@@ -6,6 +6,7 @@
     "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": "f8f24ddd-2847-478d-84d6-8183751764e1",
     "QuantumParallelRepetition.Strategy.winProbability_le_one": "17570be4-4be1-4edf-83d7-5e038d97205c",
     "QuantumParallelRepetition.Strategy.winProbability_nonneg": "b992baa8-8874-451f-8a77-c3c2ac27a0fc",
+    "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "a4e2f7ce-82e5-4f11-b4f8-dc7021745129",
     "QuantumParallelRepetition.aliceMartingaleEntropyBudget": "c521fb08-6ff3-461b-a7bb-d9ccad133960",
     "QuantumParallelRepetition.answerLogCost_nonneg_of_postselection": "3ef9538c-dc4a-4af6-aa55-4d64ecdd5b34",
     "QuantumParallelRepetition.arbitrarily_large_purified_divisor_greedy_conditioning_with_rounding": "4ea70a61-be12-4afe-b192-ac44d7e4dbdb",
@@ -138,6 +139,7 @@
     "QuantumParallelRepetition.exact_exists_support_preserving_local_shared_permutation": "80b92da9-8217-48a5-aa49-27e17d57a28c",
     "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving": "7372ca8d-1f89-48f6-aab4-7d17f73300cb",
     "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_of_information": "33c3a2d8-783a-49cf-b38c-4569ff218354",
+    "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional": "22bf82bd-c50e-4c9f-8dcf-3dda07e0ab37",
     "QuantumParallelRepetition.exact_source_equation_twenty_three_of_conditioned_reverse_prefix": "164f6c46-c94c-4fb1-b2c7-cc993bc23816",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalHeterogeneousCommonStopSpectralGaugeContinuity_sq": "8920c291-207e-41fb-8729-2c92931839bb",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalHeterogeneousStoppedCommonStopGaugeErrorBound": "9581ed76-47eb-4655-8f08-62fd65fea3ba",
@@ -179,6 +181,7 @@
     "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "86fe3927-cc85-4b14-b3b9-e3b4e09d2a5b",
     "QuantumParallelRepetition.unconditionalExactSourceScalarClipping": "36e655bf-0edb-4bd4-a5c7-f6cb600e1c9f",
     "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "b08abd41-1e5a-4a7e-8fc1-03d972ceaa1f",
+    "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "060e02ea-c000-439d-aff2-8b5f2325cbd7",
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": "ac0fd92e-0669-4587-8521-ccd2db22c880",
     "QuantumParallelRepetition.winProbabilities_bddAbove": "a9dd6609-4698-4986-aaaf-5b0f48cbe917",
     "def:qpr_core_00": "4e1135b7-b1e4-4088-a631-2b394b814ef5",
@@ -224,7 +227,10 @@
     "QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving_unconditional": "270977b5-5e56-4203-a2af-84eafb1f6bf5",
     "QuantumParallelRepetition.exact_source_equation_twenty_three_of_conditioned_reverse_prefix": "d93acba4-dade-43f2-94be-6f824130fb17",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalQuantitativeMixedPrefixCleanup_sq": "6737cde2-94af-4240-ae65-f9ffbd8d2393",
+    "QuantumParallelRepetition.unconditionalFairPhysicalFlaggedStoppingTransfer": "8c7303d3-444a-432d-b6fd-eb6f1a8795cc",
+    "QuantumParallelRepetition.unconditionalNormalizedCanonicalRetainedWork_norm_sq": "737f35d0-0aac-4914-bf11-b011c87874b8",
     "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "96da6bbd-1a04-4036-8281-67301dcca4b0",
+    "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedSelectedHistoryEquiv_hit": "c836b339-2952-4669-b099-307b4d1d529c",
     "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "1a83aa6f-666f-4996-bbd3-bf5107acad35"
   },
   "submitted": {
@@ -234,6 +240,7 @@
     "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": "9bb7c873-c637-480e-9ae1-f15df69c2abb",
     "QuantumParallelRepetition.Strategy.winProbability_le_one": "05551136-d3b1-477a-97dc-2392ecbc1846",
     "QuantumParallelRepetition.Strategy.winProbability_nonneg": "6174924f-87b3-45b0-9712-7b494f8105ab",
+    "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "4b25ffb3-215f-4688-976a-20dfe1090346",
     "QuantumParallelRepetition.aliceMartingaleEntropyBudget": "94846d8c-23f6-4c02-9c61-991a942f4a1a",
     "QuantumParallelRepetition.answerLogCost_nonneg_of_postselection": "bb44a19f-8f7f-43c4-84de-b6a4b54fe614",
     "QuantumParallelRepetition.commonFinitePurification_weighted_left_variation_le": "803e157a-c945-4cde-9af4-92f7c3dfe5b7",
@@ -354,6 +361,7 @@
     "QuantumParallelRepetition.trace_mul_posSemidef_nonneg": "32ade1fe-f331-4f13-9a1d-f09f78429f2e",
     "QuantumParallelRepetition.unconditionalExactSourceScalarClipping": "3411aeaa-7551-4f7d-9ccd-a25ca3d096a2",
     "QuantumParallelRepetition.unconditionalSelectedCopyIdealStage_norm_sq": "ee961dbe-9717-4c62-ab30-348d7cd72629",
+    "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "719724fa-306f-49a7-917f-e3f0f08cf914",
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": "684c6e5f-0aec-42b9-a6c6-24543f21d72d",
     "QuantumParallelRepetition.winProbabilities_bddAbove": "5e918e7b-a6e9-44ea-a021-b3b24ea06c35"
   },
@@ -387,6 +395,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "6174924f-87b3-45b0-9712-7b494f8105ab"
+    },
+    "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "4b25ffb3-215f-4688-976a-20dfe1090346"
     },
     "QuantumParallelRepetition.aliceMartingaleEntropyBudget": {
       "error_message": "",
@@ -1242,6 +1255,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "ee961dbe-9717-4c62-ab30-348d7cd72629"
+    },
+    "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "719724fa-306f-49a7-917f-e3f0f08cf914"
     },
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": {
       "error_message": "",
