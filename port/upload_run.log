@@ -349,3 +349,7 @@ blocked by failures:
   (1/80 attempted, 0 failed)
   [thm] QuantumParallelRepetition.exactFairAliceSeedScalarEntropy_le -> ACCEPTED 
   (2/80 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobLowQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
+  (1/67 attempted, 1 failed)
+  (2/67 attempted, 2 failed)
