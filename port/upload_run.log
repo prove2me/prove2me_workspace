@@ -369,3 +369,9 @@ blocked by failures:
   [thm] QuantumParallelRepetition.exactReverseBobHighQuestionPotential_eq_alignedPrefix -> ERROR Verification timed out after 300s
   (1/45 attempted, 1 failed)
   (2/45 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exactReverseAliceMarkedContextInformation_eq_source -> ACCEPTED 
+  (3/45 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exact_source_equation_twenty_seven_support_preserving -> ACCEPTED 
+  (4/45 attempted, 2 failed)
+  [thm] QuantumParallelRepetition.exactReverseBobActualMarkedEntropy_eq_source -> ACCEPTED 
+  (5/45 attempted, 2 failed)
