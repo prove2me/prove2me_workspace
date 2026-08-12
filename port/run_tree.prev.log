@@ -1,5 +1,9 @@
-  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ERROR Verification timed out after 300s
-  (1/5 attempted, 1 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch -> ACCEPTED 
+  (1/5 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_stoppedVerifier -> ACCEPTED 
+  (2/5 attempted, 0 failed)
+  [thm] QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier -> ERROR Verification timed out after 300s
+  (3/5 attempted, 1 failed)
 blocked by failures:
-   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
-  round 1 stopped early; 5 items left, pausing
+   thm  QuantumParallelRepetition.unconditionalActualFairSourceRoundingData_exists_stoppedVerifier
+  round 1 stopped early; 3 items left, pausing
