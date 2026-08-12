@@ -1,0 +1,12 @@
+Run complete -- nothing left to upload.
+
+  222 theorem nodes + 29 definition bundles  published on `community`
+  1 relabelling bundle + 6 transport lemmas + 3 mission reductions on the human's account
+
+All three mission targets read Proved:
+  entangledValue_exponential_decay
+  entangledValue_polynomial_decay
+  entangledValue_tendsto_zero
+
+This file gates the hourly watchdog so it stops relaunching the uploader.
+Remove it only if there is new work to upload.
