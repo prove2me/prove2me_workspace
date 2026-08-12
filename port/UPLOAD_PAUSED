@@ -1,0 +1,17 @@
+Paused at the user's request while the server is updated.
+
+State: 246 of 251 items published on `community`; all 29 definition bundles done.
+
+Blocked on one node:
+  QuantumParallelRepetition.unconditionalActualFairSourceRoundingContext_physicalBranch
+
+/verify returns "timed out after 300s" on every attempt. 126s locally in its best
+form, against a ceiling that accepts ~23s and rejects ~93s. The cost is a defeq
+between the raw form and the context projections c.PA / c.PB / c.U / c.V /
+c.prepared; it does not shrink when the proof is cut, only moves.
+
+Behind it: _stoppedVerifier, the exists_stoppedVerifier consumer,
+distributionUniformExponential, standardQuantumParallelRepetition -- then the
+three mission reductions on `self`.
+
+Remove this file to resume.
