@@ -1,0 +1,17 @@
+  [def] qpr_alphabet_relabelling -> cd91bf4a-7ae3-47ea-97a8-dabd2dcb85f5
+  [create] QuantumParallelRepetition.Strategy.outcomeProbability_relabel -> fed01086-ec68-4b13-8b4c-2adee5fc3808
+  [verify] QuantumParallelRepetition.Strategy.outcomeProbability_relabel -> ACCEPTED 
+  [create] QuantumParallelRepetition.Strategy.winProbability_relabel -> b873c5b0-5f8a-4826-b25c-121001a3e659
+  [verify] QuantumParallelRepetition.Strategy.winProbability_relabel -> ACCEPTED 
+  [create] QuantumParallelRepetition.entangledValue_relabel -> 4f4a3a06-330d-46dc-a217-1ce590dadc1b
+  [verify] QuantumParallelRepetition.entangledValue_relabel -> ACCEPTED 
+  [create] QuantumParallelRepetition.repeatedEntangledValue_relabel -> e36d6867-29f0-4b0e-b89b-c95670071616
+  [verify] QuantumParallelRepetition.repeatedEntangledValue_relabel -> ACCEPTED 
+  [create] QuantumParallelRepetition.entangledValue_eq_fin -> 97f75b12-9ed3-41b0-b42c-ca5212f6b084
+  [verify] QuantumParallelRepetition.entangledValue_eq_fin -> ACCEPTED 
+  [create] QuantumParallelRepetition.repeatedEntangledValue_eq_fin -> ef2f2882-8ff9-4909-b878-8319a24fa6b2
+  [verify] QuantumParallelRepetition.repeatedEntangledValue_eq_fin -> ACCEPTED 
+  [mission] QuantumParallelRepetition.entangledValue_exponential_decay -> ACCEPTED 
+  [mission] QuantumParallelRepetition.entangledValue_polynomial_decay -> ACCEPTED 
+  [mission] QuantumParallelRepetition.entangledValue_tendsto_zero -> ACCEPTED 
+connectors complete

@@ -394,14 +394,35 @@ def run_bundle(journal):
     }
     journal.setdefault("inflight", {})[key] = "definition"
     upload.save(journal)
-    r = api.call("POST", "/submit-definition", body=body, account=ACCOUNT, timeout=900)
-    did = r.get("definition_id")
-    if not did:
-        if "already exists" in json.dumps(r):
-            did = "exists"
-        else:
+    # Publishing is asynchronous since 0.8.0: the POST queues a compile and answers 202 with a
+    # job id.  This path still expected the old synchronous reply, so it read a successfully
+    # queued definition as a failure.  The id is journalled before polling, so an interrupted
+    # run resumes the job rather than queueing a second compile of the same bundle.
+    job_id = journal.setdefault("jobs", {}).get(key)
+    if not job_id:
+        r = api.call("POST", "/submit-definition", body=body, account=ACCOUNT, timeout=180,
+                     retries=2)
+        job_id = r.get("job_id")
+        if not job_id:
+            if "already exists" in json.dumps(r) or "duplicate key" in json.dumps(r):
+                journal["created"][key] = "exists"
+                journal["inflight"].pop(key, None)
+                upload.save(journal)
+                print("  [def] qpr_alphabet_relabelling -> already published")
+                return True
             print(f"  [FAIL] relabelling bundle: {json.dumps(r)[:800]}")
             return False
+        journal["jobs"][key] = job_id
+        upload.save(journal)
+    res = upload.poll_job(job_id, ACCOUNT)
+    if res.get("status") != "PUBLISHED":
+        journal["jobs"].pop(key, None)
+        journal["inflight"].pop(key, None)
+        upload.save(journal)
+        print(f"  [FAIL] relabelling bundle: job {res.get('status')} "
+              f"{res.get('error_message', '')[:400]}")
+        return False
+    did = res.get("theorem_id") or res.get("definition_id") or "published"
     journal["created"][key] = did
     journal["inflight"].pop(key, None)
     upload.save(journal)

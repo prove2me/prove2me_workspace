@@ -4,8 +4,10 @@
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_positive": "58a7e4e5-be66-48d6-bb20-92c36f8fa5f1",
     "QuantumParallelRepetition.Strategy.outcomeProbability_nonneg": "d50e2837-973e-4aed-ace9-85cff1338169",
     "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": "f8f24ddd-2847-478d-84d6-8183751764e1",
+    "QuantumParallelRepetition.Strategy.outcomeProbability_relabel": "fed01086-ec68-4b13-8b4c-2adee5fc3808",
     "QuantumParallelRepetition.Strategy.winProbability_le_one": "17570be4-4be1-4edf-83d7-5e038d97205c",
     "QuantumParallelRepetition.Strategy.winProbability_nonneg": "b992baa8-8874-451f-8a77-c3c2ac27a0fc",
+    "QuantumParallelRepetition.Strategy.winProbability_relabel": "b873c5b0-5f8a-4826-b25c-121001a3e659",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.answerNonempty": "7c6bf12d-33f2-495a-bccd-898df2e58da3",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all": "2241dfda-d761-4a3a-8e87-c5266ab87365",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all": "51d81525-3616-449b-993f-0a1a60c9daa4",
@@ -48,8 +50,13 @@
     "QuantumParallelRepetition.distributionUniformExponential": "ee9dcd81-daeb-4c1b-8962-95bd3bd1ae25",
     "QuantumParallelRepetition.embezzlementState_norm": "82f7429a-782c-4eed-9b22-25e974febde8",
     "QuantumParallelRepetition.ensemble_spectralPurificationFilterEntryLp_mem_common": "64946445-eaa7-4656-9f37-a727c9290267",
+    "QuantumParallelRepetition.entangledValue_eq_fin": "97f75b12-9ed3-41b0-b42c-ca5212f6b084",
+    "QuantumParallelRepetition.entangledValue_exponential_decay": "e18d53d3-db05-49b5-86a5-3154da376483",
     "QuantumParallelRepetition.entangledValue_le_one": "972e5e1e-e163-4fcb-9924-d20bd41c11bd",
     "QuantumParallelRepetition.entangledValue_nonneg": "ed0b300e-c1cb-4071-ab61-b4b7433ac7e8",
+    "QuantumParallelRepetition.entangledValue_polynomial_decay": "469992c3-d88c-4642-8dc1-be8aebe208bd",
+    "QuantumParallelRepetition.entangledValue_relabel": "4f4a3a06-330d-46dc-a217-1ce590dadc1b",
+    "QuantumParallelRepetition.entangledValue_tendsto_zero": "5d4a9804-19de-4ef4-8c84-8e1d9d8584db",
     "QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint": "40ff501e-c5a4-464a-9d48-3f05a5e024da",
     "QuantumParallelRepetition.exactAliceCoordinateFilter_posSemidef": "706da09a-2f2a-4bd0-a501-c4e23c7f46c9",
     "QuantumParallelRepetition.exactAliceCoordinateFilter_sum": "54b6dd93-2e43-41e3-9b65-edb735f2187c",
@@ -180,6 +187,8 @@
     "QuantumParallelRepetition.positiveMatrixSpectralAtom_sum": "8cc2ad96-b0ca-49e8-b1d7-5cde1439eaad",
     "QuantumParallelRepetition.purifiedRefinedEffect_complete": "cc1965c5-cc60-4d46-bc79-e81498dec050",
     "QuantumParallelRepetition.purifiedRefinedEffect_posSemidef": "c7e3e642-3012-4b85-96c0-0331d08d0e52",
+    "QuantumParallelRepetition.repeatedEntangledValue_eq_fin": "ef2f2882-8ff9-4909-b878-8319a24fa6b2",
+    "QuantumParallelRepetition.repeatedEntangledValue_relabel": "e36d6867-29f0-4b0e-b89b-c95670071616",
     "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_actual_atom_sum": "49ac220e-cc33-447d-a298-ff52209188a1",
     "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_conditional": "0f9b3381-1043-4449-b3a4-8b7106ce0af1",
     "QuantumParallelRepetition.reweightedSeedPrefixPriorMarginal_ne_zero_of_positive_atom": "53060ed2-6921-4418-abb7-528be8af94be",
@@ -223,6 +232,7 @@
     "QuantumParallelRepetition.unconditionalSourcePhysicalSameGridWeightedStoppingLedger": "4cff7b06-a8fd-43ac-b55f-cfafe35629e5",
     "QuantumParallelRepetition.unconditionalWeightedClippedMatchedVerifierAndMassLoss": "ac0fd92e-0669-4587-8521-ccd2db22c880",
     "QuantumParallelRepetition.winProbabilities_bddAbove": "a9dd6609-4698-4986-aaaf-5b0f48cbe917",
+    "def:qpr_alphabet_relabelling": "cd91bf4a-7ae3-47ea-97a8-dabd2dcb85f5",
     "def:qpr_core_00": "4e1135b7-b1e4-4088-a631-2b394b814ef5",
     "def:qpr_core_01": "bb236e95-7057-4025-9f76-25644f1450a8",
     "def:qpr_core_02": "078a042d-9866-454a-b5d7-575148a49124",
@@ -291,11 +301,15 @@
     "def:qpr_core_21": "definition"
   },
   "jobs": {
+    "QuantumParallelRepetition.Strategy.outcomeProbability_relabel": "0c164f4a-0b89-4c0d-a7ca-8d009e25851c",
+    "QuantumParallelRepetition.Strategy.winProbability_relabel": "000535ce-fb74-45a6-be17-971a65183ab2",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all": "54854e0d-53bb-452d-ac87-d1af23efade5",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all": "efe56bde-1040-4f82-ae05-2f5f76271cea",
     "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "d9c45d44-cffb-470f-8611-097768082906",
     "QuantumParallelRepetition.directDSVActualStoppingSelectedHistory_sourceProduct": "b7dbf63b-4ced-4c49-a1a3-120215fa03f2",
     "QuantumParallelRepetition.distributionUniformExponential": "e1c5dbab-43c1-4666-ada7-479ebe66a675",
+    "QuantumParallelRepetition.entangledValue_eq_fin": "fc7ddc12-1fe3-4df5-9d01-c159846df1f4",
+    "QuantumParallelRepetition.entangledValue_relabel": "797d40c4-cc21-4831-ad72-0fb384ddc49b",
     "QuantumParallelRepetition.exactBobQuestionMass_eq_jointPrefixQuestionMass": "50957f97-c97a-4f20-a6cb-926a177c1086",
     "QuantumParallelRepetition.exactBobSourceMarginalInformation_le": "5617f869-aa0e-459d-87af-4be54ffde021",
     "QuantumParallelRepetition.exactFairAcceptedBobEntropy_le_sourceRate": "8df90855-9ad6-4cc6-90df-4ebc16356bf5",
@@ -313,6 +327,8 @@
     "QuantumParallelRepetition.exact_standardQuantumParallelRepetition_of_source_rounding": "00a7a728-0249-4ec2-b73c-2197445c2d7a",
     "QuantumParallelRepetition.exists_proofDSVDensityRationalPublicBucketPhysicalQuantitativeMixedPrefixCleanup_sq": "6737cde2-94af-4240-ae65-f9ffbd8d2393",
     "QuantumParallelRepetition.exists_proofUnconditionalStoppedCommonPrefixBalancedHazard": "38cb9c66-4c08-425b-aeee-f453987a5f45",
+    "QuantumParallelRepetition.repeatedEntangledValue_eq_fin": "f8bcec81-fd75-4cf8-a583-48c79d3189cc",
+    "QuantumParallelRepetition.repeatedEntangledValue_relabel": "929e44bb-917e-44a2-a2f3-e6c86d8554ce",
     "QuantumParallelRepetition.standardQuantumParallelRepetition": "b9c51709-d6ae-46e7-9eba-af573c216c0a",
     "QuantumParallelRepetition.unconditionalActualCanonicalFullSource_eq_rawSelectedStage": "4357fefb-e861-44b5-9065-0888e55810ee",
     "QuantumParallelRepetition.unconditionalActualFairCleanedRow_le_one": "77596360-5de7-497b-b711-18d6268be142",
@@ -335,6 +351,7 @@
     "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedSelectedHistoryEquiv_hit": "c836b339-2952-4669-b099-307b4d1d529c",
     "QuantumParallelRepetition.unconditionalSourcePhysicalCleanedStoppingFixedSource_norm": "1a83aa6f-666f-4996-bbd3-bf5107acad35",
     "QuantumParallelRepetition.unconditionalSourcePhysicalRounding_exists_fairStoppingHazard": "f5b38455-088c-4986-8cd8-03f7a95615cd",
+    "def:qpr_alphabet_relabelling": "3d39bc45-c3e1-4dc1-86e3-60b271efa6d3",
     "def:qpr_core_27": "d7b905a1-bd7f-4675-ac05-1fb51839eb9f",
     "def:qpr_core_28": "e2ba091b-d82f-48f2-a99d-766b40b53a14"
   },
@@ -343,8 +360,10 @@
     "QuantumParallelRepetition.Strategy.jointMeasurementOperator_positive": "26f3efe6-29c6-4573-b82e-fab41a5d643c",
     "QuantumParallelRepetition.Strategy.outcomeProbability_nonneg": "eb45999c-237e-4396-a338-d5e0493a3d90",
     "QuantumParallelRepetition.Strategy.outcomeProbability_normalized": "9bb7c873-c637-480e-9ae1-f15df69c2abb",
+    "QuantumParallelRepetition.Strategy.outcomeProbability_relabel": "d6afdd8a-7098-4790-9749-c54af112166a",
     "QuantumParallelRepetition.Strategy.winProbability_le_one": "05551136-d3b1-477a-97dc-2392ecbc1846",
     "QuantumParallelRepetition.Strategy.winProbability_nonneg": "6174924f-87b3-45b0-9712-7b494f8105ab",
+    "QuantumParallelRepetition.Strategy.winProbability_relabel": "729d85b8-5476-4a39-88ed-7d6576c04a94",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.fine_all": "39eb03e5-6831-46a3-a546-282be347c060",
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.width_all": "528d2655-7cd3-4e02-9231-0593c651622a",
     "QuantumParallelRepetition.actualStoppingQuestionLocalWinningProbability_ge_matched": "4b25ffb3-215f-4688-976a-20dfe1090346",
@@ -383,8 +402,13 @@
     "QuantumParallelRepetition.distributionUniformExponential": "74d2a614-863c-4db9-8495-2e2aaf5dbaf4",
     "QuantumParallelRepetition.embezzlementState_norm": "bc4be974-01bd-4bb9-ab17-672adbc3de35",
     "QuantumParallelRepetition.ensemble_spectralPurificationFilterEntryLp_mem_common": "fed7b5e4-6c9f-444f-ba15-e66a46ceb547",
+    "QuantumParallelRepetition.entangledValue_eq_fin": "794ec1c7-3843-4065-adc5-dde512744306",
+    "QuantumParallelRepetition.entangledValue_exponential_decay": "713065d8-17fa-4aeb-b4d9-c118523e8f5a",
     "QuantumParallelRepetition.entangledValue_le_one": "24564a0d-ed1a-4ed8-ae9b-7313433390b7",
     "QuantumParallelRepetition.entangledValue_nonneg": "85d17adf-fdb3-43d5-a9bf-987c9f2be78f",
+    "QuantumParallelRepetition.entangledValue_polynomial_decay": "06aa0592-b6cb-4d9e-b2e8-e73675256f83",
+    "QuantumParallelRepetition.entangledValue_relabel": "e1402adb-4dd3-485b-adbf-07d999c6859b",
+    "QuantumParallelRepetition.entangledValue_tendsto_zero": "7269fcfb-e7ad-4f60-a6cc-6825877c4bbc",
     "QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint": "392235fe-3926-4ada-9600-4da0cbcef429",
     "QuantumParallelRepetition.exactAliceCoordinateFilter_posSemidef": "ff58be61-02a1-4f25-91c0-38d9998a12bc",
     "QuantumParallelRepetition.exactAliceCoordinateFilter_sum": "0b29bbfa-4166-4b7a-a924-c9e1868b5e81",
@@ -470,6 +494,8 @@
     "QuantumParallelRepetition.positiveMatrixSpectralAtom_sum": "ebdc2cc6-f33b-4a7a-b153-1b07a728ed54",
     "QuantumParallelRepetition.purifiedRefinedEffect_complete": "13654fb7-e0d0-4fde-98a7-64a71b0ea4d0",
     "QuantumParallelRepetition.purifiedRefinedEffect_posSemidef": "37843b2b-385f-4cae-aff0-b85c6ec76ca3",
+    "QuantumParallelRepetition.repeatedEntangledValue_eq_fin": "7377d3d3-4762-407f-bbb0-ce9bb99aeab2",
+    "QuantumParallelRepetition.repeatedEntangledValue_relabel": "350035e7-c04e-41ee-a1fe-6c7201457445",
     "QuantumParallelRepetition.scalarResolventFilter_memLp_two": "121f163b-6494-4770-a33a-f2286490d19e",
     "QuantumParallelRepetition.sourceHistoryAcceptedMass_eq_uniform": "977337b6-26ef-4219-9246-da91597653ee",
     "QuantumParallelRepetition.spectralPurificationFilter_memLp_two": "81ae0617-1f8f-4abf-8b39-c390a0340efd",
@@ -521,6 +547,11 @@
       "status": "ACCEPTED",
       "submission_id": "9bb7c873-c637-480e-9ae1-f15df69c2abb"
     },
+    "QuantumParallelRepetition.Strategy.outcomeProbability_relabel": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "d6afdd8a-7098-4790-9749-c54af112166a"
+    },
     "QuantumParallelRepetition.Strategy.winProbability_le_one": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -530,6 +561,11 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "6174924f-87b3-45b0-9712-7b494f8105ab"
+    },
+    "QuantumParallelRepetition.Strategy.winProbability_relabel": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "729d85b8-5476-4a39-88ed-7d6576c04a94"
     },
     "QuantumParallelRepetition.UnconditionalActualFairSourceRoundingContext.answerNonempty": {
       "error_message": "",
@@ -741,6 +777,16 @@
       "status": "ACCEPTED",
       "submission_id": "fed7b5e4-6c9f-444f-ba15-e66a46ceb547"
     },
+    "QuantumParallelRepetition.entangledValue_eq_fin": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "794ec1c7-3843-4065-adc5-dde512744306"
+    },
+    "QuantumParallelRepetition.entangledValue_exponential_decay": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "713065d8-17fa-4aeb-b4d9-c118523e8f5a"
+    },
     "QuantumParallelRepetition.entangledValue_le_one": {
       "error_message": "",
       "status": "ACCEPTED",
@@ -750,6 +796,21 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "85d17adf-fdb3-43d5-a9bf-987c9f2be78f"
+    },
+    "QuantumParallelRepetition.entangledValue_polynomial_decay": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "06aa0592-b6cb-4d9e-b2e8-e73675256f83"
+    },
+    "QuantumParallelRepetition.entangledValue_relabel": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "e1402adb-4dd3-485b-adbf-07d999c6859b"
+    },
+    "QuantumParallelRepetition.entangledValue_tendsto_zero": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "7269fcfb-e7ad-4f60-a6cc-6825877c4bbc"
     },
     "QuantumParallelRepetition.exactAliceConditionalMatrix_eq_joint": {
       "error_message": "",
@@ -1400,6 +1461,16 @@
       "error_message": "",
       "status": "ACCEPTED",
       "submission_id": "37843b2b-385f-4cae-aff0-b85c6ec76ca3"
+    },
+    "QuantumParallelRepetition.repeatedEntangledValue_eq_fin": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "7377d3d3-4762-407f-bbb0-ce9bb99aeab2"
+    },
+    "QuantumParallelRepetition.repeatedEntangledValue_relabel": {
+      "error_message": "",
+      "status": "ACCEPTED",
+      "submission_id": "350035e7-c04e-41ee-a1fe-6c7201457445"
     },
     "QuantumParallelRepetition.reweightedSeedPrefixEntropyIncrement_eq_actual_atom_sum": {
       "error_message": "",
