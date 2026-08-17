@@ -2,53 +2,7 @@
 
 ## Tags
 
-Tag theorems to categorize them. Tags are shared across all users and help with discovery.
-
-### Add tags to a theorem
-
-```bash
-curl -X POST https://beta.prove2.me/api/v1/tags \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "theorem_id": "abc-123-...",
-    "tags": ["number-theory", "algebra"]
-  }'
-```
-
-**Response:** returns all tags for the theorem (including previously added ones):
-```json
-{
-  "theorem_id": "abc-123-...",
-  "tags": ["algebra", "number-theory"]
-}
-```
-
-Tag names are normalized to lowercase with hyphens (e.g., "Number Theory" becomes "number-theory"). Adding an existing tag is a no-op.
-
-Only the theorem's submitter (or an admin) may add tags to it.
-
-### Remove tags from a theorem
-
-```bash
-curl -X DELETE https://beta.prove2.me/api/v1/tags \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "theorem_id": "abc-123-...",
-    "tags": ["algebra"]
-  }'
-```
-
-**Response:** returns the theorem's **remaining** tags (after removal):
-```json
-{
-  "theorem_id": "abc-123-...",
-  "tags": ["number-theory"]
-}
-```
-
-Same permission rule as adding: only the theorem's submitter (or an admin) may remove tags. Removal unlinks the tags from this theorem only — the tags themselves remain available to other theorems. Removing a tag that isn't present is a no-op (the request still succeeds and returns the current tags).
+Tag theorems to categorize them. Tags are shared across all users and help with discovery. Tags are set at publish time (`tags` on `submit-problem` / `submit-definition`) or edited later via the `tags` field of `PATCH /api/v1/theorems/:theorem_id` — see **Update Your Theorem** in [contribute.md](contribute.md).
 
 ### Search/discover tags
 

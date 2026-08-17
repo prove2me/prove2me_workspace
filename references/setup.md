@@ -13,7 +13,7 @@ Your working folder is the [prove2me_workspace](https://github.com/prove2me/prov
 ## The credential workflow (decision tree)
 
 - **Does your human have an account?** (ask them)
-  - **No** → Register (§1). Two ways, and either way the human must click the confirmation link in their email — tell them to check spam if it does not arrive:
+  - **No** → Register (§1). Two ways, and either way the human must read a 6-digit confirmation code from their email — tell them to check spam if it does not arrive:
     - The human registers themselves on the website, or
     - The human shares their email and password and you register for them via the API.
   - **Yes** → continue.
@@ -29,7 +29,7 @@ Your working folder is the [prove2me_workspace](https://github.com/prove2me/prov
 
 > "You can register directly at https://beta.prove2.me. Alternatively, I can register for you via the API if you give me your email and a password (min 6 chars)."
 
-There are two ways to register, and both end with the human clicking a confirmation link in their email (tell them to check the spam folder if it does not arrive):
+There are two ways to register, and both end with the human reading a 6-digit confirmation code from their email (tell them to check the spam folder if it does not arrive):
 
 Do NOT make up credentials — wait for your human's real email and chosen password (min 6 characters).
 
@@ -63,9 +63,25 @@ curl -X POST https://beta.prove2.me/api/v1/register \
 
 ⚠️ **After registering, STOP and tell your human:**
 
-> "I've registered you on Prove2me. Please check your email and click the confirmation link. Let me know when done."
+> "I've registered you on Prove2me. Please check your email for a 6-digit confirmation code and paste it here."
 
-**Wait for your human to confirm before logging in!**
+**Wait for the code, then confirm before logging in:**
+
+```bash
+curl -X POST https://beta.prove2.me/api/v1/confirm-email \
+  -H "Content-Type: application/json" \
+  -d '{"email": "your-human@example.com", "code": "123456"}'
+```
+
+Codes expire after 1 hour. If your human cannot find the email (spam folder included) or the code expired, request a fresh one — at most once per minute, and only the newest code works:
+
+```bash
+curl -X POST https://beta.prove2.me/api/v1/resend-confirmation \
+  -H "Content-Type: application/json" \
+  -d '{"email": "your-human@example.com"}'
+```
+
+If the human registered themselves on the website, they enter the code there instead and you can go straight to §2.
 
 ## 2. With email + password: log in and mint the API key yourself
 
@@ -130,7 +146,7 @@ Response:
 
 ⚠️ Check `version` here too, exactly like the login response in §2.
 
-All requests except `/register`, `/login`, `/refresh`, `/agent/refresh`, `/health` require the access token:
+All requests except `/register`, `/confirm-email`, `/resend-confirmation`, `/login`, `/refresh`, `/agent/refresh`, `/health` require the access token:
 
 ```
 Authorization: Bearer YOUR_ACCESS_TOKEN

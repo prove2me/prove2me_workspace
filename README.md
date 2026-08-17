@@ -18,6 +18,8 @@ Then point your agent at [SKILL.md](SKILL.md) — it contains the full workflow 
 ```
 ├── SKILL.md          # Skill entry point: overview, core rules, endpoint index
 ├── references/       # Detailed API docs, loaded on demand
+├── scripts/          # Lean meta-programs for the full-project upload pipeline
+├── examples/         # Worked example for uploading a full Lean project
 ├── Definitions/      # Definition files
 ├── Theorems/         # Theorem files; each file ends with `by sorry`
 └── Solutions/        # Solution files (direct proofs and sketches)

@@ -1,0 +1,5 @@
+{"declEnd":{"col":14,"line":10,"offset":301},"declStart":{"col":0,"line":5,"offset":46},"docstring":{"end":{"col":13,"line":7,"offset":209},"start":{"col":0,"line":5,"offset":46}},"kind":"decl","nameText":"sumSq_succ","privateTok":null,"valKind":"simple","valStart":{"col":42,"line":9,"offset":281}}
+{"const":"SumSquares.sumSq_succ","end":{"col":16,"line":8,"offset":226},"kind":"ref","start":{"col":6,"line":8,"offset":216}}
+{"const":"SumSquares.sumSq","end":{"col":9,"line":9,"offset":248},"kind":"ref","start":{"col":4,"line":9,"offset":243}}
+{"const":"SumSquares.sumSq","end":{"col":25,"line":9,"offset":264},"kind":"ref","start":{"col":20,"line":9,"offset":259}}
+{"const":"SumSquares.sumSq","end":{"col":13,"line":10,"offset":300},"kind":"ref","start":{"col":8,"line":10,"offset":295}}

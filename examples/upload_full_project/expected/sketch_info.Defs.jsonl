@@ -1,0 +1,9 @@
+{"declEnd":{"col":34,"line":8,"offset":176},"declStart":{"col":0,"line":5,"offset":45},"docstring":{"end":{"col":56,"line":5,"offset":106},"start":{"col":0,"line":5,"offset":45}},"kind":"decl","nameText":"sumSq","privateTok":null,"valKind":"eqns","valStart":{"col":2,"line":7,"offset":133}}
+{"declEnd":{"col":16,"line":13,"offset":376},"declStart":{"col":0,"line":10,"offset":178},"docstring":{"end":{"col":63,"line":11,"offset":320},"start":{"col":0,"line":10,"offset":178}},"kind":"decl","nameText":"SumBudget","privateTok":null,"valKind":null,"valStart":null}
+{"declEnd":{"col":33,"line":15,"offset":417},"declStart":{"col":0,"line":15,"offset":378},"docstring":null,"kind":"decl","nameText":null,"privateTok":null,"valKind":"simple","valStart":{"col":23,"line":15,"offset":403}}
+{"const":"SumSquares.sumSq","end":{"col":9,"line":6,"offset":116},"kind":"ref","start":{"col":4,"line":6,"offset":111}}
+{"const":"SumSquares.SumBudget","end":{"col":15,"line":12,"offset":336},"kind":"ref","start":{"col":6,"line":12,"offset":327}}
+{"const":"SumSquares.SumBudget.budget","end":{"col":8,"line":13,"offset":363},"kind":"ref","start":{"col":2,"line":13,"offset":357}}
+{"const":"SumSquares.instSumBudgetNat","end":{"col":8,"line":15,"offset":386},"kind":"ref","start":{"col":0,"line":15,"offset":378}}
+{"const":"SumSquares.SumBudget","end":{"col":20,"line":15,"offset":398},"kind":"ref","start":{"col":11,"line":15,"offset":389}}
+{"const":"SumSquares.sumSq","end":{"col":32,"line":15,"offset":414},"kind":"ref","start":{"col":27,"line":15,"offset":409}}

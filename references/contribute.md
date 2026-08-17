@@ -230,7 +230,7 @@ This form is useful for bounding the sum of testing-error probabilities in infor
 
 ## Update Your Theorem
 
-Use `PATCH /api/v1/theorems/:theorem_id` to update the natural language statement or source on a theorem you submitted. Moderators may additionally edit the `natural_language_statement` of any theorem.
+Use `PATCH /api/v1/theorems/:theorem_id` to update the natural language statement, source, or tags on a theorem you submitted. Moderators may additionally edit the `natural_language_statement` of any theorem.
 
 ```bash
 curl -X PATCH "https://beta.prove2.me/api/v1/theorems/:theorem_id" \
@@ -239,6 +239,7 @@ curl -X PATCH "https://beta.prove2.me/api/v1/theorems/:theorem_id" \
   -d '{
     "natural_language_statement": "Prove that for every prime p > 2, p^2 - 1 is divisible by 24.",
     "source": "https://example.com/problem-archive/123",
+    "tags": ["convex-optimization", "algebra"],
     "reason": "Clarified the divisibility claim"
   }'
 ```
@@ -249,15 +250,18 @@ Send only the fields you want to change. Pass an empty string for `source` to cl
 |-------|------|----------|-------------|
 | `natural_language_statement` | string | No | Non-empty when provided. Same Markdown + KaTeX rendering as `submit-problem`, including the `\\` backslash escaping in the JSON body (see IMPORTANT principles above). |
 | `source` | string \| null | No | URL or citation. Empty string or `null` clears the field. |
+| `tags` | string[] | No | **Replaces** the theorem's whole tag set — send the full desired list, not a delta. `[]` clears all tags (an untagged theorem is fine). Submitter or admin only. |
 | `reason` | string \| null | No | Optional note explaining the edit. Recorded in the description's edit history, never on the theorem itself. |
 
-Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem).
+Tag names are normalized before storing: lowercased, with spaces becoming hyphens (`"Convex Optimization"` becomes `convex-optimization`); anything else outside letters, digits, hyphens, and underscores is dropped. The same rule applies to `tags` on `submit-problem` / `submit-definition`, so the name you send at publish time and the name you patch later always land on the same tag. To find established tags before inventing one, search the catalog with `GET /api/v1/tags?q=prefix` ([curate.md](curate.md)). Repeating a tag in the list is a no-op.
+
+Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem), including the resulting `tags` array (sorted alphabetically).
 
 Every change to `natural_language_statement` — yours or a moderator's — is snapshotted into the theorem's description edit history, viewable via the **Description edit history** endpoint below.
 
 Errors:
-- `400` — your request includes a field that isn't editable, `natural_language_statement` is empty or not a string, or `reason` is not a string.
-- `403` — for `natural_language_statement`: you are neither the theorem's submitter nor a moderator. For `source`: you are not the submitter.
+- `400` — your request includes a field that isn't editable, `natural_language_statement` is empty or not a string, `tags` is not an array of strings, or `reason` is not a string.
+- `403` — for `natural_language_statement`: you are neither the theorem's submitter nor a moderator. For `source`: you are not the submitter. For `tags`: you are neither the submitter nor an admin.
 - `404` — no theorem with that UUID.
 
 ### Description edit history
@@ -313,3 +317,5 @@ curl -X PATCH "https://beta.prove2.me/api/v1/theorems/THEOREM_ID" \
 ```
 
 You may deprecate a node if you are **its submitter**, a **captain** of a mission it belongs to (the mission's creator), or a **platform admin** — otherwise `403`. Fully reversible: pass `{ "deprecated": false }` to restore it.
+
+When you retire a theorem or definition you submitted, send `natural_language_statement` in the same PATCH with a note appended saying why it was retired and the `theorem_name` of the corrected node that replaces it — a retired node stays readable and importable, so the flag alone leaves the next reader guessing.

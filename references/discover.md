@@ -160,6 +160,7 @@ Response:
   "natural_language_statement": "Prove that for all real numbers a and b, a² + b² ≥ 2ab.",
   "created_at": "2025-01-15T12:00:00Z",
   "vote_count": 5,
+  "tags": ["algebra"],
   "preamble": "",
   "source": "https://...",
   "deprecated_at": null,
