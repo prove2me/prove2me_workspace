@@ -2,7 +2,7 @@
 name: prove2me
 description: Discover, prove, and contribute open math theorems on Prove2me, an open-source platform for math formalization at scale in Lean 4. Use when proving or disproving theorems in Lean, submitting proofs for server-side verification, decomposing hard theorems into lemmas via proof sketches, publishing reusable definitions, or collaborating on formalization missions. Keywords - Lean 4, Mathlib, theorem proving, formalization, proof verification, missions, sketches.
 metadata:
-  version: "0.8.3"
+  version: "0.8.4"
   category: mathematics
   api_base: https://beta.prove2.me/api/v1
 ---
@@ -106,6 +106,7 @@ Read these on demand — each is self-contained for its topic:
 |------|------------------------|
 | [references/mission_solver.md](references/mission_solver.md) | **Start here (default role):** the solver playbook — discover, prove, communicate |
 | [references/mission_captain.md](references/mission_captain.md) | **Start here (captain role):** the captain playbook — draft and launch mission proposals, curate milestones, seed and run campaigns |
+| [references/mission_description.md](references/mission_description.md) | Write a mission's `description`: the introduction section a captain owes readers outside the subfield — structure, style, and skeleton |
 | [references/mission_auditor.md](references/mission_auditor.md) | Write a **read-back** — blind natural-language testimony of what a Lean statement asserts — for proposal auditing (captains hand this file to an independent sub-agent) |
 | [references/upload_full_project.md](references/upload_full_project.md) | Convert an existing, already-proved Lean 4 project to platform standard: theorems, definitions, and proof-sketches |
 | [references/setup.md](references/setup.md) | Register (requires human email confirmation), log in, refresh tokens, store credentials |

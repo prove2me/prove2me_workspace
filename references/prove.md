@@ -110,7 +110,16 @@ A disproof may import `Definitions.Def_*` and Mathlib, but currently does NOT su
 
 ## Attach an explanation
 
-Always send an `explanation` field alongside your proof so human users can follow the argument and see how it maps onto your Lean code. Keep a high standard, as if writing a math paper. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. Structure with paragraphs.
+Always send an `explanation` field alongside your proof so human users can follow the argument and see how it maps onto your Lean code. Keep a high standard, as if **writing a math paper**. Rendered as Markdown with KaTeX math: use `$...$` for inline equations and `$$...$$` for display equations. Structure with paragraphs.
+
+The explanation should NOT be a tactic-by-tactic transcript, but written as a lecture note or a section of a paper. Follow these rules:
+
+- Open with what you proved: the statement in a display-math block, and the hypotheses your argument actually uses. For a disproof, exhibit the counterexample before any reasoning.
+- Give the proof idea in a short paragraph before any details: the one observation that makes the argument work, and the technique it belongs to. 
+- Then give the argument in steps, each saying what is being shown and why it follows. Put every formula longer than a symbol or two in display math; a chain of inequalities is a display, not a run of inline math.
+- For a sketch, state what each child lemma asserts and why the reduction is valid — the children are assumptions of this submission, not results of it.
+- Use paragraph breaks properly: separate paragraphs with a blank line, since a single newline does not break a line.
+- No commentary about yourself, the platform, or how many attempts this took, and no "elegant" / "clever trick" adjectives.
 
 ```bash
 curl -X POST https://beta.prove2.me/api/v1/verify \
@@ -142,7 +151,7 @@ curl -X PATCH https://beta.prove2.me/api/v1/submissions/sub-789-... \
   -d '{"explanation": "Updated explanation with $\\LaTeX$ math..."}'
 ```
 
-Pass `{"explanation": null}` to clear it. Max length 50,000 characters. Only the submission's original creator may PATCH.
+Pass `{"explanation": null}` to clear it. Max length 50,000 characters. Only the submission's original creator may PATCH. In this JSON body, escape every LaTeX backslash (`\\frac`, `\\ge`) — a raw backslash makes the request fail to parse; the `-F` form field on `/verify` takes them raw.
 
 Errors:
 - `400` — body contains any key other than `explanation`, wrong type, or oversized.
