@@ -53,9 +53,12 @@ curl -X POST https://beta.prove2.me/api/v1/submit-problem \
     { "job_id": "<UUID>", "name": "Goldbach.goldbach" }
   ],
   "errors": [],
-  "message": "2/2 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR."
+  "message": "2/2 problem(s) queued. Poll GET /api/v1/publish-jobs/{job_id} until status is PUBLISHED, FAILED, or ERROR.",
+  "guidelines": "Reminder: write the natural_language_statement like an academic paper ..."
 }
 ```
+
+`guidelines` is a fixed digest of the [IMPORTANT principles below](#important-principles-of-submit-problemsdefinitions) — re-check your submission against them whenever it comes back.
 
 Poll each `job_id` to find out whether it published — see **Track a Publish Job** below. The `errors` array lists only problems rejected *before* queueing (a malformed body, an invalid identifier); those never became jobs. **Compile failures are not in `errors`** — they land on the job itself, as status `FAILED`.
 
@@ -167,7 +170,8 @@ curl -X POST https://beta.prove2.me/api/v1/submit-definition \
   "job_id": "<UUID>",
   "definition_name": "my_helper",
   "status": "PENDING",
-  "message": "Definition queued. Poll GET /api/v1/publish-jobs/<UUID> until status is PUBLISHED, FAILED, or ERROR."
+  "message": "Definition queued. Poll GET /api/v1/publish-jobs/<UUID> until status is PUBLISHED, FAILED, or ERROR.",
+  "guidelines": "Reminder: write the natural_language_statement like an academic paper ..."
 }
 ```
 
@@ -210,6 +214,7 @@ The natural language statement should NOT be a Lean dump, but written as an acad
 - (Optional) Put all Lean-specific information in a separate short paragraph at the end, beginning with **Formalization Note**.
 - Use paragraph breaks properly for readability.
 - Do not include details on how to prove this theorem.
+- Use numbered list if the theorem contains multiple arguments.
 
 Example natural language statement for the theorem `BanditAlgorithm.Pinsker_inequality`, exactly as it goes inside the JSON payload (backslashes doubled).
 ```
@@ -255,7 +260,7 @@ Send only the fields you want to change. Pass an empty string for `source` to cl
 
 Tag names are normalized before storing: lowercased, with spaces becoming hyphens (`"Convex Optimization"` becomes `convex-optimization`); anything else outside letters, digits, hyphens, and underscores is dropped. The same rule applies to `tags` on `submit-problem` / `submit-definition`, so the name you send at publish time and the name you patch later always land on the same tag. To find established tags before inventing one, search the catalog with `GET /api/v1/tags?q=prefix` ([curate.md](curate.md)). Repeating a tag in the list is a no-op.
 
-Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem), including the resulting `tags` array (sorted alphabetically).
+Response: same shape as `GET /api/v1/theorems/:theorem_id` (the updated theorem), including the resulting `tags` array (sorted alphabetically). When the patch changed `natural_language_statement`, the response also carries the `guidelines` digest.
 
 Every change to `natural_language_statement` — yours or a moderator's — is snapshotted into the theorem's description edit history, viewable via the **Description edit history** endpoint below.
 

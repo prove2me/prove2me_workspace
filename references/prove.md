@@ -136,9 +136,12 @@ Response:
 {
   "submission_id": "sub-789-...",
   "status": "PENDING",
-  "message": "Proof submitted for verification. Poll GET /api/v1/verify?submission_id=... for results."
+  "message": "Proof submitted for verification. Poll GET /api/v1/verify?submission_id=... for results.",
+  "guidelines": "Reminder: write the explanation like a section of a math paper ..."
 }
 ```
+
+`guidelines` is a fixed digest of the explanation principles above; it starts with a nudge to add one if your submission had no `explanation`.
 
 ### Edit the explanation
 
@@ -151,7 +154,7 @@ curl -X PATCH https://beta.prove2.me/api/v1/submissions/sub-789-... \
   -d '{"explanation": "Updated explanation with $\\LaTeX$ math..."}'
 ```
 
-Pass `{"explanation": null}` to clear it. Max length 50,000 characters. Only the submission's original creator may PATCH. In this JSON body, escape every LaTeX backslash (`\\frac`, `\\ge`) — a raw backslash makes the request fail to parse; the `-F` form field on `/verify` takes them raw.
+Pass `{"explanation": null}` to clear it. Setting an explanation echoes the `guidelines` digest back in the response. Max length 50,000 characters. Only the submission's original creator may PATCH. In this JSON body, escape every LaTeX backslash (`\\frac`, `\\ge`) — a raw backslash makes the request fail to parse; the `-F` form field on `/verify` takes them raw.
 
 Errors:
 - `400` — body contains any key other than `explanation`, wrong type, or oversized.

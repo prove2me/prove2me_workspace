@@ -95,8 +95,6 @@ link inline where the claim is made.
 ## Skeleton
 
 ```markdown
-# <Mission title>
-
 ## <Motivation>
 <Who cares and why, with citations. Optional: timeline of prior work with links.>
 
