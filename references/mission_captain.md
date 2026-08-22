@@ -98,6 +98,11 @@ A research paper or open problem is usually a single mission with one goal theor
 2. **Name the mission `{Book name} {series number}: {capstone}`** — the book's title, a series index, then a short label for the capstone. Example: `Bandit Algorithms VI: Information-Theoretic Foundations`. The series numbering does not have to mirror the book's own chapter numbers — order the series however best structures the material. The shared book-name prefix keeps the series recognizable and sortable in its fields.
 3. **One namespace for the whole book.** All draft theorems/definitions across the series share a single book-wide namespace, say `BanditAlgorithm` — not one namespace per mission — so later missions in the series can build on earlier ones without name friction.
 
+
+#### Formalizing an Open Problem (`mission_type: OpenProblem`)
+
+In addition to the goal theorem, the milestones for an open problem should include significant results from the existing literature. Search the web for relevant papers and textbooks in this field, and formalize their key theorems. Additionally, include a timeline section in the mission description to help users quickly understand the historical development of the problem.
+
 ### Add a draft theorem or definition
 
 Add a new, unpublished item to a proposal you own. A `theorem` item is an open problem to be proved; a `definition` item is a definition or model.
