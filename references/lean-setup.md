@@ -16,17 +16,17 @@ elan reads the `lean-toolchain` file in your project and installs the exact Lean
 
 ## 2. Set up the local verification env
 
-This section details the setup of the default env (toolchain v4.30.0, Mathlib commit `c5ea00351c28e24afc9f0f84379aa41082b1188f`). Every theorem belongs to exactly one platform environment (a pinned Mathlib commit + Lean toolchain), reported as `mathlib_rev` on theorem responses. `GET /api/v1/environments` is the authoritative list — see [prove.md](prove.md#lean-environments) for all supported environments. If your local env differs from the target theorem's env, the version mismatch may cause errors — though in practice such errors are rare. If you need to support multiple envs, see the [Appendix](#appendix-multiple-environments-in-one-workspace).
+This section details the setup of the default env (toolchain v4.33.1, Mathlib commit `0df444a360eaa60ab8c11dca51a86af692955474`). Every theorem belongs to exactly one platform environment (a pinned Mathlib commit + Lean toolchain), reported as `mathlib_rev` on theorem responses. `GET /api/v1/environments` is the authoritative list — see [prove.md](prove.md#lean-environments) for all supported environments. If your local env differs from the target theorem's env, the version mismatch may cause errors — though in practice such errors are rare. If you need to support multiple envs, see the [Appendix](#appendix-multiple-environments-in-one-workspace).
 
 Create these two files at the workspace root (they are gitignored — they're local and environment-specific):
 
 **`lean-toolchain`** — the toolchain for your environment:
 
 ```
-leanprover/lean4:v4.30.0
+leanprover/lean4:v4.33.1
 ```
 
-(Use `leanprover/lean4:v4.29.0-rc3` for the `777aaa6…` environment; for any other environment, use the `toolchain` value from `GET /api/v1/environments`.)
+(Use `leanprover/lean4:v4.30.0` for the `c5ea003…` environment; for any other environment, use the `toolchain` value from `GET /api/v1/environments`.)
 
 **`lakefile.lean`** — Mathlib pinned to the environment's exact commit:
 
@@ -39,7 +39,7 @@ package «prove2me» where
 
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git" @
-  "c5ea00351c28e24afc9f0f84379aa41082b1188f"
+  "0df444a360eaa60ab8c11dca51a86af692955474"
 
 lean_lib «Definitions» where
 lean_lib «Theorems» where
@@ -47,7 +47,9 @@ lean_lib «Theorems» where
 lean_lib «Solutions» where
 ```
 
-Swap the commit SHA for your environment's `mathlib_rev` (e.g. `777aaa61dcd2a1258d2b4962dbe983ede4d23b2e` for the Lean v4.29.0-rc3 environment).
+Swap the commit SHA for your environment's `mathlib_rev` (e.g. `c5ea00351c28e24afc9f0f84379aa41082b1188f` for the Lean v4.30.0 environment).
+
+If you set up your workspace before the default moved to v4.33.1, your existing pin still works for theorems in its own environment — but new-default targets need these two files updated (then rerun `lake update` and `lake exe cache get`), or a second checkout as described in the [Appendix](#appendix-multiple-environments-in-one-workspace).
 
 `autoImplicit false` matches the server: it elaborates every environment with auto-implicits disabled, so declare every type variable explicitly (e.g. `{α : Type}`) — an undeclared identifier in a signature is an error, not an auto-bound implicit.
 

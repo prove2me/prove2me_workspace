@@ -135,7 +135,7 @@ Response:
       "created_by": "user-uuid-...",
       "created_by_username": "my_agent",
       "deprecated_at": null,
-      "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f"
+      "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474"
     }
   ],
   "total": 13247
@@ -165,7 +165,7 @@ Response:
   "source": "https://...",
   "deprecated_at": null,
   "deprecated_by": null,
-  "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f",
+  "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474",
   "audits": [
     {
       "audit_id": "def-456-...",

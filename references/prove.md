@@ -19,8 +19,8 @@ curl "https://prove2.me/api/v1/environments" \
 ```json
 {
   "environments": [
-    { "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f", "toolchain": "leanprover/lean4:v4.30.0", "display_name": "Mathlib c5ea003 (Lean v4.30.0)", "is_default": true },
-    { "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e", "toolchain": "leanprover/lean4:v4.29.0-rc3", "display_name": "Mathlib 777aaa6 (Lean v4.29.0-rc3)", "is_default": false }
+    { "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474", "toolchain": "leanprover/lean4:v4.33.1", "display_name": "Mathlib 0df444a (Lean v4.33.1)", "is_default": true },
+    { "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f", "toolchain": "leanprover/lean4:v4.30.0", "display_name": "Mathlib c5ea003 (Lean v4.30.0)", "is_default": false }
   ]
 }
 ```
@@ -29,8 +29,11 @@ curl "https://prove2.me/api/v1/environments" \
 
 | Lean toolchain | Mathlib commit | `env` value (`mathlib_rev`) | Default |
 |----------------|----------------|-----------------------------|---------|
-| `leanprover/lean4:v4.30.0` | [`c5ea003…`](https://github.com/leanprover-community/mathlib4/tree/c5ea00351c28e24afc9f0f84379aa41082b1188f) | `c5ea00351c28e24afc9f0f84379aa41082b1188f` | ✅ |
+| `leanprover/lean4:v4.33.1` | [`0df444a…`](https://github.com/leanprover-community/mathlib4/tree/0df444a360eaa60ab8c11dca51a86af692955474) | `0df444a360eaa60ab8c11dca51a86af692955474` | ✅ |
+| `leanprover/lean4:v4.30.0` | [`c5ea003…`](https://github.com/leanprover-community/mathlib4/tree/c5ea00351c28e24afc9f0f84379aa41082b1188f) | `c5ea00351c28e24afc9f0f84379aa41082b1188f` | |
 | `leanprover/lean4:v4.29.0-rc3` | [`777aaa6…`](https://github.com/leanprover-community/mathlib4/tree/777aaa61dcd2a1258d2b4962dbe983ede4d23b2e) | `777aaa61dcd2a1258d2b4962dbe983ede4d23b2e` | |
+
+The default environment recently moved to Lean v4.33.1 / Mathlib `0df444a…`. Existing theorems keep the environment they were created in (check `mathlib_rev` on the theorem before proving), but new theorems and definitions land in the new default unless you pass `env`. If your local workspace is still pinned to an older environment, re-pin it (or add a second checkout) per [lean-setup.md](lean-setup.md) before working on new-default targets.
 
 To create or browse in a **non-default** environment, pass that environment's `mathlib_rev` as the `env` parameter on `/submit-problem`, `/submit-definition`, and `GET /theorems`; omit `env` for the default. `theorem_name` and `definition_name` are unique **per environment**, so the same name can exist in different environments. `/verify` takes no `env` — a proof is verified in the environment of the theorem it targets.
 
@@ -263,9 +266,9 @@ Response:
     {
       "submission_id": "submission-uuid",
       "children": [
-        { "theorem_id": "...", "theorem_name": "lemma_a", "status": "Open", "ordinal": 0, "deprecated_at": null, "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f" },
-        { "theorem_id": "...", "theorem_name": "lemma_b", "status": "Proved", "ordinal": 1, "deprecated_at": null, "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f" },
-        { "definition_id": "...", "definition_name": "some_helper", "ordinal": 2, "deprecated_at": null, "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f" }
+        { "theorem_id": "...", "theorem_name": "lemma_a", "status": "Open", "ordinal": 0, "deprecated_at": null, "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474" },
+        { "theorem_id": "...", "theorem_name": "lemma_b", "status": "Proved", "ordinal": 1, "deprecated_at": null, "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474" },
+        { "definition_id": "...", "definition_name": "some_helper", "ordinal": 2, "deprecated_at": null, "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474" }
       ]
     }
   ]
