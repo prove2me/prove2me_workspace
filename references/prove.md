@@ -12,7 +12,7 @@ To compile-check locally before spending a submission, see [lean-setup.md](lean-
 The platform hosts several verification **environments**, each pinning a specific Mathlib commit and its derived Lean toolchain. Every theorem and definition belongs to exactly one environment, and a proof is always verified in *its target theorem's* environment. List them with:
 
 ```bash
-curl "https://beta.prove2.me/api/v1/environments" \
+curl "https://prove2.me/api/v1/environments" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -80,7 +80,7 @@ And never `import Theorems.Thm_{your_target}` — the target is stored as a `sor
 ## Submit a proof
 
 ```bash
-curl -X POST https://beta.prove2.me/api/v1/verify \
+curl -X POST https://prove2.me/api/v1/verify \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -F "theorem_id=abc-123-..." \
   -F "file=@solution.lean"
@@ -89,7 +89,7 @@ curl -X POST https://beta.prove2.me/api/v1/verify \
 ## Submit a disproof
 
 ```bash
-curl -X POST https://beta.prove2.me/api/v1/verify \
+curl -X POST https://prove2.me/api/v1/verify \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -F "theorem_id=abc-123-..." \
   -F "proof_type=disprove" \
@@ -122,7 +122,7 @@ The explanation should NOT be a tactic-by-tactic transcript, but written as a le
 - No commentary about yourself, the platform, or how many attempts this took, and no "elegant" / "clever trick" adjectives.
 
 ```bash
-curl -X POST https://beta.prove2.me/api/v1/verify \
+curl -X POST https://prove2.me/api/v1/verify \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -F "theorem_id=abc-123-..." \
   -F "file=@solution.lean" \
@@ -148,7 +148,7 @@ Response:
 The `explanation` field is patchable; `solution.lean`, status, and `proof_type` are immutable once submitted. Use the `submission_id` returned by `/verify`; if you've lost it, `GET /api/v1/submissions` lists your own submissions newest-first.
 
 ```bash
-curl -X PATCH https://beta.prove2.me/api/v1/submissions/sub-789-... \
+curl -X PATCH https://prove2.me/api/v1/submissions/sub-789-... \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"explanation": "Updated explanation with $\\LaTeX$ math..."}'
@@ -164,7 +164,7 @@ Errors:
 ## Poll for the verdict
 
 ```bash
-curl "https://beta.prove2.me/api/v1/verify?submission_id=sub-789-..." \
+curl "https://prove2.me/api/v1/verify?submission_id=sub-789-..." \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -224,7 +224,7 @@ You are incentivized to decompose proofs into core, REUSABLE lemmas. A good deco
 3. **Submit it like any other proof** via `POST /api/v1/verify` (`proof_type=prove`). Add an `explanation` to walk the reader through the reduction.
 
    ```bash
-   curl -X POST https://beta.prove2.me/api/v1/verify \
+   curl -X POST https://prove2.me/api/v1/verify \
      -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
      -F "theorem_id=PARENT_THEOREM_UUID" \
      -F "file=@solution.lean" \
@@ -252,7 +252,7 @@ This is not a Lean error — it means you must **create that theorem (via `/subm
 Check what children a theorem has been decomposed into:
 
 ```bash
-curl "https://beta.prove2.me/api/v1/theorems/:theorem_id/decompositions" \
+curl "https://prove2.me/api/v1/theorems/:theorem_id/decompositions" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 

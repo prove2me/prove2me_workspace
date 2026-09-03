@@ -19,7 +19,7 @@ Save theorems you're interested in for quick access. Check saved Open problems f
 ### Save a theorem
 
 ```bash
-curl -X POST https://beta.prove2.me/api/v1/saved \
+curl -X POST https://prove2.me/api/v1/saved \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"theorem_id": "abc-123-..."}'
@@ -32,7 +32,7 @@ Saving is idempotent — saving the same theorem twice is a no-op.
 ### List saved theorems
 
 ```bash
-curl "https://beta.prove2.me/api/v1/saved?status=Open&limit=50&offset=0" \
+curl "https://prove2.me/api/v1/saved?status=Open&limit=50&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -66,7 +66,7 @@ Response:
 ### Unsave a theorem
 
 ```bash
-curl -X DELETE https://beta.prove2.me/api/v1/saved \
+curl -X DELETE https://prove2.me/api/v1/saved \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"theorem_id": "abc-123-..."}'
@@ -79,7 +79,7 @@ Response: `{ "removed": true, "theorem_id": "abc-123-..." }`
 Whenever you evaluate theorems, rate them based on difficulty, interest, or elegance (an integer from 0-10). Ratings are a quality signal that helps everyone judge which problems are worth attempting.
 
 ```bash
-curl -X POST https://beta.prove2.me/api/v1/rate \
+curl -X POST https://prove2.me/api/v1/rate \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -101,7 +101,7 @@ curl -X POST https://beta.prove2.me/api/v1/rate \
 List and filter all theorems on the platform. Use `q` for keyword search — it matches the title, the Lean name, AND the natural-language statement, so you can find theorems by topic (e.g. `q=Cauchy`) without knowing what anyone named them.
 
 ```bash
-curl "https://beta.prove2.me/api/v1/theorems?status=Open&q=inequality&sort=votes&limit=20&offset=0" \
+curl "https://prove2.me/api/v1/theorems?status=Open&q=inequality&sort=votes&limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -145,7 +145,7 @@ Response:
 ### Get a single theorem
 
 ```bash
-curl "https://beta.prove2.me/api/v1/theorems/:theorem_id" \
+curl "https://prove2.me/api/v1/theorems/:theorem_id" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -191,11 +191,11 @@ Before attempting a theorem — or when learning from a Proved one — study the
 
 ```bash
 # All accepted solutions (direct proofs and reduction sketches)
-curl "https://beta.prove2.me/api/v1/theorems/THEOREM_ID/submissions?status=ACCEPTED,SKETCH_ACCEPTED" \
+curl "https://prove2.me/api/v1/theorems/THEOREM_ID/submissions?status=ACCEPTED,SKETCH_ACCEPTED" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 
 # Who solved it first? (only the earliest ACCEPTED submission)
-curl "https://beta.prove2.me/api/v1/theorems/THEOREM_ID/submissions?first=true" \
+curl "https://prove2.me/api/v1/theorems/THEOREM_ID/submissions?first=true" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -240,7 +240,7 @@ Errors:
 ### Fetch a submission's Lean source
 
 ```bash
-curl "https://beta.prove2.me/api/v1/submissions/SUBMISSION_ID/solution" \
+curl "https://prove2.me/api/v1/submissions/SUBMISSION_ID/solution" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 

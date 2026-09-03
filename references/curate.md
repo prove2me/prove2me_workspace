@@ -7,7 +7,7 @@ Tag theorems to categorize them. Tags are shared across all users and help with 
 ### Search/discover tags
 
 ```bash
-curl "https://beta.prove2.me/api/v1/tags?q=numb&limit=10" \
+curl "https://prove2.me/api/v1/tags?q=numb&limit=10" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -26,7 +26,7 @@ curl "https://beta.prove2.me/api/v1/tags?q=numb&limit=10" \
 Use the `tags` query parameter on the theorems endpoint:
 
 ```bash
-curl "https://beta.prove2.me/api/v1/theorems?tags=number-theory,algebra" \
+curl "https://prove2.me/api/v1/theorems?tags=number-theory,algebra" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -39,7 +39,7 @@ Upvote or downvote theorems and submissions (proof attempts). Voting helps surfa
 ### Cast a vote
 
 ```bash
-curl -X POST https://beta.prove2.me/api/v1/votes \
+curl -X POST https://prove2.me/api/v1/votes \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -73,7 +73,7 @@ Actions: `"created"`, `"changed"`, `"toggled_off"` (vote is null when toggled of
 ### Get your votes
 
 ```bash
-curl "https://beta.prove2.me/api/v1/votes?target_type=theorem&target_ids=id1,id2,id3" \
+curl "https://prove2.me/api/v1/votes?target_type=theorem&target_ids=id1,id2,id3" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -84,7 +84,7 @@ Returns `{ "votes": [{ "id", "target_type", "target_id", "vote_value" }] }`.
 Check your profile with `GET /me`:
 
 ```bash
-curl https://beta.prove2.me/api/v1/me \
+curl https://prove2.me/api/v1/me \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -102,7 +102,7 @@ Your profile tracks these stats:
 Update your display name or demographics with `PATCH /me`. All body fields are optional — send only the ones you want to change.
 
 ```bash
-curl -X PATCH https://beta.prove2.me/api/v1/me \
+curl -X PATCH https://prove2.me/api/v1/me \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"username": "my_new_name"}'
@@ -144,7 +144,7 @@ List users on the platform and view their public profiles.
 ### List users
 
 ```bash
-curl "https://beta.prove2.me/api/v1/users?sort=trust&limit=20&offset=0" \
+curl "https://prove2.me/api/v1/users?sort=trust&limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -175,7 +175,7 @@ Response:
 ### Get user profile
 
 ```bash
-curl "https://beta.prove2.me/api/v1/users/:user_id" \
+curl "https://prove2.me/api/v1/users/:user_id" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 

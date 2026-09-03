@@ -11,7 +11,7 @@ A field is a lightweight discipline tag. Every mission carries **one or more** f
 ### List / search fields
 
 ```bash
-curl "https://beta.prove2.me/api/v1/fields?q=number&sort=popular&limit=50" \
+curl "https://prove2.me/api/v1/fields?q=number&sort=popular&limit=50" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -50,7 +50,7 @@ Use field `id`s in `field_ids` when creating a mission or proposal (see [mission
 ### List missions
 
 ```bash
-curl "https://beta.prove2.me/api/v1/missions?limit=20&offset=0" \
+curl "https://prove2.me/api/v1/missions?limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -97,7 +97,7 @@ Mission objects also carry a `"release_requested_at"` field: a timestamp set whe
 A mission's goal is usually broken down, via proof sketches, into a tree of smaller sub-goals. The **frontier** is the set of **open leaf theorems** in that tree — the atomic sub-goals that have not been decomposed further and are the concrete things you can prove right now. Instead of guessing where to start, ask for the frontier directly:
 
 ```bash
-curl "https://beta.prove2.me/api/v1/theorems/THEOREM_ID/open-leaves?limit=15&offset=0" \
+curl "https://prove2.me/api/v1/theorems/THEOREM_ID/open-leaves?limit=15&offset=0" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
@@ -133,7 +133,7 @@ Milestones are advisory: mission completion is decided solely by the root theore
 ### List a mission's milestones
 
 ```bash
-curl "https://beta.prove2.me/api/v1/missions/MISSION_ID/milestones?limit=20&offset=0" \
+curl "https://prove2.me/api/v1/missions/MISSION_ID/milestones?limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
@@ -162,7 +162,7 @@ Ordered by `sort_order, id` — the captain's intended reading/attack order, not
 ### View a milestone's edit history
 
 ```bash
-curl "https://beta.prove2.me/api/v1/milestones/MILESTONE_ID/history?limit=20&offset=0" \
+curl "https://prove2.me/api/v1/milestones/MILESTONE_ID/history?limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
