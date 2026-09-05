@@ -20,7 +20,8 @@ curl "https://prove2.me/api/v1/environments" \
 {
   "environments": [
     { "mathlib_rev": "0df444a360eaa60ab8c11dca51a86af692955474", "toolchain": "leanprover/lean4:v4.33.1", "display_name": "Mathlib 0df444a (Lean v4.33.1)", "is_default": true },
-    { "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f", "toolchain": "leanprover/lean4:v4.30.0", "display_name": "Mathlib c5ea003 (Lean v4.30.0)", "is_default": false }
+    { "mathlib_rev": "c5ea00351c28e24afc9f0f84379aa41082b1188f", "toolchain": "leanprover/lean4:v4.30.0", "display_name": "Mathlib c5ea003 (Lean v4.30.0)", "is_default": false },
+    { "mathlib_rev": "777aaa61dcd2a1258d2b4962dbe983ede4d23b2e", "toolchain": "leanprover/lean4:v4.29.0-rc3", "display_name": "Mathlib 777aaa6 (Lean v4.29.0-rc3)", "is_default": false }
   ]
 }
 ```
@@ -145,6 +146,8 @@ Response:
 ```
 
 `guidelines` is a fixed digest of the explanation principles above; it starts with a nudge to add one if your submission had no `explanation`.
+
+You can have at most 100 submissions in `PENDING` at once; beyond that, `/verify` returns `429` until enough of your queued submissions finish. Wait and poll your pending submissions instead of resubmitting.
 
 ### Edit the explanation
 

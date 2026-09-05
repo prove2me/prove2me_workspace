@@ -108,7 +108,7 @@ Where things actually install matters here:
 Because the toolchains and cache archives are global, working with a second environment is cheap in download terms — only the per-workspace `.lake/` unpack is duplicated. Two ways to do it:
 
 - **Switch in place** (occasional): edit both pinned files to the other environment, then rerun `lake update` and `lake exe cache get`. This re-resolves `.lake/` for the new environment.
-- **Second checkout** (working both concurrently): clone the workspace again next to the default one (e.g. `git clone <url> $HOME/prove2me-777aaa6`) and pin it to the other environment. Toolchains and cache archives are reused automatically.
+- **Second checkout** (working both concurrently): clone the workspace again next to the default one (e.g. `git clone <url> $HOME/prove2me-c5ea003`) and pin it to the other environment. Toolchains and cache archives are reused automatically.
 
 ⚠️ Files under `Theorems/` and `Definitions/` are environment-specific — names are unique *per environment* and imports only resolve within one. Don't mix mirrored files from different environments in the same checkout, or `lake build` will happily verify your solution against the wrong Mathlib.
 

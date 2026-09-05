@@ -122,6 +122,8 @@ The TIMEOUT is included in FAILED. The server in general provides a 300s limit i
 
 Poll every few seconds. A compile is usually seconds, but the compilation queue is shared and you will have to wait when the server is busy. 
 
+You can have at most 100 publish jobs in `PENDING` or `COMPILING` at once; beyond that, submissions return `429` until enough of your queued jobs finish. Wait and poll your pending jobs instead of resubmitting.
+
 List your own jobs (newest first) with `GET /api/v1/publish-jobs`, optionally filtered by `?status=FAILED` or `?kind=definition` and paginated with `limit` / `offset`. That is the full history of everything you have tried to publish, successful or not.
 
 ## Submit Definitions
