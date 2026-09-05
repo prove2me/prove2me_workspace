@@ -15,6 +15,7 @@ Stage 1 decides *what* to generate; Stage 2 supplies the positions to generate i
 2. `GET /environments` for the platform's pinned `mathlib_rev` + toolchain, then pick the **source-project commit whose own Mathlib pin matches it** (walk the history of its `lean-toolchain` / `lake-manifest.json`). A matching pin means zero drift repair. If none exists, set up per [lean-setup.md](lean-setup.md) and fix drift minimally until `lake build` is green.
 3. Copy the minimal import closure of the targets into your workspace; confirm each target's axioms are contained in `[propext, Classical.choice, Quot.sound]` **before** decomposing anything.
 4. Record repo URL + commit SHA; every uploaded item's `source` field should be a `blob/<sha>/<file>#L<start>-L<end>` link.
+5. **Audit the source's prose, not just its Lean.** Phase 3 builds every platform file by *deleting* declarations from the original sources, so every comment and docstring that survives the subtraction is published verbatim — and published Lean text is immutable. A stale docstring, or a citation naming the wrong numbered result in the paper the project certifies, becomes a permanent part of the record. Check them against the source document **now**: a fidelity audit run after Phase 7 can repair metadata (Phase 6) but never the code.
 
 ## Phase 1 — Extract the declaration graph (Lean meta-programming)
 
@@ -58,7 +59,7 @@ Rules that still bite:
 - `module` is both the module-system header keyword and a tactic — strip it only before the first `import`.
 - A `mutual` block is one command: Stage 2 reports it once — keep or delete it as a unit.
 
-**Gate before continuing:** the three libraries `lake build` clean; every `Thm_X` is a compiling sorry-stub; every `Sol_X` exists, is sorry-free, and does not import its own target. Iterate here where mistakes are free — uploaded names are immutable.
+**Gate before continuing:** the three libraries `lake build` clean; every `Thm_X` is a compiling sorry-stub; every `Sol_X` exists, is sorry-free, and does not import its own target. Iterate here where mistakes are free — uploaded names are immutable. Read the generated files as *prose* here too, not only as something that compiles: Phase 4 strips the docstring from each `formal_statement`, but nothing strips anything else, so every comment left in a `Definitions` bundle and every docstring on a helper inlined into a solution is uploaded with the code and frozen with it.
 
 ## Phase 4 — Platformize the upload text
 
@@ -97,6 +98,8 @@ Non-negotiable, because created theorems are immutable:
 ## Phase 6 — Draft metadata
 
 Per node: `theorem_title`, an academic `natural_language_statement` (KaTeX, every variable explained, main formula in display math, one role paragraph), tags, and the line-linked `source` — all per the [contributor principles](contribute.md#important-principles-of-submit-problemsdefinitions). For hundreds of nodes, fan out to sub-agents in batches of ~25 and validate each batch parses as JSON. Give the whole project one shared tag: you will need `GET /theorems?tags=…` later for id lookups and final verification.
+
+Metadata is the recoverable half of the upload, and the only one: after publication `PATCH /api/v1/theorems/:theorem_id` still edits `natural_language_statement`, `source`, and `tags` ([contribute.md](contribute.md#update-your-theorem)), while `theorem_name`, `formal_statement`, and the code of a definition bundle — comments and all — never change again. There is no delete; the heaviest correction available is deprecation plus a re-upload under a new name ([contribute.md](contribute.md)). Draft the metadata knowing you can fix it, and generate the code knowing you cannot.
 
 ## Phase 7 — Upload, strictly ordered
 
