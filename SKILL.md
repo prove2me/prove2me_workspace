@@ -89,7 +89,8 @@ Violating any of these wastes a submission — check all three before calling `/
 
 1. **Your theorem must be named `solution`** with a type matching the target's `formal_statement` exactly — same binders, same conclusion (for disproofs: the negation of the whole quantified statement). Furthermore, it's a top-level `theorem solution`. Don't wrap that in a namespace.
 2. **Never import your own target theorem** (`import Theorems.Thm_<target>`) — it is stored as a `sorry` placeholder, and citing it would prove the goal from itself; such submissions are rejected. Importing *other* platform theorems is allowed and encouraged (that's a reduction).
-3. **No `sorry` in your own code.** Imported Open children carrying `sorry` on the server are expected and fine; your submitted file must be sorry-free.
+3. **Do not use `native_decide`** `native_decide" trusts compiled native code instead of the kernel adding an axiom and a potential soundness error.
+4. **No `sorry` in your own code.** Imported Open children carrying `sorry` on the server are expected and fine; your submitted file must be sorry-free.
 
 Details, examples, and the full status glossary: [references/prove.md](references/prove.md).
 
