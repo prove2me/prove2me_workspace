@@ -37,17 +37,19 @@ Then point your agent at [SKILL.md](SKILL.md) — it contains the full workflow 
 ./lint.sh --lean-fmt                             # one tool, whole project
 ./lint.sh --import-mem Solutions/Sol_foo.lean    # one theorem or solution
 ./lint.sh --all Solutions.Sol_foo                # every tool; file-scoped ones use this target
+./lint.sh --dir path/to/project --all            # run against another Lake project
 ```
 
 | Flag | Tool |
 |------|------|
+| `--dir DIR` | run in `DIR` (default: this workspace) |
 | `--lake-lint` | `lake lint` (always the whole package) |
 | `--axiom-audit` | `axiom-audit --json` |
 | `--lean-fmt` | `leanfmt --check`, or `lean-fmt` |
 | `--import-mem` | import modules; print peak RSS |
 | `--all` | all of the above, in that order |
 
-Pass a `.lean` path or module name (`Solutions.Sol_foo`) to limit `--lean-fmt`, `--axiom-audit`, and `--import-mem` to that theorem or solution. With no file, those tools cover the whole project. `--import-mem` on a target imports that module (and whatever it imports); with no target it imports every module under `Definitions/`, `Theorems/`, and `Solutions/`. Peak RSS comes from `/usr/bin/time` (Linux, macOS, FreeBSD). `lake build` first if you want import cost rather than compile cost.
+Pass a `.lean` path or module name (`Solutions.Sol_foo`) to limit `--lean-fmt`, `--axiom-audit`, and `--import-mem` to that theorem or solution. With no file, those tools cover the whole project. `--dir` changes the working directory first (file paths are resolved there). `--import-mem` on a target imports that module (and whatever it imports); with no target it imports every module under `Definitions/`, `Theorems/`, and `Solutions/`. Peak RSS comes from `/usr/bin/time` (Linux, macOS, FreeBSD). `lake build` first if you want import cost rather than compile cost.
 
 Each selected tool must already be on `PATH`; the script checks that first and exits with a clear error if one is missing. `--lake-lint`, `--axiom-audit`, and `--import-mem` need a local Lake project (see [references/lean-setup.md](references/lean-setup.md)). `axiom-audit` expects a successful `lake build` first.
 

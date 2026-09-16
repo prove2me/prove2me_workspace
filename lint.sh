@@ -9,6 +9,7 @@ Usage: lint.sh [option ...] [file ...]
 Optional Lean quality checks. Each flag selects one tool;
 --all runs every tool serially.
 
+  --dir DIR        run in DIR (default: directory of this script)
   --lake-lint      lake lint (always the whole package)
   --axiom-audit    axiom-audit --json
   --lean-fmt       leanfmt --check, or lean-fmt
@@ -88,7 +89,7 @@ run_lake_lint() {
 module_of() {
 	file=$1
 	case $file in
-	"$script_dir"/*) file=${file#"$script_dir"/} ;;
+	"$work_dir"/*) file=${file#"$work_dir"/} ;;
 	esac
 	file=${file#./}
 	file=${file%.lean}
@@ -290,48 +291,91 @@ run_import_mem() {
 }
 
 script_dir=$(CDPATH= cd "$(dirname "$0")" && pwd)
-cd "$script_dir" || exit 1
+work_dir=$script_dir
 
 do_lake_lint=0
 do_axiom_audit=0
 do_lean_fmt=0
 do_import_mem=0
 target_list="${TMPDIR:-/tmp}/prove2me-lint-targets.$$"
+pending_targets="${TMPDIR:-/tmp}/prove2me-lint-pending.$$"
 : >"$target_list"
-trap 'rm -f "$target_list"' EXIT
+: >"$pending_targets"
+trap 'rm -f "$target_list" "$pending_targets"' EXIT
 
 if [ "$#" -eq 0 ]; then
 	usage >&2
 	exit 1
 fi
 
-for arg in "$@"; do
-	case $arg in
-	--lake-lint) do_lake_lint=1 ;;
-	--axiom-audit) do_axiom_audit=1 ;;
-	--lean-fmt) do_lean_fmt=1 ;;
-	--import-mem) do_import_mem=1 ;;
+while [ "$#" -gt 0 ]; do
+	case $1 in
+	--dir)
+		if [ "$#" -lt 2 ]; then
+			err "--dir requires a directory"
+			exit 1
+		fi
+		work_dir=$2
+		shift 2
+		;;
+	--dir=*)
+		work_dir=${1#--dir=}
+		if [ -z "$work_dir" ]; then
+			err "--dir requires a directory"
+			exit 1
+		fi
+		shift
+		;;
+	--lake-lint)
+		do_lake_lint=1
+		shift
+		;;
+	--axiom-audit)
+		do_axiom_audit=1
+		shift
+		;;
+	--lean-fmt)
+		do_lean_fmt=1
+		shift
+		;;
+	--import-mem)
+		do_import_mem=1
+		shift
+		;;
 	--all)
 		do_lake_lint=1
 		do_axiom_audit=1
 		do_lean_fmt=1
 		do_import_mem=1
+		shift
 		;;
 	-h | --help)
 		usage
 		exit 0
 		;;
 	-*)
-		err "unknown option: $arg"
+		err "unknown option: $1"
 		usage >&2
 		exit 1
 		;;
 	*)
-		resolved=$(resolve_target "$arg") || exit 1
-		printf '%s\n' "$resolved" >>"$target_list"
+		printf '%s\n' "$1" >>"$pending_targets"
+		shift
 		;;
 	esac
 done
+
+dir_arg=$work_dir
+if ! work_dir=$(CDPATH= cd "$dir_arg" 2>/dev/null && pwd); then
+	err "not a directory: $dir_arg"
+	exit 1
+fi
+cd "$work_dir" || exit 1
+
+while IFS= read -r raw; do
+	resolved=$(resolve_target "$raw") || exit 1
+	printf '%s\n' "$resolved" >>"$target_list"
+done <"$pending_targets"
 
 if [ "$do_lake_lint$do_axiom_audit$do_lean_fmt$do_import_mem" = "0000" ]; then
 	err "select a tool (see --help)"
