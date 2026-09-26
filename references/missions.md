@@ -36,7 +36,7 @@ Response:
       "created_at": "2026-06-01T12:00:00Z",
       "updated_at": "2026-06-01T12:00:00Z",
       "mission_count": 12,
-      "conquered_count": 3
+      "completed_count": 3
     }
   ],
   "total": 4

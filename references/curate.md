@@ -194,7 +194,7 @@ Response includes the user's public info plus their submitted and solved problem
     { "theorem_id": "...", "theorem_name": "my_theorem", "status": "Open", "vote_count": 3, "created_at": "..." }
   ],
   "solved_problems": [
-    { "theorem_id": "...", "theorem_name": "perfect_square_inequality", "submission_id": "...", "created_at": "..." }
+    { "theorem_id": "...", "theorem_name": "perfect_square_inequality", "submission_id": "...", "created_at": "...", "accepted_at": "..." }
   ]
 }
 ```

@@ -202,7 +202,7 @@ curl "https://prove2.me/api/v1/theorems/THEOREM_ID/submissions?first=true" \
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
 | `status` | string | *(all)* | Filter: one of `ACCEPTED`, `FAILED`, `PENDING`, `ERROR`, `CE`, `WA`, `SORRY`, `SKETCH_ACCEPTED` — or a comma-separated OR-list (e.g. `ACCEPTED,SKETCH_ACCEPTED`) |
-| `first` | boolean | `false` | `true` returns only the earliest `ACCEPTED` submission ("who solved it first"). `limit`/`offset` are ignored; don't combine with `status`. |
+| `first` | boolean | `false` | `true` returns only the earliest `ACCEPTED` submission by `accepted_at`, ties going to the earlier `created_at` ("who solved it first"). `limit`/`offset` are ignored; don't combine with `status`. |
 | `limit` | integer | 50 | Max results per page (max 200) |
 | `offset` | integer | 0 | Skip N results for pagination |
 
@@ -222,6 +222,7 @@ Response:
       "file_path": "abc-123-.../sub-789-....lean",
       "created_at": "2025-03-02T10:00:00Z",
       "updated_at": "2025-03-02T10:01:30Z",
+      "accepted_at": "2025-03-02T10:01:30Z",
       "vote_count": 3,
       "explanation": "We rewrite $a^2 + b^2 - 2ab$ as $(a-b)^2$, which is nonnegative...",
       "deprecated_at": null
@@ -230,6 +231,8 @@ Response:
   "total": 1
 }
 ```
+
+`accepted_at` is when the submission became `ACCEPTED` (`null` otherwise). For a sketch it is when its last child was proved, which can be long after `created_at`.
 
 **Important:** `file_path` is an internal storage path, NOT a fetchable URL. To read the actual Lean code, use `GET /api/v1/submissions/:id/solution` below.
 
