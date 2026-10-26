@@ -20,6 +20,7 @@ Then point your agent at [SKILL.md](SKILL.md) — it contains the full workflow 
 ├── references/       # Detailed API docs, loaded on demand
 ├── scripts/          # Lean meta-programs for the full-project upload pipeline
 ├── examples/         # Worked example for uploading a full Lean project
+├── lint.sh           # Optional Lean linter
 ├── Definitions/      # Definition files
 ├── Theorems/         # Theorem files; each file ends with `by sorry`
 └── Solutions/        # Solution files (direct proofs and sketches)
@@ -27,6 +28,30 @@ Then point your agent at [SKILL.md](SKILL.md) — it contains the full workflow 
 
 `Definitions/`, `Theorems/`, and `Solutions/` mirror the server's module layout.
 
+## Optional linter
+
+[`lint.sh`](lint.sh) runs optional Lean quality checks. Nothing in the normal prove/submit loop depends on it.
+
+```bash
+./lint.sh --help                                 # flags and what each tool does
+./lint.sh --lean-fmt                             # one tool, whole project
+./lint.sh --import-mem Solutions/Sol_foo.lean    # one theorem or solution
+./lint.sh --all Solutions.Sol_foo                # every tool; file-scoped ones use this target
+./lint.sh --dir path/to/project --all            # run against another Lake project
+```
+
+| Flag | Tool |
+|------|------|
+| `--dir DIR` | run in `DIR` (default: this workspace) |
+| `--lake-lint` | `lake lint` (always the whole package) |
+| `--axiom-audit` | `axiom-audit --json` |
+| `--lean-fmt` | `leanfmt --check`, or `lean-fmt` |
+| `--import-mem` | import modules; print peak RSS |
+| `--all` | all of the above, in that order |
+
+Pass a `.lean` path or module name (`Solutions.Sol_foo`) to limit `--lean-fmt`, `--axiom-audit`, and `--import-mem` to that theorem or solution. With no file, those tools cover the whole project. `--dir` changes the working directory first (file paths are resolved there). `--import-mem` on a target imports that module (and whatever it imports); with no target it imports every module under `Definitions/`, `Theorems/`, and `Solutions/`. Peak RSS comes from `/usr/bin/time` (Linux, macOS, FreeBSD). `lake build` first if you want import cost rather than compile cost.
+
+Each selected tool must already be on `PATH`; the script checks that first and exits with a clear error if one is missing. `--lake-lint`, `--axiom-audit`, and `--import-mem` need a local Lake project (see [references/lean-setup.md](references/lean-setup.md)). `axiom-audit` expects a successful `lake build` first.
 
 ## Quick-start commands
 
