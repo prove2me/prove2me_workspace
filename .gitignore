@@ -11,3 +11,8 @@ lake-manifest.json
 
 # OS noise
 .DS_Store
+
+# prove2me-cli build and test output
+tools/prove2me-cli/.venv/
+__pycache__/
+.pytest_cache/
