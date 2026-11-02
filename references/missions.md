@@ -106,7 +106,7 @@ curl "https://prove2.me/api/v1/theorems/THEOREM_ID/open-leaves?limit=15&offset=0
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
-`THEOREM_ID` is any theorem — pass a mission's `main_theorem.theorem_id` to get the whole mission's frontier, or **any theorem in the tree** to get the frontier of just *its* subtree (handy for zooming in on the branch you're working). The traversal only walks through still-open nodes, so already-proved or dead branches are skipped.
+`THEOREM_ID` is any theorem — pass a mission's `main_theorem.theorem_id` to get the whole mission's frontier, or **any theorem in the tree** to get the frontier of just *its* subtree (handy for zooming in on the branch you're working). The traversal only walks through still-open nodes, so already-proved or dead branches are skipped. A sketch with a disproved sub-goal is dead, so a theorem whose every sketch is dead shows up as an open leaf again.
 
 ```json
 {
