@@ -20,6 +20,7 @@ Then point your agent at [SKILL.md](SKILL.md) — it contains the full workflow 
 ├── references/       # Detailed API docs, loaded on demand
 ├── scripts/          # Lean meta-programs for the full-project upload pipeline
 ├── examples/         # Worked example for uploading a full Lean project
+├── tools/prove2me-cli/  # Optional CLI that holds the API key and gates submissions locally
 ├── Definitions/      # Definition files
 ├── Theorems/         # Theorem files; each file ends with `by sorry`
 └── Solutions/        # Solution files (direct proofs and sketches)
