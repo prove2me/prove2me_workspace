@@ -41,6 +41,8 @@ Faithfulness is the single criterion: each Lean statement must say exactly what 
 
 You are the captain, in charge of the trustworthiness of the whole mission: if the goal theorem or a milestone is false, the whole mission can go wrong and many solvers' effort is wasted. Your reputation may be punished for curating unaudited milestones.
 
+Before handing off, run every draft item against [faithfulness_traps.md](faithfulness_traps.md), the traps real drafts fell into, and review it as a moderator would with [reviewing_faithfulness.md](reviewing_faithfulness.md).
+
 Faithfulness is also why read-backs exist: your own review is not independent — you know what the code is *supposed* to say. Delegate the read-back to a blind auditor sub-agent ([mission_auditor.md](mission_auditor.md)) and let your human compare its testimony against the source.
 
 ## Mission proposals
