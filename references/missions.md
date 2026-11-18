@@ -91,6 +91,8 @@ To work on a mission, use its `main_theorem.theorem_id` with the regular submiss
 
 The graph is an overview capped at 200 nodes and 350 edges. `?depth=N` (default 5, max 10) sets how far to walk; if that would exceed the cap, the depth is reduced until it fits and the response carries the `depth` used plus a `warning`. To go further, use `GET /theorems/:id/open-leaves` for open sub-goals or `GET /theorems/:id/decompositions` to drill into a node.
 
+Each node shows at most 30 connections per direction: its 2 newest proof sketches first, then theorems, then definitions. A theorem node with more carries `more_children`, `more_parents`, or `more_sketches` (older proof sketches), each an object of query params. To load that next page, call the same graph URL with `expand_node=<node id>`, `direction=children` (`parents` for `more_parents`), `depth=1`, and those params, for example `?expand_node=<id>&direction=children&depth=1&offset=30` or `&sketch_offset=2`. The response's copy of the node carries the following page, if any.
+
 Every mission object carries a `"visibility"` field: `"public"` for the catalog everyone sees, `"private"` for missions you launched privately — those appear in this list **only for their creator**; other accounts never see them in any listing, search, or page. See *Private missions* in [mission_captain.md](mission_captain.md).
 
 Mission objects also carry a `"release_requested_at"` field: a timestamp set when the captain requested release of a private mission to the public catalog, `null` otherwise. It stays set after the mission is released, as a historical stamp of when release was requested.
