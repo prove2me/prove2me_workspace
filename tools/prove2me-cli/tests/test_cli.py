@@ -994,7 +994,7 @@ def test_setup_for_a_mission_pins_a_checkout_for_its_environment(
 def test_a_checkout_set_up_from_a_relative_home_still_finds_the_key(
     tmp_path: Path, default_workspace: Path, monkeypatch, capsys
 ) -> None:
-    # formalize_statement.sh exports PROVE2ME_WORKSPACE as the checkout and then
+    # A script that exports PROVE2ME_WORKSPACE as the checkout and then
     # changes directory, so neither the relative home nor the env var reaches the key.
     home = tmp_path / "volume" / "prove2me_workspace"
     home.mkdir(parents=True)

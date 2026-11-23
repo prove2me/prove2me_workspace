@@ -1,19 +1,15 @@
 # Testing prove2me-cli
 
-How to exercise the `prove2me` command, the agent guide in
-[AGENTS.md](AGENTS.md), and `formalize_statement.sh`. The stages run from safest to riskiest; finish each
-before moving on. Only stages 4 and 7 write to Prove2Me, and stage 4 keeps
-everything private.
+How to exercise the `prove2me` command. The stages run from safest to
+riskiest; finish each before moving on. Only stage 4 writes to Prove2Me, and
+it keeps everything private.
 
 All commands run from this folder (`tools/prove2me-cli`) unless stated otherwise.
 
 ## Prerequisites
 
-- `git`, `uv`, `lake` (via [elan](https://github.com/leanprover/elan)), and
-  `claude` on `PATH`.
-- For statement mode of `formalize_statement.sh` (stages 6 and 7), an
-  [AutoformBot](https://github.com/facebookresearch/autoform-bot) checkout,
-  with `AUTOFORM_PLUGIN_ROOT` set to it.
+- `git`, `uv`, and `lake` (via [elan](https://github.com/leanprover/elan)) on
+  `PATH`.
 - A Prove2Me account. New accounts register at <https://prove2.me>; see
   <https://prove2.me/start.md>. Stage 0 clones the workspace and asks for the
   API key, so neither has to exist beforehand.
@@ -66,7 +62,7 @@ export PROVE2ME_WORKSPACE="$(uv run prove2me setup \
   --mission Positive_definite_matrix_integral_inequality --print-workspace)"
 ```
 
-`formalize_statement.sh` runs `setup` itself. Missions use different
+Missions use different
 environments (Weak Goldbach is on `0df444a`, the matrix inequality mission on
 `c5ea003`), and each new one is another multi-gigabyte checkout.
 
@@ -193,76 +189,6 @@ on each command.
 Afterwards, retire the theorem with Prove2Me's deprecation flag
 (`references/contribute.md`); the CLI does not wrap that yet.
 
-## 5. The guide, interactively
-
-Start Claude Code in the Prove2Me workspace:
-
-```bash
-cd ~/prove2me_workspace
-claude
-```
-
-Then ask, for example:
-
-> Follow tools/prove2me-cli/AGENTS.md: pick a theorem in Positive_definite_matrix_integral_inequality and show me a dry run
-
-You approve each tool call, so check that it:
-
-- reads the workspace's `SKILL.md`, `references/mission_solver.md`, and
-  `references/prove.md` before acting;
-- uses `prove2me …` for every API call, and never `curl`, a hand-written
-  HTTP client, or `credentials.json`;
-- scouts milestone history, prior submissions, and discussion before choosing;
-- notices the Mathlib mismatch instead of compiling against the wrong one;
-- follows the cited source rather than improvising a proof;
-- stops at `verify --dry-run` and asks before submitting;
-- writes an explanation that reads like a section of a paper.
-
-## 6. The script, without spending a Claude run
-
-`formalize_statement.sh` only assembles a prompt and a permission list, then
-calls `claude`. A stand-in `claude` that prints its arguments shows exactly
-what would run:
-
-```bash
-mkdir -p /tmp/fakebin
-printf '#!/bin/bash\nprintf "ARG: %%s\\n" "$@"\n' > /tmp/fakebin/claude
-chmod +x /tmp/fakebin/claude
-
-PATH=/tmp/fakebin:$PATH ./formalize_statement.sh --prove2me Positive_definite_matrix_integral_inequality --dry-run
-PATH=/tmp/fakebin:$PATH PROVE2ME_API_KEY=p2m_x.eyJleHAiOjEwMDB9.x ./formalize_statement.sh --prove2me x
-```
-
-Expect the first to authenticate for real, then print the prompt and an
-allow-list without `curl` or `python3`. Expect the second to stop with an
-expired-key error before reaching `claude`. The `git pull` of the workspace
-may wait on the network; it only warns on failure.
-
-Statement mode works the same way, but its first real run creates
-`~/autoform_statements` (or `$AUTOFORM_STATEMENTS_DIR`, which must be outside
-the AutoformBot checkout) and downloads Mathlib; use `--roadmap-only` or `--project` to
-avoid that.
-
-## 7. The script, for real
-
-```bash
-./formalize_statement.sh --prove2me Positive_definite_matrix_integral_inequality --dry-run
-./formalize_statement.sh "6 is not a prime number"
-./formalize_statement.sh --propose --dry-run "6 is not a prime number"
-```
-
-The first runs the guide unattended with a fixed permission list. Anything it
-needed but was not allowed shows up as a refused tool call in its final
-report. Drop `--dry-run` only once stages 4 and 5 look right: that run
-publishes under your account and the platform's Apache 2.0 terms.
-
-The third also drafts a mission proposal in the platform's default Mathlib,
-choosing the type and fields itself (`--mission-type` overrides), and stops
-after `propose --dry-run` with the spec at `prove2me/proposal.json`. Without
-`--dry-run` it uploads a private draft; nothing is published until you
-confirm each item under **My missions** on prove2.me and click **Submit
-Proposal**.
-
 ## Troubleshooting
 
 | Symptom | Cause and fix |
@@ -277,8 +203,7 @@ Proposal**.
 | `No space left on device` during `lake update` | The disk filled mid-download. Delete the half-made checkout (it was created by that run) before retrying. |
 | `could not find platform module …` | An import names a theorem or definition the API could not resolve in that environment. |
 | `HTTP 429 … too many pending` | Wait for queued submissions or publish jobs to finish instead of resubmitting. |
-| `no Prove2Me API key` inside a script run | The session uses a per-environment checkout; rerun `setup` so it links the key there. |
-| Edits refused as "a sensitive file" | The statements workspace is inside the AutoformBot checkout (the plugin directory); move it out. |
+| `no Prove2Me API key` in a per-environment checkout | Rerun `setup` so it links the key there. |
 | `propose`: `… already exists and is not a local draft` | A mirrored platform module has that name in this environment; rename the draft item. |
 | `propose`: `can no longer be edited` | The proposal was submitted; after a moderator sends it back (`Changes requested`) it is editable again. |
 | `no visible Prove2Me mission matches` | The name differs from the URL slug, or the mission is private to someone else. |
