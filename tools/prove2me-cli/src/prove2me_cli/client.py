@@ -67,7 +67,9 @@ def load_credentials(workspace: Path) -> Credentials:
 
     The key belongs to the account, not to a checkout, so a workspace without
     its own credentials.json (a second checkout pinned to another Mathlib, a
-    scratch copy) falls back to the default workspace's.
+    scratch copy) falls back to the default workspace's. An expired copy does
+    the same, so a key renewed in the default workspace is not hidden by an old
+    one left in a checkout; when every key has expired, the first is reported.
     """
     env_key = os.environ.get("PROVE2ME_API_KEY", "").strip()
     if env_key:
@@ -77,12 +79,23 @@ def load_credentials(workspace: Path) -> Credentials:
         directory / "credentials.json"
         for directory in (workspace, workspace_path(), DEFAULT_WORKSPACE.expanduser())
     ))
-    path = next((candidate for candidate in candidates if candidate.is_file()), None)
-    if path is None:
-        raise Prove2MeError(
-            "no Prove2Me API key: run `prove2me setup` in a terminal, or set PROVE2ME_API_KEY "
-            "(see https://prove2.me/start.md)"
-        )
+    first_expired: Credentials | None = None
+    for path in candidates:
+        if not path.is_file():
+            continue
+        credentials = _read_credentials(path)
+        if not credentials.expired:
+            return credentials
+        first_expired = first_expired or credentials
+    if first_expired is not None:
+        return first_expired
+    raise Prove2MeError(
+        "no Prove2Me API key: run `prove2me setup` in a terminal, or set PROVE2ME_API_KEY "
+        "(see https://prove2.me/start.md)"
+    )
+
+
+def _read_credentials(path: Path) -> Credentials:
     try:
         stored = json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
@@ -484,6 +497,24 @@ def check_solution(source: str, target_name: str, *, disprove: bool = False) -> 
     return problems
 
 
+def solution_module_name(path: Path, workspace: Path) -> str | None:
+    """The module a solution file builds as, or None outside the workspace's Solutions/.
+
+    The type check imports the solution, so it must be a module of the workspace.
+    """
+    try:
+        relative = path.resolve().relative_to(workspace.resolve())
+    except ValueError:
+        return None
+    if relative.parts[0] != "Solutions" or relative.suffix != ".lean":
+        return None
+    return ".".join(relative.with_suffix("").parts)
+
+
+def misplaced_solution_message(workspace: Path) -> str:
+    return f"put the solution under {workspace / 'Solutions'} so its type can be checked against the target"
+
+
 def compile_locally(
     path: Path, workspace: Path, target_name: str, timeout: float, *, disprove: bool = False
 ) -> tuple[bool, str]:
@@ -496,13 +527,9 @@ def compile_locally(
     the whole quantified statement, so its check is `¬ (type_of% @target)`.
     Returns (ok, combined output).
     """
-    try:
-        relative = path.resolve().relative_to(workspace.resolve())
-    except ValueError:
-        relative = None
-    if relative is None or relative.parts[0] != "Solutions" or relative.suffix != ".lean":
-        return False, f"put the solution under {workspace / 'Solutions'} so its type can be checked against the target"
-    solution_module = ".".join(relative.with_suffix("").parts)
+    solution_module = solution_module_name(path, workspace)
+    if solution_module is None:
+        return False, misplaced_solution_message(workspace)
     if not is_lean_name(target_name):
         return False, f"refusing target name {target_name!r}: not a plain Lean name"
     if not is_lean_name(solution_module):
@@ -1139,11 +1166,14 @@ def share_credentials(workspace: Path, home: Path) -> bool:
 
     A script that points PROVE2ME_WORKSPACE at the checkout hides the home
     workspace from the key lookup. A symlink keeps one copy of the key, which
-    the workspace repository gitignores like the file itself.
+    the workspace repository gitignores like the file itself. A dangling link,
+    left by a moved or unmounted home workspace, is replaced; a file is not.
     """
     target, link = home / "credentials.json", workspace / "credentials.json"
-    if workspace.resolve() == home.resolve() or not target.is_file() or link.exists() or link.is_symlink():
+    if workspace.resolve() == home.resolve() or not target.is_file() or link.exists():
         return False
+    if link.is_symlink():
+        link.unlink()
     link.symlink_to(target.resolve())
     return True
 

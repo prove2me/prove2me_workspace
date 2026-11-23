@@ -373,6 +373,8 @@ def _verify(client: prove2me.Client, args: argparse.Namespace, workspace: Path) 
             f"workspace pins Mathlib {workspace_rev or 'unknown'} but the target is verified in "
             f"{theorem.get('mathlib_rev')}; re-pin, or pass --allow-env-mismatch"
         )
+    if not args.skip_compile and prove2me.solution_module_name(path, workspace) is None:
+        problems.append(prove2me.misplaced_solution_message(workspace))
     if not problems and not args.skip_compile:
         # Re-mirror so the type check compares against the statement as published now.
         mirrored = prove2me.fetch_theorem(

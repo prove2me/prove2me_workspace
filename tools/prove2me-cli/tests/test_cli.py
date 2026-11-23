@@ -77,8 +77,7 @@ def cli_api(monkeypatch):
 # --- credentials -------------------------------------------------------------
 
 
-def test_key_expiry_is_read_from_the_key_itself(tmp_path: Path, monkeypatch) -> None:
-    monkeypatch.delenv("PROVE2ME_API_KEY", raising=False)
+def test_key_expiry_is_read_from_the_key_itself(tmp_path: Path, default_workspace: Path) -> None:
     stored = _key(1000)
     (tmp_path / "credentials.json").write_text(json.dumps({"api_key": stored, "username": "u"}))
 
@@ -93,8 +92,7 @@ def test_key_expiry_is_read_from_the_key_itself(tmp_path: Path, monkeypatch) -> 
         Client(credentials)
 
 
-def test_stored_expiry_accepts_unix_seconds_and_iso(tmp_path: Path, monkeypatch) -> None:
-    monkeypatch.delenv("PROVE2ME_API_KEY", raising=False)
+def test_stored_expiry_accepts_unix_seconds_and_iso(tmp_path: Path, default_workspace: Path) -> None:
     for stored in (FUTURE, "2099-01-01T00:00:00Z"):
         (tmp_path / "credentials.json").write_text(json.dumps({"api_key": "opaque", "api_key_expires_at": stored}))
         assert not prove2me.load_credentials(tmp_path).expired
@@ -144,6 +142,46 @@ def test_a_second_checkout_borrows_the_default_workspace_key(tmp_path: Path, def
     assert credentials.source == str(default_workspace / "credentials.json")
     (checkout / "credentials.json").write_text(json.dumps({"api_key": _key(FUTURE + 1)}))
     assert prove2me.load_credentials(checkout).source == str(checkout / "credentials.json")
+
+
+def test_an_expired_checkout_key_does_not_hide_a_renewed_default_key(tmp_path: Path, default_workspace: Path) -> None:
+    (default_workspace / "credentials.json").write_text(json.dumps({"api_key": _key(FUTURE)}))
+    checkout = tmp_path / "prove2me-c5ea003"
+    checkout.mkdir()
+    (checkout / "credentials.json").write_text(json.dumps({"api_key": _key(1000)}))
+
+    credentials = prove2me.load_credentials(checkout)
+
+    assert credentials.source == str(default_workspace / "credentials.json")
+    assert not credentials.expired
+
+
+def test_when_every_key_has_expired_the_checkout_key_is_reported(tmp_path: Path, default_workspace: Path) -> None:
+    (default_workspace / "credentials.json").write_text(json.dumps({"api_key": _key(2000)}))
+    checkout = tmp_path / "prove2me-c5ea003"
+    checkout.mkdir()
+    (checkout / "credentials.json").write_text(json.dumps({"api_key": _key(1000)}))
+
+    credentials = prove2me.load_credentials(checkout)
+
+    assert credentials.expired and credentials.source == str(checkout / "credentials.json")
+
+
+def test_share_credentials_replaces_a_dangling_link_but_not_a_file(tmp_path: Path) -> None:
+    home = tmp_path / "home"
+    home.mkdir()
+    (home / "credentials.json").write_text(json.dumps({"api_key": _key(FUTURE)}))
+    moved = tmp_path / "moved"
+    moved.mkdir()
+    (moved / "credentials.json").symlink_to(tmp_path / "unmounted" / "credentials.json")
+    kept = tmp_path / "kept"
+    kept.mkdir()
+    (kept / "credentials.json").write_text(json.dumps({"api_key": "own"}))
+
+    assert prove2me.share_credentials(moved, home) is True
+    assert (moved / "credentials.json").resolve() == (home / "credentials.json").resolve()
+    assert prove2me.share_credentials(kept, home) is False
+    assert json.loads((kept / "credentials.json").read_text())["api_key"] == "own"
 
 
 # --- client ------------------------------------------------------------------
@@ -508,6 +546,21 @@ def test_verify_refuses_a_mismatched_environment_before_compiling(cli_api, tmp_p
 
     assert main(["verify", "leaf", str(good), "--workspace", str(tmp_path)]) == 1
     assert "re-pin" in capsys.readouterr().out
+
+
+def test_verify_refuses_a_solution_outside_solutions_before_mirroring(cli_api, tmp_path: Path, capsys, monkeypatch) -> None:
+    cli_api["api"] = FakeApi({("GET", "/theorems/leaf"): TARGET})
+    rev = TARGET["mathlib_rev"]
+    (tmp_path / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": rev}]}))
+    good = tmp_path / "good.lean"
+    good.write_text("theorem solution : True := trivial\n")
+    monkeypatch.setattr(prove2me, "fetch_theorem", lambda *a, **k: pytest.fail("mirrored a misplaced solution"))
+    monkeypatch.setattr(prove2me, "compile_locally", lambda *a, **k: pytest.fail("compiled a misplaced solution"))
+
+    assert main(["verify", "leaf", str(good), "--workspace", str(tmp_path), "--dry-run"]) == 1
+    output = capsys.readouterr()
+    assert output.out.splitlines() == [f"error: {prove2me.misplaced_solution_message(tmp_path)}"]
+    assert "Lake" not in output.err
 
 
 def test_verify_submits_with_explanation_and_waits(cli_api, tmp_path: Path, capsys, monkeypatch) -> None:
