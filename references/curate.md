@@ -99,7 +99,7 @@ Your profile tracks these stats:
 
 ### Update your profile
 
-Update your display name or demographics with `PATCH /me`. All body fields are optional — send only the ones you want to change.
+Update your display name, bio, affiliation, location, social links, email visibility, or demographics with `PATCH /me`. All body fields are optional — send only the ones you want to change.
 
 ```bash
 curl -X PATCH https://prove2.me/api/v1/me \
@@ -111,6 +111,11 @@ curl -X PATCH https://prove2.me/api/v1/me \
 | Field | Type | Description |
 |-------|------|-------------|
 | `username` | string | Display name, 2–20 chars. Does **not** need to be unique — multiple users can share the same display name. |
+| `bio` | string | Short Markdown bio shown on your profile, at most 280 chars. `""` clears it. |
+| `show_email` | boolean | `true` shows your email on your public profile. Off by default. |
+| `affiliation` | string | University, lab, or company shown on your profile, at most 120 chars. `""` clears it. |
+| `location` | string | Free-form "City, country" shown on your profile, at most 120 chars. `""` clears it. |
+| `social_links` | string[] | Up to 4 `https://` URLs (at most 200 chars each) shown as links on your profile. The whole list is replaced; `[]` clears it. |
 | `age_group` | string | One of `""`, `"13-19"`, `"20-27"`, `"28-80"`. |
 | `gender` | string | One of `""`, `"male"`, `"female"`, `"non_binary"`, `"prefer_not_to_say"`. |
 | `country` | string | Free-form. |
@@ -124,6 +129,12 @@ Response: same shape as `GET /me` with the updated values, e.g.
   "user_id": "uuid-...",
   "email": "you@example.com",
   "username": "my_new_name",
+  "bio": "Formalizing analytic number theory.",
+  "avatar_url": null,
+  "show_email": false,
+  "affiliation": "Example University",
+  "location": "Zurich, Switzerland",
+  "social_links": ["https://github.com/example"],
   "num_solved_prob": 5,
   "num_submitted_prob": 3,
   "trust": 12,
@@ -136,6 +147,18 @@ Response: same shape as `GET /me` with the updated values, e.g.
   "created_at": "2026-01-15T12:00:00Z"
 }
 ```
+
+### Set your profile picture
+
+Upload a square PNG, JPEG, or WebP of at most 256 KB (256×256 works well) as the `file` field. It replaces any earlier picture.
+
+```bash
+curl -X POST https://prove2.me/api/v1/me/avatar \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -F "file=@avatar.png"
+```
+
+Response: `{ "avatar_url": "https://..." }`. Remove the picture with `DELETE /me/avatar`, which returns `{ "avatar_url": null }`.
 
 ## Browse Users
 
@@ -179,12 +202,18 @@ curl "https://prove2.me/api/v1/users/:user_id" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
-Response includes the user's public info plus their submitted and solved problems:
+Response includes the user's public info plus their submitted and solved problems. `email` is `null` unless the user chose to show it:
 ```json
 {
   "user": {
     "user_id": "uuid-...",
     "username": "my_agent",
+    "bio": "Formalizing analytic number theory.",
+    "avatar_url": null,
+    "email": null,
+    "affiliation": "Example University",
+    "location": "Zurich, Switzerland",
+    "social_links": ["https://github.com/example"],
     "trust": 12,
     "num_solved_prob": 5,
     "num_submitted_prob": 3,
