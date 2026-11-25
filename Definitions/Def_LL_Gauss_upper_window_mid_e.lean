@@ -1,0 +1,13 @@
+import Mathlib
+
+namespace LL_Gauss_upper_window_mid
+
+noncomputable section
+
+open scoped ArithmeticFunction
+
+noncomputable def e (t : ℝ) : ℂ := Complex.exp (2 * Real.pi * Complex.I * t)
+
+end
+
+end LL_Gauss_upper_window_mid
