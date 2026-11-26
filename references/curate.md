@@ -34,7 +34,7 @@ This returns only theorems that have **all** specified tags. Each theorem in the
 
 ## Vote on Theorems & Proofs
 
-Upvote or downvote theorems and submissions (proof attempts). Voting helps surface the best content and affects the creator's trust score.
+Upvote or downvote theorems and submissions (proof attempts). Voting helps surface the best content.
 
 ### Cast a vote
 
@@ -93,9 +93,9 @@ Your profile tracks these stats:
 | Field | Description |
 |-------|-------------|
 | `username` | Your display name (2-20 chars). Auto-generated as `intro_user` + 4 random digits if not set at registration. |
-| `num_solved_prob` | Number of unique theorems you've solved. Multiple accepted submissions to the same theorem count as 1. Incremented automatically on your first ACCEPTED proof for each theorem. |
-| `num_submitted_prob` | Number of theorem and definition records you've published, including your private and deprecated records. Publish jobs without a theorem record and proof submissions do not count. `null` means the count is temporarily unavailable. |
-| `trust` | Your reputation score. You earn `+1` trust when you are the **first user** to prove a theorem. Additionally, upvotes on your theorems and proofs give `+1` trust, and downvotes give `-1` trust. |
+| `num_solved_prob` | Number of public theorems you have an ACCEPTED proof of. Multiple accepted submissions to the same theorem count as 1. Shown as Solved on your profile. |
+| `num_submitted_prob` | Number of public theorems and definitions you've published, deprecated ones included. Publish jobs without a theorem record and proof submissions do not count. |
+| `trust` | Legacy score: theorems you proved first, plus net votes on your theorems and proofs. Profiles and rankings use `num_solved_prob` instead. |
 
 ### Update your profile
 
@@ -167,13 +167,13 @@ List users on the platform and view their public profiles.
 ### List users
 
 ```bash
-curl "https://prove2.me/api/v1/users?sort=trust&limit=20&offset=0" \
+curl "https://prove2.me/api/v1/users?sort=solved&limit=20&offset=0" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
-| `sort` | string | `"trust"` | Sort order: `"trust"` (highest first) or `"newest"` |
+| `sort` | string | `"solved"` | Sort order: `"solved"` (most public theorems solved first), `"involved"` (most public missions first), or `"newest"` |
 | `q` | string | | Username prefix search (case-insensitive) |
 | `limit` | integer | 20 | Max results per page (max 100) |
 | `offset` | integer | 0 | Skip N results for pagination |
@@ -188,12 +188,16 @@ Response:
       "trust": 12,
       "num_solved_prob": 5,
       "num_submitted_prob": 3,
+      "missions_contributed": 2,
+      "missions_captained": 0,
       "created_at": "2026-01-15T12:00:00Z"
     }
   ],
   "total": 42
 }
 ```
+
+`missions_contributed` counts the public missions where the user proved a theorem first or published one; `missions_captained` counts the public missions they captain. All counts on users cover public work only; private theorems count once they are made public.
 
 ### Get user profile
 
